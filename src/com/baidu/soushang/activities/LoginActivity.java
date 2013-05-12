@@ -1,6 +1,11 @@
 package com.baidu.soushang.activities;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.baidu.android.speech.SpeechConfig;
 import com.baidu.android.speech.ui.BaiduSpeechDialog;
@@ -10,9 +15,12 @@ import com.baidu.api.BaiduDialog.BaiduDialogListener;
 import com.baidu.api.BaiduDialogError;
 import com.baidu.api.BaiduException;
 import com.baidu.soushang.R;
+import com.baidu.soushang.utils.DialogUtils;
+import com.google.gson.JsonObject;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -87,7 +95,45 @@ public class LoginActivity extends FragmentActivity {
 			@Override
 			public void onResults(Bundle arg0) {
 				if (arg0 != null) {
-					Log.i("sa", arg0.toString());
+					Log.i("sas", arg0.toString());
+					ArrayList<String> results = arg0.getStringArrayList(BaiduSpeechDialog.RESULTS_RECOGNITION);
+					if (results != null && results.size() > 0) {
+						try {
+							JSONObject result = new JSONObject(results.get(0));
+							if (result.has("command_str")) {
+								String commandStr = result.getString("command_str");
+								if (!TextUtils.isEmpty(commandStr)) {
+									JSONObject commandObject = new JSONObject(commandStr);
+									
+									JSONArray commandList = commandObject.getJSONArray("commandlist");
+									if (commandList != null && commandList.length() > 0) {
+										JSONObject command = commandList.getJSONObject(0);
+										if (command != null) {
+											String commandType = command.getString("commandtype");
+											if (commandType.equalsIgnoreCase("search")) {
+												JSONObject commandContent = command.getJSONObject("commandcontent");
+												if (commandContent != null) {
+													String baseUrl = commandContent.getString("baseurl");
+													String searchContent = commandContent.getString("searchcontent");
+													String web = commandContent.getString("web");
+													
+													if (!TextUtils.isEmpty(baseUrl) && !TextUtils.isEmpty(searchContent) && !TextUtils.isEmpty(web)) {
+														DialogUtils.showSearchResultDialog(LoginActivity.this, searchContent, baseUrl, web);
+														return;
+													}
+												}
+											}
+										}
+									}
+									
+									String handleText = commandObject.getString("handle_text");
+									DialogUtils.showSearchResultDialog(LoginActivity.this, handleText);
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 			
