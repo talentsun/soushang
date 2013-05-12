@@ -1,5 +1,9 @@
 <resources>
 
     <string name="app_name">soushang</string>
+    
+    <string name="login">登陆</string>
+    <string name="sa">百度语音助手</string>
+    <string name="sa_help">求助百度语音助手</string>
 
 </resources>
