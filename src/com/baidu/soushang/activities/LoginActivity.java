@@ -15,6 +15,9 @@ import com.baidu.api.BaiduDialog.BaiduDialogListener;
 import com.baidu.api.BaiduDialogError;
 import com.baidu.api.BaiduException;
 import com.baidu.soushang.R;
+import com.baidu.soushang.cloudapis.Apis;
+import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.utils.DialogUtils;
 import com.google.gson.JsonObject;
 
@@ -35,6 +38,7 @@ public class LoginActivity extends FragmentActivity {
 	
 	private Button mLogin;
 	private Button mSa;
+	private Button mNextQuestion;
 	private Baidu mBaidu;
 	private BaiduSpeechDialog mBaiduSpeechDialog;
 	
@@ -95,7 +99,6 @@ public class LoginActivity extends FragmentActivity {
 			@Override
 			public void onResults(Bundle arg0) {
 				if (arg0 != null) {
-					Log.i("sas", arg0.toString());
 					ArrayList<String> results = arg0.getStringArrayList(BaiduSpeechDialog.RESULTS_RECOGNITION);
 					if (results != null && results.size() > 0) {
 						try {
@@ -150,6 +153,31 @@ public class LoginActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				mBaiduSpeechDialog.show();
+			}
+		});
+		
+		mNextQuestion = (Button) findViewById(R.id.next_question);
+		mNextQuestion.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Apis.getNextQuestion(LoginActivity.this, new ApiResponseCallback<QuestionResponse>() {
+					
+					@Override
+					public void onResults(QuestionResponse arg0) {
+						if (arg0 != null) {
+							Log.i("next question", arg0.getTitle());
+							Log.i("next question", "" + arg0.getRightAnswer());
+						} else {
+							Log.i("next question", "failed");
+						}
+					}
+					
+					@Override
+					public void onError(Throwable arg0) {
+						Log.i("next question", "failed");
+					}
+				});
 			}
 		});
 		

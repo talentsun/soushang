@@ -6,5 +6,6 @@
     <string name="sa">百度语音助手</string>
     <string name="sa_help">求助百度语音助手</string>
 	<string name="i_know">我知道了</string>
+	<string name="next_question">下一道题</string>
     
 </resources>
