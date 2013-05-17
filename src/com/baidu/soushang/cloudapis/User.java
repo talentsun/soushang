@@ -9,7 +9,7 @@ public class User extends AbstractJSONResponse {
   @JsonProperty(value="user_id")
   private long userId;
   
-  @JsonProperty(value="username")
+  @JsonProperty(value="user_name")
   private String username;
   
   @JsonProperty(value="point")

@@ -20,21 +20,7 @@
         android:theme="@android:style/Theme.Black.NoTitleBar"
         android:name="com.baidu.soushang.SouShangApplication" >
         <activity 
-            android:name=".activities.LoginActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden">
-<!--             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
-        </activity>
-        
-        <activity 
-            android:name=".activities.QuestionActivity"
-            android:label="@string/app_name"
+            android:name=".activities.HomeActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
@@ -44,6 +30,46 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity 
+            android:name=".activities.QuestionActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+        <activity 
+            android:name=".activities.EventCompletedActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+        <activity 
+            android:name=".activities.RankActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+        <activity 
+            android:name=".activities.ShopActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+        <activity 
+            android:name=".activities.SouShangActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
     </application>
 </manifest>

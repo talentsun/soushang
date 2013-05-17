@@ -1,9 +1,11 @@
 package com.baidu.soushang.widgets;
 
 import com.baidu.soushang.R;
+import com.baidu.soushang.activities.HomeActivity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
@@ -39,6 +41,8 @@ public class PausedDialog extends Dialog implements android.view.View.OnClickLis
     
     mResume.setOnClickListener(this);
     mHome.setOnClickListener(this);
+    
+    setCanceledOnTouchOutside(false);
   }
 
   @Override
@@ -64,6 +68,7 @@ public class PausedDialog extends Dialog implements android.view.View.OnClickLis
   }
 
   private void home() {
-    
+    Intent intent = new Intent(getContext(), HomeActivity.class);
+    getContext().startActivity(intent);
   }
 }

@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Typeface;
@@ -31,10 +32,13 @@ import android.widget.Toast;
 import com.baidu.android.speech.ui.BaiduSpeechDialog;
 import com.baidu.android.speech.ui.DialogRecognitionListener;
 import com.baidu.soushang.Config;
+import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
-import com.baidu.soushang.cloudapis.Answer;
+import com.baidu.soushang.SouShangApplication;
+import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.AnswerRequest;
 import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.baidu.soushang.utils.DialogUtils;
@@ -178,6 +182,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
       
       @Override
       public void onHome() {
+        finish();
       }
     });
     
@@ -286,15 +291,33 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
     if (arg0 != null) {
       if (arg0.getRetCode() == 0) {
         mCurrentQuestion = arg0.getQuestion();
-        updateUI(mCurrentQuestion);
+        
+        if (mCurrentQuestion != null) {
+          updateUI(mCurrentQuestion);
+        } else {
+          showEventComplated();
+        }
       } else {
         mCurrentQuestion = null;
-        Log.i("current question", "question is done");
-        //TODO handle question is done
+        
+        showEventComplated();
       }
     } else {
       Toast.makeText(this, getResources().getString(R.string.get_question_failed), Toast.LENGTH_SHORT).show();
     }
+  }
+
+  private void showEventComplated() {
+    Intent intent = new Intent(QuestionActivity.this, EventCompletedActivity.class);
+    
+    if (!Config.isLogged(QuestionActivity.this)) {
+      intent.putExtra(Intents.EXTRA_CREDIT, mCredit);
+      intent.putExtra(Intents.EXTRA_POINT, mPoint);
+      SouShangApplication application = (SouShangApplication) getApplication();
+      application.setAnswers(mAnswers);
+    }
+    
+    startActivity(intent);
   }
   
   private void updateUI(QuestionResponse.Question question) {

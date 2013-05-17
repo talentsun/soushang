@@ -2,6 +2,8 @@ package com.baidu.soushang.cloudapis;
 
 import java.util.List;
 
+import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
+
 import android.content.Context;
 import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
