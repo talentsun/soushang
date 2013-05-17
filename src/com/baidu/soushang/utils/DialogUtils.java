@@ -11,59 +11,55 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class DialogUtils {
-	public static void showSearchResultDialog(Context context, String query) {
-		AlertDialog.Builder dialogBuilder = new Builder(context);
-		
-		dialogBuilder.setTitle(query);
-		
-		WebView webview = new WebView(context);
-		webview.loadUrl("http://m.baidu.com/s?word=" + query);
-		webview.setWebViewClient(new WebViewClient(){
+  public static void showSearchResultDialog(Context context, String query) {
+    AlertDialog.Builder dialogBuilder = new Builder(context);
 
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
-			
-		});
-		
-		dialogBuilder.setView(webview);
-		dialogBuilder.setNegativeButton(R.string.i_know, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		
-		dialogBuilder.show();
-	}
-	
-	public static void showSearchResultDialog(Context context, String title, String baseUrl, String content) {
-		AlertDialog.Builder dialogBuilder = new Builder(context);
-		
-		dialogBuilder.setTitle(title);
-		
-		WebView webview = new WebView(context);
-		webview.loadDataWithBaseURL(baseUrl, content, "text/html", "UTF-8", null);
-		webview.setWebViewClient(new WebViewClient(){
+    dialogBuilder.setTitle(query);
 
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
-			
-		});
-		
-		dialogBuilder.setView(webview);
-		dialogBuilder.setNegativeButton(R.string.i_know, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		
-		dialogBuilder.show();
-	}
+    WebView webview = new WebView(context);
+    webview.loadUrl("http://m.baidu.com/s?word=" + query);
+    webview.setWebViewClient(new WebViewClient() {
+
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);
+        return true;
+      }
+
+    });
+
+    dialogBuilder.setView(webview);
+    dialogBuilder.setNegativeButton(R.string.i_know, new DialogInterface.OnClickListener() {
+
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        }
+    });
+
+    dialogBuilder.show();
+  }
+
+  public static void showSearchResultDialog(Context context, String title, String baseUrl,
+      String content, DialogInterface.OnClickListener onClickListener) {
+    AlertDialog.Builder dialogBuilder = new Builder(context);
+
+    dialogBuilder.setTitle(title);
+
+    WebView webview = new WebView(context);
+    webview.loadDataWithBaseURL(baseUrl, content, "text/html", "UTF-8", null);
+    webview.setWebViewClient(new WebViewClient() {
+
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);
+        return true;
+      }
+
+    });
+
+    dialogBuilder.setView(webview);
+    dialogBuilder.setNegativeButton(R.string.i_know, onClickListener);
+
+    dialogBuilder.show();
+  }
 }

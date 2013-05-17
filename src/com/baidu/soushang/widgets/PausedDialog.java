@@ -1,0 +1,69 @@
+package com.baidu.soushang.widgets;
+
+import com.baidu.soushang.R;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.view.View;
+import android.widget.Button;
+
+public class PausedDialog extends Dialog implements android.view.View.OnClickListener {
+  public interface OnClickListener {
+    public void onResume();
+    public void onHome();
+  }
+
+  private OnClickListener mOnClickListener;
+  private Button mResume;
+  private Button mHome;
+  
+  public OnClickListener getOnClickListener() {
+    return mOnClickListener;
+  }
+
+  public void setOnClickListener(OnClickListener onClickListener) {
+    this.mOnClickListener = onClickListener;
+  }
+
+  public PausedDialog(Context context) {
+    this(context, R.style.PausedDialog);
+  }
+  
+  public PausedDialog(Context context, int theme) {
+    super(context, theme);
+    
+    setContentView(R.layout.paused_dialog);
+    
+    mResume = (Button) findViewById(R.id.resume);
+    mHome = (Button) findViewById(R.id.home);
+    
+    mResume.setOnClickListener(this);
+    mHome.setOnClickListener(this);
+  }
+
+  @Override
+  public void onClick(View v) {
+    if (v == mResume) {
+      if (mOnClickListener != null) {
+        mOnClickListener.onResume();
+      }
+    } else if (v == mHome) {
+      if (mOnClickListener != null) {
+        mOnClickListener.onHome();
+      }
+      home();
+    }
+    
+    dismiss();
+  }
+
+  @Override
+  public void onBackPressed() {
+    home();
+    dismiss();
+  }
+
+  private void home() {
+    
+  }
+}
