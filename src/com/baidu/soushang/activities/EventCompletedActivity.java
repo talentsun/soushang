@@ -72,16 +72,20 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
     @Override
     public void onResults(CommonResponse arg0) {
       if (arg0 != null && arg0.getRetCode() == 0) {
+        Config.setLogged(getApplicationContext(), true);
+        
         SouShangApplication application = (SouShangApplication) getApplication();
         Apis.answer(EventCompletedActivity.this, application.getAnswers(), null);
         initLoggedArea();
       } else {
+        Config.setLogged(getApplicationContext(), false);
         Toast.makeText(EventCompletedActivity.this, getResources().getString(R.string.login_failed_compus), Toast.LENGTH_SHORT).show();
       }
     }
     
     @Override
     public void onError(Throwable arg0) {
+      Config.setLogged(getApplicationContext(), false);
       Toast.makeText(EventCompletedActivity.this, getResources().getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
     }
   };
@@ -163,6 +167,7 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
 
         @Override
         public void onComplete(Bundle arg0) {
+          Config.setAccessToken(EventCompletedActivity.this, mBaidu.getAccessToken());
           Apis.Login(EventCompletedActivity.this, mBaidu.getAccessToken(), mLoginCallback);
         }
 
