@@ -318,6 +318,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
     }
     
     startActivity(intent);
+    finish();
   }
   
   private void updateUI(QuestionResponse.Question question) {

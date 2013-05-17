@@ -1,25 +1,33 @@
-package com.baidu.soushang.activities;
+package com.baidu.soushang.widgets;
 
 import com.baidu.soushang.R;
 import com.baidu.soushang.utils.NetworkUtils;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.app.Dialog;
+import android.content.Context;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class WebViewActivity extends FragmentActivity {
-  protected WebView mWebView;
-  protected TextView mNoNetwork;
+public class WebViewDialog extends Dialog {
+  private WebView mWebView;
+  private TextView mNoNetwork;
+  private Button mKnow;
+  
+  public WebViewDialog(Context context) {
+    this(context, 0);
+  }
 
-  @Override
-  protected void onCreate(Bundle arg0) {
-    setContentView(R.layout.webview);
+  public WebViewDialog(Context context, int theme) {
+    super(context, theme);
+    
+    setContentView(R.layout.webview_dialog);
     
     mWebView = (WebView) findViewById(R.id.webview);
     mNoNetwork = (TextView) findViewById(R.id.no_network);
+    mKnow = (Button) findViewById(R.id.know);
     
     mWebView.getSettings().setJavaScriptEnabled(true);
     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -33,18 +41,22 @@ public class WebViewActivity extends FragmentActivity {
       
     });
     
-    super.onCreate(arg0);
-  }
-
-  @Override
-  protected void onDestroy() {
-    // TODO Auto-generated method stub
-    super.onDestroy();
+    mKnow.setOnClickListener(new View.OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+        dismiss();
+      }
+    });
   }
 
   @Override
   protected void onStart() {
-    // TODO Auto-generated method stub
+    if (!NetworkUtils.isNetworkConnected(getContext())) {
+      mNoNetwork.setVisibility(View.VISIBLE);
+      mWebView.setVisibility(View.GONE);
+    }
+    
     super.onStart();
   }
 
@@ -54,19 +66,8 @@ public class WebViewActivity extends FragmentActivity {
     super.onStop();
   }
 
-  @Override
-  protected void onPause() {
-    // TODO Auto-generated method stub
-    super.onPause();
+  public void show(String url) {
+    mWebView.loadUrl(url);
+    super.show();
   }
-
-  @Override
-  protected void onResume() {
-    if (!NetworkUtils.isNetworkConnected(this)) {
-      mNoNetwork.setVisibility(View.VISIBLE);
-      mWebView.setVisibility(View.GONE);
-    }
-    super.onResume();
-  }
-
 }

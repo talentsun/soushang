@@ -38,6 +38,34 @@ public class DialogUtils {
 
     dialogBuilder.show();
   }
+  
+  public static void showWebViewDialog(Context context, String title, String url) {
+    AlertDialog.Builder dialogBuilder = new Builder(context);
+
+    dialogBuilder.setTitle(title);
+
+    WebView webview = new WebView(context);
+    webview.loadUrl(url);
+    webview.setWebViewClient(new WebViewClient() {
+
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);
+        return true;
+      }
+
+    });
+
+    dialogBuilder.setView(webview);
+    dialogBuilder.setNegativeButton(R.string.i_know, new DialogInterface.OnClickListener() {
+
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        }
+    });
+
+    dialogBuilder.show();
+  }
 
   public static void showSearchResultDialog(Context context, String title, String baseUrl,
       String content, DialogInterface.OnClickListener onClickListener) {

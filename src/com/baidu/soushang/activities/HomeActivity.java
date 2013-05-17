@@ -1,6 +1,15 @@
 package com.baidu.soushang.activities;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.baidu.soushang.Config;
 import com.baidu.soushang.R;
+import com.baidu.soushang.cloudapis.Apis;
+import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.CommonResponse;
+import com.baidu.soushang.utils.DialogUtils;
+import com.baidu.soushang.widgets.WebViewDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +23,8 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
   private Button mDailyEvent;
   private Button mRank;
   private Button mShop;
+  
+  private WebViewDialog mNewsDialog;
   
   @Override
   protected void onCreate(Bundle arg0) {
@@ -29,6 +40,32 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
     mRank.setOnClickListener(this);
     mShop.setOnClickListener(this);
     
+    mNewsDialog = new WebViewDialog(this);
+    mNewsDialog.setTitle(R.string.news);
+    
+    String currentDate = getCurrentDate();
+    if (!currentDate.equalsIgnoreCase(Config.getLatestNewsDate(this))) {
+      Config.setLatestNewsDate(this, currentDate);
+      DialogUtils.showWebViewDialog(this, getResources().getString(R.string.news), "http://m.baidu.com");
+    }
+    
+    if (Config.isLogged(this)) {
+      Apis.Login(this, Config.getAccessToken(this), new ApiResponseCallback<CommonResponse>() {
+        
+        @Override
+        public void onResults(CommonResponse arg0) {
+          if (arg0 == null || arg0.getRetCode() != 0) {
+            Config.setAccessToken(HomeActivity.this, null);
+            Config.setLogged(HomeActivity.this, false);
+          }
+        }
+        
+        @Override
+        public void onError(Throwable arg0) {
+        }
+      });
+    }
+    
     super.onCreate(arg0);
   }
 
@@ -36,18 +73,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
   protected void onDestroy() {
     // TODO Auto-generated method stub
     super.onDestroy();
-  }
-
-  @Override
-  protected void onStart() {
-    // TODO Auto-generated method stub
-    super.onStart();
-  }
-
-  @Override
-  protected void onStop() {
-    // TODO Auto-generated method stub
-    super.onStop();
   }
 
   @Override
@@ -65,6 +90,11 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
       Intent intent = new Intent(this, ShopActivity.class);
       startActivity(intent);
     }
+  }
+  
+  private String getCurrentDate() {
+    Date date = new Date();
+    return new SimpleDateFormat("yyyyMMdd").format(date);
   }
 
 }
