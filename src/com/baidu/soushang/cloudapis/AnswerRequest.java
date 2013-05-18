@@ -27,7 +27,7 @@ public class AnswerRequest extends AbstractJSONRequest {
     private long id;
     
     @JsonProperty(value="ans")
-    private int answer;
+    private int ans;
 
     public long getId() {
       return id;
@@ -38,11 +38,11 @@ public class AnswerRequest extends AbstractJSONRequest {
     }
 
     public int getAnswer() {
-      return answer;
+      return ans;
     }
 
     public void setAnswer(int answer) {
-      this.answer = answer;
+      this.ans = answer;
     }
     
     public Answer() {

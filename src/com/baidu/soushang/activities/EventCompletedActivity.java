@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -75,11 +76,13 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
         Config.setLogged(getApplicationContext(), true);
         
         SouShangApplication application = (SouShangApplication) getApplication();
-        Apis.answer(EventCompletedActivity.this, application.getAnswers(), null);
+        Apis.answer(EventCompletedActivity.this, application.getAnswers(), Config.getAccessToken(EventCompletedActivity.this), null);
         initLoggedArea();
       } else {
+        Log.i("ret_code", "" + arg0.getRetCode());
+        Log.i("ret_msg", arg0.getRetMsg());
         Config.setLogged(getApplicationContext(), false);
-        Toast.makeText(EventCompletedActivity.this, getResources().getString(R.string.login_failed_compus), Toast.LENGTH_SHORT).show();
+        Toast.makeText(EventCompletedActivity.this, getResources().getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
       }
     }
     
@@ -133,7 +136,7 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
     mNotLoggedArea.setVisibility(View.GONE);
     mLoggedArea.setVisibility(View.VISIBLE);
     
-    Apis.getUserInfo(this, mUserInfoCallback);
+    Apis.getUserInfo(this, Config.getAccessToken(this), mUserInfoCallback);
   }
   
   private void updateTotalScore(int credit, int point) {
@@ -167,6 +170,7 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
 
         @Override
         public void onComplete(Bundle arg0) {
+          Log.i("access_token", mBaidu.getAccessToken());
           Config.setAccessToken(EventCompletedActivity.this, mBaidu.getAccessToken());
           Apis.Login(EventCompletedActivity.this, mBaidu.getAccessToken(), mLoginCallback);
         }

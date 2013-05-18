@@ -279,10 +279,10 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
   }
   
   private void getQuestion() {
-    Apis.getNextQuestion(this, mCurrentQuestion == null ? 0 : mCurrentQuestion.getId(), this);
+    Apis.getNextQuestion(this, mCurrentQuestion == null ? 0 : mCurrentQuestion.getId(), Config.getAccessToken(this), this);
     
     if (Config.isLogged(this)) {
-      Apis.getUserInfo(this, mUserInfoCallback);
+      Apis.getUserInfo(this, Config.getAccessToken(this), mUserInfoCallback);
     }
   }
   
@@ -390,7 +390,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
       if (Config.isLogged(this)) {
         List<Answer> answers = new ArrayList<Answer>();
         answers.add(answer);
-        Apis.answer(this, answers, null);
+        Apis.answer(this, answers, Config.getAccessToken(QuestionActivity.this), null);
       } else {
         mAnswers.add(answer);
       }

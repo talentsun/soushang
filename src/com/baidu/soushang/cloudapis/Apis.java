@@ -2,19 +2,25 @@ package com.baidu.soushang.cloudapis;
 
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
 import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class Apis {
   private static final String QUESTION_URL = "http://soushang.limijiaoyin.com/index.php/Devent/next/s/%d.html";
-  private static final String LOGIN_URL = "http://soushang.limijiaoyin.com/index.php/Oauth/login.html";
-  private static final String ANSWER_URL = "http://soushang.limijiaoyin.com/index.php/Devent/answer.html";
-  private static final String USERINFO_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userinfo.html";
-  private static final String USEREVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userevent.html?event_id=%d";
+  private static final String QUESTION_URL_LOGGED = "http://soushang.limijiaoyin.com/index.php/Devent/next/s/%d.html?access_token=%s";
+  private static final String LOGIN_URL = "http://soushang.limijiaoyin.com/index.php/Oauth/login.html?access_token=%s";
+  private static final String ANSWER_URL = "http://soushang.limijiaoyin.com/index.php/Devent/answer.html?answers=%s&access_token=%s";
+  private static final String USERINFO_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userinfo.html?access_token=%s";
+  private static final String USEREVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userevent.html?event_id=%d&access_token=%s";
   private static final String USERRANK_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userrank.html";
   
   public interface ApiResponseCallback<T extends AbstractJSONResponse> {
@@ -23,8 +29,9 @@ public class Apis {
     public void onError(Throwable arg0);
   }
 
-  public static void getNextQuestion(Context context, int questionId,
+  public static void getNextQuestion(Context context, int questionId, String accessToken, 
       final ApiResponseCallback<QuestionResponse> callback) {
+    String url = TextUtils.isEmpty(accessToken) ? String.format(QUESTION_URL, questionId) : String.format(QUESTION_URL_LOGGED, questionId, accessToken);
     RestClientFactory.getClient().getAsync(
         new ContextAwareAPIDelegate<QuestionResponse>(context, QuestionResponse.class) {
 
@@ -41,15 +48,12 @@ public class Apis {
               callback.onResults(arg0);
             }
           }
-        }, String.format(QUESTION_URL, questionId), 2 * 1000);
+        }, url, 2 * 1000);
   }
   
   public static void Login(Context context, String accessToken,
       final ApiResponseCallback<CommonResponse> callback) {
-    LoginRequest request = new LoginRequest();
-    request.setAccessToken(accessToken);
-    
-    RestClientFactory.getClient().postAsync(
+    RestClientFactory.getClient().getAsync(
       new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
         @Override
         public void onError(Throwable arg0) {
@@ -64,10 +68,10 @@ public class Apis {
             callback.onResults(arg0);
           }
         }
-      }, LOGIN_URL, request, 2 * 1000);
+      }, String.format(LOGIN_URL, accessToken), 2 * 1000);
   }
   
-  public static void getUserInfo(Context context,
+  public static void getUserInfo(Context context, String accessToken,
       final ApiResponseCallback<UserInfoResponse> callback) {
     RestClientFactory.getClient().getAsync(new ContextAwareAPIDelegate<UserInfoResponse>(context, UserInfoResponse.class) {
 
@@ -85,10 +89,10 @@ public class Apis {
         }
       }
       
-    }, USERINFO_URL, 2 * 1000);
+    }, String.format(USERINFO_URL, accessToken), 2 * 1000);
   }
   
-  public static void getUserEvent(Context context, long eventId,
+  public static void getUserEvent(Context context, long eventId, String accessToken,
       final ApiResponseCallback<UserEventResponse> callback) {
     RestClientFactory.getClient().getAsync(
       new ContextAwareAPIDelegate<UserEventResponse>(context, UserEventResponse.class) {
@@ -107,7 +111,7 @@ public class Apis {
           }
         }
       
-    }, String.format(USEREVENT_URL, eventId), 2 * 1000);
+    }, String.format(USEREVENT_URL, eventId, accessToken), 2 * 1000);
   }
   
   public static void getUserRank(Context context,
@@ -131,12 +135,22 @@ public class Apis {
     }, USERRANK_URL, 2 * 1000);
   }
   
-  public static void answer(Context context, List<Answer> answers, 
+  public static void answer(Context context, List<Answer> answers, String accessToken,
       final ApiResponseCallback<CommonResponse> callback) {
-    AnswerRequest request = new AnswerRequest();
-    request.setAnswers(answers);
+//    AnswerRequest request = new AnswerRequest();
+//    request.setAnswers(answers);
     
-    RestClientFactory.getClient().postAsync(new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
+    JSONArray jsonArray = new JSONArray();
+    try {
+      for (Answer answer : answers) {
+        jsonArray.put(new JSONObject(answer.toJSON()));
+      }
+    } catch (Exception e) {
+    }
+    String json = jsonArray.toString();
+    Log.i("answer", json);
+    
+    RestClientFactory.getClient().getAsync(new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
 
       @Override
       public void onError(Throwable arg0) {
@@ -152,6 +166,6 @@ public class Apis {
         }
       }
       
-    }, ANSWER_URL, request);
+    }, String.format(ANSWER_URL, json, accessToken), 2 * 1000);
   }
 }

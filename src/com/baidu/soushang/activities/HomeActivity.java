@@ -55,7 +55,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
         @Override
         public void onResults(CommonResponse arg0) {
           if (arg0 == null || arg0.getRetCode() != 0) {
-            Config.setAccessToken(HomeActivity.this, null);
+            Config.removeAccessToken(HomeActivity.this);
             Config.setLogged(HomeActivity.this, false);
           }
         }

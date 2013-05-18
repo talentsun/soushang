@@ -22,6 +22,13 @@ public class Config {
     editor.commit();
   }
   
+  public static void removeAccessToken(Context context) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    Editor editor = settings.edit();
+    editor.remove(KEY_ACCESS_TOKEN);
+    editor.commit();
+  }
+  
   public static String getAccessToken(Context context) {
     SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
     return settings.getString(KEY_ACCESS_TOKEN, null);
