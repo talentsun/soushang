@@ -8,12 +8,14 @@ import com.baidu.soushang.R;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
-import com.baidu.soushang.utils.DialogUtils;
+import com.baidu.soushang.cloudapis.UserEventResponse;
+import com.baidu.soushang.cloudapis.UserEventResponse.Answer;
 import com.baidu.soushang.widgets.WebViewDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,6 +27,24 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
   private Button mShop;
   
   private WebViewDialog mNewsDialog;
+  
+  private ApiResponseCallback<UserEventResponse> mUserEventCallback = new ApiResponseCallback<UserEventResponse>() {
+    
+    @Override
+    public void onResults(UserEventResponse arg0) {
+      if (arg0 != null && arg0.getRetCode() == 0) {
+        for (Answer answer : arg0.getAnswers()) {
+          Log.i("user_event", "answer " + answer.getAnswer() + ", id " + answer.getId());
+        }
+      }
+    }
+    
+    @Override
+    public void onError(Throwable arg0) {
+      // TODO Auto-generated method stub
+      
+    }
+  };
   
   @Override
   protected void onCreate(Bundle arg0) {
@@ -41,12 +61,11 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
     mShop.setOnClickListener(this);
     
     mNewsDialog = new WebViewDialog(this);
-    mNewsDialog.setTitle(R.string.news);
     
     String currentDate = getCurrentDate();
     if (!currentDate.equalsIgnoreCase(Config.getLatestNewsDate(this))) {
       Config.setLatestNewsDate(this, currentDate);
-      DialogUtils.showWebViewDialog(this, getResources().getString(R.string.news), "http://m.baidu.com");
+      mNewsDialog.show(getResources().getString(R.string.news), "http://m.baidu.com/news");
     }
     
     if (Config.isLogged(this)) {
@@ -81,6 +100,9 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
       Intent intent = new Intent(this, SouShangActivity.class);
       startActivity(intent);
     } else if (v == mDailyEvent) {
+      if (Config.isLogged(this)) {
+        Apis.getUserEvent(this, 360L, Config.getAccessToken(this), mUserEventCallback);
+      }
       Intent intent = new Intent(this, QuestionActivity.class);
       startActivity(intent);
     } else if (v == mRank) {

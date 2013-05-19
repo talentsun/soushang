@@ -48,6 +48,17 @@ public class WebViewDialog extends Dialog {
         dismiss();
       }
     });
+    
+    setCanceledOnTouchOutside(false);
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (mWebView.canGoBack()) {
+      mWebView.goBack();
+    } else {
+      super.onBackPressed();
+    }
   }
 
   @Override
@@ -62,12 +73,18 @@ public class WebViewDialog extends Dialog {
 
   @Override
   protected void onStop() {
-    // TODO Auto-generated method stub
     super.onStop();
   }
 
-  public void show(String url) {
+  public void show(String title, String url) {
+    setTitle(title);
     mWebView.loadUrl(url);
+    super.show();
+  }
+  
+  public void show(String title, String baseUrl, String content) {
+    setTitle(title);
+    mWebView.loadDataWithBaseURL(baseUrl, content, "text/html", "UTF-8", null);
     super.show();
   }
 }

@@ -23,7 +23,9 @@ public class UserEventResponse extends CommonResponse {
     
   }
   
-  public class Answer extends AbstractJSONResponse {
+  public static class Answer extends AbstractJSONResponse {
+    private static final long serialVersionUID = 1L;
+
     @JsonProperty(value="id")
     private long id;
     

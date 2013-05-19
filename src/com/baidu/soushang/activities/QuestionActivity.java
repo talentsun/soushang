@@ -7,20 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,11 +34,10 @@ import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
-import com.baidu.soushang.cloudapis.AnswerRequest;
 import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
-import com.baidu.soushang.utils.DialogUtils;
 import com.baidu.soushang.widgets.PausedDialog;
+import com.baidu.soushang.widgets.WebViewDialog;
 
 public class QuestionActivity extends FragmentActivity implements ApiResponseCallback<QuestionResponse>, OnClickListener {
   class AnswerTimer extends CountDownTimer {
@@ -104,6 +99,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
   private List<Answer> mAnswers;
   private BaiduSpeechDialog mBaiduSpeechDialog;
   private PausedDialog mPausedDialog;
+  private WebViewDialog mSearchResultDialog;
   
   private Handler mMainHandler;
   
@@ -191,6 +187,22 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
       mAnswers = new ArrayList<Answer>();
     }
     
+    mSearchResultDialog = new WebViewDialog(this);
+    mSearchResultDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+      
+      @Override
+      public void onCancel(DialogInterface dialog) {
+        resume();
+      }
+    });
+    mSearchResultDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+      
+      @Override
+      public void onDismiss(DialogInterface dialog) {
+        resume();
+      }
+    });
+    
     initBaiduSpeechDialog();
     
     getQuestion();
@@ -243,14 +255,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
 
                           if (!TextUtils.isEmpty(baseUrl) && !TextUtils.isEmpty(searchContent)
                               && !TextUtils.isEmpty(web)) {
-                            DialogUtils.showSearchResultDialog(QuestionActivity.this, searchContent,
-                                baseUrl, web, new DialogInterface.OnClickListener() {
-                                  
-                                  @Override
-                                  public void onClick(DialogInterface dialog, int which) {
-                                    resume();
-                                  }
-                                });
+                            mSearchResultDialog.show(searchContent, baseUrl, web);
                             return;
                           }
                         }
@@ -259,7 +264,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
                   }
 
                   String handleText = commandObject.getString("handle_text");
-                  DialogUtils.showSearchResultDialog(QuestionActivity.this, handleText);
+                  mSearchResultDialog.show(handleText, "http://m.baidu.com/s?word=" + handleText);
                 }
               }
             } catch (JSONException e) {
@@ -450,8 +455,6 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
     super.onStop();
     pause();
   }
-  
-  
 
   @Override
   public void onBackPressed() {
