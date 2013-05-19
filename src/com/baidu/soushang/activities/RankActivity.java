@@ -3,15 +3,8 @@ package com.baidu.soushang.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.baidu.soushang.R;
-import com.baidu.soushang.cloudapis.Apis;
-import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
-import com.baidu.soushang.cloudapis.User;
-import com.baidu.soushang.cloudapis.UserRankResponse;
-
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +12,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.baidu.soushang.R;
+import com.baidu.soushang.cloudapis.Apis;
+import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.User;
+import com.baidu.soushang.cloudapis.UserRankResponse;
 
 public class RankActivity extends FragmentActivity {
   private ListView mListView;

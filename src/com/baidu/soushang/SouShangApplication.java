@@ -14,6 +14,7 @@ import android.webkit.CookieSyncManager;
 public class SouShangApplication extends Application {
   public static final String APP_KEY = "VKgVRtN9Lja2Uu4mcRumpkTY";
   public static final String APP_SECRET = "Fnp8AQYSp9jR7G9RluVbgBxqmz7bQexH";
+  public static final String FONT = "fonts/yuppy-sc.otf";
   
   private List<Answer> mAnswers;
   

@@ -6,6 +6,7 @@ import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
 import it.restrung.rest.marshalling.response.AbstractJSONResponse;
@@ -136,6 +137,8 @@ public class Apis {
       final ApiResponseCallback<CommonResponse> callback) {
     AnswerRequest request = new AnswerRequest();
     request.setAnswers(answers);
+    
+    Log.i("answer", request.toJSON());
 
     RestClientFactory.getClient().getAsync(new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
 
@@ -144,6 +147,8 @@ public class Apis {
         if (callback != null) {
           callback.onError(arg0);
         }
+        
+        Log.i("answer", arg0.toString());
       }
 
       @Override
@@ -151,6 +156,9 @@ public class Apis {
         if (callback != null) {
           callback.onResults(arg0);
         }
+        
+        Log.i("answer", "" + arg0.getRetCode());
+        Log.i("answer", "" + arg0.getRetMsg());
       }
 
     }, String.format(ANSWER_URL, accessToken), request);

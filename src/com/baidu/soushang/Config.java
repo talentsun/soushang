@@ -1,6 +1,5 @@
 package com.baidu.soushang;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

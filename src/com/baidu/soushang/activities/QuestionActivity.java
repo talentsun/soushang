@@ -3,7 +3,6 @@ package com.baidu.soushang.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -148,7 +147,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
     mOptionD.setOnClickListener(this);
     mHelp.setOnClickListener(this);
     
-    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/nietzsche.TTF");
+    Typeface typeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
     mMatchName.setTypeface(typeface);
     mCreditAndPoint.setTypeface(typeface);
     mQuestionOrder.setTypeface(typeface);
@@ -292,9 +291,10 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
   private void showEventComplated() {
     Intent intent = new Intent(QuestionActivity.this, EventCompletedActivity.class);
     
+    intent.putExtra(Intents.EXTRA_CREDIT, mCredit);
+    intent.putExtra(Intents.EXTRA_POINT, mPoint);
+    
     if (!Config.isLogged(QuestionActivity.this)) {
-      intent.putExtra(Intents.EXTRA_CREDIT, mCredit);
-      intent.putExtra(Intents.EXTRA_POINT, mPoint);
       SouShangApplication application = (SouShangApplication) getApplication();
       application.setAnswers(mAnswers);
     }
@@ -356,9 +356,10 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
       if (index == mCurrentQuestion.getRightAnswer()) {
         showAnswerResult(index, true);
         
+        mCredit += CREDIT_INTERVAL;
+        mPoint += POINT_INTERVAL;
+        
         if (!Config.isLogged(this)) {
-          mCredit += CREDIT_INTERVAL;
-          mPoint += POINT_INTERVAL;
           updateUserInfo(mCredit, mPoint);
         }
       } else {

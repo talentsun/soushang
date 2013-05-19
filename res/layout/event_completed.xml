@@ -2,24 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    android:gravity="center" >
     
     <LinearLayout 
         android:id="@+id/not_logged_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
-        <TextView 
-            android:id="@+id/event_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        
+        android:gravity="center_horizontal"
+        android:visibility="visible">
+        <LinearLayout 
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/event_completed_no_logged"
+            android:orientation="vertical"
+            android:paddingTop="32dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+            <TextView 
+                android:id="@+id/event_score_no_logged"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#b93f06"
+                android:text="@string/event_score_no_logged"/>
+            <TextView 
+                android:id="@+id/event_score_text_no_logged"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/why_login"
+                android:textSize="14sp"
+                android:textColor="#b93f06"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
         <Button 
             android:id="@+id/login" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:background="@drawable/go_shop"
+            android:layout_marginTop="16dp"
+            style="@style/OptionFont" />
     </LinearLayout>
 
     <LinearLayout 
@@ -27,29 +53,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:visibility="gone">
-        
-        <TextView 
-            android:id="@+id/total_score"
+
+        <LinearLayout 
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/event_completed_logged"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="40dp"
+            android:paddingRight="16dp"
+            android:baselineAligned="false">
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right" >
+                <TextView 
+                    android:id="@+id/event_score_logged"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:textSize="27sp"
+                    android:textColor="#b93f06" />
+                <TextView 
+                    android:id="@+id/event_score_text_logged"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/event_score" 
+                    android:textSize="16sp"
+                    android:textColor="#b93f06" />
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right"
+                android:layout_marginLeft="36dp">
+                <TextView 
+                    android:id="@+id/total_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:textSize="27sp"
+                    android:textColor="#b93f06" />
+                <TextView 
+                    android:id="@+id/total_score_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_score"
+                    android:textSize="16sp"
+                    android:textColor="#b93f06" />
+            </LinearLayout>
+        </LinearLayout>
         
         <Button 
             android:id="@+id/shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_shop"/>
+            android:text="@string/go_shop"
+            android:background="@drawable/go_shop"
+            style="@style/OptionFont"
+            android:layout_marginTop="16dp"/>
         
         <Button
             android:id="@+id/rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/view_rank" />
+            android:text="@string/view_rank"
+            android:background="@drawable/view_rank"
+            style="@style/OptionFont"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
     
     <Button 
         android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/home" />
+        android:text="@string/home"
+        android:background="@drawable/back_home"
+        style="@style/OptionFont"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
 </LinearLayout>

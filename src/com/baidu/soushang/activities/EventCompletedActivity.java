@@ -14,6 +14,7 @@ import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -26,31 +27,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EventCompletedActivity extends FragmentActivity implements OnClickListener {
-  private TextView mEventScore;
   private LinearLayout mNotLoggedArea;
   private Button mLogin;
+  private TextView mEventScoreNoLogged;
+  private TextView mEventScoreTextNoLogged;
   private LinearLayout mLoggedArea;
+  private TextView mEventScoreLogged;
+  private TextView mEventScoreTextLogged;
   private TextView mTotalScore;
+  private TextView mTotalScoreText;
   private Button mShop;
   private Button mRank;
   private Button mHome;
   
   private Baidu mBaidu;
   private Handler mMainHandler;
+  private int mEventPoint;
   
   private ApiResponseCallback<UserInfoResponse> mUserInfoCallback = new ApiResponseCallback<UserInfoResponse>() {
     
     @Override
     public void onResults(UserInfoResponse arg0) {
       if (arg0 != null && arg0.getRetCode() == 0 && arg0.getUser() != null) {
-        final int credit = arg0.getUser().getIntegral();
         final int point = arg0.getUser().getPoint();
         
         mMainHandler.post(new Runnable() {
           
           @Override
           public void run() {
-            updateTotalScore(credit, point);
+            updateTotalScore(point);
           }
         });
       }
@@ -62,7 +67,7 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
         
         @Override
         public void run() {
-          updateTotalScore(0, 0);
+          updateTotalScore(0);
         }
       });
     }
@@ -77,10 +82,8 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
         
         SouShangApplication application = (SouShangApplication) getApplication();
         Apis.answer(EventCompletedActivity.this, application.getAnswers(), Config.getAccessToken(EventCompletedActivity.this), null);
-        initLoggedArea();
+        initLoggedArea(null);
       } else {
-        Log.i("ret_code", "" + arg0.getRetCode());
-        Log.i("ret_msg", arg0.getRetMsg());
         Config.setLogged(getApplicationContext(), false);
         Toast.makeText(EventCompletedActivity.this, getResources().getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
       }
@@ -97,11 +100,15 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
   protected void onCreate(Bundle arg0) {
     setContentView(R.layout.event_completed);
     
-    mEventScore = (TextView) findViewById(R.id.event_score);
     mNotLoggedArea = (LinearLayout) findViewById(R.id.not_logged_area);
+    mEventScoreNoLogged = (TextView) findViewById(R.id.event_score_no_logged);
+    mEventScoreTextNoLogged = (TextView) findViewById(R.id.event_score_text_no_logged);
     mLogin = (Button) findViewById(R.id.login);
     mLoggedArea = (LinearLayout) findViewById(R.id.logged_area);
+    mEventScoreLogged = (TextView) findViewById(R.id.event_score_logged);
+    mEventScoreTextLogged = (TextView) findViewById(R.id.event_score_text_logged);
     mTotalScore = (TextView) findViewById(R.id.total_score);
+    mTotalScoreText = (TextView) findViewById(R.id.total_score_text);
     mShop = (Button) findViewById(R.id.shop);
     mRank = (Button) findViewById(R.id.rank);
     mHome = (Button) findViewById(R.id.home);
@@ -109,13 +116,25 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
     if (!Config.isLogged(this)) {
       initNotLoggedArea(getIntent());
     } else {
-      initLoggedArea();
+      initLoggedArea(getIntent());
     }
     
     mLogin.setOnClickListener(this);
     mShop.setOnClickListener(this);
     mRank.setOnClickListener(this);
     mHome.setOnClickListener(this);
+    
+    Typeface typeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
+    mEventScoreNoLogged.setTypeface(typeface);
+    mEventScoreTextNoLogged.setTypeface(typeface);
+    mLogin.setTypeface(typeface);
+    mEventScoreLogged.setTypeface(typeface);
+    mEventScoreTextLogged.setTypeface(typeface);
+    mTotalScore.setTypeface(typeface);
+    mTotalScoreText.setTypeface(typeface);
+    mShop.setTypeface(typeface);
+    mRank.setTypeface(typeface);
+    mHome.setTypeface(typeface);
     
     mMainHandler = new Handler();
     
@@ -126,21 +145,25 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
     mNotLoggedArea.setVisibility(View.VISIBLE);
     mLoggedArea.setVisibility(View.GONE);
     
-    int credit = intent.getIntExtra(Intents.EXTRA_CREDIT, 0);
-    int point = intent.getIntExtra(Intents.EXTRA_POINT, 0);
+    mEventPoint = intent.getIntExtra(Intents.EXTRA_POINT, 0);
     
-    mEventScore.setText(String.format(getResources().getString(R.string.event_score), credit, point));
+    mEventScoreNoLogged.setText(String.format(getResources().getString(R.string.event_score_no_logged), mEventPoint));
   }
   
-  private void initLoggedArea() {
+  private void initLoggedArea(Intent intent) {
     mNotLoggedArea.setVisibility(View.GONE);
     mLoggedArea.setVisibility(View.VISIBLE);
+    
+    if (intent != null) {
+      mEventPoint = intent.getIntExtra(Intents.EXTRA_POINT, 0);
+    }
+    mEventScoreLogged.setText("" + mEventPoint);
     
     Apis.getUserInfo(this, Config.getAccessToken(this), mUserInfoCallback);
   }
   
-  private void updateTotalScore(int credit, int point) {
-    mTotalScore.setText(String.format(getResources().getString(R.string.total_score), credit, point));
+  private void updateTotalScore(int point) {
+    mTotalScore.setText("" + point);
   }
 
   @Override
@@ -207,7 +230,7 @@ public class EventCompletedActivity extends FragmentActivity implements OnClickL
     if (!Config.isLogged(this)) {
       initNotLoggedArea(intent);
     } else {
-      initLoggedArea();
+      initLoggedArea(intent);
     }
     super.onNewIntent(intent);
   }
