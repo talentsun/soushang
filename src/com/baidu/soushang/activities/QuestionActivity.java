@@ -16,6 +16,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -63,9 +64,10 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
 
     @Override
     public void onTick(long millisUntilFinished) {
-      int progress = (int) (millisUntilFinished / 1000);
+      Log.i("time left", "" + millisUntilFinished);
+      int progress = (int) (millisUntilFinished / 100);
       mProgressBar.setProgress(progress);
-      if (progress <= 5) {
+      if (progress <= 50) {
         mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer_red));
       } else {
         mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer));
@@ -315,8 +317,8 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
     
     mTimeout.setVisibility(View.INVISIBLE);
     
-    mAnswerTime.setMax(question.getAnswerTime());
-    mAnswerTime.setProgress(question.getAnswerTime());
+    mAnswerTime.setMax(question.getAnswerTime() * 10);
+    mAnswerTime.setProgress(question.getAnswerTime() * 10);
     
     clearAnswerResult();
     
@@ -335,7 +337,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
   
   private void startTimer() {
     stopTimer();
-    mTimer = new AnswerTimer(mAnswerTime, mAnswerTime.getProgress() * 1000, 1000);
+    mTimer = new AnswerTimer(mAnswerTime, mAnswerTime.getProgress() * 100, 100);
     mTimer.start();
   }
   
