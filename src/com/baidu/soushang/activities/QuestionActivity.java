@@ -240,29 +240,6 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
                 String commandStr = result.getString("command_str");
                 if (!TextUtils.isEmpty(commandStr)) {
                   JSONObject commandObject = new JSONObject(commandStr);
-
-                  JSONArray commandList = commandObject.getJSONArray("commandlist");
-                  if (commandList != null && commandList.length() > 0) {
-                    JSONObject command = commandList.getJSONObject(0);
-                    if (command != null) {
-                      String commandType = command.getString("commandtype");
-                      if (commandType.equalsIgnoreCase("search")) {
-                        JSONObject commandContent = command.getJSONObject("commandcontent");
-                        if (commandContent != null) {
-                          String baseUrl = commandContent.getString("baseurl");
-                          String searchContent = commandContent.getString("searchcontent");
-                          String web = commandContent.getString("web");
-
-                          if (!TextUtils.isEmpty(baseUrl) && !TextUtils.isEmpty(searchContent)
-                              && !TextUtils.isEmpty(web)) {
-                            mSearchResultDialog.show(searchContent, baseUrl, web);
-                            return;
-                          }
-                        }
-                      }
-                    }
-                  }
-
                   String handleText = commandObject.getString("handle_text");
                   mSearchResultDialog.show(handleText, "http://m.baidu.com/s?word=" + handleText);
                 }

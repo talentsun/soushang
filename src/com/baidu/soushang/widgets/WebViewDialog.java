@@ -78,13 +78,8 @@ public class WebViewDialog extends Dialog {
 
   public void show(String title, String url) {
     setTitle(title);
+    mWebView.clearHistory();
     mWebView.loadUrl(url);
-    super.show();
-  }
-  
-  public void show(String title, String baseUrl, String content) {
-    setTitle(title);
-    mWebView.loadDataWithBaseURL(baseUrl, content, "text/html", "UTF-8", null);
     super.show();
   }
 }
