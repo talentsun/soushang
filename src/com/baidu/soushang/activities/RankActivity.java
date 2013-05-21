@@ -2,8 +2,10 @@ package com.baidu.soushang.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.baidu.soushang.R;
+import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.User;
@@ -22,6 +25,8 @@ import com.baidu.soushang.cloudapis.UserRankResponse;
 public class RankActivity extends FragmentActivity {
   private ListView mListView;
   private RankAdapter mAdapter;
+  private TextView mNoRank;
+  private Typeface mTypeface;
   
   private ApiResponseCallback<UserRankResponse> mUserRankCallback = new ApiResponseCallback<UserRankResponse>() {
     
@@ -45,8 +50,18 @@ public class RankActivity extends FragmentActivity {
     setContentView(R.layout.rank);
     
     mListView = (ListView) findViewById(R.id.list);
+    mTypeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
+    View headerView = LayoutInflater.from(this).inflate(R.layout.rank_header, null);
+    ((TextView) headerView.findViewById(R.id.ranking)).setTypeface(mTypeface);
+    ((TextView) headerView.findViewById(R.id.user)).setTypeface(mTypeface);
+    ((TextView) headerView.findViewById(R.id.credit)).setTypeface(mTypeface);
+    mListView.addHeaderView(headerView);
+    mListView.setEmptyView(findViewById(android.R.id.empty));
     mAdapter = new RankAdapter(this);
     mListView.setAdapter(mAdapter);
+    
+    mNoRank = (TextView) findViewById(R.id.norank);
+    mNoRank.setTypeface(mTypeface);
     
     Apis.getUserRank(this, mUserRankCallback);
     
@@ -132,13 +147,29 @@ public class RankActivity extends FragmentActivity {
         viewHolder.numberView = (TextView) convertView.findViewById(R.id.number);
         viewHolder.usernameView = (TextView) convertView.findViewById(R.id.username);
         viewHolder.creditView = (TextView) convertView.findViewById(R.id.credit);
+        viewHolder.numberView.setTypeface(mTypeface);
+        viewHolder.usernameView.setTypeface(mTypeface);
+        viewHolder.creditView.setTypeface(mTypeface);
         convertView.setTag(viewHolder);
       } else {
         viewHolder = (ViewHolder) convertView.getTag();
       }
 
       User user = (User) getItem(position);
-      viewHolder.numberView.setText("" + (position+1));
+      if (position == 0) {
+        viewHolder.numberView.setText("");
+        viewHolder.numberView.setBackgroundResource(R.drawable.rank_1);
+      } else if (position == 1) {
+        viewHolder.numberView.setText("");
+        viewHolder.numberView.setBackgroundResource(R.drawable.rank_2);
+      } else if (position == 2) {
+        viewHolder.numberView.setText("");
+        viewHolder.numberView.setBackgroundResource(R.drawable.rank_3);
+      } else {
+        viewHolder.numberView.setText("" + (position+1));
+        viewHolder.numberView.setBackgroundResource(R.drawable.rank_other);
+      }
+
       viewHolder.usernameView.setText(user.getUsername());
       viewHolder.creditView.setText("" + user.getIntegral());
 

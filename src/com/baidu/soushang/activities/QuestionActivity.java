@@ -111,7 +111,7 @@ public class QuestionActivity extends FragmentActivity implements ApiResponseCal
     
     @Override
     public void onResults(UserInfoResponse arg0) {
-      if (arg0.getRetCode() == 0) {
+      if (arg0.getRetCode() == 0 && arg0.getUser() != null) {
         updateUserInfo(arg0.getUser().getIntegral(), arg0.getUser().getPoint());
       } else {
         updateUserInfo(0, 0);

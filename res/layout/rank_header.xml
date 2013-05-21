@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:weightSum="5" >
+    <TextView 
+        android:id="@+id/ranking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#536f03"
+        android:text="@string/ranking"/>
+
+    <TextView 
+        android:id="@+id/user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#536f03"
+        android:text="@string/user"/>
+    
+    <TextView 
+        android:id="@+id/credit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#536f03"
+        android:text="@string/credit"/>
+</LinearLayout>
