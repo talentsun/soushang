@@ -15,10 +15,11 @@ public class Apis {
   private static final String QUESTION_URL = "http://soushang.limijiaoyin.com/index.php/Devent/next/s/%d.html";
   private static final String QUESTION_URL_LOGGED = "http://soushang.limijiaoyin.com/index.php/Devent/next/s/%d.html?access_token=%s";
   private static final String LOGIN_URL = "http://soushang.limijiaoyin.com/index.php/Oauth/login.html?access_token=%s";
-  private static final String ANSWER_URL = "http://soushang.limijiaoyin.com/index.php/Devent/answer.html?access_token=%s";
+  private static final String ANSWER_URL = "http://soushang.limijiaoyin.com/index.php/Devent/answer.html";
   private static final String USERINFO_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userinfo.html?access_token=%s";
   private static final String USEREVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userevent.html?event_id=%d&access_token=%s";
   private static final String USERRANK_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userrank.html";
+  private static final String DAYEVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/dayevent.html?access_token=%s";
   
   public interface ApiResponseCallback<T extends AbstractJSONResponse> {
     public void onResults(T arg0);
@@ -137,10 +138,9 @@ public class Apis {
       final ApiResponseCallback<CommonResponse> callback) {
     AnswerRequest request = new AnswerRequest();
     request.setAnswers(answers);
+    request.setAccessToken(accessToken);
     
-    Log.i("answer", request.toJSON());
-
-    RestClientFactory.getClient().getAsync(new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
+    RestClientFactory.getClient().postAsync(new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
 
       @Override
       public void onError(Throwable arg0) {
@@ -156,11 +156,30 @@ public class Apis {
         if (callback != null) {
           callback.onResults(arg0);
         }
-        
-        Log.i("answer", "" + arg0.getRetCode());
-        Log.i("answer", "" + arg0.getRetMsg());
       }
 
-    }, String.format(ANSWER_URL, accessToken), request);
+    }, ANSWER_URL, request);
+  }
+  
+  public static void getDayEvent(Context context, String accessToken,
+      final ApiResponseCallback<DayEventResponse> callback) {
+    RestClientFactory.getClient().getAsync(
+        new ContextAwareAPIDelegate<DayEventResponse>(context, DayEventResponse.class) {
+
+          @Override
+          public void onError(Throwable arg0) {
+            if (callback != null) {
+              callback.onError(arg0);
+            }
+          }
+
+          @Override
+          public void onResults(DayEventResponse arg0) {
+            if (callback != null) {
+              callback.onResults(arg0);
+            }
+          }
+
+        }, String.format(DAYEVENT_URL, accessToken), 2 * 1000);
   }
 }

@@ -25,6 +25,8 @@
     <string name="rank">达人排行</string>
     <string name="shop">积分商城</string>
     <string name="news">比赛资讯</string>
+    <string name="get_dayevent_failed">获取日赛失败，请检查网络连接</string>
+    <string name="no_day_event">今天的日赛结束了，明天吧。</string>
     
     <string name="no_rank">暂无积分排名</string>
     <string name="no_network">网络不可用</string>

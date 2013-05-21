@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -63,7 +62,6 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
     @Override
     public void onTick(long millisUntilFinished) {
-      Log.i("time left", "" + millisUntilFinished);
       int progress = (int) (millisUntilFinished / 100);
       mProgressBar.setProgress(progress);
       if (progress <= 50) {
@@ -104,25 +102,8 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private Handler mMainHandler;
   
   private static final int CREDIT_INTERVAL = 10;
-  private static final int POINT_INTERVAL = 20;
+  private static final int POINT_INTERVAL = 5;
 
-  ApiResponseCallback<UserInfoResponse> mUserInfoCallback = new ApiResponseCallback<UserInfoResponse>() {
-    
-    @Override
-    public void onResults(UserInfoResponse arg0) {
-      if (arg0.getRetCode() == 0 && arg0.getUser() != null) {
-        updateUserInfo(arg0.getUser().getIntegral(), arg0.getUser().getPoint());
-      } else {
-        updateUserInfo(0, 0);
-      }
-    }
-    
-    @Override
-    public void onError(Throwable arg0) {
-      updateUserInfo(0, 0);
-    }
-  };
-  
   @Override
   protected void onCreate(Bundle arg0) {
 
@@ -182,10 +163,8 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       }
     });
     
-    if (!Config.isLogged(this)) {
-      updateUserInfo(mCredit, mPoint);
-      mAnswers = new ArrayList<Answer>();
-    }
+    mAnswers = new ArrayList<Answer>();
+    updateUserInfo(mCredit, mPoint);
     
     mSearchResultDialog = new WebViewDialog(this);
     mSearchResultDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -262,10 +241,6 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   
   private void getQuestion() {
     Apis.getNextQuestion(this, mCurrentQuestion == null ? 0 : mCurrentQuestion.getId(), Config.getAccessToken(this), this);
-    
-    if (Config.isLogged(this)) {
-      Apis.getUserInfo(this, Config.getAccessToken(this), mUserInfoCallback);
-    }
   }
   
   @Override
@@ -292,7 +267,6 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private void showEventComplated() {
     Intent intent = new Intent(QuestionActivity.this, EventCompletedActivity.class);
     
-    intent.putExtra(Intents.EXTRA_CREDIT, mCredit);
     intent.putExtra(Intents.EXTRA_POINT, mPoint);
     
     if (!Config.isLogged(QuestionActivity.this)) {
@@ -360,9 +334,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
         mCredit += CREDIT_INTERVAL;
         mPoint += POINT_INTERVAL;
         
-        if (!Config.isLogged(this)) {
-          updateUserInfo(mCredit, mPoint);
-        }
+        updateUserInfo(mCredit, mPoint);
       } else {
         showAnswerResult(index, false);
       }

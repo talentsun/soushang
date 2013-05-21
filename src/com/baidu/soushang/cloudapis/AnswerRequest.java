@@ -17,6 +17,17 @@ public class AnswerRequest extends AbstractJSONRequest {
   public void setAnswers(List<Answer> answers) {
     this.answers = answers;
   }
+  
+  @JsonProperty(value="access_token")
+  private String access_token;
+  
+  public String getAccessToken() {
+    return access_token;
+  }
+  
+  public void setAccessToken(String accessToken) {
+    access_token = accessToken;
+  }
 
   public AnswerRequest() {
     
