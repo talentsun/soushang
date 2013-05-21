@@ -14,13 +14,12 @@ import com.baidu.soushang.widgets.WebViewDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class HomeActivity extends FragmentActivity implements OnClickListener {
+public class HomeActivity extends BaseActivity implements OnClickListener {
   private Button mSouShang;
   private Button mDailyEvent;
   private Button mRank;

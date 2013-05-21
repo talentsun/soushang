@@ -2,12 +2,10 @@ package com.baidu.soushang.activities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,7 @@ import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.User;
 import com.baidu.soushang.cloudapis.UserRankResponse;
 
-public class RankActivity extends FragmentActivity {
+public class RankActivity extends BaseActivity {
   private ListView mListView;
   private RankAdapter mAdapter;
   private TextView mNoRank;

@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EventCompletedActivity extends FragmentActivity implements OnClickListener {
+public class EventCompletedActivity extends BaseActivity implements OnClickListener {
   private LinearLayout mNotLoggedArea;
   private Button mLogin;
   private TextView mEventScoreNoLogged;

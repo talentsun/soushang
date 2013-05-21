@@ -4,13 +4,12 @@ import com.baidu.soushang.R;
 import com.baidu.soushang.utils.NetworkUtils;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-public class WebViewActivity extends FragmentActivity {
+public class WebViewActivity extends BaseActivity {
   protected WebView mWebView;
   protected TextView mNoNetwork;
 

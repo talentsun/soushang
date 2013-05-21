@@ -14,7 +14,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +38,7 @@ import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.baidu.soushang.widgets.PausedDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 
-public class QuestionActivity extends FragmentActivity implements ApiResponseCallback<QuestionResponse>, OnClickListener {
+public class QuestionActivity extends BaseActivity implements ApiResponseCallback<QuestionResponse>, OnClickListener {
   class AnswerTimer extends CountDownTimer {
     private ProgressBar mProgressBar;
 
