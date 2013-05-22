@@ -50,14 +50,6 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       mProgressBar.setProgress(0);
       mTimeout.setVisibility(View.VISIBLE);
       answer(-1);
-      
-      mMainHandler.postDelayed(new Runnable() {
-        
-        @Override
-        public void run() {
-          getQuestion();
-        }
-      }, 1000);
     }
 
     @Override
