@@ -33,7 +33,6 @@ import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.QuestionResponse;
-import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.baidu.soushang.widgets.PausedDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 
@@ -50,6 +49,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     public void onFinish() {
       mProgressBar.setProgress(0);
       mTimeout.setVisibility(View.VISIBLE);
+      answer(-1);
       
       mMainHandler.postDelayed(new Runnable() {
         
@@ -364,6 +364,10 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   }
   
   private void showAnswerResult(int index, boolean correct) {
+    if (index < 0 || index > 3) {
+      return;
+    }
+    
     int xIndex = index;
     int yIndex = correct ? 0 : 1;
     

@@ -52,9 +52,6 @@ public class PausedDialog extends Dialog implements android.view.View.OnClickLis
         mOnClickListener.onResume();
       }
     } else if (v == mHome) {
-      if (mOnClickListener != null) {
-        mOnClickListener.onHome();
-      }
       home();
     }
     
@@ -68,6 +65,10 @@ public class PausedDialog extends Dialog implements android.view.View.OnClickLis
   }
 
   private void home() {
+    if (mOnClickListener != null) {
+      mOnClickListener.onHome();
+    }
+    
     Intent intent = new Intent(getContext(), HomeActivity.class);
     getContext().startActivity(intent);
   }
