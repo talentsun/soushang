@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/soushang_bg"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp" >
+    
+    <TextView 
+        android:id="@+id/soushang_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/soushang_title"
+        android:background="@drawable/soushang_title"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="#fdfcc4"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowColor="#082d00"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="4dp"/>
+    
+    <TextView 
+        android:id="@+id/soushang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#536f03"
+        android:text="@string/soushang"
+        android:layout_below="@id/soushang_title"/>
+    
+    <TextView 
+        android:id="@+id/soushang_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#536f03"
+        android:text="@string/soushang_content"
+        android:layout_alignTop="@id/soushang"
+        android:paddingTop="8dp"
+        android:lineSpacingExtra="2dp" />
+
+</RelativeLayout>

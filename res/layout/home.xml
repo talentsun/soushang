@@ -2,30 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/bg" >
     
     <Button 
         android:id="@+id/soushang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/soushang"/>
+        android:background="@drawable/home_soushang"/>
     
     <Button 
         android:id="@+id/daily_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/daily_event"/>
+        android:background="@drawable/home_daily_event"/>
     
     <Button 
         android:id="@+id/rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rank"/>
+        android:background="@drawable/home_rank"/>
     
     <Button 
         android:id="@+id/shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/shop"/>
+        android:background="@drawable/home_shop"/>
 
 </LinearLayout>

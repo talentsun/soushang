@@ -20,10 +20,6 @@
     <string name="event_score_no_logged">本次获得积分：%1$d</string>
     <string name="why_login">登录之后可以保存积分换礼品哦！快去登录吧！</string>
     
-    <string name="soushang">科普“搜商”</string>
-    <string name="daily_event">每日答题</string>
-    <string name="rank">达人排行</string>
-    <string name="shop">积分商城</string>
     <string name="news">比赛资讯</string>
     <string name="get_dayevent_failed">获取日赛失败，请检查网络连接</string>
     <string name="no_day_event">今天的日赛结束了，明天吧。</string>
@@ -33,4 +29,8 @@
     <string name="ranking">名次</string>
     <string name="user">用户</string>
     <string name="credit">荣誉值</string>
+    
+    <string name="soushang">搜商：</string>
+    <string name="soushang_title">科普搜商</string>
+    <string name="soushang_content">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;即通过搜索获取知识，解决问题的能力，是一种与智商、情商并列的人类智力因素，也是人类在信息时代需要具备的第三种能力。在信息爆炸的21世纪，除了智商、情商，面对海量信息包围的困境，决定人生成败与否的关键因素是什么？是“搜商”，即一种通过工具获取新知识的能力——搜索能力。而搜索引擎是人类获取信息的伟大发明，善用搜索成为高效获取信息，提高搜商的重要途径。百度作为全球最大的中文搜索引擎，一直在不断努力优化搜索结果，百度一下，能更快捷地通过搜索获取更有价值的信息，百度帮你提高搜商，成为互联网时代的信息达人！</string>
 </resources>
