@@ -1,10 +1,12 @@
 package com.baidu.soushang.widgets;
 
 import com.baidu.soushang.R;
+import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.utils.NetworkUtils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,9 +17,10 @@ public class WebViewDialog extends Dialog {
   private WebView mWebView;
   private TextView mNoNetwork;
   private Button mKnow;
+  private TextView mTitle;
   
   public WebViewDialog(Context context) {
-    this(context, 0);
+    this(context, R.style.WebViewDialog);
   }
 
   public WebViewDialog(Context context, int theme) {
@@ -28,6 +31,7 @@ public class WebViewDialog extends Dialog {
     mWebView = (WebView) findViewById(R.id.webview);
     mNoNetwork = (TextView) findViewById(R.id.no_network);
     mKnow = (Button) findViewById(R.id.know);
+    mTitle = (TextView) findViewById(R.id.dialog_title);
     
     mWebView.getSettings().setJavaScriptEnabled(true);
     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -48,6 +52,11 @@ public class WebViewDialog extends Dialog {
         dismiss();
       }
     });
+    
+    Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), SouShangApplication.FONT);
+    mNoNetwork.setTypeface(typeface);
+    mKnow.setTypeface(typeface);
+    mTitle.setTypeface(typeface);
     
     setCanceledOnTouchOutside(false);
   }
@@ -77,7 +86,7 @@ public class WebViewDialog extends Dialog {
   }
 
   public void show(String title, String url) {
-    setTitle(title);
+    mTitle.setText(title);
     mWebView.clearHistory();
     mWebView.loadUrl(url);
     super.show();

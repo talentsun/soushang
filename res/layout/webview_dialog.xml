@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
-    <TextView
-        android:id="@+id/no_network"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg" >
+    <TextView 
+        android:id="@+id/dialog_title"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#fdfcc5"
+        android:background="@drawable/dialog_title"/>
+    <FrameLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/no_network"
-        android:visibility="gone" />
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+        <TextView
+            android:id="@+id/no_network"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:textColor="#fdfcc5"
+            android:gravity="center"
+            android:text="@string/no_network"
+            android:visibility="gone" />
 
-    <WebView 
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <WebView 
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="350dp" />
+    </FrameLayout>
     
     <Button 
         android:id="@+id/know"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/i_know"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="20sp"
+        android:textColor="#fdfcc5"
+        android:text="@string/i_know"
+        android:background="@drawable/iknow"/>
 
-</RelativeLayout>
+</LinearLayout>

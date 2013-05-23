@@ -1,9 +1,11 @@
 package com.baidu.soushang.widgets;
 
 import com.baidu.soushang.R;
+import com.baidu.soushang.SouShangApplication;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +16,7 @@ public class NoDayEventDialog extends Dialog {
   private Button mKnow;
 
   public NoDayEventDialog(Context context) {
-    this(context, 0);
+    this(context, R.style.TipsDialog);
   }
 
   public NoDayEventDialog(Context context, int theme) {
@@ -35,6 +37,10 @@ public class NoDayEventDialog extends Dialog {
         dismiss();
       }
     });
+    
+    Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), SouShangApplication.FONT);
+    mKnow.setTypeface(typeface);
+    mContent.setTypeface(typeface);
     
     super.onCreate(savedInstanceState);
   }
