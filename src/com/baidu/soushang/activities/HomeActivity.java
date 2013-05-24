@@ -38,6 +38,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
           Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
           intent.putExtra(Intents.EXTRA_QUESTION_ID, arg0.getStartId());
           HomeActivity.this.startActivity(intent);
+          overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         } else {
           mNoDayEventDialog.show();
         }
@@ -108,22 +109,24 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     if (v == mSouShang) {
       Intent intent = new Intent(this, SouShangActivity.class);
       startActivity(intent);
+      overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mDailyEvent) {
       if (Config.isLogged(this)) {
         Apis.getDayEvent(this, Config.getAccessToken(this), mDayEventCallback);
       } else {
         Intent intent = new Intent(this, QuestionActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
       }
     } else if (v == mRank) {
       Intent intent = new Intent(this, RankActivity.class);
       startActivity(intent);
+      overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mShop) {
       Intent intent = new Intent(this, ShopActivity.class);
       startActivity(intent);
+      overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
-    
-    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
   }
   
   private String getCurrentDate() {

@@ -19,17 +19,20 @@ import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.User;
 import com.baidu.soushang.cloudapis.UserRankResponse;
+import com.baidu.soushang.views.LoadingView;
 
 public class RankActivity extends BaseActivity {
   private ListView mListView;
   private RankAdapter mAdapter;
   private TextView mNoRank;
+  private LoadingView mLoading;
   private Typeface mTypeface;
   
   private ApiResponseCallback<UserRankResponse> mUserRankCallback = new ApiResponseCallback<UserRankResponse>() {
     
     @Override
     public void onResults(UserRankResponse arg0) {
+      showNoRank();
       if (arg0 != null && arg0.getRetCode() == 0 && arg0.getUsers() != null) {
         mAdapter.setData(arg0.getUsers());
       } else {
@@ -39,6 +42,7 @@ public class RankActivity extends BaseActivity {
     
     @Override
     public void onError(Throwable arg0) {
+      showNoRank();
       mAdapter.clearData();
     }
   };
@@ -57,10 +61,12 @@ public class RankActivity extends BaseActivity {
     mListView.setEmptyView(findViewById(android.R.id.empty));
     mAdapter = new RankAdapter(this);
     mListView.setAdapter(mAdapter);
+    mLoading = (LoadingView) findViewById(R.id.loading);
     
     mNoRank = (TextView) findViewById(R.id.norank);
     mNoRank.setTypeface(mTypeface);
     
+    showLoading();
     Apis.getUserRank(this, mUserRankCallback);
     
     super.onCreate(arg0);
@@ -79,6 +85,16 @@ public class RankActivity extends BaseActivity {
   @Override
   protected void onStop() {
     super.onStop();
+  }
+  
+  private void showLoading() {
+    mNoRank.setVisibility(View.GONE);
+    mLoading.setVisibility(View.VISIBLE);
+  }
+  
+  private void showNoRank() {
+    mNoRank.setVisibility(View.VISIBLE);
+    mLoading.setVisibility(View.GONE);
   }
 
   public class RankAdapter extends BaseAdapter {

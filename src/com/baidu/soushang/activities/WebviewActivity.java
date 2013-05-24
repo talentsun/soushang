@@ -2,7 +2,9 @@ package com.baidu.soushang.activities;
 
 import com.baidu.soushang.R;
 import com.baidu.soushang.utils.NetworkUtils;
+import com.baidu.soushang.views.LoadingView;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 public class WebViewActivity extends BaseActivity {
   protected WebView mWebView;
   protected TextView mNoNetwork;
+  protected LoadingView mLoading;
 
   @Override
   protected void onCreate(Bundle arg0) {
@@ -19,6 +22,7 @@ public class WebViewActivity extends BaseActivity {
     
     mWebView = (WebView) findViewById(R.id.webview);
     mNoNetwork = (TextView) findViewById(R.id.no_network);
+    mLoading = (LoadingView) findViewById(R.id.loading);
     
     mWebView.getSettings().setJavaScriptEnabled(true);
     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -28,6 +32,18 @@ public class WebViewActivity extends BaseActivity {
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
         // TODO Auto-generated method stub
         return super.shouldOverrideUrlLoading(view, url);
+      }
+
+      @Override
+      public void onPageFinished(WebView view, String url) {
+        mLoading.setVisibility(View.GONE);
+        super.onPageFinished(view, url);
+      }
+
+      @Override
+      public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        mLoading.setVisibility(View.VISIBLE);
+        super.onPageStarted(view, url, favicon);
       }
       
     });

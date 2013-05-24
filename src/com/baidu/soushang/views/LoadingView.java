@@ -5,6 +5,9 @@ import com.baidu.soushang.R;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 public class LoadingView extends ImageView {
@@ -30,8 +33,13 @@ public class LoadingView extends ImageView {
 
   private void initView() {
     setBackgroundResource(R.drawable.loading);
-    AnimationDrawable background = (AnimationDrawable) getBackground();
-    background.start();
+    
+    Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.loading);
+    LinearInterpolator lin = new LinearInterpolator();
+    anim.setInterpolator(lin);
+    
+    clearAnimation();
+    startAnimation(anim);
   }
 
 }

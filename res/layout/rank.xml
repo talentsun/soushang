@@ -37,7 +37,12 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textColor="#536f03"
-                android:text="@string/no_rank" />
+                android:text="@string/no_rank"
+                android:visibility="gone" />
+            <com.baidu.soushang.views.LoadingView 
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
     
