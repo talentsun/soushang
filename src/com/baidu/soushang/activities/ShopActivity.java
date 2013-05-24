@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.R.id;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,13 +66,14 @@ public class ShopActivity extends BaseActivity implements OnClickListener {
       
       mInflater = LayoutInflater.from(context);
       
-      mGiftViews = new View[4];
+      mGiftViews = new View[5];
       
       mGifts = new ArrayList<ShopActivity.Gift>();
-      mGifts.add(new Gift(R.drawable.gift_phone, getResources().getString(R.string.gift_name_1), 40000));
-      mGifts.add(new Gift(R.drawable.gift_phone, getResources().getString(R.string.gift_name_2), 50000));
-      mGifts.add(new Gift(R.drawable.gift_phone, getResources().getString(R.string.gift_name_3), 60000));
-      mGifts.add(new Gift(R.drawable.gift_phone, getResources().getString(R.string.gift_name_4), 70000));
+      mGifts.add(new Gift(R.drawable.gift_newipad, getResources().getString(R.string.gift_name_1), 40000));
+      mGifts.add(new Gift(R.drawable.gift_qianbao, getResources().getString(R.string.gift_name_2), 50000));
+      mGifts.add(new Gift(R.drawable.gift_bitong, getResources().getString(R.string.gift_name_3), 60000));
+      mGifts.add(new Gift(R.drawable.gift_qinghuaci, getResources().getString(R.string.gift_name_4), 70000));
+      mGifts.add(new Gift(R.drawable.gift_bag, getResources().getString(R.string.gift_name_5), 70000));
     }
 
     @Override

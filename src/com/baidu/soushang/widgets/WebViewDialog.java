@@ -3,9 +3,11 @@ package com.baidu.soushang.widgets;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.utils.NetworkUtils;
+import com.baidu.soushang.views.LoadingView;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.View;
 import android.webkit.WebView;
@@ -18,6 +20,7 @@ public class WebViewDialog extends Dialog {
   private TextView mNoNetwork;
   private Button mKnow;
   private TextView mTitle;
+  private LoadingView mLoadingView;
   
   public WebViewDialog(Context context) {
     this(context, R.style.WebViewDialog);
@@ -32,6 +35,7 @@ public class WebViewDialog extends Dialog {
     mNoNetwork = (TextView) findViewById(R.id.no_network);
     mKnow = (Button) findViewById(R.id.know);
     mTitle = (TextView) findViewById(R.id.dialog_title);
+    mLoadingView = (LoadingView) findViewById(R.id.loading);
     
     mWebView.getSettings().setJavaScriptEnabled(true);
     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -42,6 +46,18 @@ public class WebViewDialog extends Dialog {
         // TODO Auto-generated method stub
         return super.shouldOverrideUrlLoading(view, url);
       }
+
+	@Override
+	public void onPageFinished(WebView view, String url) {
+		mLoadingView.setVisibility(View.GONE);
+		super.onPageFinished(view, url);
+	}
+
+	@Override
+	public void onPageStarted(WebView view, String url, Bitmap favicon) {
+		mLoadingView.setVisibility(View.VISIBLE);
+		super.onPageStarted(view, url, favicon);
+	}
       
     });
     

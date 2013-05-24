@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -268,17 +269,18 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     
     startActivity(intent);
     finish();
+    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
   }
   
   private void updateUI(QuestionResponse.Question question) {
     mMatchName.setText(question.getEventTitle());
     mQuestionOrder.setText(String.format(getResources().getString(R.string.question_order), question.getIndex()+1, question.getTotal()));
-    mQuestionTitle.setText(question.getTitle());
+    mQuestionTitle.setText(Html.fromHtml(question.getTitle()));
     
-    mOptionA.setText(question.getOptions().get(0));
-    mOptionB.setText(question.getOptions().get(1));
-    mOptionC.setText(question.getOptions().get(2));
-    mOptionD.setText(question.getOptions().get(3));
+    mOptionA.setText(Html.fromHtml(question.getOptions().get(0)));
+    mOptionB.setText(Html.fromHtml(question.getOptions().get(1)));
+    mOptionC.setText(Html.fromHtml(question.getOptions().get(2)));
+    mOptionD.setText(Html.fromHtml(question.getOptions().get(3)));
     
     mTimeout.setVisibility(View.INVISIBLE);
     

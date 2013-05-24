@@ -122,6 +122,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       Intent intent = new Intent(this, ShopActivity.class);
       startActivity(intent);
     }
+    
+    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
   }
   
   private String getCurrentDate() {

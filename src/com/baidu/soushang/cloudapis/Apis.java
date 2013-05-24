@@ -12,14 +12,14 @@ import it.restrung.rest.client.RestClientFactory;
 import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class Apis {
-  private static final String QUESTION_URL = "http://soushang.limijiaoyin.com/index.php/Devent/next/s/%d.html";
-  private static final String QUESTION_URL_LOGGED = "http://soushang.limijiaoyin.com/index.php/Devent/next/s/%d.html?access_token=%s";
-  private static final String LOGIN_URL = "http://soushang.limijiaoyin.com/index.php/Oauth/login.html?access_token=%s";
-  private static final String ANSWER_URL = "http://soushang.limijiaoyin.com/index.php/Devent/answer.html";
-  private static final String USERINFO_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userinfo.html?access_token=%s";
-  private static final String USEREVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userevent.html?event_id=%d&access_token=%s";
-  private static final String USERRANK_URL = "http://soushang.limijiaoyin.com/index.php/Devent/userrank.html";
-  private static final String DAYEVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/dayevent.html?access_token=%s";
+  private static final String QUESTION_URL = "http://sou.baidu.com/index.php/Devent/next/s/%d.html";
+  private static final String QUESTION_URL_LOGGED = "http://sou.baidu.com/index.php/Devent/next/s/%d.html?access_token=%s";
+  private static final String LOGIN_URL = "http://sou.baidu.com/index.php/Oauth/login.html?access_token=%s";
+  private static final String ANSWER_URL = "http://sou.baidu.com/index.php/Devent/answer.html";
+  private static final String USERINFO_URL = "http://sou.baidu.com/index.php/Devent/userinfo.html?access_token=%s";
+  private static final String USEREVENT_URL = "http://sou.baidu.com/index.php/Devent/userevent.html?event_id=%d&access_token=%s";
+  private static final String USERRANK_URL = "http://sou.baidu.com/index.php/Devent/userrank.html";
+  private static final String DAYEVENT_URL = "http://sou.baidu.com/index.php/Devent/dayevent.html?access_token=%s";
   
   public interface ApiResponseCallback<T extends AbstractJSONResponse> {
     public void onResults(T arg0);

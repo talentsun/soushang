@@ -212,16 +212,19 @@ public class EventCompletedActivity extends BaseActivity implements OnClickListe
       startActivity(intent);
       
       finish();
+      overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mRank) {
       Intent intent = new Intent(EventCompletedActivity.this, RankActivity.class);
       startActivity(intent);
       
       finish();
+      overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mHome) {
       Intent intent = new Intent(EventCompletedActivity.this, HomeActivity.class);
       startActivity(intent);
       
       finish();
+      overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
   }
 

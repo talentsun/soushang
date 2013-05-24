@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">百度搜商</string>
+    <string name="app_name">寻找搜神</string>
     <string name="sa_help">求助百度语音助手</string>
     <string name="i_know">我知道了</string>
     <string name="pause">暂停</string>
@@ -36,9 +36,10 @@
     
     <string name="go_shop_web">去网页版兑换礼品吧!</string>
     <string name="shop_url">http://sou.baidu.com/integral.html</string>
-    <string name="gift_name_1">百度云手机1</string>
-    <string name="gift_name_2">百度云手机2</string>
-    <string name="gift_name_3">百度云手机3</string>
-    <string name="gift_name_4">百度云手机4</string>
+    <string name="gift_name_1">iPad2</string>
+    <string name="gift_name_2">百度钱包</string>
+    <string name="gift_name_3">笔筒</string>
+    <string name="gift_name_4">青花瓷套装</string>
+    <string name="gift_name_5">百度书包</string>
     <string name="need_point">所需积分：</string>
 </resources>
