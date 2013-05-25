@@ -6,28 +6,39 @@
     android:gravity="center_horizontal"
     android:background="@drawable/bg" >
     
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/appname"/>
+    
     <Button 
         android:id="@+id/soushang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
         android:background="@drawable/home_soushang"/>
     
     <Button 
         android:id="@+id/daily_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
         android:background="@drawable/home_daily_event"/>
     
     <Button 
         android:id="@+id/rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:background="@drawable/home_rank"/>
     
     <Button 
         android:id="@+id/shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:background="@drawable/home_shop"/>
 
 </LinearLayout>

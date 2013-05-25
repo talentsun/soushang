@@ -5,13 +5,15 @@ import com.baidu.soushang.R;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 public class LoadingView extends ImageView {
-
+  private Animation mAnim;
+  
   public LoadingView(Context context) {
     super(context);
     initView();
@@ -34,12 +36,20 @@ public class LoadingView extends ImageView {
   private void initView() {
     setBackgroundResource(R.drawable.loading);
     
-    Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.loading);
+    mAnim = AnimationUtils.loadAnimation(getContext(), R.anim.loading);
     LinearInterpolator lin = new LinearInterpolator();
-    anim.setInterpolator(lin);
-    
+    mAnim.setInterpolator(lin);
+  }
+  
+  public void show() {
     clearAnimation();
-    startAnimation(anim);
+    startAnimation(mAnim);
+    setVisibility(View.VISIBLE);
+  }
+  
+  public void hide() {
+    clearAnimation();
+    setVisibility(View.GONE);
   }
 
 }

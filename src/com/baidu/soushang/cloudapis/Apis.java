@@ -2,6 +2,7 @@ package com.baidu.soushang.cloudapis;
 
 import java.util.List;
 
+import com.baidu.soushang.Config;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 
 import android.content.Context;
@@ -12,14 +13,14 @@ import it.restrung.rest.client.RestClientFactory;
 import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class Apis {
-  private static final String QUESTION_URL = "http://sou.baidu.com/index.php/Devent/next/s/%d.html";
-  private static final String QUESTION_URL_LOGGED = "http://sou.baidu.com/index.php/Devent/next/s/%d.html?access_token=%s";
-  private static final String LOGIN_URL = "http://sou.baidu.com/index.php/Oauth/login.html?access_token=%s";
-  private static final String ANSWER_URL = "http://sou.baidu.com/index.php/Devent/answer.html";
-  private static final String USERINFO_URL = "http://sou.baidu.com/index.php/Devent/userinfo.html?access_token=%s";
-  private static final String USEREVENT_URL = "http://sou.baidu.com/index.php/Devent/userevent.html?event_id=%d&access_token=%s";
-  private static final String USERRANK_URL = "http://sou.baidu.com/index.php/Devent/userrank.html";
-  private static final String DAYEVENT_URL = "http://sou.baidu.com/index.php/Devent/dayevent.html?access_token=%s";
+  private static final String BASE_URL = "http://sou.baidu.com/";
+  private static final String QUESTION_URL = BASE_URL + "Devent/next/s/%d.html?udid=%s";
+  private static final String QUESTION_URL_LOGGED = BASE_URL + "Devent/next/s/%d.html?access_token=%s";
+  private static final String LOGIN_URL = BASE_URL + "Oauth/login.html?access_token=%s";
+  private static final String ANSWER_URL = BASE_URL + "Devent/answer.html";
+  private static final String USERINFO_URL = BASE_URL + "Devent/userinfo.html?access_token=%s";
+  private static final String USERRANK_URL = BASE_URL + "Devent/userrank.html";
+  private static final String DAYEVENT_URL = BASE_URL + "Devent/dayevent.html?access_token=%s";
   
   public interface ApiResponseCallback<T extends AbstractJSONResponse> {
     public void onResults(T arg0);
@@ -29,7 +30,7 @@ public class Apis {
 
   public static void getNextQuestion(Context context, int questionId, String accessToken, 
       final ApiResponseCallback<QuestionResponse> callback) {
-    String url = TextUtils.isEmpty(accessToken) ? String.format(QUESTION_URL, questionId) : String.format(QUESTION_URL_LOGGED, questionId, accessToken);
+    String url = TextUtils.isEmpty(accessToken) ? String.format(QUESTION_URL, questionId, Config.getUDID(context)) : String.format(QUESTION_URL_LOGGED, questionId, accessToken);
     RestClientFactory.getClient().getAsync(
         new ContextAwareAPIDelegate<QuestionResponse>(context, QuestionResponse.class) {
 
@@ -88,28 +89,6 @@ public class Apis {
       }
       
     }, String.format(USERINFO_URL, accessToken), 2 * 1000);
-  }
-  
-  public static void getUserEvent(Context context, long eventId, String accessToken,
-      final ApiResponseCallback<UserEventResponse> callback) {
-    RestClientFactory.getClient().getAsync(
-      new ContextAwareAPIDelegate<UserEventResponse>(context, UserEventResponse.class) {
-
-        @Override
-        public void onError(Throwable arg0) {
-          if (callback != null) {
-            callback.onError(arg0);
-          }
-        }
-
-        @Override
-        public void onResults(UserEventResponse arg0) {
-          if (callback != null) {
-            callback.onResults(arg0);
-          }
-        }
-      
-    }, String.format(USEREVENT_URL, eventId, accessToken), 2 * 1000);
   }
   
   public static void getUserRank(Context context,

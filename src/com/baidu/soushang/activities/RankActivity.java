@@ -89,12 +89,12 @@ public class RankActivity extends BaseActivity {
   
   private void showLoading() {
     mNoRank.setVisibility(View.GONE);
-    mLoading.setVisibility(View.VISIBLE);
+    mLoading.show();
   }
   
   private void showNoRank() {
     mNoRank.setVisibility(View.VISIBLE);
-    mLoading.setVisibility(View.GONE);
+    mLoading.hide();
   }
 
   public class RankAdapter extends BaseAdapter {

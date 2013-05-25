@@ -38,8 +38,6 @@
     <string name="shop_url">http://sou.baidu.com/integral.html</string>
     <string name="gift_name_1">iPad2</string>
     <string name="gift_name_2">百度钱包</string>
-    <string name="gift_name_3">笔筒</string>
-    <string name="gift_name_4">青花瓷套装</string>
-    <string name="gift_name_5">百度书包</string>
+    <string name="gift_name_3">青花瓷套装</string>
     <string name="need_point">所需积分：</string>
 </resources>

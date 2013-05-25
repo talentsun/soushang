@@ -20,6 +20,7 @@
             android:layout_centerVertical="true"
             android:text="@string/daily_match"
             android:textSize="14sp"
+            android:maxWidth="70dp"
             android:textColor="#b93f06" />
         
         <TextView 

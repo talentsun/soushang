@@ -175,6 +175,10 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       }
     });
     
+    mTimeout.setVisibility(View.GONE);
+    mAnswerTime.setMax(10);
+    mAnswerTime.setProgress(10);
+    
     initBaiduSpeechDialog();
     
     getQuestion();
@@ -277,10 +281,10 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     mQuestionOrder.setText(String.format(getResources().getString(R.string.question_order), question.getIndex()+1, question.getTotal()));
     mQuestionTitle.setText(Html.fromHtml(question.getTitle()));
     
-    mOptionA.setText(Html.fromHtml(question.getOptions().get(0)));
-    mOptionB.setText(Html.fromHtml(question.getOptions().get(1)));
-    mOptionC.setText(Html.fromHtml(question.getOptions().get(2)));
-    mOptionD.setText(Html.fromHtml(question.getOptions().get(3)));
+    mOptionA.setText(Html.fromHtml(normalizeOption(question.getOptions().get(0))));
+    mOptionB.setText(Html.fromHtml(normalizeOption(question.getOptions().get(1))));
+    mOptionC.setText(Html.fromHtml(normalizeOption(question.getOptions().get(2))));
+    mOptionD.setText(Html.fromHtml(normalizeOption(question.getOptions().get(3))));
     
     mTimeout.setVisibility(View.INVISIBLE);
     
@@ -290,6 +294,21 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     clearAnswerResult();
     
     resume();
+  }
+  
+  private String normalizeOption(String option) {
+    String normalizedOption = option;
+    
+    if (!TextUtils.isEmpty(normalizedOption)) {
+      if (normalizedOption.startsWith("A.") || normalizedOption.startsWith("a.")
+          || normalizedOption.startsWith("B.") || normalizedOption.startsWith("b.")
+          || normalizedOption.startsWith("C.") || normalizedOption.startsWith("c.")
+          || normalizedOption.startsWith("D.") || normalizedOption.startsWith("d.")) {
+        normalizedOption = normalizedOption.substring(2);
+      }
+    }
+    
+    return normalizedOption;
   }
   
   private void updateUserInfo(int credit, int point) {
@@ -347,6 +366,8 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     } else {
       showAnswerResult(index, false);
     }
+    
+    stopTimer();
 
     mMainHandler.postDelayed(new Runnable() {
       

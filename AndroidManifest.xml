@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
@@ -73,8 +74,13 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         
-        <meta-data android:name="BaiduMobAd_CHANNEL" android:value="soushang_web" />
-        <meta-data android:name="BaiduMobAd_STAT_ID" android:value="695ef7eb36" />
-        <meta-data android:name="BaiduMobAd_EXCEPTION_LOG" android:value="true" />
+        <service
+		    android:name="com.umeng.common.net.DownloadingService"
+		    android:exported="true"
+		    android:process=":DownloadingService" >
+		</service>
+        
+        <meta-data android:name="UMENG_CHANNEL" android:value="soushang_web" />
+        <meta-data android:name="UMENG_APPKEY" android:value="51a05d4256240b7b080200c6" />
     </application>
 </manifest>

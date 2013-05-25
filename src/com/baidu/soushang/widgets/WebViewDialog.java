@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,25 +22,25 @@ public class WebViewDialog extends Dialog {
   private Button mKnow;
   private TextView mTitle;
   private LoadingView mLoadingView;
-  
+
   public WebViewDialog(Context context) {
     this(context, R.style.WebViewDialog);
   }
 
   public WebViewDialog(Context context, int theme) {
     super(context, theme);
-    
+
     setContentView(R.layout.webview_dialog);
-    
+
     mWebView = (WebView) findViewById(R.id.webview);
     mNoNetwork = (TextView) findViewById(R.id.no_network);
     mKnow = (Button) findViewById(R.id.know);
     mTitle = (TextView) findViewById(R.id.dialog_title);
     mLoadingView = (LoadingView) findViewById(R.id.loading);
-    
+
     mWebView.getSettings().setJavaScriptEnabled(true);
     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-    mWebView.setWebViewClient(new WebViewClient(){
+    mWebView.setWebViewClient(new WebViewClient() {
 
       @Override
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -47,33 +48,34 @@ public class WebViewDialog extends Dialog {
         return super.shouldOverrideUrlLoading(view, url);
       }
 
-	@Override
-	public void onPageFinished(WebView view, String url) {
-		mLoadingView.setVisibility(View.GONE);
-		super.onPageFinished(view, url);
-	}
+      @Override
+      public void onPageFinished(WebView view, String url) {
+        mLoadingView.hide();
+        super.onPageFinished(view, url);
+      }
 
-	@Override
-	public void onPageStarted(WebView view, String url, Bitmap favicon) {
-		mLoadingView.setVisibility(View.VISIBLE);
-		super.onPageStarted(view, url, favicon);
-	}
-      
+      @Override
+      public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        mLoadingView.show();
+        super.onPageStarted(view, url, favicon);
+      }
+
     });
-    
+
     mKnow.setOnClickListener(new View.OnClickListener() {
-      
+
       @Override
       public void onClick(View v) {
         dismiss();
       }
     });
-    
-    Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), SouShangApplication.FONT);
+
+    Typeface typeface =
+        Typeface.createFromAsset(getContext().getAssets(), SouShangApplication.FONT);
     mNoNetwork.setTypeface(typeface);
     mKnow.setTypeface(typeface);
     mTitle.setTypeface(typeface);
-    
+
     setCanceledOnTouchOutside(false);
   }
 
@@ -92,7 +94,7 @@ public class WebViewDialog extends Dialog {
       mNoNetwork.setVisibility(View.VISIBLE);
       mWebView.setVisibility(View.GONE);
     }
-    
+
     super.onStart();
   }
 

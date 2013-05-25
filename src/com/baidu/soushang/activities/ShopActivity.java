@@ -66,14 +66,12 @@ public class ShopActivity extends BaseActivity implements OnClickListener {
       
       mInflater = LayoutInflater.from(context);
       
-      mGiftViews = new View[5];
+      mGiftViews = new View[3];
       
       mGifts = new ArrayList<ShopActivity.Gift>();
-      mGifts.add(new Gift(R.drawable.gift_newipad, getResources().getString(R.string.gift_name_1), 40000));
-      mGifts.add(new Gift(R.drawable.gift_qianbao, getResources().getString(R.string.gift_name_2), 50000));
-      mGifts.add(new Gift(R.drawable.gift_bitong, getResources().getString(R.string.gift_name_3), 60000));
-      mGifts.add(new Gift(R.drawable.gift_qinghuaci, getResources().getString(R.string.gift_name_4), 70000));
-      mGifts.add(new Gift(R.drawable.gift_bag, getResources().getString(R.string.gift_name_5), 70000));
+      mGifts.add(new Gift(R.drawable.gift_newipad, getResources().getString(R.string.gift_name_1), 130000));
+      mGifts.add(new Gift(R.drawable.gift_qianbao, getResources().getString(R.string.gift_name_2), 1600));
+      mGifts.add(new Gift(R.drawable.gift_qinghuaci, getResources().getString(R.string.gift_name_3), 1300));
     }
 
     @Override

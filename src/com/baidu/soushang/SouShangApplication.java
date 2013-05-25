@@ -40,6 +40,8 @@ public class SouShangApplication extends Application {
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);
     CookieSyncManager.createInstance(this);
+    
+    Config.getUDID(this);
   }
 
 }

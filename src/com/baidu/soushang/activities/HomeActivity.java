@@ -12,6 +12,8 @@ import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
 import com.baidu.soushang.widgets.NoDayEventDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -96,6 +98,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     }
     
     super.onCreate(arg0);
+    MobclickAgent.onError(this);
+    UmengUpdateAgent.update(this);
   }
 
   @Override
