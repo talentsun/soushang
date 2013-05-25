@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     String currentDate = getCurrentDate();
     if (!currentDate.equalsIgnoreCase(Config.getLatestNewsDate(this))) {
       Config.setLatestNewsDate(this, currentDate);
-      mNewsDialog.show(getResources().getString(R.string.news), "http://soushang.limijiaoyin.com/news/news.html");
+      mNewsDialog.show(getResources().getString(R.string.news), "http://sou.baidu.com/news/news.html");
     }
     
     if (Config.isLogged(this)) {
