@@ -34,6 +34,7 @@ import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.QuestionResponse;
+import com.baidu.soushang.widgets.LoadingDialog;
 import com.baidu.soushang.widgets.PausedDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 
@@ -91,6 +92,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private BaiduSpeechDialog mBaiduSpeechDialog;
   private PausedDialog mPausedDialog;
   private WebViewDialog mSearchResultDialog;
+  private LoadingDialog mLoadingDialog;
   
   private Handler mMainHandler;
   
@@ -174,6 +176,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
         resume();
       }
     });
+    mLoadingDialog = new LoadingDialog(this);
     
     mTimeout.setVisibility(View.GONE);
     mAnswerTime.setMax(10);
@@ -181,7 +184,15 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     
     initBaiduSpeechDialog();
     
-    getQuestion();
+    mLoadingDialog.show(getResources().getString(R.string.get_question));
+    
+    mMainHandler.postDelayed(new Runnable() {
+      
+      @Override
+      public void run() {
+        getQuestion();
+      }
+    }, 1000);
 
     super.onCreate(arg0);
   }
@@ -248,15 +259,24 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
         
         if (mCurrentQuestion != null) {
           updateUI(mCurrentQuestion);
+          mMainHandler.postDelayed(new Runnable() {
+            
+            @Override
+            public void run() {
+              mLoadingDialog.hide();
+            }
+          }, 100);
         } else {
+          mLoadingDialog.hide();
           showEventComplated();
         }
       } else {
         mCurrentQuestion = null;
-        
+        mLoadingDialog.hide();
         showEventComplated();
       }
     } else {
+      mLoadingDialog.hide();
       Toast.makeText(this, getResources().getString(R.string.get_question_failed), Toast.LENGTH_SHORT).show();
     }
   }
@@ -340,6 +360,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   }
 
   private void answer(int index) {
+    boolean finished = false;
     if (mCurrentQuestion != null) {
       if (index == mCurrentQuestion.getRightAnswer()) {
         showAnswerResult(index, true);
@@ -363,19 +384,39 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       } else {
         mAnswers.add(answer);
       }
+      
+      finished = mCurrentQuestion.getTotal() == (mCurrentQuestion.getIndex() + 1);
     } else {
       showAnswerResult(index, false);
     }
     
     stopTimer();
 
+    if (finished) {
+      mMainHandler.postDelayed(new Runnable() {
+        
+        @Override
+        public void run() {
+          mLoadingDialog.show(getResources().getString(R.string.complete_answer));
+        }
+      }, 300);
+    } else {
+      mMainHandler.postDelayed(new Runnable() {
+        
+        @Override
+        public void run() {
+          mLoadingDialog.show(getResources().getString(R.string.get_question));
+        }
+      }, 300);
+    }
+    
     mMainHandler.postDelayed(new Runnable() {
       
       @Override
       public void run() {
         getQuestion();
       }
-    }, 500);
+    }, 1000);
   }
   
   private void showAnswerResult(int index, boolean correct) {
@@ -407,7 +448,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
   @Override
   public void onError(Throwable arg0) {
-    
+    mLoadingDialog.hide();
   }
 
   @Override

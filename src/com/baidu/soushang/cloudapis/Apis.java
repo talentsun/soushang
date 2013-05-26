@@ -21,6 +21,7 @@ public class Apis {
   private static final String USERINFO_URL = BASE_URL + "Devent/userinfo.html?access_token=%s";
   private static final String USERRANK_URL = BASE_URL + "Devent/userrank.html";
   private static final String DAYEVENT_URL = BASE_URL + "Devent/dayevent.html?access_token=%s";
+  private static final String SHARE_URL = BASE_URL + "Devent/share_and_point.html?access_token=%s";
   
   public interface ApiResponseCallback<T extends AbstractJSONResponse> {
     public void onResults(T arg0);

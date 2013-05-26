@@ -10,6 +10,7 @@ import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
+import com.baidu.soushang.widgets.LoadingDialog;
 import com.baidu.soushang.widgets.NoDayEventDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;

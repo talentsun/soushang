@@ -9,6 +9,8 @@
     <string name="daily_match">日赛</string>
     <string name="question_order">第%1$d/%2$d题目</string>
     <string name="get_question_failed">哎呦，肿么没找到题目呢？要不你重试一下？</string>
+    <string name="get_question">正在取题...</string>
+    <string name="complete_answer">正在交卷...</string>
     
     <string name="event_score">本次积分</string>
     <string name="total_score">总积分</string>
