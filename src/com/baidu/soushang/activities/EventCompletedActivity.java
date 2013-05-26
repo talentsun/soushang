@@ -24,7 +24,7 @@ import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
-import com.bestgames.dialog.CommonShareDialog;
+import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
 
 public class EventCompletedActivity extends BaseActivity implements
         OnClickListener {

@@ -1,4 +1,7 @@
-package com.bestgames.dialog;
+package com.limijiaoyin.socialsdk.dialogs;
+
+import com.limijiaoyin.socialsdk.ISocialLogin;
+import com.limijiaoyin.socialsdk.Platform;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
@@ -23,10 +26,6 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bestgames.sharesdk.ISocialLogin;
-import com.bestgames.sharesdk.Platform;
-
 
 public class AccountOauthDialog extends Dialog {
 
