@@ -16,6 +16,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -263,20 +264,20 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
             
             @Override
             public void run() {
-              mLoadingDialog.hide();
+              mLoadingDialog.dismiss();
             }
           }, 100);
         } else {
-          mLoadingDialog.hide();
+          mLoadingDialog.dismiss();
           showEventComplated();
         }
       } else {
         mCurrentQuestion = null;
-        mLoadingDialog.hide();
+        mLoadingDialog.dismiss();
         showEventComplated();
       }
     } else {
-      mLoadingDialog.hide();
+      mLoadingDialog.dismiss();
       Toast.makeText(this, getResources().getString(R.string.get_question_failed), Toast.LENGTH_SHORT).show();
     }
   }
@@ -448,7 +449,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
   @Override
   public void onError(Throwable arg0) {
-    mLoadingDialog.hide();
+    mLoadingDialog.dismiss();
   }
 
   @Override

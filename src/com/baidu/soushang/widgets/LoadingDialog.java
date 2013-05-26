@@ -2,13 +2,13 @@ package com.baidu.soushang.widgets;
 
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
+import com.baidu.soushang.activities.BaseActivity;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -60,12 +60,9 @@ public class LoadingDialog extends Dialog {
       }
     });
   }
-  
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    mPencil.clearAnimation();
-    mPencil.startAnimation(mAnim);
-    
     super.onCreate(savedInstanceState);
   }
   
@@ -73,6 +70,10 @@ public class LoadingDialog extends Dialog {
     if (!TextUtils.isEmpty(message)) {
       mStatus.setText(message);
     }
+    
+    mPencil.clearAnimation();
+    mPencil.startAnimation(mAnim);
+    
     super.show();
   }
 }
