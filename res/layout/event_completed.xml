@@ -117,6 +117,15 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/share"
+            style="@style/OptionFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/share"
+            android:text="@string/share_add_point" />
+        
+        <Button
             android:id="@+id/shop"
             style="@style/OptionFont"
             android:layout_width="wrap_content"
@@ -144,15 +153,5 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/back_home"
         android:text="@string/home" />
-
-    <Button
-        android:id="@+id/share"
-        style="@style/OptionFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back_home"
-        android:text="@string/share" />
 
 </LinearLayout>

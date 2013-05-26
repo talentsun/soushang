@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="comment_content_height">100dip</dimen>
+    <dimen name="comment_content_height">200dip</dimen>
 </resources>

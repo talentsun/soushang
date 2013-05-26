@@ -21,6 +21,7 @@
     <string name="login_failed">登录失败，请重新登录。</string>
     <string name="event_score_no_logged">本次获得积分：%1$d</string>
     <string name="why_login">登录之后可以保存积分换礼品哦！快去登录吧！</string>
+    <string name="share_add_point">分享得积分</string>
     
     <string name="news">比赛资讯</string>
     <string name="get_dayevent_failed">获取日赛失败，请检查网络连接</string>
@@ -42,4 +43,7 @@
     <string name="gift_name_2">百度钱包</string>
     <string name="gift_name_3">青花瓷套装</string>
     <string name="need_point">所需积分：</string>
+    
+    <string name="share_content">如今最夯最in的是搜商高，我就是搜商超高的搜神，快来跟我一起成为搜神，挑战搜商极限吧。还有精美礼品拿哦。  APP：寻找搜神，下载地址：http://xxxxxxxxxxx</string>
+    <string name="share_add_5_point">分享一次加5个积分哦！</string>
 </resources>

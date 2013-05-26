@@ -7,10 +7,10 @@ public class CommonResponse extends AbstractJSONResponse {
   private static final long serialVersionUID = 1L;
   
   @JsonProperty(value="ret_code")
-  private int retCode;
+  protected int retCode;
 
   @JsonProperty(value="ret_msg")
-  private String retMsg;
+  protected String retMsg;
   
   public int getRetCode() {
     return retCode;

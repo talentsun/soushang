@@ -37,20 +37,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     
     @Override
     public void onResults(DayEventResponse arg0) {
-      if (arg0 != null && arg0.getRetCode() == 0) {
-        if (arg0.getEventFinished() == 0) {
-          Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
-          intent.putExtra(Intents.EXTRA_QUESTION_ID, arg0.getStartId());
-          HomeActivity.this.startActivity(intent);
-          overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        } else {
-          mNoDayEventDialog.show();
-        }
-        
-        return;
+      //FIXME no event 0:00
+      if (arg0 != null && arg0.getRetCode() == 0 && arg0.getEventFinished() == 0) {
+        Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
+        intent.putExtra(Intents.EXTRA_QUESTION_ID, arg0.getStartId());
+        HomeActivity.this.startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      } else {
+        mNoDayEventDialog.show();
       }
-      
-      Toast.makeText(HomeActivity.this, HomeActivity.this.getResources().getString(R.string.get_dayevent_failed), Toast.LENGTH_SHORT).show();
     }
     
     @Override

@@ -25,6 +25,7 @@ import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
+import com.limijiaoyin.socialsdk.dialogs.ShareDialog;
 
 public class EventCompletedActivity extends BaseActivity implements
         OnClickListener {
@@ -251,9 +252,32 @@ public class EventCompletedActivity extends BaseActivity implements
       finish();
       overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mShare) {
-      mShareDialog = new CommonShareDialog(this, "test");
+      mShareDialog = new CommonShareDialog(this, getResources().getString(R.string.share_content), null, getResources().getString(R.string.share_add_5_point));
+      mShareDialog.setOnShareListener(new CommonShareDialog.OnShareListener() {
+
+        @Override
+        public void onShared() {
+          Apis.share(EventCompletedActivity.this, Config.getAccessToken(EventCompletedActivity.this), new ApiResponseCallback<CommonResponse>() {
+            
+            @Override
+            public void onResults(CommonResponse arg0) {
+              Apis.getUserInfo(EventCompletedActivity.this, Config.getAccessToken(EventCompletedActivity.this), mUserInfoCallback);
+            }
+            
+            @Override
+            public void onError(Throwable arg0) {
+            }
+          });
+        }
+
+        @Override
+        public void onFailed() {
+        }
+        
+      });
       mShareDialog.create().show();
     }
+    
   }
 
   @Override
