@@ -2,136 +2,157 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/bg"
-    android:gravity="center" >
-    
-    <LinearLayout 
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
         android:id="@+id/not_logged_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:visibility="visible">
-        <LinearLayout 
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <LinearLayout
             android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:background="@drawable/event_completed_no_logged"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="32dp"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp">
-            <TextView 
+            android:paddingRight="24dp"
+            android:paddingTop="32dp" >
+
+            <TextView
                 android:id="@+id/event_score_no_logged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:text="@string/event_score_no_logged"
                 android:textColor="#b93f06"
-                android:text="@string/event_score_no_logged"/>
-            <TextView 
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/event_score_text_no_logged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="@string/why_login"
-                android:textSize="14sp"
                 android:textColor="#b93f06"
-                android:layout_marginTop="16dp"/>
+                android:textSize="14sp" />
         </LinearLayout>
-        <Button 
-            android:id="@+id/login" 
+
+        <Button
+            android:id="@+id/login"
+            style="@style/OptionFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:background="@drawable/go_shop"
             android:layout_marginTop="16dp"
-            style="@style/OptionFont" />
+            android:background="@drawable/go_shop"
+            android:text="@string/login" />
     </LinearLayout>
 
-    <LinearLayout 
+    <LinearLayout
         android:id="@+id/logged_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:visibility="gone">
+        android:orientation="vertical"
+        android:visibility="gone" >
 
-        <LinearLayout 
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/event_completed_logged"
-            android:orientation="horizontal"
+            android:baselineAligned="false"
             android:gravity="center"
-            android:paddingTop="40dp"
+            android:orientation="horizontal"
             android:paddingRight="16dp"
-            android:baselineAligned="false">
-            <LinearLayout 
+            android:paddingTop="40dp" >
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right" >
-                <TextView 
+                android:gravity="right"
+                android:orientation="vertical" >
+
+                <TextView
                     android:id="@+id/event_score_logged"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    android:textSize="27sp"
-                    android:textColor="#b93f06" />
-                <TextView 
+                    android:layout_height="wrap_content"
+                    android:textColor="#b93f06"
+                    android:textSize="27sp" />
+
+                <TextView
                     android:id="@+id/event_score_text_logged"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/event_score" 
-                    android:textSize="16sp"
-                    android:textColor="#b93f06" />
+                    android:text="@string/event_score"
+                    android:textColor="#b93f06"
+                    android:textSize="16sp" />
             </LinearLayout>
-            <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginLeft="36dp"
                 android:gravity="right"
-                android:layout_marginLeft="36dp">
-                <TextView 
+                android:orientation="vertical" >
+
+                <TextView
                     android:id="@+id/total_score"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    android:textSize="27sp"
-                    android:textColor="#b93f06" />
-                <TextView 
+                    android:layout_height="wrap_content"
+                    android:textColor="#b93f06"
+                    android:textSize="27sp" />
+
+                <TextView
                     android:id="@+id/total_score_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/total_score"
-                    android:textSize="16sp"
-                    android:textColor="#b93f06" />
+                    android:textColor="#b93f06"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
-        
-        <Button 
+
+        <Button
             android:id="@+id/shop"
+            style="@style/OptionFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_shop"
+            android:layout_marginTop="16dp"
             android:background="@drawable/go_shop"
-            style="@style/OptionFont"
-            android:layout_marginTop="16dp"/>
-        
+            android:text="@string/go_shop" />
+
         <Button
             android:id="@+id/rank"
+            style="@style/OptionFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/view_rank"
+            android:layout_marginTop="16dp"
             android:background="@drawable/view_rank"
-            style="@style/OptionFont"
-            android:layout_marginTop="16dp" />
+            android:text="@string/view_rank" />
     </LinearLayout>
-    
-    <Button 
+
+    <Button
         android:id="@+id/home"
+        style="@style/OptionFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/home"
-        android:background="@drawable/back_home"
-        style="@style/OptionFont"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp" />
+        android:background="@drawable/back_home"
+        android:text="@string/home" />
+
+    <Button
+        android:id="@+id/share"
+        style="@style/OptionFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back_home"
+        android:text="@string/share" />
+
 </LinearLayout>

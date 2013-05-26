@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fadingEdge="none" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/aa_app_list_item_background"
+        android:orientation="vertical"
+        android:padding="@dimen/small_padding" >
+        
+       <EditText
+            android:id="@+id/comment_dialog_content"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/comment_content_height"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginRight="@dimen/small_margin"
+            android:layout_marginTop="@dimen/comment_editbox_margin_top"
+            android:background="@drawable/aa_searchbox"
+            android:gravity="left|top"
+            android:hint="@string/detail_dialog_hint"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/normal_text_color_black"
+            android:textColorHint="@color/normal_text_color_gray" />"
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:background="@drawable/aa_searchbox"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/normal_padding"
+            android:paddingBottom="@dimen/normal_padding"
+            android:weightSum="4" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:text="@string/share_to"
+                android:textColor="@color/normal_text_color_gray"
+                android:textSize="@dimen/small_text_size" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="1dip"
+                android:layout_weight="1" >
+            </View>
+
+            <CheckBox
+                android:id="@+id/comment_dialog_sync_sina"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="@dimen/xsmall_margin"
+                android:layout_marginRight="@dimen/xsmall_margin"
+                android:background="@drawable/aa_share_icon_sina"
+                android:button="@null"
+                android:textColor="@color/normal_text_color_black" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="1dip"
+                android:layout_weight="1" >
+            </View>
+
+            <CheckBox
+                android:id="@+id/comment_dialog_sync_qzone"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="@dimen/xsmall_margin"
+                android:layout_marginRight="@dimen/xsmall_margin"
+                android:background="@drawable/aa_share_icon_qzone"
+                android:button="@null"
+                android:textColor="@color/normal_text_color_black" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="1dip"
+                android:layout_weight="1" >
+            </View>
+
+            <CheckBox
+                android:id="@+id/comment_dialog_sync_tqq"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="@dimen/xsmall_margin"
+                android:layout_marginRight="@dimen/xsmall_margin"
+                android:background="@drawable/aa_share_icon_tqq"
+                android:button="@null"
+                android:textColor="@color/normal_text_color_black" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="1dip"
+                android:layout_weight="1" >
+            </View>
+
+            <CheckBox
+                android:id="@+id/comment_dialog_sync_renren"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="@dimen/xsmall_margin"
+                android:layout_marginRight="@dimen/xsmall_margin"
+                android:background="@drawable/aa_share_icon_renren"
+                android:button="@null"
+                android:textColor="@color/normal_text_color_black" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
