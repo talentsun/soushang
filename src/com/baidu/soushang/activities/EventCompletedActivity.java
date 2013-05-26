@@ -29,37 +29,23 @@ import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
 public class EventCompletedActivity extends BaseActivity implements
         OnClickListener {
   private LinearLayout mNotLoggedArea;
-
   private Button mLogin;
-
   private TextView mEventScoreNoLogged;
-
   private TextView mEventScoreTextNoLogged;
-
   private LinearLayout mLoggedArea;
-
   private TextView mEventScoreLogged;
-
   private TextView mEventScoreTextLogged;
-
   private TextView mTotalScore;
-
   private TextView mTotalScoreText;
 
   private Button mShop;
-
   private Button mRank;
-
   private Button mHome;
-
   private Button mShare;
 
   private CommonShareDialog mShareDialog;
-
   private Baidu mBaidu;
-
   private Handler mMainHandler;
-
   private int mEventPoint;
 
   private ApiResponseCallback<UserInfoResponse> mUserInfoCallback =

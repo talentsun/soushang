@@ -28,6 +28,27 @@ public class Apis {
 
     public void onError(Throwable arg0);
   }
+  
+  public static void share(Context context, String accessToken, final ApiResponseCallback<CommonResponse> callback) {
+    RestClientFactory.getClient().getAsync(
+      new ContextAwareAPIDelegate<CommonResponse>(context, CommonResponse.class) {
+
+        @Override
+        public void onError(Throwable arg0) {
+          if (callback != null) {
+            callback.onError(arg0);
+          }
+        }
+
+        @Override
+        public void onResults(CommonResponse arg0) {
+          if (callback != null) {
+            callback.onResults(arg0);
+          }
+        }
+
+      }, String.format(SHARE_URL, accessToken), 2 * 1000);
+  }
 
   public static void getNextQuestion(Context context, int questionId, String accessToken, 
       final ApiResponseCallback<QuestionResponse> callback) {

@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:text="@string/daily_match"
             android:textSize="14sp"
-            android:maxWidth="70dp"
+            android:maxWidth="@dimen/match_name_max_width"
             android:textColor="#b93f06" />
         
         <TextView 
@@ -136,7 +136,7 @@
         
         <Button 
             android:id="@+id/option_a"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/option_a"
             android:layout_alignParentTop="true"
@@ -165,7 +165,7 @@
         
         <Button 
             android:id="@+id/option_b"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/option_b" 
             android:layout_below="@id/option_a"
@@ -194,7 +194,7 @@
         
         <Button 
             android:id="@+id/option_c"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/option_c" 
             android:layout_below="@id/option_b"
@@ -223,7 +223,7 @@
         
         <Button 
             android:id="@+id/option_d"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/option_d" 
             android:layout_below="@id/option_c"
