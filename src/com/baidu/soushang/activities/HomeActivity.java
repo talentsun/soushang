@@ -10,6 +10,7 @@ import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
+import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.widgets.LoadingDialog;
 import com.baidu.soushang.widgets.NoDayEventDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
@@ -50,6 +51,25 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       }
       
       Toast.makeText(HomeActivity.this, HomeActivity.this.getResources().getString(R.string.get_dayevent_failed), Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    public void onError(Throwable arg0) {
+      Toast.makeText(HomeActivity.this, HomeActivity.this.getResources().getString(R.string.get_dayevent_failed), Toast.LENGTH_SHORT).show();
+    }
+  };
+  
+  private ApiResponseCallback<QuestionResponse> mNextQuestionCallback = new ApiResponseCallback<QuestionResponse>() {
+    
+    @Override
+    public void onResults(QuestionResponse arg0) {
+      if (arg0 != null && arg0.getRetCode() == 0 && arg0.getQuestion() != null) {
+        Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
+        HomeActivity.this.startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      } else {
+        mNoDayEventDialog.show();
+      }
     }
     
     @Override
@@ -119,9 +139,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       if (Config.isLogged(this)) {
         Apis.getDayEvent(this, Config.getAccessToken(this), mDayEventCallback);
       } else {
-        Intent intent = new Intent(this, QuestionActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        Apis.getNextQuestion(this, 0, null, mNextQuestionCallback);
       }
     } else if (v == mRank) {
       Intent intent = new Intent(this, RankActivity.class);
