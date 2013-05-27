@@ -13,7 +13,7 @@
     <string name="cancel">取消</string>
     <string name="share">分享</string>
     <string name="account_progress">账号完整度 %1$s%%</string>
-    <string name="choose_share_platform_tip">请选择分享到的地方</string>
+    <string name="choose_share_platform_tip">请选择要分享到的社交网络^_^</string>
     <string name="unknown_app">未知应用</string>
     <string name="app_name">test</string>
     <string name="detail_dialog_hint">说点什么吧？</string>
