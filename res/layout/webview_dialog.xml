@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:weightSum="1"
     android:background="@drawable/dialog_bg" >
     <TextView 
         android:id="@+id/dialog_title"
@@ -15,15 +16,16 @@
         android:background="@drawable/dialog_title"/>
     <FrameLayout 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/webview_dialog_padding"
+        android:paddingRight="@dimen/webview_dialog_padding">
         <TextView
             android:id="@+id/no_network"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20sp"
-            android:textColor="#fdfcc5"
+            android:textColor="#b93f06"
             android:gravity="center"
             android:text="@string/no_network"
             android:visibility="gone" />
@@ -31,7 +33,7 @@
         <WebView 
             android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="350dp" />
+            android:layout_height="@dimen/webview_dialog_content_height" />
         
         <com.baidu.soushang.views.LoadingView 
             android:id="@+id/loading"

@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="match_name_max_width">42dp</dimen>
+    
+    <dimen name="home_soushang_marginRight">16dp</dimen>
+    <dimen name="home_daily_event_marginRight">8dp</dimen>
+    <dimen name="home_rank_marginLeft">8dp</dimen>
+    <dimen name="home_shop_marginLeft">16dp</dimen>
+    <dimen name="home_paddingBottom">0dp</dimen>
+    <dimen name="home_appname_marginTop">8dp</dimen>
+    <dimen name="tips_dialog_width">240dp</dimen>
+    <dimen name="tips_dialog_height">207dp</dimen>
+    
+    <dimen name="hangtag_marginTop">90dp</dimen>
+    <dimen name="webview_dialog_padding">24dp</dimen>
+    <dimen name="webview_dialog_content_height">350dp</dimen>
+    
+    <dimen name="question_section_margin">4dp</dimen>
 </resources>
