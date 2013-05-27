@@ -77,7 +77,7 @@
     
     <FrameLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/timer_height"
         android:orientation="horizontal"
         android:paddingLeft="4dp"
         android:layout_marginTop="-120dp" >
@@ -86,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/clock"
+            android:layout_gravity="left|top"
             android:layout_marginTop="60dp" />
         
         <ImageView 
@@ -93,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/time_up"
+            android:layout_gravity="left|top"
             android:layout_marginLeft="28dp"
             android:visibility="visible" />
         
@@ -100,7 +102,7 @@
             android:id="@+id/time"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_horizontal|top"
             android:progressDrawable="@drawable/answer_timer"
             android:layout_marginTop="80dp"
             style="@android:style/Widget.ProgressBar.Horizontal" />

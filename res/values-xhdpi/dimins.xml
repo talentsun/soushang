@@ -17,4 +17,6 @@
     <dimen name="webview_dialog_content_height">460dp</dimen>
     
     <dimen name="question_section_margin">10dp</dimen>
+    <dimen name="timer_height">113dp</dimen>
+    <dimen name="loading_content_height">85dp</dimen>
 </resources>

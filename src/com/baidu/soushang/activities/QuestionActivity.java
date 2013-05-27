@@ -59,11 +59,11 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     public void onTick(long millisUntilFinished) {
       int progress = (int) (millisUntilFinished / 100);
       mProgressBar.setProgress(progress);
-      if (progress <= 50) {
-        mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer_red));
-      } else {
-        mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer));
-      }
+//      if (progress <= 50) {
+//        mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer_red));
+//      } else {
+//        mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer));
+//      }
     }
 
   }

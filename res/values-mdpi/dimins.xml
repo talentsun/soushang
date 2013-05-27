@@ -11,11 +11,12 @@
     <dimen name="tips_dialog_width">240dp</dimen>
     <dimen name="tips_dialog_height">207dp</dimen>
     
-    <dimen name="hangtag_marginTop">90dp</dimen>
+    <dimen name="hangtag_marginTop">80dp</dimen>
+    
     <dimen name="webview_dialog_padding">24dp</dimen>
     <dimen name="webview_dialog_content_height">350dp</dimen>
     
     <dimen name="question_section_margin">4dp</dimen>
-    <dimen name="timer_height">118dp</dimen>
-    <dimen name="loading_content_height">92dp</dimen>
+    <dimen name="timer_height">113dp</dimen>
+    <dimen name="loading_content_height">85dp</dimen>
 </resources>
