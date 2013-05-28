@@ -150,6 +150,7 @@ public class EventCompletedActivity extends BaseActivity implements
     mEventScoreTextLogged.setTypeface(typeface);
     mTotalScore.setTypeface(typeface);
     mTotalScoreText.setTypeface(typeface);
+    mShare.setTypeface(typeface);
     mShop.setTypeface(typeface);
     mRank.setTypeface(typeface);
     mHome.setTypeface(typeface);
