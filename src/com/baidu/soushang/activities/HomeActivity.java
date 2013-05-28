@@ -115,6 +115,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     
     super.onCreate(arg0);
     MobclickAgent.onError(this);
+    MobclickAgent.updateOnlineConfig(this);
     UmengUpdateAgent.update(this);
   }
 

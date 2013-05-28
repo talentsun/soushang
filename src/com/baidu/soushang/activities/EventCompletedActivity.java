@@ -26,6 +26,7 @@ import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
 import com.limijiaoyin.socialsdk.dialogs.ShareDialog;
+import com.umeng.analytics.MobclickAgent;
 
 public class EventCompletedActivity extends BaseActivity implements
         OnClickListener {
@@ -157,6 +158,13 @@ public class EventCompletedActivity extends BaseActivity implements
 
     mMainHandler = new Handler();
 
+    String shareEnabled = MobclickAgent.getConfigParams(this, "share_enabled");
+    if ("true".equalsIgnoreCase(shareEnabled)) {
+      mShare.setVisibility(View.VISIBLE);
+    } else {
+      mShare.setVisibility(View.GONE);
+    }
+    
     super.onCreate(arg0);
   }
 
