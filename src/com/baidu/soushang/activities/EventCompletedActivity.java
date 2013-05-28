@@ -301,12 +301,10 @@ public class EventCompletedActivity extends BaseActivity implements
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    // TODO Auto-generated method stub
     super.onActivityResult(requestCode, resultCode, data);
 
     if (mShareDialog != null) {
-      mShareDialog.getSinaSSOHandler().authorizeCallBack(requestCode,
-                    resultCode, data);
+      mShareDialog.onActivityResult(requestCode, resultCode, data);
     }
   }
 

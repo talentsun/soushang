@@ -23,26 +23,26 @@ public class ShareDialog extends Dialog {
 
   public ShareDialog(Context context, int theme) {
     super(context, theme);
-    
+
     setContentView(R.layout.share_dialog);
-    
+
     mTitle = (TextView) findViewById(R.id.dialog_title);
     mCommentDialogContent = (EditText) findViewById(R.id.comment_dialog_content);
     mShareTo = (TextView) findViewById(R.id.share_to);
     mDescription = (TextView) findViewById(R.id.description);
     mShare = (Button) findViewById(R.id.share);
     mCancel = (Button) findViewById(R.id.cancel);
-    
+
     Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/yuppy-sc.otf");
     mTitle.setTypeface(typeface);
-    
+
     mCommentDialogContent.setTypeface(typeface);
     mShareTo.setTypeface(typeface);
     mDescription.setTypeface(typeface);
     mShare.setTypeface(typeface);
     mCancel.setTypeface(typeface);
   }
-  
-  
+
+
 
 }
