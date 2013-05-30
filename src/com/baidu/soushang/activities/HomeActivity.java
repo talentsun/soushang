@@ -12,7 +12,7 @@ import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
 import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.widgets.LoadingDialog;
-import com.baidu.soushang.widgets.NoDayEventDialog;
+import com.baidu.soushang.widgets.TipsDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -31,20 +31,25 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   private Button mShop;
   
   private WebViewDialog mNewsDialog;
-  private NoDayEventDialog mNoDayEventDialog;
+  private TipsDialog mTipsDialog;
   
   private ApiResponseCallback<DayEventResponse> mDayEventCallback = new ApiResponseCallback<DayEventResponse>() {
     
     @Override
     public void onResults(DayEventResponse arg0) {
       //FIXME no event 0:00
-      if (arg0 != null && arg0.getRetCode() == 0 && arg0.getEventFinished() == 0) {
-        Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
-        intent.putExtra(Intents.EXTRA_QUESTION_ID, arg0.getStartId());
-        HomeActivity.this.startActivity(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      if (arg0 != null && arg0.getRetCode() == 0) {
+        if (arg0.getEventFinished() == 0) {
+          Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
+          intent.putExtra(Intents.EXTRA_QUESTION_ID, arg0.getStartId());
+          HomeActivity.this.startActivity(intent);
+          overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        } else {
+          mTipsDialog.show(getResources().getString(R.string.day_event_finished));
+        }
+        
       } else {
-        mNoDayEventDialog.show();
+        mTipsDialog.show(getResources().getString(R.string.no_day_event));
       }
     }
     
@@ -63,7 +68,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         HomeActivity.this.startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
       } else {
-        mNoDayEventDialog.show();
+        mTipsDialog.show(getResources().getString(R.string.no_day_event));
       }
     }
     
@@ -88,7 +93,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mShop.setOnClickListener(this);
     
     mNewsDialog = new WebViewDialog(this);
-    mNoDayEventDialog = new NoDayEventDialog(this);
+    mTipsDialog = new TipsDialog(this);
     
     String currentDate = getCurrentDate();
     if (!currentDate.equalsIgnoreCase(Config.getLatestNewsDate(this))) {

@@ -12,42 +12,56 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/home_appname_marginTop"
         android:src="@drawable/appname" />
-
-    <LinearLayout
+    
+    <FrameLayout 
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:paddingBottom="@dimen/home_paddingBottom"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/soushang"
-            android:layout_width="wrap_content"
+        android:gravity="center">
+        <TextView 
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/home_soushang_marginRight"
-            android:background="@drawable/home_soushang" />
+            android:gravity="right"
+            android:paddingRight="8dp"
+            android:textSize="14sp"
+            android:textColor="#29532e"
+            android:text="@string/beta" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="@dimen/home_paddingBottom"
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/daily_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/home_daily_event_marginRight"
-            android:background="@drawable/home_daily_event" />
+            <Button
+                android:id="@+id/soushang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/home_soushang_marginRight"
+                android:background="@drawable/home_soushang" />
 
-        <Button
-            android:id="@+id/rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/home_rank_marginLeft"
-            android:background="@drawable/home_rank" />
+            <Button
+                android:id="@+id/daily_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/home_daily_event_marginRight"
+                android:background="@drawable/home_daily_event" />
 
-        <Button
-            android:id="@+id/shop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/home_shop_marginLeft"
-            android:background="@drawable/home_shop" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/home_rank_marginLeft"
+                android:background="@drawable/home_rank" />
+
+            <Button
+                android:id="@+id/shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/home_shop_marginLeft"
+                android:background="@drawable/home_shop" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
