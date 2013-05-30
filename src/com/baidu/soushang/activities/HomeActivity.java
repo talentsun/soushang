@@ -6,6 +6,7 @@ import java.util.Date;
 import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
+import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
@@ -18,10 +19,12 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class HomeActivity extends BaseActivity implements OnClickListener {
@@ -29,6 +32,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   private Button mDailyEvent;
   private Button mRank;
   private Button mShop;
+  private TextView mBeta;
   
   private WebViewDialog mNewsDialog;
   private TipsDialog mTipsDialog;
@@ -86,6 +90,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mDailyEvent = (Button) findViewById(R.id.daily_event);
     mRank = (Button) findViewById(R.id.rank);
     mShop = (Button) findViewById(R.id.shop);
+    mBeta = (TextView) findViewById(R.id.beta);
+    
+    Typeface typeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
+    mBeta.setTypeface(typeface);
     
     mSouShang.setOnClickListener(this);
     mDailyEvent.setOnClickListener(this);
