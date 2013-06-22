@@ -91,6 +91,13 @@ class User(object):
         cmd.ParseFromString(buf)
         print "1 is win 2 is lose, your result is", cmd.result
 
+    def showFightState(self, buf):
+        cmd = OFightState()
+        cmd.ParseFromString(buf)
+        print "all:", cmd.all
+        print "done:", cmd.done
+        print "right:", cmd.right
+
     def showResp(self):
         while self.sk == None:
             time.sleep(1)
@@ -117,6 +124,9 @@ class User(object):
             elif cmd_type == CmdType.FETCH_PEER_LIST_RESP:
                 print "fetch peer list resp"
                 self.showFetchList(buf[4:])
+            elif cmd_type == CmdType.FIGHT_STATE:
+                print "fight state"
+                self.showFightState(buf[4:])
 
 
 if __name__ == '__main__':

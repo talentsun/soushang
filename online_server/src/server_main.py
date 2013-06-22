@@ -82,8 +82,8 @@ class Client(object):
             cmd.message = 'other lose connection'
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
 
-            self.peer_client = None
             self.peer_client.peer_client = None
+            self.peer_client = None
         elif self.state == Client.WAIT_FOR_ANSWER or self.state == Client.WAIT_FOR_RESULT:
             self.state = 0
             self.peer_client.state = 0
@@ -93,8 +93,8 @@ class Client(object):
             cmd.result = 3
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
 
-            self.peer_client = None
             self.peer_client.peer_client = None
+            self.peer_client = None
 
             
 
@@ -186,7 +186,7 @@ class Client(object):
             if client:
                 self.state = Client.FIGHT_REQ_A
                 resp = OFightReq()
-                resp.user.id = client.id
+                resp.user.id = self.id
                 client.send_msg(self.build_cmd(CmdType.FIGHT_REQ, resp))
                 client.state = Client.FIGHT_REQ_B
                 self.peer_client = client
