@@ -1,0 +1,43 @@
+message User {
+    required int32 id = 1;
+}
+message OQuestion {
+    required string statement = 1;
+    repeated string options = 2;
+    required int32 right = 3;
+    required int32 index = 4;
+    required int32 all = 5;
+}
+message IAnswer {
+    required int32 index = 1;
+    required int32 choose = 2;
+}
+message OFightState {
+    required int32 all = 1;
+    required int32 done = 2;
+    required int32 right = 3;
+}
+message OFightResult {
+    // 1 is win 2 is lose
+    // 3 is other lose connect, you win
+    required int32 result = 1;
+}
+message OPeerListResp {
+    repeated User users = 1;
+}
+message IFightReq {
+    required int32 id = 1;
+}
+message OFightResp {
+    // 0 shows success
+    // 1 shows failed
+    required int32 result = 1; 
+    optional string message = 2;
+}
+message OFightReq {
+    required User user = 1;
+}
+message IFightResp {
+    // 0 is agree, others disagree
+    required int32 result = 1;
+}
