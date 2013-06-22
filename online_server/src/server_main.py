@@ -37,7 +37,8 @@ class OnlineClientManager(object):
 
         
 class Client(object):
-    FIGHT_REQ_A = 1
+    IDLE = 0
+    FIGHT_REQ_A = IDLE + 1
     FIGHT_REQ_B = FIGHT_REQ_A + 1
     WAIT_FOR_ANSWER = FIGHT_REQ_B  + 1
     START = WAIT_FOR_ANSWER  + 1
@@ -47,12 +48,15 @@ class Client(object):
         self.sk = sk
         client_id += 1
         self.id = client_id
-        self.state = 0
+        self.name = ''
+        self.state = Client.IDLE
         self.cmd_buf = ''
         self.peer_client = None
         self.question_index = 0
         self.timeout = None
         self.right = 0
+        self.longitude = None
+        self.latitude = None
         pass
 
     def __del__(self):
@@ -73,8 +77,8 @@ class Client(object):
 
     def lose_hb(self):
         if self.state == Client.FIGHT_REQ_A or self.state == Client.FIGHT_REQ_B:
-            self.state = 0
-            self.peer_client.state = 0
+            self.state = Client.IDLE
+            self.peer_client.state = Client.IDLE
 
             self.cancel_timeout()
             cmd = OFightResp()
@@ -85,8 +89,8 @@ class Client(object):
             self.peer_client.peer_client = None
             self.peer_client = None
         elif self.state == Client.WAIT_FOR_ANSWER or self.state == Client.WAIT_FOR_RESULT:
-            self.state = 0
-            self.peer_client.state = 0
+            self.state = Client.IDLE
+            self.peer_client.state = Client.IDLE
 
             self.cancel_timeout()
             cmd = OFightResult()
@@ -101,8 +105,8 @@ class Client(object):
     def deal_timeout(self):
         self.timeout = None
         if self.state == Client.FIGHT_REQ_A:
-            self.state = 0
-            self.peer_client.state = 0
+            self.state = Client.IDLE
+            self.peer_client.state = Client.IDLE
 
             cmd = OFightResp()
             cmd.result = 1
@@ -114,8 +118,8 @@ class Client(object):
             self.peer_client.peer_client = None
             self.peer_client = None
         elif self.state == Client.WAIT_FOR_ANSWER:
-            self.state = 0
-            self.peer_client.state = 0
+            self.state = Client.IDLE
+            self.peer_client.state = Client.IDLE
 
             cmd = OFightResult()
             cmd.result = 1
@@ -171,15 +175,34 @@ class Client(object):
         print cmd_type, self.state
         if cmd_type == CmdType.HEARTBEAT:
             return
+        if len(self.name) == 0:
+            if cmd_type == CmdType.CLIENT_INFO:
+                cmd = IClientInfo()
+                cmd.ParseFromString(buf)
+                self.name = cmd.name
+                return
+            else:
+                self.send_msg(struct.pack("!HH", CmdType.UNKNOWN_OP, 0))
+                return
+
+        if cmd_type == CmdType.CLIENT_LBS:
+            cmd = IClientLBS()
+            cmd.ParseFromString(buf)
+            self.latitude = cmd.latitude
+            self.longitude = cmd.longitude
         elif cmd_type == CmdType.FETCH_PEER_LIST_REQ:
+            if self.latitude == None:
+                self.send_msg(struct.pack("!HH", CmdType.UNKNOWN_OP, 0))
+                return
             resp = OPeerListResp()
             clients = client_mgr.get_list(self)
             for c in clients:
                 u = resp.users.add()
+                u.name = c.name
                 u.id = c.id
 
             self.send_msg(self.build_cmd(CmdType.FETCH_PEER_LIST_RESP, resp))
-        elif cmd_type == CmdType.FIGHT_REQ and self.state == 0:
+        elif cmd_type == CmdType.FIGHT_REQ and self.state == Client.IDLE:
             req = IFightReq()
             req.ParseFromString(buf)
             client = client_mgr.get(req.id)
@@ -187,6 +210,7 @@ class Client(object):
                 self.state = Client.FIGHT_REQ_A
                 resp = OFightReq()
                 resp.user.id = self.id
+                resp.user.name = self.name
                 client.send_msg(self.build_cmd(CmdType.FIGHT_REQ, resp))
                 client.state = Client.FIGHT_REQ_B
                 self.peer_client = client
@@ -213,8 +237,8 @@ class Client(object):
                 resp.result = 1
                 resp.message = 'other does not agree'
                 self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
-                self.state = 0
-                self.peer_client.state = 0
+                self.state = Client.IDLE
+                self.peer_client.state = Client.IDLE
 
         elif cmd_type == CmdType.ANSWER and self.state == Client.WAIT_FOR_ANSWER:
             self.cancel_timeout()
@@ -236,13 +260,15 @@ class Client(object):
                     self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
                     resp.result = 2
                     self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
-                    self.state = 0
-                    self.peer_client.state = 0
+                    self.state = Client.IDLE
+                    self.peer_client.state = Client.IDLE
                 else:
                     self.state = Client.WAIT_FOR_RESULT
             else:
                 self.start_timeout(2 * 60)
                 self.send_msg(self.build_cmd(CmdType.QUESTION, self.get_question()))
+        else:
+            self.send_msg(struct.pack("!HH", CmdType.UNKNOWN_OP, 0))
                 
 
 client_id = 0

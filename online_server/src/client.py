@@ -50,6 +50,22 @@ class User(object):
         self.send_cmd(CmdType.FIGHT_RESP, cmd)
 
 
+    def sendClientInfo(self):
+        name = raw_input("your name is:")
+        if len(name) == 0:
+            return
+        cmd = IClientInfo()
+        cmd.name = name
+        self.send_cmd(CmdType.CLIENT_INFO, cmd)
+
+    def sendLBS(self):
+        longitude = int(raw_input("longitude:"))
+        latitude = int(raw_input("latitude:"))
+        cmd = IClientLBS()
+        cmd.longitude = longitude
+        cmd.latitude = latitude
+        self.send_cmd(CmdType.CLIENT_LBS, cmd)
+
     def sendAnswer(self):
         i = int(raw_input("your choices is:"))
         index = int(raw_input("question index is:"))
@@ -127,6 +143,10 @@ class User(object):
             elif cmd_type == CmdType.FIGHT_STATE:
                 print "fight state"
                 self.showFightState(buf[4:])
+            elif cmd_type == CmdType.UNKNOWN_OP:
+                print "unkonwn op"
+            else:
+                print "bad op"
 
 
 if __name__ == '__main__':
@@ -136,7 +156,9 @@ if __name__ == '__main__':
     2:fetch list
     3:fight
     4:fight resp
-    5:answer'''
+    5:answer
+    6:client info
+    7:lbs'''
     p = threading.Thread(target = u.showResp)
     p.start()
     q = threading.Thread(target = u.send_heartbeat)
@@ -158,6 +180,10 @@ if __name__ == '__main__':
             u.sendFightResp()
         elif i == 5:
             u.sendAnswer()
+        elif i == 6:
+            u.sendClientInfo()
+        elif i == 7:
+            u.sendLBS()
 
         
 

@@ -11,6 +11,10 @@ class CmdType(object):
     FIGHT_STATE = 7
     FIGHT_RESULT = 8
 
+    CLIENT_INFO = 9
+
+    CLIENT_LBS = 11
+
     UNKNOWN_OP = 1000
     HEARTBEAT = 1001
 

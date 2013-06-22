@@ -1,6 +1,17 @@
 message User {
     required int32 id = 1;
+    required string name = 2;
 }
+
+message IClientInfo {
+    required string name = 1;
+}
+
+message IClientLBS {
+    required int64 longitude = 1;
+    required int64 latitude = 2;
+}
+
 message OQuestion {
     required string statement = 1;
     repeated string options = 2;
