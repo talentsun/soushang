@@ -28,6 +28,8 @@ class OnlineClientManager(object):
         for c in self.clients.values():
             if c == ex_cli:
                 continue
+            if c.state != 0:
+                continue
             res.append(c)
             if len(res) > 5:
                break
@@ -127,11 +129,17 @@ class Client(object):
 
     def read_and_deal_cmd(self):
         while len(self.cmd_buf) < 4:
-            self.cmd_buf += self.sk.recv(4 - len(self.cmd_buf)) # 2 is cmd type and 2 is protobuf string
+            tmpBuf = self.sk.recv(4 - len(self.cmd_buf)) # 2 is cmd type and 2 is protobuf string
+            if len(tmpBuf) == 0:
+                raise Exception, 'close'
+            self.cmd_buf += tmpBuf
 
         cmd_type, cmd_len = struct.unpack("!HH", self.cmd_buf)
         while len(self.cmd_buf) < cmd_len + 4:
-            self.cmd_buf += self.sk.recv(cmd_len + 4 - len(self.cmd_buf))
+            tmpBuf = self.sk.recv(cmd_len + 4 - len(self.cmd_buf))
+            if len(tmpBuf) == 0:
+                raise Exception, 'close'
+            self.cmd_buf += tmpBuf
         self.deal_cmd(cmd_type, self.cmd_buf[4:])
         self.cmd_buf = ''
 
@@ -265,11 +273,13 @@ def main(socket, address):
                 client.deal_timeout()
 
         except:
+            hbTimer.cancel()
             traceback.print_exc()
             print "client close"
             client.lose_hb()
             client_mgr.remove(client)
             client = None
+            break
             
 
 
