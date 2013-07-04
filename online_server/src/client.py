@@ -25,22 +25,28 @@ class User(object):
 
 
         while True:
-            self.sk.send(struct.pack("!HH", CmdType.HEARTBEAT, 0))
+            self.send_cmd(CmdType.HEARTBEAT, EmptyMsg())
             time.sleep(30)
 
     def send_cmd(self, cmd_type, cmd):
-        req = cmd.SerializeToString()
-        req = struct.pack("!HH%ds" % len(req), cmd_type, len(req), req)
-        self.sk.send(req)
+        msg = cmd.SerializeToString()
+        cmd = CommandMsg()
+        cmd.type = cmd_type
+        cmd.content = msg
+        msg = cmd.SerializeToString()
+        self.sk.send(struct.pack("!I%ds" % len(msg), len(msg), msg))
         
     def sendFetchList(self):
-        self.sk.send(struct.pack("!HH", CmdType.FETCH_PEER_LIST_REQ, 0))
+        self.send_cmd(CmdType.FETCH_PEER_LIST_REQ, EmptyMsg())
 
     def sendFightReq(self):
         id = int(raw_input("other's id:"))
         cmd = IFightReq()
         cmd.id = id
         self.send_cmd(CmdType.FIGHT_REQ, cmd)
+
+    def sendFightCancel(self):
+        self.send_cmd(CmdType.FIGHT_CANCEL, EmptyMsg())
 
     def sendFightResp(self):
         print "0 show agree others disgree"
@@ -122,29 +128,33 @@ class User(object):
             buf = ''
             while len(buf) < 4:
                 buf += self.sk.recv(4 - len(buf))
-            cmd_type, cmd_len = struct.unpack("!HH", buf[0:4])
+            cmd_len = struct.unpack("!I", buf[0:4])[0]
             while len(buf) < 4 + cmd_len:
                 buf += self.sk.recv(4 + cmd_len - len(buf))
-            if cmd_type == CmdType.FIGHT_RESP:
+            cmd = CommandMsg()
+            cmd.ParseFromString(buf[4:])
+            if cmd.type == CmdType.FIGHT_RESP:
                 print "fight resp"
-                self.showFightResp(buf[4:])
-            elif cmd_type == CmdType.QUESTION:
+                self.showFightResp(cmd.content)
+            elif cmd.type == CmdType.QUESTION:
                 print "question"
-                self.showQuestion(buf[4:])
-            elif cmd_type == CmdType.FIGHT_RESULT:
+                self.showQuestion(cmd.content)
+            elif cmd.type == CmdType.FIGHT_RESULT:
                 print "fight result"
-                self.showResult(buf[4:])
-            elif cmd_type == CmdType.FIGHT_REQ:
+                self.showResult(cmd.content)
+            elif cmd.type == CmdType.FIGHT_REQ:
                 print "fight req"
-                self.showFightReq(buf[4:])
-            elif cmd_type == CmdType.FETCH_PEER_LIST_RESP:
+                self.showFightReq(cmd.content)
+            elif cmd.type == CmdType.FETCH_PEER_LIST_RESP:
                 print "fetch peer list resp"
-                self.showFetchList(buf[4:])
-            elif cmd_type == CmdType.FIGHT_STATE:
+                self.showFetchList(cmd.content)
+            elif cmd.type == CmdType.FIGHT_STATE:
                 print "fight state"
-                self.showFightState(buf[4:])
-            elif cmd_type == CmdType.UNKNOWN_OP:
+                self.showFightState(cmd.content)
+            elif cmd.type == CmdType.UNKNOWN_OP:
                 print "unkonwn op"
+            elif cmd.type == CmdType.FIGHT_CANCEL:
+                print "fight cancel"
             else:
                 print "bad op"
 
@@ -158,7 +168,9 @@ if __name__ == '__main__':
     4:fight resp
     5:answer
     6:client info
-    7:lbs'''
+    7:lbs
+    8:cancel fight
+    '''
     p = threading.Thread(target = u.showResp)
     p.start()
     q = threading.Thread(target = u.send_heartbeat)
@@ -184,6 +196,8 @@ if __name__ == '__main__':
             u.sendClientInfo()
         elif i == 7:
             u.sendLBS()
+        elif i == 8:
+            u.sendFightCancel()
 
         
 

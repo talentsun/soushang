@@ -73,7 +73,12 @@ class Client(object):
 
     def build_cmd(self, cmd_type, cmd):
         msg = cmd.SerializeToString()
-        return struct.pack("!HH%ds" % len(msg), cmd_type, len(msg), msg)
+        cmd = CommandMsg()
+        cmd.type = cmd_type
+        cmd.content = msg
+        msg = cmd.SerializeToString()
+
+        return struct.pack("!I%ds" % len(msg), len(msg), msg)
 
     def lose_hb(self):
         if self.state == Client.FIGHT_REQ_A or self.state == Client.FIGHT_REQ_B:
@@ -133,18 +138,22 @@ class Client(object):
 
     def read_and_deal_cmd(self):
         while len(self.cmd_buf) < 4:
-            tmpBuf = self.sk.recv(4 - len(self.cmd_buf)) # 2 is cmd type and 2 is protobuf string
+            tmpBuf = self.sk.recv(4 - len(self.cmd_buf)) # 4 is protobuf string
             if len(tmpBuf) == 0:
                 raise Exception, 'close'
             self.cmd_buf += tmpBuf
 
-        cmd_type, cmd_len = struct.unpack("!HH", self.cmd_buf)
+        cmd_len = struct.unpack("!I", self.cmd_buf)[0]
+        print "cmd len", cmd_len
         while len(self.cmd_buf) < cmd_len + 4:
             tmpBuf = self.sk.recv(cmd_len + 4 - len(self.cmd_buf))
             if len(tmpBuf) == 0:
                 raise Exception, 'close'
             self.cmd_buf += tmpBuf
-        self.deal_cmd(cmd_type, self.cmd_buf[4:])
+        cmd = CommandMsg()
+        cmd.ParseFromString(self.cmd_buf[4:])
+        print "receive cmd", cmd.type
+        self.deal_cmd(cmd.type, cmd.content)
         self.cmd_buf = ''
 
     def start_timeout(self, seconds):
@@ -182,7 +191,7 @@ class Client(object):
                 self.name = cmd.name
                 return
             else:
-                self.send_msg(struct.pack("!HH", CmdType.UNKNOWN_OP, 0))
+                self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 return
 
         if cmd_type == CmdType.CLIENT_LBS:
@@ -192,7 +201,7 @@ class Client(object):
             self.longitude = cmd.longitude
         elif cmd_type == CmdType.FETCH_PEER_LIST_REQ:
             if self.latitude == None:
-                self.send_msg(struct.pack("!HH", CmdType.UNKNOWN_OP, 0))
+                self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 return
             resp = OPeerListResp()
             clients = client_mgr.get_list(self)
@@ -240,6 +249,10 @@ class Client(object):
                 self.state = Client.IDLE
                 self.peer_client.state = Client.IDLE
 
+        elif cmd_type == CmdType.FIGHT_CANCEL and (self.state == Client.FIGHT_REQ_A or self.state == Client.WAIT_FOR_ANSWER):
+            self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_CANCEL, EmptyMsg()))
+            self.peer_client.state = self.state = Client.IDLE
+
         elif cmd_type == CmdType.ANSWER and self.state == Client.WAIT_FOR_ANSWER:
             self.cancel_timeout()
             req = IAnswer()
@@ -268,7 +281,7 @@ class Client(object):
                 self.start_timeout(2 * 60)
                 self.send_msg(self.build_cmd(CmdType.QUESTION, self.get_question()))
         else:
-            self.send_msg(struct.pack("!HH", CmdType.UNKNOWN_OP, 0))
+            self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 
 
 client_id = 0

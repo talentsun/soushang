@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='message.proto',
   package='',
-  serialized_pb='\n\rmessage.proto\" \n\x04User\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x1b\n\x0bIClientInfo\x12\x0c\n\x04name\x18\x01 \x02(\t\"1\n\nIClientLBS\x12\x11\n\tlongitude\x18\x01 \x02(\x03\x12\x10\n\x08latitude\x18\x02 \x02(\x03\"Z\n\tOQuestion\x12\x11\n\tstatement\x18\x01 \x02(\t\x12\x0f\n\x07options\x18\x02 \x03(\t\x12\r\n\x05right\x18\x03 \x02(\x05\x12\r\n\x05index\x18\x04 \x02(\x05\x12\x0b\n\x03\x61ll\x18\x05 \x02(\x05\"(\n\x07IAnswer\x12\r\n\x05index\x18\x01 \x02(\x05\x12\x0e\n\x06\x63hoose\x18\x02 \x02(\x05\"7\n\x0bOFightState\x12\x0b\n\x03\x61ll\x18\x01 \x02(\x05\x12\x0c\n\x04\x64one\x18\x02 \x02(\x05\x12\r\n\x05right\x18\x03 \x02(\x05\"\x1e\n\x0cOFightResult\x12\x0e\n\x06result\x18\x01 \x02(\x05\"%\n\rOPeerListResp\x12\x14\n\x05users\x18\x01 \x03(\x0b\x32\x05.User\"\x17\n\tIFightReq\x12\n\n\x02id\x18\x01 \x02(\x05\"-\n\nOFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\" \n\tOFightReq\x12\x13\n\x04user\x18\x01 \x02(\x0b\x32\x05.User\"\x1c\n\nIFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05')
+  serialized_pb='\n\rmessage.proto\" \n\x04User\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x02(\t\"+\n\nCommandMsg\x12\x0c\n\x04type\x18\x01 \x02(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x02(\x0c\"\x1b\n\x0bIClientInfo\x12\x0c\n\x04name\x18\x01 \x02(\t\"1\n\nIClientLBS\x12\x11\n\tlongitude\x18\x01 \x02(\x02\x12\x10\n\x08latitude\x18\x02 \x02(\x02\"Z\n\tOQuestion\x12\x11\n\tstatement\x18\x01 \x02(\t\x12\x0f\n\x07options\x18\x02 \x03(\t\x12\r\n\x05right\x18\x03 \x02(\x05\x12\r\n\x05index\x18\x04 \x02(\x05\x12\x0b\n\x03\x61ll\x18\x05 \x02(\x05\"(\n\x07IAnswer\x12\r\n\x05index\x18\x01 \x02(\x05\x12\x0e\n\x06\x63hoose\x18\x02 \x02(\x05\"7\n\x0bOFightState\x12\x0b\n\x03\x61ll\x18\x01 \x02(\x05\x12\x0c\n\x04\x64one\x18\x02 \x02(\x05\x12\r\n\x05right\x18\x03 \x02(\x05\"\x1e\n\x0cOFightResult\x12\x0e\n\x06result\x18\x01 \x02(\x05\"%\n\rOPeerListResp\x12\x14\n\x05users\x18\x01 \x03(\x0b\x32\x05.User\"\x17\n\tIFightReq\x12\n\n\x02id\x18\x01 \x02(\x05\"-\n\nOFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\" \n\tOFightReq\x12\x13\n\x04user\x18\x01 \x02(\x0b\x32\x05.User\"\x1c\n\nIFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\"\n\n\x08\x45mptyMsg')
 
 
 
@@ -53,6 +53,41 @@ _USER = _descriptor.Descriptor(
 )
 
 
+_COMMANDMSG = _descriptor.Descriptor(
+  name='CommandMsg',
+  full_name='CommandMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='type', full_name='CommandMsg.type', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='content', full_name='CommandMsg.content', index=1,
+      number=2, type=12, cpp_type=9, label=2,
+      has_default_value=False, default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=51,
+  serialized_end=94,
+)
+
+
 _ICLIENTINFO = _descriptor.Descriptor(
   name='IClientInfo',
   full_name='IClientInfo',
@@ -76,8 +111,8 @@ _ICLIENTINFO = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=51,
-  serialized_end=78,
+  serialized_start=96,
+  serialized_end=123,
 )
 
 
@@ -90,14 +125,14 @@ _ICLIENTLBS = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='longitude', full_name='IClientLBS.longitude', index=0,
-      number=1, type=3, cpp_type=2, label=2,
+      number=1, type=2, cpp_type=6, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='latitude', full_name='IClientLBS.latitude', index=1,
-      number=2, type=3, cpp_type=2, label=2,
+      number=2, type=2, cpp_type=6, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -111,8 +146,8 @@ _ICLIENTLBS = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=80,
-  serialized_end=129,
+  serialized_start=125,
+  serialized_end=174,
 )
 
 
@@ -167,8 +202,8 @@ _OQUESTION = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=131,
-  serialized_end=221,
+  serialized_start=176,
+  serialized_end=266,
 )
 
 
@@ -202,8 +237,8 @@ _IANSWER = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=223,
-  serialized_end=263,
+  serialized_start=268,
+  serialized_end=308,
 )
 
 
@@ -244,8 +279,8 @@ _OFIGHTSTATE = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=265,
-  serialized_end=320,
+  serialized_start=310,
+  serialized_end=365,
 )
 
 
@@ -272,8 +307,8 @@ _OFIGHTRESULT = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=322,
-  serialized_end=352,
+  serialized_start=367,
+  serialized_end=397,
 )
 
 
@@ -300,8 +335,8 @@ _OPEERLISTRESP = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=354,
-  serialized_end=391,
+  serialized_start=399,
+  serialized_end=436,
 )
 
 
@@ -328,8 +363,8 @@ _IFIGHTREQ = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=393,
-  serialized_end=416,
+  serialized_start=438,
+  serialized_end=461,
 )
 
 
@@ -363,8 +398,8 @@ _OFIGHTRESP = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=418,
-  serialized_end=463,
+  serialized_start=463,
+  serialized_end=508,
 )
 
 
@@ -391,8 +426,8 @@ _OFIGHTREQ = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=465,
-  serialized_end=497,
+  serialized_start=510,
+  serialized_end=542,
 )
 
 
@@ -419,13 +454,35 @@ _IFIGHTRESP = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=499,
-  serialized_end=527,
+  serialized_start=544,
+  serialized_end=572,
+)
+
+
+_EMPTYMSG = _descriptor.Descriptor(
+  name='EmptyMsg',
+  full_name='EmptyMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=574,
+  serialized_end=584,
 )
 
 _OPEERLISTRESP.fields_by_name['users'].message_type = _USER
 _OFIGHTREQ.fields_by_name['user'].message_type = _USER
 DESCRIPTOR.message_types_by_name['User'] = _USER
+DESCRIPTOR.message_types_by_name['CommandMsg'] = _COMMANDMSG
 DESCRIPTOR.message_types_by_name['IClientInfo'] = _ICLIENTINFO
 DESCRIPTOR.message_types_by_name['IClientLBS'] = _ICLIENTLBS
 DESCRIPTOR.message_types_by_name['OQuestion'] = _OQUESTION
@@ -437,12 +494,19 @@ DESCRIPTOR.message_types_by_name['IFightReq'] = _IFIGHTREQ
 DESCRIPTOR.message_types_by_name['OFightResp'] = _OFIGHTRESP
 DESCRIPTOR.message_types_by_name['OFightReq'] = _OFIGHTREQ
 DESCRIPTOR.message_types_by_name['IFightResp'] = _IFIGHTRESP
+DESCRIPTOR.message_types_by_name['EmptyMsg'] = _EMPTYMSG
 
 class User(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _USER
 
   # @@protoc_insertion_point(class_scope:User)
+
+class CommandMsg(_message.Message):
+  __metaclass__ = _reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _COMMANDMSG
+
+  # @@protoc_insertion_point(class_scope:CommandMsg)
 
 class IClientInfo(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
@@ -509,6 +573,12 @@ class IFightResp(_message.Message):
   DESCRIPTOR = _IFIGHTRESP
 
   # @@protoc_insertion_point(class_scope:IFightResp)
+
+class EmptyMsg(_message.Message):
+  __metaclass__ = _reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _EMPTYMSG
+
+  # @@protoc_insertion_point(class_scope:EmptyMsg)
 
 
 # @@protoc_insertion_point(module_scope)

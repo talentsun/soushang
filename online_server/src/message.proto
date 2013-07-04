@@ -7,13 +7,18 @@ message User {
     required string name = 2;
 }
 
+message CommandMsg {
+    required int32 type = 1;
+    required bytes content = 2;
+}
+
 message IClientInfo {
     required string name = 1;
 }
 
 message IClientLBS {
-    required int64 longitude = 1;
-    required int64 latitude = 2;
+    required float longitude = 1;
+    required float latitude = 2;
 }
 
 message OQuestion {
@@ -37,12 +42,15 @@ message OFightResult {
     // 3 is other lose connect, you win
     required int32 result = 1;
 }
+
 message OPeerListResp {
     repeated User users = 1;
 }
+
 message IFightReq {
     required int32 id = 1;
 }
+
 message OFightResp {
     // 0 shows success
     // 1 shows failed
@@ -55,4 +63,7 @@ message OFightReq {
 message IFightResp {
     // 0 is agree, others disagree
     required int32 result = 1;
+}
+
+message EmptyMsg {
 }

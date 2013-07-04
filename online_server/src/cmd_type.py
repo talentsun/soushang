@@ -15,6 +15,9 @@ class CmdType(object):
 
     CLIENT_LBS = 11
 
+    FIGHT_CANCEL = 12
+    FIGHT_QUIT = 13
+
     UNKNOWN_OP = 1000
     HEARTBEAT = 1001
 
