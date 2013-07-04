@@ -1,3 +1,7 @@
+option java_package="com.baidu.soushang.lbs";
+option java_outer_classname="Models";
+option optimize_for = LITE_RUNTIME;
+
 message User {
     required int32 id = 1;
     required string name = 2;
