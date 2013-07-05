@@ -4,15 +4,19 @@ import static org.jboss.netty.channel.Channels.pipeline;
 
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.handler.codec.protobuf.ProtobufEncoder;
+
+import android.content.Context;
 
 public class LBSClientPipelineFactory implements ChannelPipelineFactory {
 
   @Override
   public ChannelPipeline getPipeline() throws Exception {
     ChannelPipeline pipeline = pipeline();
-//    pipeline.addLast("encoder", "")
-    return null;
+    
+    pipeline.addLast("encoder", new CommandRequestEncoder());
+    pipeline.addLast("handler", new LBSClientRequestClientHandler());
+    
+    return pipeline;
   }
 
 }

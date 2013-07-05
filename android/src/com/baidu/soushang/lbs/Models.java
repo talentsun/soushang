@@ -932,25 +932,25 @@ public final class Models {
   public interface IClientLBSOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required int64 longitude = 1;
+    // required float longitude = 1;
     /**
-     * <code>required int64 longitude = 1;</code>
+     * <code>required float longitude = 1;</code>
      */
     boolean hasLongitude();
     /**
-     * <code>required int64 longitude = 1;</code>
+     * <code>required float longitude = 1;</code>
      */
-    long getLongitude();
+    float getLongitude();
 
-    // required int64 latitude = 2;
+    // required float latitude = 2;
     /**
-     * <code>required int64 latitude = 2;</code>
+     * <code>required float latitude = 2;</code>
      */
     boolean hasLatitude();
     /**
-     * <code>required int64 latitude = 2;</code>
+     * <code>required float latitude = 2;</code>
      */
-    long getLatitude();
+    float getLatitude();
   }
   /**
    * Protobuf type {@code IClientLBS}
@@ -995,14 +995,14 @@ public final class Models {
               }
               break;
             }
-            case 8: {
+            case 13: {
               bitField0_ |= 0x00000001;
-              longitude_ = input.readInt64();
+              longitude_ = input.readFloat();
               break;
             }
-            case 16: {
+            case 21: {
               bitField0_ |= 0x00000002;
-              latitude_ = input.readInt64();
+              latitude_ = input.readFloat();
               break;
             }
           }
@@ -1032,41 +1032,41 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required int64 longitude = 1;
+    // required float longitude = 1;
     public static final int LONGITUDE_FIELD_NUMBER = 1;
-    private long longitude_;
+    private float longitude_;
     /**
-     * <code>required int64 longitude = 1;</code>
+     * <code>required float longitude = 1;</code>
      */
     public boolean hasLongitude() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required int64 longitude = 1;</code>
+     * <code>required float longitude = 1;</code>
      */
-    public long getLongitude() {
+    public float getLongitude() {
       return longitude_;
     }
 
-    // required int64 latitude = 2;
+    // required float latitude = 2;
     public static final int LATITUDE_FIELD_NUMBER = 2;
-    private long latitude_;
+    private float latitude_;
     /**
-     * <code>required int64 latitude = 2;</code>
+     * <code>required float latitude = 2;</code>
      */
     public boolean hasLatitude() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int64 latitude = 2;</code>
+     * <code>required float latitude = 2;</code>
      */
-    public long getLatitude() {
+    public float getLatitude() {
       return latitude_;
     }
 
     private void initFields() {
-      longitude_ = 0L;
-      latitude_ = 0L;
+      longitude_ = 0F;
+      latitude_ = 0F;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1089,10 +1089,10 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt64(1, longitude_);
+        output.writeFloat(1, longitude_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt64(2, latitude_);
+        output.writeFloat(2, latitude_);
       }
     }
 
@@ -1104,11 +1104,11 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, longitude_);
+          .computeFloatSize(1, longitude_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, latitude_);
+          .computeFloatSize(2, latitude_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -1201,9 +1201,9 @@ public final class Models {
 
       public Builder clear() {
         super.clear();
-        longitude_ = 0L;
+        longitude_ = 0F;
         bitField0_ = (bitField0_ & ~0x00000001);
-        latitude_ = 0L;
+        latitude_ = 0F;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
@@ -1282,68 +1282,68 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required int64 longitude = 1;
-      private long longitude_ ;
+      // required float longitude = 1;
+      private float longitude_ ;
       /**
-       * <code>required int64 longitude = 1;</code>
+       * <code>required float longitude = 1;</code>
        */
       public boolean hasLongitude() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required int64 longitude = 1;</code>
+       * <code>required float longitude = 1;</code>
        */
-      public long getLongitude() {
+      public float getLongitude() {
         return longitude_;
       }
       /**
-       * <code>required int64 longitude = 1;</code>
+       * <code>required float longitude = 1;</code>
        */
-      public Builder setLongitude(long value) {
+      public Builder setLongitude(float value) {
         bitField0_ |= 0x00000001;
         longitude_ = value;
         
         return this;
       }
       /**
-       * <code>required int64 longitude = 1;</code>
+       * <code>required float longitude = 1;</code>
        */
       public Builder clearLongitude() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        longitude_ = 0L;
+        longitude_ = 0F;
         
         return this;
       }
 
-      // required int64 latitude = 2;
-      private long latitude_ ;
+      // required float latitude = 2;
+      private float latitude_ ;
       /**
-       * <code>required int64 latitude = 2;</code>
+       * <code>required float latitude = 2;</code>
        */
       public boolean hasLatitude() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int64 latitude = 2;</code>
+       * <code>required float latitude = 2;</code>
        */
-      public long getLatitude() {
+      public float getLatitude() {
         return latitude_;
       }
       /**
-       * <code>required int64 latitude = 2;</code>
+       * <code>required float latitude = 2;</code>
        */
-      public Builder setLatitude(long value) {
+      public Builder setLatitude(float value) {
         bitField0_ |= 0x00000002;
         latitude_ = value;
         
         return this;
       }
       /**
-       * <code>required int64 latitude = 2;</code>
+       * <code>required float latitude = 2;</code>
        */
       public Builder clearLatitude() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        latitude_ = 0L;
+        latitude_ = 0F;
         
         return this;
       }

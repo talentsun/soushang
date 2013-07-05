@@ -28,7 +28,7 @@ class User(object):
         if self.sk:
             return
         self.sk = socket()
-        self.sk.connect( ('127.0.0.1', 9300) )
+        self.sk.connect( ('118.244.225.222', 9300) )
 
     def send_heartbeat(self):
         while not self.sk:

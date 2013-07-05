@@ -13,6 +13,7 @@ public class Config {
   public static final String KEY_LOGGED = "logged";
   public static final String KEY_LATEST_NEWS_DATE = "latest_news_date";
   public static final String KEY_UDID = "udid";
+  public static final String KEY_USERNAME = "username";
   
   public static SharedPreferences getConfigs(Context context) {
     return context.getSharedPreferences(PREFS_NAME, 0);
@@ -59,6 +60,18 @@ public class Config {
   public static String getLatestNewsDate(Context context) {
     SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
     return settings.getString(KEY_LATEST_NEWS_DATE, null);
+  }
+  
+  public static void setUsername(Context context, String username) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    Editor editor = settings.edit();
+    editor.putString(KEY_USERNAME, username);
+    editor.commit();
+  }
+  
+  public static String getUsername(Context context) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    return settings.getString(KEY_USERNAME, null);
   }
   
   public static String getUDID(Context context) {
