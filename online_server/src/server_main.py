@@ -2,12 +2,18 @@
 #coding:utf8
 import struct
 import traceback
+import logging
+
 from gevent.server import StreamServer
 from gevent import monkey; monkey.patch_socket()
 from gevent import Timeout
 
 from message_pb2 import *
 from cmd_type import CmdType
+
+from utils import InitLogger
+
+logger = InitLogger("server_main", logging.DEBUG, "../log/server_main.log")
 
 class OnlineClientManager(object):
     def __init__(self):
@@ -81,6 +87,7 @@ class Client(object):
         return struct.pack("!I%ds" % len(msg), len(msg), msg)
 
     def lose_hb(self):
+        logger.debug("%d lose hb" % self.id)
         if self.state == Client.FIGHT_REQ_A or self.state == Client.FIGHT_REQ_B:
             self.state = Client.IDLE
             self.peer_client.state = Client.IDLE
@@ -108,6 +115,7 @@ class Client(object):
             
 
     def deal_timeout(self):
+        logger.debug("%d timeout %d" % (self.id, self.state))
         self.timeout = None
         if self.state == Client.FIGHT_REQ_A:
             self.state = Client.IDLE
@@ -181,7 +189,7 @@ class Client(object):
         return resp
 
     def deal_cmd(self, cmd_type, buf):
-        print cmd_type, self.state
+        logger.debug("receive cmd type %d state %d", cmd_type, self.state)
         if cmd_type == CmdType.HEARTBEAT:
             return
         if len(self.name) == 0:
@@ -189,8 +197,10 @@ class Client(object):
                 cmd = IClientInfo()
                 cmd.ParseFromString(buf)
                 self.name = cmd.name
+                logger.debug("client name %s", cmd.name)
                 return
             else:
+                logger.debug("client not set client info")
                 self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 return
 
@@ -199,11 +209,14 @@ class Client(object):
             cmd.ParseFromString(buf)
             self.latitude = cmd.latitude
             self.longitude = cmd.longitude
+            logger.debug("client lbs lat %f long %f" % (cmd.latitude, cmd.longitude))
         elif cmd_type == CmdType.FETCH_PEER_LIST_REQ:
             if self.latitude == None:
                 self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
+                logger.debug("client not set the lbs info")
                 return
             resp = OPeerListResp()
+            logger.debug("client fetch peer list")
             clients = client_mgr.get_list(self)
             for c in clients:
                 u = resp.users.add()
@@ -214,6 +227,7 @@ class Client(object):
         elif cmd_type == CmdType.FIGHT_REQ and self.state == Client.IDLE:
             req = IFightReq()
             req.ParseFromString(buf)
+            logger.debug("client fight req %d" % req.id)
             client = client_mgr.get(req.id)
             if client:
                 self.state = Client.FIGHT_REQ_A
@@ -229,6 +243,7 @@ class Client(object):
                 resp = OFightResp()
                 resp.result = 1
                 resp.message = 'no such user'
+                logger.error("not find user %d" % req.id)
                 self.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
         elif cmd_type == CmdType.FIGHT_RESP and self.state == Client.FIGHT_REQ_B:
             req = IFightResp()
@@ -245,13 +260,18 @@ class Client(object):
                 resp = OFightResp()
                 resp.result = 1
                 resp.message = 'other does not agree'
+                logger.debug("peer %d disagree")
                 self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
                 self.state = Client.IDLE
                 self.peer_client.state = Client.IDLE
+                self.peer_client.peer_client = None
+                self.peer_client = None
 
         elif cmd_type == CmdType.FIGHT_CANCEL and (self.state == Client.FIGHT_REQ_A or self.state == Client.WAIT_FOR_ANSWER):
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_CANCEL, EmptyMsg()))
             self.peer_client.state = self.state = Client.IDLE
+            self.peer_client.peer_client = None
+            self.peer_client = None
 
         elif cmd_type == CmdType.ANSWER and self.state == Client.WAIT_FOR_ANSWER:
             self.cancel_timeout()
@@ -290,6 +310,7 @@ client_mgr = OnlineClientManager()
 def main(socket, address):
     global client_mgr
     print "one client", address
+    logger.debug("one client %s" % str(address))
     client = Client(socket)
     client_mgr.add(client)
     hbTimer = None
@@ -314,6 +335,7 @@ def main(socket, address):
         except:
             hbTimer.cancel()
             traceback.print_exc()
+            logger.error(traceback.format_exc())
             print "client close"
             client.lose_hb()
             client_mgr.remove(client)
