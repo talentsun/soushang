@@ -17,6 +17,7 @@ from google.protobuf.internal import decoder
 from google.protobuf.internal import encoder
 
 from lbs import LBSClientManager
+from user import UserInfo
 
 logger = InitLogger("server_main", logging.DEBUG, "../log/server_main.log")
 
@@ -148,7 +149,12 @@ class Client(object):
             cmd = OFightResult()
             cmd.result = 1
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, cmd))
+            self.peer_client.user_info.fight_num += 1
+            self.peer_client.user_info.win_num += 1
+            self.peer_client.user_info.store()
             cmd.result = 2
+            self.user_info.fight_num += 1
+            self.user_info.store()
             self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, cmd))
 
             self.peer_client.peer_client = None
@@ -205,6 +211,10 @@ class Client(object):
                 self.id = cmd.id
                 self.net_type = cmd.net_type
                 self.avatar = cmd.avatar
+                self.user_info = UserInfo.get_user_by_id(self.id)
+                if not self.user_info:
+                    self.user_info = UserInfo()
+                    self.user_info.id = self.id
                 logger.debug("client name %s", cmd.name)
                 return
             else:
@@ -237,8 +247,8 @@ class Client(object):
                 u = resp.users.add()
                 u.name = c.name
                 u.id = c.id
-                u.fight_num = 0
-                u.win_num = 0
+                u.fight_num = c.user_info.fight_num
+                u.win_num = c.user_info.win_num
                 u.avatar = self.avatar
                 u.net_type = self.net_type
 
@@ -255,8 +265,8 @@ class Client(object):
                 resp.user.name = self.name
                 resp.user.avatar = self.avatar
                 resp.user.net_type = self.net_type
-                resp.user.fight_num = 0
-                resp.user.win_num = 0
+                resp.user.fight_num = self.user_info.fight_num
+                resp.user.win_num = self.user_info.win_num
                 client.send_msg(self.build_cmd(CmdType.FIGHT_REQ, resp))
                 client.state = Client.FIGHT_REQ_B
                 self.peer_client = client
@@ -319,8 +329,13 @@ class Client(object):
                     resp = OFightResult()
                     resp.result = 1
                     self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
+                    self.peer_client.user_info.fight_num += 1
+                    self.peer_client.user_info.win_num += 1
+                    self.peer_client.user_info.store()
                     resp.result = 2
                     self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
+                    self.user_info.fight_num += 1
+                    self.user_info.store()
                     self.state = Client.IDLE
                     self.peer_client.state = Client.IDLE
                 else:
