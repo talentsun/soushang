@@ -7,12 +7,13 @@ import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
+import com.baidu.soushang.SouShangApplication.LoginListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
 import com.baidu.soushang.cloudapis.QuestionResponse;
-import com.baidu.soushang.widgets.LoadingDialog;
+import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.widgets.TipsDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -21,6 +22,7 @@ import com.umeng.update.UmengUpdateAgent;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,10 +34,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   private Button mDailyEvent;
   private Button mRank;
   private Button mShop;
-  private TextView mBeta;
+  private Button mLBSEvent;
+  private Button mFeatureEvent;
+  private Button mLogin;
   
   private WebViewDialog mNewsDialog;
   private TipsDialog mTipsDialog;
+  private SouShangApplication mApplication;
   
   private ApiResponseCallback<DayEventResponse> mDayEventCallback = new ApiResponseCallback<DayEventResponse>() {
     
@@ -90,15 +95,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mDailyEvent = (Button) findViewById(R.id.daily_event);
     mRank = (Button) findViewById(R.id.rank);
     mShop = (Button) findViewById(R.id.shop);
-    mBeta = (TextView) findViewById(R.id.beta);
+    mLBSEvent = (Button) findViewById(R.id.lbs_event);
+    mFeatureEvent = (Button) findViewById(R.id.feature_event);
+    mLogin = (Button) findViewById(R.id.login);
     
     Typeface typeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
-    mBeta.setTypeface(typeface);
-    
+    mLogin.setTypeface(typeface);
+
     mSouShang.setOnClickListener(this);
     mDailyEvent.setOnClickListener(this);
     mRank.setOnClickListener(this);
     mShop.setOnClickListener(this);
+    mLogin.setOnClickListener(this);
+    mLBSEvent.setOnClickListener(this);
     
     mNewsDialog = new WebViewDialog(this);
     mTipsDialog = new TipsDialog(this);
@@ -109,6 +118,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       mNewsDialog.show(getResources().getString(R.string.news), "http://sou.baidu.com/news/news.html");
     }
     
+    mApplication = (SouShangApplication) getApplication();
     if (Config.isLogged(this)) {
       Apis.Login(this, Config.getAccessToken(this), new ApiResponseCallback<CommonResponse>() {
         
@@ -117,24 +127,48 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
           if (arg0 == null || arg0.getRetCode() != 0) {
             Config.removeAccessToken(HomeActivity.this);
             Config.setLogged(HomeActivity.this, false);
+            notLogged();
+          } else {
+            logged();
           }
         }
-        
+
         @Override
         public void onError(Throwable arg0) {
+          notLogged();
         }
       });
+    } else {
+      notLogged();
     }
-    
+
     super.onCreate(arg0);
+
     MobclickAgent.onError(this);
     MobclickAgent.updateOnlineConfig(this);
     UmengUpdateAgent.update(this);
   }
+  
+  private void logged() {
+    Log.d("home", "logged");
+    mLogin.setText(Config.getUserName(HomeActivity.this));
+    mLogin.setEnabled(false);
+    
+    Intent lbsIntent = new Intent(this, LBSService.class);
+    startService(lbsIntent);
+  }
+  
+  private void notLogged() {
+    Log.d("home", "not logged");
+    
+    mLogin.setText(getResources().getText(R.string.not_logged));
+    mLogin.setEnabled(true);
+  }
 
   @Override
   protected void onDestroy() {
-    // TODO Auto-generated method stub
+    Intent intent = new Intent(this, LBSService.class);
+    stopService(intent);
     super.onDestroy();
   }
 
@@ -158,12 +192,69 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       Intent intent = new Intent(this, ShopActivity.class);
       startActivity(intent);
       overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    } else if (v == mLogin) {
+      mApplication.login(HomeActivity.this);
+    } else if (v == mLBSEvent) {
+      if (Config.isLogged(HomeActivity.this)) {
+        Intent intent = new Intent(this, LBSEventActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      } else {
+        mTipsDialog.show(getResources().getString(R.string.lbs_event_need_logged));
+      }
     }
   }
   
   private String getCurrentDate() {
     Date date = new Date();
     return new SimpleDateFormat("yyyyMMdd").format(date);
+  }
+
+  @Override
+  protected void onStart() {
+    mApplication.setLoginListener(new LoginListener() {
+      
+      @Override
+      public void onSuccess() {
+        mLogin.post(new Runnable() {
+          
+          @Override
+          public void run() {
+            logged();
+          }
+        });
+      }
+      
+      @Override
+      public void onFail() {
+        mLogin.post(new Runnable() {
+          
+          @Override
+          public void run() {
+            notLogged();
+          }
+        });
+      }
+      
+      @Override
+      public void onError() {
+        mLogin.post(new Runnable() {
+          
+          @Override
+          public void run() {
+            notLogged();
+          }
+        });
+      }
+    });
+    
+    super.onStart();
+  }
+
+  @Override
+  protected void onStop() {
+    mApplication.setLoginListener(null);
+    super.onStop();
   }
 
 }

@@ -1,68 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    android:gravity="center_horizontal"
-    android:weightSum="1"
-    android:orientation="vertical" >
+    android:background="@drawable/bg" >
 
     <ImageView
+        android:id="@+id/appname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/home_appname_marginTop"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentTop="true"
         android:src="@drawable/appname" />
-    
-    <FrameLayout 
+
+    <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView 
-            android:id="@+id/beta"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/appname"
+        android:orientation="vertical"
+        android:weightSum="4">
+        <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:paddingRight="8dp"
-            android:textSize="14sp"
-            android:textColor="#29532e"
-            android:text="@string/beta" />
-        
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:paddingBottom="@dimen/home_paddingBottom"
             android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/soushang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/home_soushang_marginRight"
-                android:background="@drawable/home_soushang" />
-
             <Button
                 android:id="@+id/daily_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/home_daily_event_marginRight"
                 android:background="@drawable/home_daily_event" />
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+            <Button
+                android:id="@+id/lbs_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:background="@drawable/home_lbs_event" />
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+            <Button
+                android:id="@+id/feature_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:layout_marginLeft="@dimen/home_feature_event_marginLeft"
+                android:background="@drawable/home_feature_event" />
+        </LinearLayout>
+
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/soushang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_soushang" />
 
             <Button
                 android:id="@+id/rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/home_rank_marginLeft"
                 android:background="@drawable/home_rank" />
 
             <Button
                 android:id="@+id/shop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/home_shop_marginLeft"
                 android:background="@drawable/home_shop" />
         </LinearLayout>
-    </FrameLayout>
-
-</LinearLayout>
+    </LinearLayout>
+    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:background="@drawable/home_login"
+        android:text="@string/not_logged"
+        android:textColor="#fdfcc4"
+        android:textSize="16sp"
+        android:paddingRight="8dp"
+        android:paddingLeft="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/appname"/>
+</RelativeLayout>

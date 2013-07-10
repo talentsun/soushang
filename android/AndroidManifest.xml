@@ -17,6 +17,9 @@
     <uses-permission android:name="android.permission.READ_LOGS"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     
     <supports-screens
         android:smallScreens="true"
@@ -51,10 +54,23 @@
         </activity>
         
         <activity 
+            android:name=".activities.LBSEventActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+        <activity 
             android:name=".activities.EventCompletedActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         
         <activity 
@@ -95,10 +111,18 @@
             </intent-filter>
         </activity>
         
+        <service 
+            android:name="com.baidu.soushang.lbs.LBSService">
+        </service>
         <service
             android:name="com.umeng.common.net.DownloadingService"
             android:exported="true"
             android:process=":DownloadingService" >
+        </service>
+        <service 
+            android:name="com.baidu.location.f" 
+            android:enabled="true" 
+            android:process=":remote">
         </service>
         
         <meta-data android:name="UMENG_CHANNEL" android:value="soushang_web" />

@@ -1,5 +1,9 @@
 package com.baidu.soushang.activities;
 
+import java.io.IOException;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.api.AsyncBaiduRunner;
+import com.baidu.api.AsyncBaiduRunner.RequestListener;
 import com.baidu.api.Baidu;
 import com.baidu.api.BaiduDialog.BaiduDialogListener;
 import com.baidu.api.BaiduDialogError;
@@ -20,12 +26,14 @@ import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
+import com.baidu.soushang.SouShangApplication.LoginListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
+import com.baidu.soushang.lbs.LBSService;
+import com.baidu.soushang.utils.SystemUtils;
 import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
-import com.limijiaoyin.socialsdk.dialogs.ShareDialog;
 import com.umeng.analytics.MobclickAgent;
 
 public class EventCompletedActivity extends BaseActivity implements
@@ -46,9 +54,9 @@ public class EventCompletedActivity extends BaseActivity implements
   private Button mShare;
 
   private CommonShareDialog mShareDialog;
-  private Baidu mBaidu;
   private Handler mMainHandler;
   private int mEventPoint;
+  private SouShangApplication mApplication;
 
   private ApiResponseCallback<UserInfoResponse> mUserInfoCallback =
       new ApiResponseCallback<UserInfoResponse>() {
@@ -78,37 +86,6 @@ public class EventCompletedActivity extends BaseActivity implements
               updateTotalScore(0);
             }
           });
-        }
-      };
-
-  private ApiResponseCallback<CommonResponse> mLoginCallback =
-      new ApiResponseCallback<CommonResponse>() {
-
-        @Override
-        public void onResults(CommonResponse arg0) {
-          if (arg0 != null && arg0.getRetCode() == 0) {
-            Config.setLogged(getApplicationContext(), true);
-
-            SouShangApplication application = (SouShangApplication) getApplication();
-            Apis.answer(EventCompletedActivity.this,
-                        application.getAnswers(),
-                        Config.getAccessToken(EventCompletedActivity.this),
-                        null);
-            initLoggedArea(null);
-          } else {
-            Config.setLogged(getApplicationContext(), false);
-            Toast.makeText(EventCompletedActivity.this,
-                        getResources().getString(R.string.login_failed),
-                        Toast.LENGTH_SHORT).show();
-          }
-        }
-
-        @Override
-        public void onError(Throwable arg0) {
-          Config.setLogged(getApplicationContext(), false);
-          Toast.makeText(EventCompletedActivity.this,
-                    getResources().getString(R.string.login_failed),
-                    Toast.LENGTH_SHORT).show();
         }
       };
 
@@ -165,6 +142,8 @@ public class EventCompletedActivity extends BaseActivity implements
       mShare.setVisibility(View.GONE);
     }
     
+    mApplication = (SouShangApplication) getApplication();
+
     super.onCreate(arg0);
   }
 
@@ -203,42 +182,45 @@ public class EventCompletedActivity extends BaseActivity implements
 
   @Override
   protected void onStart() {
+    mApplication.setLoginListener(new LoginListener() {
+      
+      @Override
+      public void onSuccess() {
+        Apis.answer(EventCompletedActivity.this,
+          mApplication.getAnswers(),
+          Config.getAccessToken(EventCompletedActivity.this),
+          null);
+        initLoggedArea(null);
+      }
+      
+      @Override
+      public void onFail() {
+        Toast.makeText(EventCompletedActivity.this,
+          getResources().getString(R.string.login_failed),
+          Toast.LENGTH_SHORT).show();
+      }
+      
+      @Override
+      public void onError() {
+        Toast.makeText(EventCompletedActivity.this,
+          getResources().getString(R.string.login_failed),
+          Toast.LENGTH_SHORT).show();
+      }
+    });
+
     super.onStart();
   }
 
   @Override
   protected void onStop() {
+    mApplication.setLoginListener(null);
     super.onStop();
   }
 
   @Override
   public void onClick(View v) {
     if (v == mLogin) {
-      mBaidu = new Baidu(SouShangApplication.APP_KEY,
-                    SouShangApplication.APP_SECRET, EventCompletedActivity.this);
-      mBaidu.authorize(EventCompletedActivity.this,
-                    new BaiduDialogListener() {
-
-                      @Override
-                      public void onError(BaiduDialogError arg0) {}
-
-                      @Override
-                      public void onComplete(Bundle arg0) {
-                        Log.i("access_token", mBaidu.getAccessToken());
-                        Config.setAccessToken(EventCompletedActivity.this,
-                                    mBaidu.getAccessToken());
-                        Apis.Login(EventCompletedActivity.this,
-                                    mBaidu.getAccessToken(), mLoginCallback);
-                      }
-
-                      @Override
-                      public void onCancel() {
-
-                      }
-
-                      @Override
-                      public void onBaiduException(BaiduException arg0) {}
-                    });
+      mApplication.login(EventCompletedActivity.this);
     } else if (v == mShop) {
       Intent intent = new Intent(EventCompletedActivity.this,
                     ShopActivity.class);

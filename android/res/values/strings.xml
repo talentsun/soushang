@@ -27,7 +27,7 @@
     <string name="get_dayevent_failed">获取日赛失败，请检查网络连接</string>
     <string name="no_day_event">现在还没有比赛可以做哦，请稍后再来！</string>
     <string name="day_event_finished">您已完成今天的全部题目，明天再来呦！</string>
-    <string name="beta">Beta</string>
+    <string name="not_logged">使用百度帐号登录</string>
     
     <string name="no_rank">暂无积分排名</string>
     <string name="no_network">网络不可用</string>
@@ -48,4 +48,7 @@
     
     <string name="share_content">如今最夯最in的是搜商高，我就是搜商超高的搜神，快来跟我一起成为搜神，挑战搜商极限吧。还有精美礼品拿哦。  http://as.baidu.com/a/item?docid=3199169</string>
     <string name="share_add_5_point">分享一次加5个积分哦！</string>
+    
+    <string name="no_peers">周围没有朋友，快邀请你的好友加入！</string>
+    <string name="lbs_event_need_logged">1v1挑战赛需要登录之后才可以玩，赶快登录吧！</string>
 </resources>

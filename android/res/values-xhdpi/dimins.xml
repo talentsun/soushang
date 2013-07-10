@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="match_name_max_width">56dp</dimen>
-    
-    <dimen name="home_soushang_marginRight">24dp</dimen>
+
     <dimen name="home_daily_event_marginRight">12dp</dimen>
-    <dimen name="home_rank_marginLeft">12dp</dimen>
-    <dimen name="home_shop_marginLeft">24dp</dimen>
+    <dimen name="home_feature_event_marginLeft">12dp</dimen>
     <dimen name="home_paddingBottom">20dp</dimen>
-    <dimen name="home_appname_marginTop">16dp</dimen>
     <dimen name="tips_dialog_width">275dp</dimen>
     <dimen name="tips_dialog_height">238dp</dimen>
     
