@@ -68,7 +68,7 @@ class LBSClientManager(object):
     def add_client(self, client):
         if client.id in self.clients:
             logger.error("id %d already in" % client.id)
-            retunr
+            return
         logger.debug("add client longitude %f latitude %f id %d" % (client.longitude, client.latitude, client.id))
         prefix = self.get_prefix(client)
         logger.debug("client %d prefix %s" % (client.id, prefix))

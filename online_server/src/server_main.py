@@ -48,7 +48,8 @@ class OnlineClientManager(object):
 
         
 class Client(object):
-    IDLE = 0
+    INIT_INFO = 0
+    IDLE = INIT_INFO
     FIGHT_REQ_A = IDLE + 1
     FIGHT_REQ_B = FIGHT_REQ_A + 1
     WAIT_FOR_ANSWER = FIGHT_REQ_B  + 1
@@ -57,10 +58,9 @@ class Client(object):
     def __init__(self, sk):
         global client_id
         self.sk = sk
-        client_id += 1
-        self.id = client_id
+        self.id = -1
         self.name = ''
-        self.state = Client.IDLE
+        self.state = Client.INIT_INFO
         self.cmd_buf = ''
         self.peer_client = None
         self.question_index = 0
@@ -189,28 +189,22 @@ class Client(object):
             self.timeout = None
         
 
-    def get_question(self):
-        resp = OQuestion()
-        resp.statement = 'haha'
-        resp.index = self.question_index
-        self.question_index += 1
-        resp.all = 5
-        resp.options.append('a')
-        resp.options.append('b')
-        resp.options.append('c')
-        resp.options.append('d')
-        resp.right = 0
-        return resp
-
     def deal_cmd(self, cmd_type, buf):
         logger.debug("receive cmd type %d state %d", cmd_type, self.state)
         if cmd_type == CmdType.HEARTBEAT:
             return
-        if len(self.name) == 0:
+        if self.id == -1:
             if cmd_type == CmdType.CLIENT_INFO:
                 cmd = IClientInfo()
                 cmd.ParseFromString(buf)
+                if client_mgr.get(cmd.id):
+                    self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
+                    logger.error("id %d already in system" % cmd.id)
+                    return
                 self.name = cmd.name
+                self.id = cmd.id
+                self.net_type = cmd.net_type
+                self.avatar = cmd.avatar
                 logger.debug("client name %s", cmd.name)
                 return
             else:
@@ -223,6 +217,10 @@ class Client(object):
             cmd.ParseFromString(buf)
             if self.latitude != None:
                 client_mgr.remove_client(self)
+            if client_mgr.get(self.id):
+                logger.error("id %d already in system" % self.id)
+                self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
+                return
             self.latitude = cmd.latitude
             self.longitude = cmd.longitude
             client_mgr.add_client(self)
@@ -239,6 +237,10 @@ class Client(object):
                 u = resp.users.add()
                 u.name = c.name
                 u.id = c.id
+                u.fight_num = 0
+                u.win_num = 0
+                u.avatar = self.avatar
+                u.net_type = self.net_type
 
             self.send_msg(self.build_cmd(CmdType.FETCH_PEER_LIST_RESP, resp))
         elif cmd_type == CmdType.FIGHT_REQ and self.state == Client.IDLE:
@@ -251,6 +253,10 @@ class Client(object):
                 resp = OFightReq()
                 resp.user.id = self.id
                 resp.user.name = self.name
+                resp.user.avatar = self.avatar
+                resp.user.net_type = self.net_type
+                resp.user.fight_num = 0
+                resp.user.win_num = 0
                 client.send_msg(self.build_cmd(CmdType.FIGHT_REQ, resp))
                 client.state = Client.FIGHT_REQ_B
                 self.peer_client = client

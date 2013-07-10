@@ -3,8 +3,12 @@ option java_outer_classname="Models";
 option optimize_for = LITE_RUNTIME;
 
 message User {
-    required int32 id = 1;
+    required uint32 id = 1;
     required string name = 2;
+    required string avatar = 3;
+    required int32 net_type = 4;
+    required int32 fight_num = 5;
+    required int32 win_num = 6;
 }
 
 message CommandMsg {
@@ -13,7 +17,10 @@ message CommandMsg {
 }
 
 message IClientInfo {
-    required string name = 1;
+    required uint32 id = 1;
+    required string name = 2;
+    required string avatar = 3;
+    required int32 net_type = 4;
 }
 
 message IClientLBS {
@@ -44,7 +51,7 @@ message OPeerListResp {
 }
 
 message IFightReq {
-    required int32 id = 1;
+    required uint32 id = 1;
 }
 
 message OFightResp {

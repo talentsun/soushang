@@ -83,6 +83,9 @@ class User(object):
             return
         cmd = IClientInfo()
         cmd.name = name
+        cmd.id = random.randint(1, 10000000)
+        cmd.avatar = 'avatar'
+        cmd.net_type = 1
         self.send_cmd(CmdType.CLIENT_INFO, cmd)
 
     def sendLBS(self):
@@ -120,7 +123,7 @@ class User(object):
         cmd = OPeerListResp()
         cmd.ParseFromString(buf)
         for i in cmd.users:
-            print "one user", i.id
+            print "one user", i.id, i.name
 
     def showFightReq(self, buf):
         cmd = OFightReq()
