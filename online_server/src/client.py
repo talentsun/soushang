@@ -6,11 +6,22 @@ from socket import socket
 import struct
 import time
 import threading
+import random
 
+import urllib2, cookielib
+import urllib, json
+
+from google.protobuf.internal import decoder
+from google.protobuf.internal import encoder
 
 class User(object):
     def __init__(self):
         self.sk = None
+        cj = cookielib.CookieJar()
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+        urllib2.install_opener(opener)
+        self.fight_key = 'jfwang213'
+        self.question_id = 0
         pass
 
     def connect(self):
@@ -34,7 +45,17 @@ class User(object):
         cmd.type = cmd_type
         cmd.content = msg
         msg = cmd.SerializeToString()
-        self.sk.send(struct.pack("!I%ds" % len(msg), len(msg), msg))
+
+        class PrefixWriter(object):
+            def __init__(self):
+                self.msg = ''
+            def write(self, onechr):
+                self.msg = onechr + self.msg
+
+        writer = PrefixWriter()
+        encoder._EncodeVarint(writer.write, len(msg))
+        print len(writer.msg)
+        self.sk.send(writer.msg + msg)
         
     def sendFetchList(self):
         self.send_cmd(CmdType.FETCH_PEER_LIST_REQ, EmptyMsg())
@@ -80,6 +101,20 @@ class User(object):
         cmd.choose = i
         self.send_cmd(CmdType.ANSWER, cmd)
 
+    def fetchQuestion(self):
+        data = urllib.urlencode({'udid':'aaa', 's':'%d' % (self.question_id), 'type': 'lbs_fight', 'fight_key': self.fight_key})
+
+        resp = urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/next.html", data)
+        result = json.loads(resp.read())
+        print result
+        self.question_id = int(result['question']['question_id'])
+        self.question_index = int(result['question']['index'])
+        print "id %d index %d" % (self.question_id, self.question_index)
+        cmd = IAnswer()
+        cmd.index = self.question_index
+        cmd.right = random.randint(0, 1)
+        self.send_cmd(CmdType.ANSWER, cmd)
+
 
     def showFetchList(self, buf):
         cmd = OPeerListResp()
@@ -102,11 +137,9 @@ class User(object):
     def showQuestion(self, buf):
         cmd = OQuestion()
         cmd.ParseFromString(buf)
-        print "question:", cmd.statement
-        print "index:", cmd.index
-        print "all:", cmd.all
-        for op in cmd.options:
-            print op
+        self.fight_key = cmd.fight_key
+        print self.fight_key
+        self.question_id = 0
 
     def showResult(self, buf):
         cmd = OFightResult()
@@ -123,16 +156,29 @@ class User(object):
     def showResp(self):
         while self.sk == None:
             time.sleep(1)
-        
+                
         while True:
             buf = ''
-            while len(buf) < 4:
-                buf += self.sk.recv(4 - len(buf))
-            cmd_len = struct.unpack("!I", buf[0:4])[0]
-            while len(buf) < 4 + cmd_len:
-                buf += self.sk.recv(4 + cmd_len - len(buf))
+            while True:
+                tmpBuf = self.sk.recv(1) # 4 is protobuf string
+                if len(tmpBuf) == 0:
+                    raise Exception, 'close'
+                buf += tmpBuf
+                if ord(tmpBuf[0]) & 0x80 == 0:
+                    break
+
+            cmd_len = decoder._DecodeVarint32(buf, 0)[0]
+            prefix_len = len(buf)
+            print "cmd len", cmd_len
+            while len(buf) < cmd_len + prefix_len:
+                tmpBuf = self.sk.recv(cmd_len + prefix_len - len(buf))
+                if len(tmpBuf) == 0:
+                    raise Exception, 'close'
+                buf += tmpBuf
             cmd = CommandMsg()
-            cmd.ParseFromString(buf[4:])
+            cmd.ParseFromString(buf[prefix_len:])
+
+
             if cmd.type == CmdType.FIGHT_RESP:
                 print "fight resp"
                 self.showFightResp(cmd.content)
@@ -170,6 +216,7 @@ if __name__ == '__main__':
     6:client info
     7:lbs
     8:cancel fight
+    9:fetch question
     '''
     p = threading.Thread(target = u.showResp)
     p.start()
@@ -198,6 +245,8 @@ if __name__ == '__main__':
             u.sendLBS()
         elif i == 8:
             u.sendFightCancel()
+        elif i == 9:
+            u.fetchQuestion()
 
         
 

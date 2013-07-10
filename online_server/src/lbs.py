@@ -1,8 +1,12 @@
 #!/usr/local/bin/python
 #coding=utf8
 
+from utils import *
 import random
 from trie import Trie, TrieNode
+
+
+logger = InitLogger("client_manager", logging.DEBUG, "../log/client_manager.log")
 
 class TestClient(object):
     def __init__(self):
@@ -13,6 +17,7 @@ class LBSClientManager(object):
     def __init__(self):
         self.trie = Trie(4, ord('0'))
         self.max_len = 20
+        self.clients = {}
 
     def show_all_clients(self):
         print "show all clients"
@@ -20,17 +25,20 @@ class LBSClientManager(object):
         for o in objs:
             print o.longitude, o.latitude
 
+    def get(self, id):
+        return self.clients.get(id)
+
     def get_prefix(self, client):
         lon = client.longitude
         lat = client.latitude
         if lon < -180:
-            lon = -180
+            lon = -180.0
         if lon > 180:
-            lon = 180
+            lon = 180.0
         if lat > 90:
-            lat = 90
+            lat = 90.0
         if lat < -90:
-            lat = -90
+            lat = -90.0
 
         lon_min = -180.0
         lon_max = 180.0
@@ -58,12 +66,25 @@ class LBSClientManager(object):
         return ret
 
     def add_client(self, client):
+        if client.id in self.clients:
+            logger.error("id %d already in" % client.id)
+            retunr
+        logger.debug("add client longitude %f latitude %f id %d" % (client.longitude, client.latitude, client.id))
         prefix = self.get_prefix(client)
+        logger.debug("client %d prefix %s" % (client.id, prefix))
         self.trie.add_one(prefix, client)
+        self.clients[client.id] = client
+        
 
     def remove_client(self, client):
+        if client.id not in self.clients:
+            logger.error("id %d not in")
+            return
+
         prefix = self.get_prefix(client)
+        logger.debug("remove client %d longitude %f latitude %f prefix %s" % (client.id, client.longitude, client.latitude, prefix))
         self.trie.remove_one(prefix, client)
+        del self.clients[client.id]
 
     def get_left(self, prefix_num, len):
         if len <= 0:
@@ -158,6 +179,7 @@ class LBSClientManager(object):
         return prefix
 
     def get_near_prefix(self, prefix):
+        logger.debug("get near prefix for %s" % prefix)
         prefix_num = int(prefix, 4)
         near_prefixs = []
         nears = (
@@ -181,6 +203,7 @@ class LBSClientManager(object):
 
 
     def get_near(self, client, num):
+        logger.debug("get near for %d num %d" % (client.id, num))
         res = []
         prefix = self.get_prefix(client)
         while len(prefix) > 0:
@@ -208,6 +231,7 @@ class LBSClientManager(object):
             prefix = prefix[:-1]
 
 
+        logger.debug("get near res %d" % len(res))
         return res
 
 

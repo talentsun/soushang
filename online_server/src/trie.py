@@ -57,7 +57,7 @@ class TrieNode(object):
             cur_chr = ord(prefix[0])
             index = cur_chr - self.base_chr
             if self.sons[index] != None:
-                ret = self.sons[index].remove_son(prefix[1:])
+                ret = self.sons[index].remove_son(prefix[1:], obj)
 
         self.offspring_num -= ret
 

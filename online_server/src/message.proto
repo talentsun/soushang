@@ -22,15 +22,11 @@ message IClientLBS {
 }
 
 message OQuestion {
-    required string statement = 1;
-    repeated string options = 2;
-    required int32 right = 3;
-    required int32 index = 4;
-    required int32 all = 5;
+    required string fight_key = 1;
 }
 message IAnswer {
     required int32 index = 1;
-    required int32 choose = 2;
+    required int32 right = 2;
 }
 message OFightState {
     required int32 all = 1;

@@ -3,6 +3,7 @@
 import struct
 import traceback
 import logging
+import time
 
 from gevent.server import StreamServer
 from gevent import monkey; monkey.patch_socket()
@@ -12,6 +13,10 @@ from message_pb2 import *
 from cmd_type import CmdType
 
 from utils import InitLogger
+from google.protobuf.internal import decoder
+from google.protobuf.internal import encoder
+
+from lbs import LBSClientManager
 
 logger = InitLogger("server_main", logging.DEBUG, "../log/server_main.log")
 
@@ -69,12 +74,8 @@ class Client(object):
         print "%d del" % self.id
 
 
-    def start_question(self):
-        self.question_index = 0
-        self.right = 0
-        self.last_right_choose = 0
-
     def send_msg(self, msg):
+        logger.debug("%d send msg len %d", self.id, len(msg))
         self.sk.send(msg)
 
     def build_cmd(self, cmd_type, cmd):
@@ -83,8 +84,18 @@ class Client(object):
         cmd.type = cmd_type
         cmd.content = msg
         msg = cmd.SerializeToString()
+        
+        class PrefixWriter(object):
+            def __init__(self):
+                self.msg = ''
+            def write(self, onechr):
+                self.msg = onechr + self.msg
 
-        return struct.pack("!I%ds" % len(msg), len(msg), msg)
+
+        writer = PrefixWriter()
+        encoder._EncodeVarint(writer.write, len(msg))
+        return writer.msg + msg
+
 
     def lose_hb(self):
         logger.debug("%d lose hb" % self.id)
@@ -145,21 +156,24 @@ class Client(object):
         pass
 
     def read_and_deal_cmd(self):
-        while len(self.cmd_buf) < 4:
-            tmpBuf = self.sk.recv(4 - len(self.cmd_buf)) # 4 is protobuf string
+        while True:
+            tmpBuf = self.sk.recv(1) # 4 is protobuf string
             if len(tmpBuf) == 0:
                 raise Exception, 'close'
             self.cmd_buf += tmpBuf
+            if ord(tmpBuf[0]) & 0x80 == 0:
+                break
 
-        cmd_len = struct.unpack("!I", self.cmd_buf)[0]
+        cmd_len = decoder._DecodeVarint32(self.cmd_buf, 0)[0]
+        prefix_len = len(self.cmd_buf)
         print "cmd len", cmd_len
-        while len(self.cmd_buf) < cmd_len + 4:
-            tmpBuf = self.sk.recv(cmd_len + 4 - len(self.cmd_buf))
+        while len(self.cmd_buf) < cmd_len + prefix_len:
+            tmpBuf = self.sk.recv(cmd_len + prefix_len - len(self.cmd_buf))
             if len(tmpBuf) == 0:
                 raise Exception, 'close'
             self.cmd_buf += tmpBuf
         cmd = CommandMsg()
-        cmd.ParseFromString(self.cmd_buf[4:])
+        cmd.ParseFromString(self.cmd_buf[prefix_len:])
         print "receive cmd", cmd.type
         self.deal_cmd(cmd.type, cmd.content)
         self.cmd_buf = ''
@@ -207,8 +221,11 @@ class Client(object):
         if cmd_type == CmdType.CLIENT_LBS:
             cmd = IClientLBS()
             cmd.ParseFromString(buf)
+            if self.latitude != None:
+                client_mgr.remove_client(self)
             self.latitude = cmd.latitude
             self.longitude = cmd.longitude
+            client_mgr.add_client(self)
             logger.debug("client lbs lat %f long %f" % (cmd.latitude, cmd.longitude))
         elif cmd_type == CmdType.FETCH_PEER_LIST_REQ:
             if self.latitude == None:
@@ -217,7 +234,7 @@ class Client(object):
                 return
             resp = OPeerListResp()
             logger.debug("client fetch peer list")
-            clients = client_mgr.get_list(self)
+            clients = client_mgr.get_near(self, 5)
             for c in clients:
                 u = resp.users.add()
                 u.name = c.name
@@ -250,12 +267,13 @@ class Client(object):
             req.ParseFromString(buf)
             self.peer_client.cancel_timeout()
             if req.result == 0:
-                self.start_question()
-                self.peer_client.start_question()
-                self.peer_client.send_msg(self.build_cmd(CmdType.QUESTION, self.peer_client.get_question()))
-                self.send_msg(self.build_cmd(CmdType.QUESTION, self.get_question()))
+                question = OQuestion()
+                question.fight_key = "%d_%d_%d" % (self.peer_client.id, self.id, int(time.time()))
+                self.peer_client.send_msg(self.build_cmd(CmdType.QUESTION, question))
+                self.send_msg(self.build_cmd(CmdType.QUESTION, question))
                 self.state = self.peer_client.state = Client.WAIT_FOR_ANSWER
                 self.start_timeout(2 * 60)
+                self.question_index = self.peer_client.question_index = 0
             else:
                 resp = OFightResp()
                 resp.result = 1
@@ -277,16 +295,20 @@ class Client(object):
             self.cancel_timeout()
             req = IAnswer()
             req.ParseFromString(buf)
-            if req.index != self.question_index - 1:
+            if req.index != self.question_index:
+                logger.error("answer is not right index")
                 return
+            self.question_index += 1
+            logger.debug("%d done %d" % (self.id, self.question_index))
             cmd = OFightState()
-            cmd.all = 5
+            cmd.all = 10
             cmd.done = self.question_index
-            if req.choose == self.last_right_choose:
+            if req.right:
                 self.right += 1
             cmd.right = self.right
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_STATE, cmd))
-            if req.index >= 4:
+            if req.index >= 9:
+                logger.debug("%d finish" % self.id)
                 if self.peer_client.state == Client.WAIT_FOR_RESULT:
                     resp = OFightResult()
                     resp.result = 1
@@ -299,24 +321,22 @@ class Client(object):
                     self.state = Client.WAIT_FOR_RESULT
             else:
                 self.start_timeout(2 * 60)
-                self.send_msg(self.build_cmd(CmdType.QUESTION, self.get_question()))
         else:
             self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 
 
 client_id = 0
-client_mgr = OnlineClientManager()
+client_mgr = LBSClientManager()
 
 def main(socket, address):
     global client_mgr
     print "one client", address
     logger.debug("one client %s" % str(address))
     client = Client(socket)
-    client_mgr.add(client)
     hbTimer = None
     while True:
         try:
-            hbTimer = Timeout(60)
+            hbTimer = Timeout(60 * 2)
             hbTimer.start()
             client.read_and_deal_cmd()
             hbTimer.cancel()
@@ -324,7 +344,8 @@ def main(socket, address):
             if t == hbTimer:
                 print "client lose"
                 client.lose_hb()
-                client_mgr.remove(client)
+                if client.latitude != None:
+                    client_mgr.remove_client(client)
                 client = None
                 break
             else:
@@ -338,7 +359,8 @@ def main(socket, address):
             logger.error(traceback.format_exc())
             print "client close"
             client.lose_hb()
-            client_mgr.remove(client)
+            if client.latitude != None:
+                client_mgr.remove_client(client)
             client = None
             break
             
