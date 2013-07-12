@@ -186,25 +186,43 @@ public class EventCompletedActivity extends BaseActivity implements
       
       @Override
       public void onSuccess() {
-        Apis.answer(EventCompletedActivity.this,
-          mApplication.getAnswers(),
-          Config.getAccessToken(EventCompletedActivity.this),
-          null);
-        initLoggedArea(null);
+        mLogin.post(new Runnable() {
+          
+          @Override
+          public void run() {
+            Apis.answer(EventCompletedActivity.this,
+              mApplication.getAnswers(),
+              Config.getAccessToken(EventCompletedActivity.this),
+              null);
+            initLoggedArea(null);
+          }
+        });
       }
       
       @Override
       public void onFail() {
-        Toast.makeText(EventCompletedActivity.this,
-          getResources().getString(R.string.login_failed),
-          Toast.LENGTH_SHORT).show();
+        mLogin.post(new Runnable() {
+          
+          @Override
+          public void run() {
+            Toast.makeText(EventCompletedActivity.this,
+              getResources().getString(R.string.login_failed),
+              Toast.LENGTH_SHORT).show();
+          }
+        });
       }
       
       @Override
       public void onError() {
-        Toast.makeText(EventCompletedActivity.this,
-          getResources().getString(R.string.login_failed),
-          Toast.LENGTH_SHORT).show();
+        mLogin.post(new Runnable() {
+          
+          @Override
+          public void run() {
+            Toast.makeText(EventCompletedActivity.this,
+              getResources().getString(R.string.login_failed),
+              Toast.LENGTH_SHORT).show();
+          }
+        });
       }
     });
 

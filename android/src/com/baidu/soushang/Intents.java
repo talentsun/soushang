@@ -8,9 +8,8 @@ public class Intents {
   
   public static final String ACTION_STARTUP = "com.baidu.soushang.action.STARTUP";
   public static final String ACTION_HEARTBEAT = "com.baidu.soushang.action.HEARTBEAT";
-  public static final String ACTION_BEGIN_UPDATE_PEERS = "com.baidu.soushang.action.BEGIN_UPDATE_PEERS";
   public static final String ACTION_UPDATE_PEERS = "com.baidu.soushang.action.UPDATE_PEERS";
-  public static final String ACTION_END_UPDATE_PEERS = "com.baidu.soushang.action.END_UPDATE_PEERS";
   public static final String ACTION_SHUTDOWN = "com.baidu.soushang.action.SHUTDOWN";
   public static final String ACTION_LBS_STARTUP = "com.baidu.soushang.action.LBS_STARTUP";
+  public static final String ACTION_PEERS_UPDATED = "com.baidu.soushang.action.PEERS_UPDATED";
 }

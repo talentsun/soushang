@@ -17,7 +17,7 @@ message CommandMsg {
 }
 
 message IClientInfo {
-    required uint32 id = 1;
+    required uint64 id = 1;
     required string name = 2;
     required string avatar = 3;
     required int32 net_type = 4;

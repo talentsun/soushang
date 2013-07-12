@@ -2,17 +2,20 @@ package com.baidu.soushang.lbs;
 
 import java.net.InetSocketAddress;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
+import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.lbs.LBSClientRequestClientHandler.ClientListener;
+import com.baidu.soushang.lbs.Models.User;
+import com.baidu.soushang.utils.NetworkUtils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -40,8 +43,11 @@ public class LBSService extends Service {
   private static final int STARTUP = 1;
   private static final int HEARTBEAT = 2;
   private static final int LBS_INFO = 3;
-  private static final int SHUTDOWN = 4;
+  private static final int UPDATE_PEERS = 4;
+  private static final int SHUTDOWN = 5;
+  
   private AlarmManager mAlarmManager;
+  private SouShangApplication mApplication;
   
   private Channel mChannel;
   private ClientBootstrap mClientBootstrap;
@@ -73,6 +79,9 @@ public class LBSService extends Service {
         case LBS_INFO:
           mHandler.sendLBSInfo(mLongitude, mLatitude);
           break;
+        case UPDATE_PEERS:
+          mHandler.sendFetchPeerListReq();
+          break;
         case SHUTDOWN:
           shutdown();
           break;
@@ -98,6 +107,7 @@ public class LBSService extends Service {
   @Override
   public void onCreate() {
     mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    mApplication = (SouShangApplication) getApplication();
     
     mWorker = new HandlerThread("lbs-service");
     mWorker.start();
@@ -120,6 +130,8 @@ public class LBSService extends Service {
       String action = intent.getAction();
       if (Intents.ACTION_HEARTBEAT.equalsIgnoreCase(action)) {
         Message.obtain(mClient, HEARTBEAT).sendToTarget();
+      } else if (Intents.ACTION_UPDATE_PEERS.equalsIgnoreCase(action)) {
+        Message.obtain(mClient, UPDATE_PEERS).sendToTarget();
       }
     }
     
@@ -190,6 +202,15 @@ public class LBSService extends Service {
               LBSService.this.stopSelf();
             }
           }
+
+          @Override
+          public void onPeersUpdated(List<User> peers) {
+            mApplication.setPeers(peers);
+            
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_PEERS_UPDATED);
+            sendBroadcast(intent);
+          }
         });
         
         mStartup = true;
@@ -197,7 +218,10 @@ public class LBSService extends Service {
         startHeartbeat();
 
         if (!TextUtils.isEmpty(Config.getUserName(LBSService.this))) {
-          mHandler.sendClientInfo(Config.getUserName(LBSService.this));
+          Log.d(TAG, Config.getAvatar(LBSService.this));
+          mHandler.sendClientInfo(Config.getUserId(LBSService.this),
+              Config.getUserName(LBSService.this), Config.getAvatar(LBSService.this),
+              NetworkUtils.getNetworkType(LBSService.this));
         } else {
           Log.e(TAG, "no client info");
         }

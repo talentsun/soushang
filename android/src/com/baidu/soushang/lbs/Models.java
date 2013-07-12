@@ -11,13 +11,13 @@ public final class Models {
   public interface UserOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required int32 id = 1;
+    // required uint32 id = 1;
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     boolean hasId();
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     int getId();
 
@@ -35,6 +35,51 @@ public final class Models {
      */
     com.google.protobuf.ByteString
         getNameBytes();
+
+    // required string avatar = 3;
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    boolean hasAvatar();
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    java.lang.String getAvatar();
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getAvatarBytes();
+
+    // required int32 net_type = 4;
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    boolean hasNetType();
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    int getNetType();
+
+    // required int32 fight_num = 5;
+    /**
+     * <code>required int32 fight_num = 5;</code>
+     */
+    boolean hasFightNum();
+    /**
+     * <code>required int32 fight_num = 5;</code>
+     */
+    int getFightNum();
+
+    // required int32 win_num = 6;
+    /**
+     * <code>required int32 win_num = 6;</code>
+     */
+    boolean hasWinNum();
+    /**
+     * <code>required int32 win_num = 6;</code>
+     */
+    int getWinNum();
   }
   /**
    * Protobuf type {@code User}
@@ -81,12 +126,32 @@ public final class Models {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              id_ = input.readInt32();
+              id_ = input.readUInt32();
               break;
             }
             case 18: {
               bitField0_ |= 0x00000002;
               name_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              avatar_ = input.readBytes();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              netType_ = input.readInt32();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              fightNum_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              winNum_ = input.readInt32();
               break;
             }
           }
@@ -116,17 +181,17 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required int32 id = 1;
+    // required uint32 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int id_;
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     public int getId() {
       return id_;
@@ -175,9 +240,104 @@ public final class Models {
       }
     }
 
+    // required string avatar = 3;
+    public static final int AVATAR_FIELD_NUMBER = 3;
+    private java.lang.Object avatar_;
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    public boolean hasAvatar() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    public java.lang.String getAvatar() {
+      java.lang.Object ref = avatar_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          avatar_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAvatarBytes() {
+      java.lang.Object ref = avatar_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        avatar_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required int32 net_type = 4;
+    public static final int NET_TYPE_FIELD_NUMBER = 4;
+    private int netType_;
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    public boolean hasNetType() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    public int getNetType() {
+      return netType_;
+    }
+
+    // required int32 fight_num = 5;
+    public static final int FIGHT_NUM_FIELD_NUMBER = 5;
+    private int fightNum_;
+    /**
+     * <code>required int32 fight_num = 5;</code>
+     */
+    public boolean hasFightNum() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required int32 fight_num = 5;</code>
+     */
+    public int getFightNum() {
+      return fightNum_;
+    }
+
+    // required int32 win_num = 6;
+    public static final int WIN_NUM_FIELD_NUMBER = 6;
+    private int winNum_;
+    /**
+     * <code>required int32 win_num = 6;</code>
+     */
+    public boolean hasWinNum() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>required int32 win_num = 6;</code>
+     */
+    public int getWinNum() {
+      return winNum_;
+    }
+
     private void initFields() {
       id_ = 0;
       name_ = "";
+      avatar_ = "";
+      netType_ = 0;
+      fightNum_ = 0;
+      winNum_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -192,6 +352,22 @@ public final class Models {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasAvatar()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasNetType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasFightNum()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasWinNum()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -200,10 +376,22 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt32(1, id_);
+        output.writeUInt32(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getAvatarBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, netType_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, fightNum_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt32(6, winNum_);
       }
     }
 
@@ -215,11 +403,27 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
+          .computeUInt32Size(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getAvatarBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, netType_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, fightNum_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, winNum_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -316,6 +520,14 @@ public final class Models {
         bitField0_ = (bitField0_ & ~0x00000001);
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
+        avatar_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        netType_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        fightNum_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        winNum_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -347,6 +559,22 @@ public final class Models {
           to_bitField0_ |= 0x00000002;
         }
         result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.avatar_ = avatar_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.netType_ = netType_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.fightNum_ = fightNum_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.winNum_ = winNum_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -361,6 +589,20 @@ public final class Models {
           name_ = other.name_;
           
         }
+        if (other.hasAvatar()) {
+          bitField0_ |= 0x00000004;
+          avatar_ = other.avatar_;
+          
+        }
+        if (other.hasNetType()) {
+          setNetType(other.getNetType());
+        }
+        if (other.hasFightNum()) {
+          setFightNum(other.getFightNum());
+        }
+        if (other.hasWinNum()) {
+          setWinNum(other.getWinNum());
+        }
         return this;
       }
 
@@ -370,6 +612,22 @@ public final class Models {
           return false;
         }
         if (!hasName()) {
+          
+          return false;
+        }
+        if (!hasAvatar()) {
+          
+          return false;
+        }
+        if (!hasNetType()) {
+          
+          return false;
+        }
+        if (!hasFightNum()) {
+          
+          return false;
+        }
+        if (!hasWinNum()) {
           
           return false;
         }
@@ -395,22 +653,22 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required int32 id = 1;
+      // required uint32 id = 1;
       private int id_ ;
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public int getId() {
         return id_;
       }
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public Builder setId(int value) {
         bitField0_ |= 0x00000001;
@@ -419,7 +677,7 @@ public final class Models {
         return this;
       }
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -498,6 +756,179 @@ public final class Models {
   }
   bitField0_ |= 0x00000002;
         name_ = value;
+        
+        return this;
+      }
+
+      // required string avatar = 3;
+      private java.lang.Object avatar_ = "";
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public boolean hasAvatar() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public java.lang.String getAvatar() {
+        java.lang.Object ref = avatar_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          avatar_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAvatarBytes() {
+        java.lang.Object ref = avatar_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          avatar_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public Builder setAvatar(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        avatar_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public Builder clearAvatar() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        avatar_ = getDefaultInstance().getAvatar();
+        
+        return this;
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public Builder setAvatarBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        avatar_ = value;
+        
+        return this;
+      }
+
+      // required int32 net_type = 4;
+      private int netType_ ;
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public boolean hasNetType() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public int getNetType() {
+        return netType_;
+      }
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public Builder setNetType(int value) {
+        bitField0_ |= 0x00000008;
+        netType_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public Builder clearNetType() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        netType_ = 0;
+        
+        return this;
+      }
+
+      // required int32 fight_num = 5;
+      private int fightNum_ ;
+      /**
+       * <code>required int32 fight_num = 5;</code>
+       */
+      public boolean hasFightNum() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required int32 fight_num = 5;</code>
+       */
+      public int getFightNum() {
+        return fightNum_;
+      }
+      /**
+       * <code>required int32 fight_num = 5;</code>
+       */
+      public Builder setFightNum(int value) {
+        bitField0_ |= 0x00000010;
+        fightNum_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 fight_num = 5;</code>
+       */
+      public Builder clearFightNum() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        fightNum_ = 0;
+        
+        return this;
+      }
+
+      // required int32 win_num = 6;
+      private int winNum_ ;
+      /**
+       * <code>required int32 win_num = 6;</code>
+       */
+      public boolean hasWinNum() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>required int32 win_num = 6;</code>
+       */
+      public int getWinNum() {
+        return winNum_;
+      }
+      /**
+       * <code>required int32 win_num = 6;</code>
+       */
+      public Builder setWinNum(int value) {
+        bitField0_ |= 0x00000020;
+        winNum_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 win_num = 6;</code>
+       */
+      public Builder clearWinNum() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        winNum_ = 0;
         
         return this;
       }
@@ -949,20 +1380,55 @@ public final class Models {
   public interface IClientInfoOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required string name = 1;
+    // required uint64 id = 1;
     /**
-     * <code>required string name = 1;</code>
+     * <code>required uint64 id = 1;</code>
+     */
+    boolean hasId();
+    /**
+     * <code>required uint64 id = 1;</code>
+     */
+    long getId();
+
+    // required string name = 2;
+    /**
+     * <code>required string name = 2;</code>
      */
     boolean hasName();
     /**
-     * <code>required string name = 1;</code>
+     * <code>required string name = 2;</code>
      */
     java.lang.String getName();
     /**
-     * <code>required string name = 1;</code>
+     * <code>required string name = 2;</code>
      */
     com.google.protobuf.ByteString
         getNameBytes();
+
+    // required string avatar = 3;
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    boolean hasAvatar();
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    java.lang.String getAvatar();
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getAvatarBytes();
+
+    // required int32 net_type = 4;
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    boolean hasNetType();
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    int getNetType();
   }
   /**
    * Protobuf type {@code IClientInfo}
@@ -1007,9 +1473,24 @@ public final class Models {
               }
               break;
             }
-            case 10: {
+            case 8: {
               bitField0_ |= 0x00000001;
+              id_ = input.readUInt64();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
               name_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              avatar_ = input.readBytes();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              netType_ = input.readInt32();
               break;
             }
           }
@@ -1039,17 +1520,33 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
-    private java.lang.Object name_;
+    // required uint64 id = 1;
+    public static final int ID_FIELD_NUMBER = 1;
+    private long id_;
     /**
-     * <code>required string name = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
-    public boolean hasName() {
+    public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string name = 1;</code>
+     * <code>required uint64 id = 1;</code>
+     */
+    public long getId() {
+      return id_;
+    }
+
+    // required string name = 2;
+    public static final int NAME_FIELD_NUMBER = 2;
+    private java.lang.Object name_;
+    /**
+     * <code>required string name = 2;</code>
+     */
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required string name = 2;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -1066,7 +1563,7 @@ public final class Models {
       }
     }
     /**
-     * <code>required string name = 1;</code>
+     * <code>required string name = 2;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -1082,15 +1579,89 @@ public final class Models {
       }
     }
 
+    // required string avatar = 3;
+    public static final int AVATAR_FIELD_NUMBER = 3;
+    private java.lang.Object avatar_;
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    public boolean hasAvatar() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    public java.lang.String getAvatar() {
+      java.lang.Object ref = avatar_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          avatar_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string avatar = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAvatarBytes() {
+      java.lang.Object ref = avatar_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        avatar_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required int32 net_type = 4;
+    public static final int NET_TYPE_FIELD_NUMBER = 4;
+    private int netType_;
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    public boolean hasNetType() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 net_type = 4;</code>
+     */
+    public int getNetType() {
+      return netType_;
+    }
+
     private void initFields() {
+      id_ = 0L;
       name_ = "";
+      avatar_ = "";
+      netType_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
+      if (!hasId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       if (!hasName()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasAvatar()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasNetType()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -1102,7 +1673,16 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getNameBytes());
+        output.writeUInt64(1, id_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getAvatarBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, netType_);
       }
     }
 
@@ -1114,7 +1694,19 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getNameBytes());
+          .computeUInt64Size(1, id_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getAvatarBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, netType_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -1207,8 +1799,14 @@ public final class Models {
 
       public Builder clear() {
         super.clear();
-        name_ = "";
+        id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        avatar_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        netType_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1235,23 +1833,58 @@ public final class Models {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
         result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.avatar_ = avatar_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.netType_ = netType_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
 
       public Builder mergeFrom(com.baidu.soushang.lbs.Models.IClientInfo other) {
         if (other == com.baidu.soushang.lbs.Models.IClientInfo.getDefaultInstance()) return this;
+        if (other.hasId()) {
+          setId(other.getId());
+        }
         if (other.hasName()) {
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000002;
           name_ = other.name_;
           
+        }
+        if (other.hasAvatar()) {
+          bitField0_ |= 0x00000004;
+          avatar_ = other.avatar_;
+          
+        }
+        if (other.hasNetType()) {
+          setNetType(other.getNetType());
         }
         return this;
       }
 
       public final boolean isInitialized() {
+        if (!hasId()) {
+          
+          return false;
+        }
         if (!hasName()) {
+          
+          return false;
+        }
+        if (!hasAvatar()) {
+          
+          return false;
+        }
+        if (!hasNetType()) {
           
           return false;
         }
@@ -1277,16 +1910,49 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required string name = 1;
-      private java.lang.Object name_ = "";
+      // required uint64 id = 1;
+      private long id_ ;
       /**
-       * <code>required string name = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
-      public boolean hasName() {
+      public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>required uint64 id = 1;</code>
+       */
+      public long getId() {
+        return id_;
+      }
+      /**
+       * <code>required uint64 id = 1;</code>
+       */
+      public Builder setId(long value) {
+        bitField0_ |= 0x00000001;
+        id_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required uint64 id = 1;</code>
+       */
+      public Builder clearId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        id_ = 0L;
+        
+        return this;
+      }
+
+      // required string name = 2;
+      private java.lang.Object name_ = "";
+      /**
+       * <code>required string name = 2;</code>
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required string name = 2;</code>
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -1300,7 +1966,7 @@ public final class Models {
         }
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>required string name = 2;</code>
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -1316,37 +1982,144 @@ public final class Models {
         }
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>required string name = 2;</code>
        */
       public Builder setName(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000002;
         name_ = value;
         
         return this;
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>required string name = 2;</code>
        */
       public Builder clearName() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         name_ = getDefaultInstance().getName();
         
         return this;
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>required string name = 2;</code>
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000002;
         name_ = value;
+        
+        return this;
+      }
+
+      // required string avatar = 3;
+      private java.lang.Object avatar_ = "";
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public boolean hasAvatar() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public java.lang.String getAvatar() {
+        java.lang.Object ref = avatar_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          avatar_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAvatarBytes() {
+        java.lang.Object ref = avatar_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          avatar_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public Builder setAvatar(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        avatar_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public Builder clearAvatar() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        avatar_ = getDefaultInstance().getAvatar();
+        
+        return this;
+      }
+      /**
+       * <code>required string avatar = 3;</code>
+       */
+      public Builder setAvatarBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        avatar_ = value;
+        
+        return this;
+      }
+
+      // required int32 net_type = 4;
+      private int netType_ ;
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public boolean hasNetType() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public int getNetType() {
+        return netType_;
+      }
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public Builder setNetType(int value) {
+        bitField0_ |= 0x00000008;
+        netType_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 net_type = 4;</code>
+       */
+      public Builder clearNetType() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        netType_ = 0;
         
         return this;
       }
@@ -1795,70 +2568,20 @@ public final class Models {
   public interface OQuestionOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required string statement = 1;
+    // required string fight_key = 1;
     /**
-     * <code>required string statement = 1;</code>
+     * <code>required string fight_key = 1;</code>
      */
-    boolean hasStatement();
+    boolean hasFightKey();
     /**
-     * <code>required string statement = 1;</code>
+     * <code>required string fight_key = 1;</code>
      */
-    java.lang.String getStatement();
+    java.lang.String getFightKey();
     /**
-     * <code>required string statement = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getStatementBytes();
-
-    // repeated string options = 2;
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    java.util.List<java.lang.String>
-    getOptionsList();
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    int getOptionsCount();
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    java.lang.String getOptions(int index);
-    /**
-     * <code>repeated string options = 2;</code>
+     * <code>required string fight_key = 1;</code>
      */
     com.google.protobuf.ByteString
-        getOptionsBytes(int index);
-
-    // required int32 right = 3;
-    /**
-     * <code>required int32 right = 3;</code>
-     */
-    boolean hasRight();
-    /**
-     * <code>required int32 right = 3;</code>
-     */
-    int getRight();
-
-    // required int32 index = 4;
-    /**
-     * <code>required int32 index = 4;</code>
-     */
-    boolean hasIndex();
-    /**
-     * <code>required int32 index = 4;</code>
-     */
-    int getIndex();
-
-    // required int32 all = 5;
-    /**
-     * <code>required int32 all = 5;</code>
-     */
-    boolean hasAll();
-    /**
-     * <code>required int32 all = 5;</code>
-     */
-    int getAll();
+        getFightKeyBytes();
   }
   /**
    * Protobuf type {@code OQuestion}
@@ -1905,30 +2628,7 @@ public final class Models {
             }
             case 10: {
               bitField0_ |= 0x00000001;
-              statement_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                options_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              options_.add(input.readBytes());
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000002;
-              right_ = input.readInt32();
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000004;
-              index_ = input.readInt32();
-              break;
-            }
-            case 40: {
-              bitField0_ |= 0x00000008;
-              all_ = input.readInt32();
+              fightKey_ = input.readBytes();
               break;
             }
           }
@@ -1939,9 +2639,6 @@ public final class Models {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          options_ = new com.google.protobuf.UnmodifiableLazyStringList(options_);
-        }
         makeExtensionsImmutable();
       }
     }
@@ -1961,20 +2658,20 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required string statement = 1;
-    public static final int STATEMENT_FIELD_NUMBER = 1;
-    private java.lang.Object statement_;
+    // required string fight_key = 1;
+    public static final int FIGHT_KEY_FIELD_NUMBER = 1;
+    private java.lang.Object fightKey_;
     /**
-     * <code>required string statement = 1;</code>
+     * <code>required string fight_key = 1;</code>
      */
-    public boolean hasStatement() {
+    public boolean hasFightKey() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string statement = 1;</code>
+     * <code>required string fight_key = 1;</code>
      */
-    public java.lang.String getStatement() {
-      java.lang.Object ref = statement_;
+    public java.lang.String getFightKey() {
+      java.lang.Object ref = fightKey_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
@@ -1982,131 +2679,37 @@ public final class Models {
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
-          statement_ = s;
+          fightKey_ = s;
         }
         return s;
       }
     }
     /**
-     * <code>required string statement = 1;</code>
+     * <code>required string fight_key = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getStatementBytes() {
-      java.lang.Object ref = statement_;
+        getFightKeyBytes() {
+      java.lang.Object ref = fightKey_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        statement_ = b;
+        fightKey_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
-    // repeated string options = 2;
-    public static final int OPTIONS_FIELD_NUMBER = 2;
-    private com.google.protobuf.LazyStringList options_;
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    public java.util.List<java.lang.String>
-        getOptionsList() {
-      return options_;
-    }
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    public int getOptionsCount() {
-      return options_.size();
-    }
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    public java.lang.String getOptions(int index) {
-      return options_.get(index);
-    }
-    /**
-     * <code>repeated string options = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getOptionsBytes(int index) {
-      return options_.getByteString(index);
-    }
-
-    // required int32 right = 3;
-    public static final int RIGHT_FIELD_NUMBER = 3;
-    private int right_;
-    /**
-     * <code>required int32 right = 3;</code>
-     */
-    public boolean hasRight() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required int32 right = 3;</code>
-     */
-    public int getRight() {
-      return right_;
-    }
-
-    // required int32 index = 4;
-    public static final int INDEX_FIELD_NUMBER = 4;
-    private int index_;
-    /**
-     * <code>required int32 index = 4;</code>
-     */
-    public boolean hasIndex() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required int32 index = 4;</code>
-     */
-    public int getIndex() {
-      return index_;
-    }
-
-    // required int32 all = 5;
-    public static final int ALL_FIELD_NUMBER = 5;
-    private int all_;
-    /**
-     * <code>required int32 all = 5;</code>
-     */
-    public boolean hasAll() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    /**
-     * <code>required int32 all = 5;</code>
-     */
-    public int getAll() {
-      return all_;
-    }
-
     private void initFields() {
-      statement_ = "";
-      options_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      right_ = 0;
-      index_ = 0;
-      all_ = 0;
+      fightKey_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
-      if (!hasStatement()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasRight()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasIndex()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasAll()) {
+      if (!hasFightKey()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -2118,19 +2721,7 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getStatementBytes());
-      }
-      for (int i = 0; i < options_.size(); i++) {
-        output.writeBytes(2, options_.getByteString(i));
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(3, right_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt32(4, index_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeInt32(5, all_);
+        output.writeBytes(1, getFightKeyBytes());
       }
     }
 
@@ -2142,28 +2733,7 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getStatementBytes());
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < options_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(options_.getByteString(i));
-        }
-        size += dataSize;
-        size += 1 * getOptionsList().size();
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, right_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, index_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, all_);
+          .computeBytesSize(1, getFightKeyBytes());
       }
       memoizedSerializedSize = size;
       return size;
@@ -2256,16 +2826,8 @@ public final class Models {
 
       public Builder clear() {
         super.clear();
-        statement_ = "";
+        fightKey_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        options_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        right_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        index_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000008);
-        all_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -2292,72 +2854,23 @@ public final class Models {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.statement_ = statement_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          options_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              options_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.options_ = options_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.right_ = right_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.index_ = index_;
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000008;
-        }
-        result.all_ = all_;
+        result.fightKey_ = fightKey_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
 
       public Builder mergeFrom(com.baidu.soushang.lbs.Models.OQuestion other) {
         if (other == com.baidu.soushang.lbs.Models.OQuestion.getDefaultInstance()) return this;
-        if (other.hasStatement()) {
+        if (other.hasFightKey()) {
           bitField0_ |= 0x00000001;
-          statement_ = other.statement_;
+          fightKey_ = other.fightKey_;
           
-        }
-        if (!other.options_.isEmpty()) {
-          if (options_.isEmpty()) {
-            options_ = other.options_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureOptionsIsMutable();
-            options_.addAll(other.options_);
-          }
-          
-        }
-        if (other.hasRight()) {
-          setRight(other.getRight());
-        }
-        if (other.hasIndex()) {
-          setIndex(other.getIndex());
-        }
-        if (other.hasAll()) {
-          setAll(other.getAll());
         }
         return this;
       }
 
       public final boolean isInitialized() {
-        if (!hasStatement()) {
-          
-          return false;
-        }
-        if (!hasRight()) {
-          
-          return false;
-        }
-        if (!hasIndex()) {
-          
-          return false;
-        }
-        if (!hasAll()) {
+        if (!hasFightKey()) {
           
           return false;
         }
@@ -2383,268 +2896,76 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required string statement = 1;
-      private java.lang.Object statement_ = "";
+      // required string fight_key = 1;
+      private java.lang.Object fightKey_ = "";
       /**
-       * <code>required string statement = 1;</code>
+       * <code>required string fight_key = 1;</code>
        */
-      public boolean hasStatement() {
+      public boolean hasFightKey() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string statement = 1;</code>
+       * <code>required string fight_key = 1;</code>
        */
-      public java.lang.String getStatement() {
-        java.lang.Object ref = statement_;
+      public java.lang.String getFightKey() {
+        java.lang.Object ref = fightKey_;
         if (!(ref instanceof java.lang.String)) {
           java.lang.String s = ((com.google.protobuf.ByteString) ref)
               .toStringUtf8();
-          statement_ = s;
+          fightKey_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>required string statement = 1;</code>
+       * <code>required string fight_key = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getStatementBytes() {
-        java.lang.Object ref = statement_;
+          getFightKeyBytes() {
+        java.lang.Object ref = fightKey_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          statement_ = b;
+          fightKey_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>required string statement = 1;</code>
+       * <code>required string fight_key = 1;</code>
        */
-      public Builder setStatement(
+      public Builder setFightKey(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000001;
-        statement_ = value;
+        fightKey_ = value;
         
         return this;
       }
       /**
-       * <code>required string statement = 1;</code>
+       * <code>required string fight_key = 1;</code>
        */
-      public Builder clearStatement() {
+      public Builder clearFightKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        statement_ = getDefaultInstance().getStatement();
+        fightKey_ = getDefaultInstance().getFightKey();
         
         return this;
       }
       /**
-       * <code>required string statement = 1;</code>
+       * <code>required string fight_key = 1;</code>
        */
-      public Builder setStatementBytes(
+      public Builder setFightKeyBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000001;
-        statement_ = value;
-        
-        return this;
-      }
-
-      // repeated string options = 2;
-      private com.google.protobuf.LazyStringList options_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureOptionsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          options_ = new com.google.protobuf.LazyStringArrayList(options_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public java.util.List<java.lang.String>
-          getOptionsList() {
-        return java.util.Collections.unmodifiableList(options_);
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public int getOptionsCount() {
-        return options_.size();
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public java.lang.String getOptions(int index) {
-        return options_.get(index);
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getOptionsBytes(int index) {
-        return options_.getByteString(index);
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public Builder setOptions(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureOptionsIsMutable();
-        options_.set(index, value);
-        
-        return this;
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public Builder addOptions(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureOptionsIsMutable();
-        options_.add(value);
-        
-        return this;
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public Builder addAllOptions(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureOptionsIsMutable();
-        super.addAll(values, options_);
-        
-        return this;
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public Builder clearOptions() {
-        options_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        
-        return this;
-      }
-      /**
-       * <code>repeated string options = 2;</code>
-       */
-      public Builder addOptionsBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureOptionsIsMutable();
-        options_.add(value);
-        
-        return this;
-      }
-
-      // required int32 right = 3;
-      private int right_ ;
-      /**
-       * <code>required int32 right = 3;</code>
-       */
-      public boolean hasRight() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required int32 right = 3;</code>
-       */
-      public int getRight() {
-        return right_;
-      }
-      /**
-       * <code>required int32 right = 3;</code>
-       */
-      public Builder setRight(int value) {
-        bitField0_ |= 0x00000004;
-        right_ = value;
-        
-        return this;
-      }
-      /**
-       * <code>required int32 right = 3;</code>
-       */
-      public Builder clearRight() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        right_ = 0;
-        
-        return this;
-      }
-
-      // required int32 index = 4;
-      private int index_ ;
-      /**
-       * <code>required int32 index = 4;</code>
-       */
-      public boolean hasIndex() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      /**
-       * <code>required int32 index = 4;</code>
-       */
-      public int getIndex() {
-        return index_;
-      }
-      /**
-       * <code>required int32 index = 4;</code>
-       */
-      public Builder setIndex(int value) {
-        bitField0_ |= 0x00000008;
-        index_ = value;
-        
-        return this;
-      }
-      /**
-       * <code>required int32 index = 4;</code>
-       */
-      public Builder clearIndex() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        index_ = 0;
-        
-        return this;
-      }
-
-      // required int32 all = 5;
-      private int all_ ;
-      /**
-       * <code>required int32 all = 5;</code>
-       */
-      public boolean hasAll() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-      /**
-       * <code>required int32 all = 5;</code>
-       */
-      public int getAll() {
-        return all_;
-      }
-      /**
-       * <code>required int32 all = 5;</code>
-       */
-      public Builder setAll(int value) {
-        bitField0_ |= 0x00000010;
-        all_ = value;
-        
-        return this;
-      }
-      /**
-       * <code>required int32 all = 5;</code>
-       */
-      public Builder clearAll() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        all_ = 0;
+        fightKey_ = value;
         
         return this;
       }
@@ -2673,15 +2994,15 @@ public final class Models {
      */
     int getIndex();
 
-    // required int32 choose = 2;
+    // required int32 right = 2;
     /**
-     * <code>required int32 choose = 2;</code>
+     * <code>required int32 right = 2;</code>
      */
-    boolean hasChoose();
+    boolean hasRight();
     /**
-     * <code>required int32 choose = 2;</code>
+     * <code>required int32 right = 2;</code>
      */
-    int getChoose();
+    int getRight();
   }
   /**
    * Protobuf type {@code IAnswer}
@@ -2733,7 +3054,7 @@ public final class Models {
             }
             case 16: {
               bitField0_ |= 0x00000002;
-              choose_ = input.readInt32();
+              right_ = input.readInt32();
               break;
             }
           }
@@ -2779,25 +3100,25 @@ public final class Models {
       return index_;
     }
 
-    // required int32 choose = 2;
-    public static final int CHOOSE_FIELD_NUMBER = 2;
-    private int choose_;
+    // required int32 right = 2;
+    public static final int RIGHT_FIELD_NUMBER = 2;
+    private int right_;
     /**
-     * <code>required int32 choose = 2;</code>
+     * <code>required int32 right = 2;</code>
      */
-    public boolean hasChoose() {
+    public boolean hasRight() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 choose = 2;</code>
+     * <code>required int32 right = 2;</code>
      */
-    public int getChoose() {
-      return choose_;
+    public int getRight() {
+      return right_;
     }
 
     private void initFields() {
       index_ = 0;
-      choose_ = 0;
+      right_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2808,7 +3129,7 @@ public final class Models {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasChoose()) {
+      if (!hasRight()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -2823,7 +3144,7 @@ public final class Models {
         output.writeInt32(1, index_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(2, choose_);
+        output.writeInt32(2, right_);
       }
     }
 
@@ -2839,7 +3160,7 @@ public final class Models {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, choose_);
+          .computeInt32Size(2, right_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -2934,7 +3255,7 @@ public final class Models {
         super.clear();
         index_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        choose_ = 0;
+        right_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
@@ -2966,7 +3287,7 @@ public final class Models {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.choose_ = choose_;
+        result.right_ = right_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -2976,8 +3297,8 @@ public final class Models {
         if (other.hasIndex()) {
           setIndex(other.getIndex());
         }
-        if (other.hasChoose()) {
-          setChoose(other.getChoose());
+        if (other.hasRight()) {
+          setRight(other.getRight());
         }
         return this;
       }
@@ -2987,7 +3308,7 @@ public final class Models {
           
           return false;
         }
-        if (!hasChoose()) {
+        if (!hasRight()) {
           
           return false;
         }
@@ -3046,35 +3367,35 @@ public final class Models {
         return this;
       }
 
-      // required int32 choose = 2;
-      private int choose_ ;
+      // required int32 right = 2;
+      private int right_ ;
       /**
-       * <code>required int32 choose = 2;</code>
+       * <code>required int32 right = 2;</code>
        */
-      public boolean hasChoose() {
+      public boolean hasRight() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 choose = 2;</code>
+       * <code>required int32 right = 2;</code>
        */
-      public int getChoose() {
-        return choose_;
+      public int getRight() {
+        return right_;
       }
       /**
-       * <code>required int32 choose = 2;</code>
+       * <code>required int32 right = 2;</code>
        */
-      public Builder setChoose(int value) {
+      public Builder setRight(int value) {
         bitField0_ |= 0x00000002;
-        choose_ = value;
+        right_ = value;
         
         return this;
       }
       /**
-       * <code>required int32 choose = 2;</code>
+       * <code>required int32 right = 2;</code>
        */
-      public Builder clearChoose() {
+      public Builder clearRight() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        choose_ = 0;
+        right_ = 0;
         
         return this;
       }
@@ -4466,13 +4787,13 @@ public final class Models {
   public interface IFightReqOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required int32 id = 1;
+    // required uint32 id = 1;
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     boolean hasId();
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     int getId();
   }
@@ -4521,7 +4842,7 @@ public final class Models {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              id_ = input.readInt32();
+              id_ = input.readUInt32();
               break;
             }
           }
@@ -4551,17 +4872,17 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required int32 id = 1;
+    // required uint32 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int id_;
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required int32 id = 1;</code>
+     * <code>required uint32 id = 1;</code>
      */
     public int getId() {
       return id_;
@@ -4587,7 +4908,7 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt32(1, id_);
+        output.writeUInt32(1, id_);
       }
     }
 
@@ -4599,7 +4920,7 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
+          .computeUInt32Size(1, id_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -4760,22 +5081,22 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required int32 id = 1;
+      // required uint32 id = 1;
       private int id_ ;
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public int getId() {
         return id_;
       }
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public Builder setId(int value) {
         bitField0_ |= 0x00000001;
@@ -4784,7 +5105,7 @@ public final class Models {
         return this;
       }
       /**
-       * <code>required int32 id = 1;</code>
+       * <code>required uint32 id = 1;</code>
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);

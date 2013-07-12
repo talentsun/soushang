@@ -12,7 +12,6 @@ import com.baidu.api.BaiduDialogError;
 import com.baidu.api.BaiduException;
 import com.baidu.api.AsyncBaiduRunner.RequestListener;
 import com.baidu.api.BaiduDialog.BaiduDialogListener;
-import com.baidu.soushang.activities.EventCompletedActivity;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
@@ -30,14 +29,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.CookieSyncManager;
-import android.widget.Toast;
 
 public class SouShangApplication extends Application {
   public static final String FONT = "fonts/yuppy-sc.otf";
   
   private static final String APP_KEY = "VKgVRtN9Lja2Uu4mcRumpkTY";
   private static final String APP_SECRET = "Fnp8AQYSp9jR7G9RluVbgBxqmz7bQexH";
-  private static final String USERINFO_URL = "https://openapi.baidu.com/rest/2.0/passport/users/getInfo";
+  private static final String USERINFO_URL = "https://openapi.baidu.com/rest/2.0/passport/users/getLoggedInUser";
   
   private List<Answer> mAnswers;
   public void setAnswers(List<Answer> answers) {
@@ -153,34 +151,45 @@ public class SouShangApplication extends Application {
       
       @Override
       public void onIOException(IOException arg0) {
-        Config.setUserName(SouShangApplication.this, SystemUtils.getDeviceName(SouShangApplication.this));
+        updateUserInfoError();
       }
       
       @Override
       public void onComplete(String arg0) {
+        Log.d("userInfo", arg0);
         try {
           JSONObject obj = new JSONObject(arg0);
-          Config.setUserName(SouShangApplication.this, obj.getString("username"));
+          Config.setUserName(SouShangApplication.this, obj.getString("uname"));
+          Config.setAvatar(SouShangApplication.this, "http://tb.himg.baidu.com/sys/portrait/item/" + obj.getString("portrait"));
+          Config.setUserId(SouShangApplication.this, obj.getLong("uid"));
+          Log.d("userId", obj.getLong("uid") + "");
           
           Intent lbsIntent = new Intent(SouShangApplication.this, LBSService.class);
-          SouShangApplication.this.startService(lbsIntent);
+          startService(lbsIntent);
+          
+          if (mLoginListener != null) {
+            mLoginListener.onSuccess();
+          }
         } catch (Exception e) {
-          Config.setUserName(SouShangApplication.this, SystemUtils.getDeviceName(SouShangApplication.this));
-        }
-        
-        if (mLoginListener != null) {
-          mLoginListener.onSuccess();
+          updateUserInfoError();
         }
       }
       
       @Override
       public void onBaiduException(BaiduException arg0) {
-        Config.setUserName(SouShangApplication.this, SystemUtils.getDeviceName(SouShangApplication.this));
-        if (mLoginListener != null) {
-          mLoginListener.onSuccess();
-        }
+        updateUserInfoError();
       }
     });
+  }
+
+  private void updateUserInfoError() {
+    Config.setUserName(SouShangApplication.this, SystemUtils.getDeviceName(SouShangApplication.this));
+    Config.setAvatar(SouShangApplication.this, "http://tb.himg.baidu.com/sys/portrait/item/");
+    Config.setUserId(SouShangApplication.this, 0);
+    
+    if (mLoginListener != null) {
+      mLoginListener.onError();
+    }
   }
 
 }

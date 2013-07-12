@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class Config {
   public static final String PREFS_NAME = "com.baidu.soushang";
@@ -14,6 +15,8 @@ public class Config {
   public static final String KEY_LATEST_NEWS_DATE = "latest_news_date";
   public static final String KEY_UDID = "udid";
   public static final String KEY_USERNAME = "user_name";
+  public static final String KEY_AVATAR = "avatar";
+  public static final String KEY_USERID = "user_id";
   
   public static SharedPreferences getConfigs(Context context) {
     return context.getSharedPreferences(PREFS_NAME, 0);
@@ -72,6 +75,30 @@ public class Config {
   public static String getUserName(Context context) {
     SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
     return settings.getString(KEY_USERNAME, null);
+  }
+  
+  public static void setAvatar(Context context, String avatar) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    Editor editor = settings.edit();
+    editor.putString(KEY_AVATAR, avatar);
+    editor.commit();
+  }
+  
+  public static String getAvatar(Context context) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    return settings.getString(KEY_AVATAR, null);
+  }
+  
+  public static void setUserId(Context context, long userId) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    Editor editor = settings.edit();
+    editor.putLong(KEY_USERID, userId);
+    editor.commit();
+  }
+  
+  public static long getUserId(Context context) {
+    SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+    return settings.getLong(KEY_USERID, 0);
   }
   
   public static String getUDID(Context context) {

@@ -125,8 +125,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         @Override
         public void onResults(CommonResponse arg0) {
           if (arg0 == null || arg0.getRetCode() != 0) {
-            Config.removeAccessToken(HomeActivity.this);
-            Config.setLogged(HomeActivity.this, false);
             notLogged();
           } else {
             logged();
@@ -141,6 +139,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     } else {
       notLogged();
     }
+    
+    if (Config.isLogged(this)) {
+      Intent lbsIntent = new Intent(this, LBSService.class);
+      startService(lbsIntent);
+    }
 
     super.onCreate(arg0);
 
@@ -150,16 +153,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   }
   
   private void logged() {
-    Log.d("home", "logged");
     mLogin.setText(Config.getUserName(HomeActivity.this));
     mLogin.setEnabled(false);
-    
-    Intent lbsIntent = new Intent(this, LBSService.class);
-    startService(lbsIntent);
   }
   
   private void notLogged() {
-    Log.d("home", "not logged");
+    Config.removeAccessToken(HomeActivity.this);
+    Config.setLogged(HomeActivity.this, false);
     
     mLogin.setText(getResources().getText(R.string.not_logged));
     mLogin.setEnabled(true);

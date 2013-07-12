@@ -51,4 +51,6 @@
     
     <string name="no_peers">周围没有朋友，快邀请你的好友加入！</string>
     <string name="lbs_event_need_logged">1v1挑战赛需要登录之后才可以玩，赶快登录吧！</string>
+    <string name="event_count">比赛次数：%1$d</string>
+    <string name="win_rate">胜率：%1$d%%</string>
 </resources>

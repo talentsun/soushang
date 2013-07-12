@@ -1,5 +1,7 @@
 package com.baidu.soushang.lbs;
 
+import java.util.List;
+
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -15,6 +17,9 @@ import com.baidu.soushang.lbs.Models.IClientInfo;
 import com.baidu.soushang.lbs.Models.IClientLBS;
 import com.baidu.soushang.lbs.Models.IFightReq;
 import com.baidu.soushang.lbs.Models.IFightResp;
+import com.baidu.soushang.lbs.Models.OPeerListResp;
+import com.baidu.soushang.lbs.Models.User;
+import com.baidu.soushang.utils.NetworkUtils;
 
 public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler {
   private volatile Channel mChannel;
@@ -38,6 +43,7 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
   
   public interface ClientListener {
     public void onClosed();
+    public void onPeersUpdated(List<User> peers);
   }
   
   private ClientListener mListener;
@@ -66,7 +72,15 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     
     if (e.getMessage() != null && e.getMessage() instanceof CommandMsg) {
       CommandMsg msg = (CommandMsg) e.getMessage();
-      Log.d(TAG, "" + msg.getType());
+      Log.d(TAG, msg.getType() + "");
+      switch (msg.getType()) {
+        case FETCH_PEER_LIST_RESP:
+          OPeerListResp resp = OPeerListResp.parseFrom(msg.getContent());
+          if (mListener != null) {
+            mListener.onPeersUpdated(resp.getUsersList());
+          }
+          break;
+      }
     }
     
     super.messageReceived(ctx, e);
@@ -125,11 +139,14 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     mChannel.write(msgBuilder.build());
   }
   
-  public void sendClientInfo(String clientName) {
+  public void sendClientInfo(long userId, String username, String avatar, int networkType) {
     Log.d(TAG, "send client info");
     
     IClientInfo.Builder builder = IClientInfo.newBuilder();
-    builder.setName(clientName);
+    builder.setName(username);
+    builder.setId(userId);
+    builder.setAvatar(avatar);
+    builder.setNetType(networkType);
     
     CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
     msgBuilder.setType(CLIENT_INFO);

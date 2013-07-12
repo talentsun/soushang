@@ -15,6 +15,8 @@
         android:id="@+id/peers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:clipToPadding="false"
         android:cacheColorHint="@android:color/transparent"
         android:listSelector="#00000000">
@@ -23,7 +25,9 @@
     <LinearLayout 
         android:id="@android:id/empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="140dp"
+        android:gravity="center_vertical|center_horizontal">
         <TextView
             android:id="@+id/no_peers"
             android:layout_width="wrap_content"
