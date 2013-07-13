@@ -13,13 +13,17 @@ import android.util.Log;
 
 import com.baidu.soushang.lbs.Models.CommandMsg;
 import com.baidu.soushang.lbs.Models.EmptyMsg;
+import com.baidu.soushang.lbs.Models.IAnswer;
 import com.baidu.soushang.lbs.Models.IClientInfo;
 import com.baidu.soushang.lbs.Models.IClientLBS;
 import com.baidu.soushang.lbs.Models.IFightReq;
 import com.baidu.soushang.lbs.Models.IFightResp;
 import com.baidu.soushang.lbs.Models.OFightReq;
 import com.baidu.soushang.lbs.Models.OFightResp;
+import com.baidu.soushang.lbs.Models.OFightResult;
+import com.baidu.soushang.lbs.Models.OFightState;
 import com.baidu.soushang.lbs.Models.OPeerListResp;
+import com.baidu.soushang.lbs.Models.OQuestion;
 import com.baidu.soushang.lbs.Models.User;
 
 public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler {
@@ -48,6 +52,9 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     public void onFightReq(User peer);
     public void onFightResp(int result);
     public void onFightCancel();
+    public void onFightBegin(String fightKey);
+    public void onFighting(int right, int done, int total);
+    public void onFightEnd(int result, int myPoint, int myTime, int myPointDelta, int myWinRate, int otherPoint, int otherTime);
   }
   
   private ClientListener mListener;
@@ -99,6 +106,24 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
         case FIGHT_CANCEL:
           if (mListener != null) {
             mListener.onFightCancel();
+          }
+          break;
+        case QUESTION:
+          OQuestion questionResp = OQuestion.parseFrom(msg.getContent());
+          if (mListener != null) {
+            mListener.onFightBegin(questionResp.getFightKey());
+          }
+          break;
+        case FIGHT_STATE:
+          OFightState fightState = OFightState.parseFrom(msg.getContent());
+          if (mListener != null) {
+            mListener.onFighting(fightState.getRight(), fightState.getDone(), fightState.getAll());
+          }
+          break;
+        case FIGHT_RESULT:
+          OFightResult fightResult = OFightResult.parseFrom(msg.getContent());
+          if (mListener != null) {
+            mListener.onFightEnd(fightResult.getResult(), 0, 0, 0, 0, 0, 0);
           }
           break;
       }
@@ -196,6 +221,30 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
     msgBuilder.setType(CLIENT_LBS);
     msgBuilder.setContent(builder.build().toByteString());
+    
+    mChannel.write(msgBuilder.build());
+  }
+  
+  public void sendAnswer(int index, int right) {
+    Log.d(TAG, "send answer");
+    
+    IAnswer.Builder builder = IAnswer.newBuilder();
+    builder.setIndex(index);
+    builder.setRight(right);
+    
+    CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
+    msgBuilder.setType(ANSWER);
+    msgBuilder.setContent(builder.build().toByteString());
+    
+    mChannel.write(msgBuilder.build());
+  }
+  
+  public void sendFightQuit() {
+    Log.d(TAG, "send fight quit");
+    
+    CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
+    msgBuilder.setType(FIGHT_QUIT);
+    msgBuilder.setContent(EmptyMsg.newBuilder().build().toByteString());
     
     mChannel.write(msgBuilder.build());
   }

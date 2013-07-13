@@ -4,6 +4,7 @@ import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
+import com.baidu.soushang.activities.QuestionActivity;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
 import com.baidu.soushang.utils.NetworkUtils;
@@ -71,13 +72,20 @@ public class FightDialog extends Dialog implements View.OnClickListener {
             Toast.makeText(getContext(), String.format(getContext().getString(R.string.be_rejected), mApplication.getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
             mApplication.setCurrentPeer(null);
             cancel();
-          } else {
-            //ACCEPT
           }
         } else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
           Toast.makeText(getContext(), String.format(getContext().getString(R.string.be_cancelled), mApplication.getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
           mApplication.setCurrentPeer(null);
           cancel();
+        } else if (Intents.ACTION_FIGHT_BEGIN.equalsIgnoreCase(action)) {
+          //TODO add time counter
+          
+          dismiss();
+          
+          Intent questionIntent = new Intent(getContext(), QuestionActivity.class);
+          questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE, Intents.EVENT_TYPE_LBS);
+          questionIntent.putExtra(Intents.EXTRA_FIGHT_KEY, intent.getStringExtra(Intents.EXTRA_FIGHT_KEY));
+          getContext().startActivity(questionIntent);
         }
       }
     }
@@ -168,6 +176,7 @@ public class FightDialog extends Dialog implements View.OnClickListener {
     IntentFilter filter = new IntentFilter();
     filter.addAction(Intents.ACTION_FIGHT_RESP);
     filter.addAction(Intents.ACTION_FIGHT_CANCEL);
+    filter.addAction(Intents.ACTION_FIGHT_BEGIN);
     getContext().registerReceiver(mFightRespReceiver, filter);
     
     super.onStart();

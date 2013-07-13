@@ -47,7 +47,9 @@ public class LBSService extends Service {
   private static final int FIGHT_REQ = 5;
   private static final int FIGHT_CANCEL = 6;
   private static final int FIGHT_RESP = 7;
-  private static final int SHUTDOWN = 8;
+  private static final int ANSWER = 8;
+  private static final int FIGHT_QUIT = 9;
+  private static final int SHUTDOWN = 10;
   
   private AlarmManager mAlarmManager;
   private SouShangApplication mApplication;
@@ -93,6 +95,12 @@ public class LBSService extends Service {
           break;
         case FIGHT_RESP:
           mHandler.sendFightResp(msg.arg1);
+          break;
+        case ANSWER:
+          mHandler.sendAnswer(msg.arg1, msg.arg2);
+          break;
+        case FIGHT_QUIT:
+          mHandler.sendFightQuit();
           break;
         case SHUTDOWN:
           shutdown();
@@ -151,6 +159,11 @@ public class LBSService extends Service {
       } else if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
         Message msg = Message.obtain(mClient, FIGHT_RESP);
         msg.arg1 = intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 0);
+        msg.sendToTarget();
+      } else if (Intents.ACTION_ANSWER.equalsIgnoreCase(action)) {
+        Message msg = Message.obtain(mClient, ANSWER);
+        msg.arg1 = intent.getIntExtra(Intents.EXTRA_INDEX, -1);
+        msg.arg2 = intent.getIntExtra(Intents.EXTRA_RIGHT, -1);
         msg.sendToTarget();
       }
     }
@@ -253,6 +266,39 @@ public class LBSService extends Service {
           public void onFightCancel() {
             Intent intent = new Intent();
             intent.setAction(Intents.ACTION_FIGHT_CANCEL);
+            sendBroadcast(intent);
+          }
+
+          @Override
+          public void onFightBegin(String fightKey) {
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_FIGHT_BEGIN);
+            intent.putExtra(Intents.EXTRA_FIGHT_KEY, fightKey);
+            sendBroadcast(intent);
+          }
+
+          @Override
+          public void onFighting(int right, int done, int total) {
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_FIGHTING);
+            intent.putExtra(Intents.EXTRA_RIGHT, right);
+            intent.putExtra(Intents.EXTRA_DONE, done);
+            intent.putExtra(Intents.EXTRA_TOTAL, total);
+            sendBroadcast(intent);
+          }
+
+          @Override
+          public void onFightEnd(int result, int myPoint, int myTime, int myPointDelta,
+              int myWinRate, int otherPoint, int otherTime) {
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_FIGHT_END);
+            intent.putExtra(Intents.EXTRA_FIGHT_RESULT, result);
+            intent.putExtra(Intents.EXTRA_MY_POINT, myPoint);
+            intent.putExtra(Intents.EXTRA_MY_TIME, myTime);
+            intent.putExtra(Intents.EXTRA_MY_POINT_DELTA, myPointDelta);
+            intent.putExtra(Intents.EXTRA_MY_WIN_RATE, myWinRate);
+            intent.putExtra(Intents.EXTRA_OTHER_POINT, otherPoint);
+            intent.putExtra(Intents.EXTRA_OTHER_TIME, otherTime);
             sendBroadcast(intent);
           }
         });

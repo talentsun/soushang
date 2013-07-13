@@ -6,7 +6,10 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
@@ -35,6 +38,7 @@ import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.QuestionResponse;
+import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.widgets.LoadingDialog;
 import com.baidu.soushang.widgets.PausedDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
@@ -68,8 +72,23 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
   }
   
+  public class FightStateReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      if (intent != null) {
+        String action = intent.getAction();
+        if (Intents.ACTION_FIGHTING.equalsIgnoreCase(action)) {
+          mOtherPoint = intent.getIntExtra(Intents.EXTRA_RIGHT, 0) * POINT_INTERVAL;
+          updatePointBoard();
+        }
+      }
+    }
+    
+  }
+  
   private TextView mMatchName;
-  private TextView mCreditAndPoint;
+  private TextView mPointBoard;
   private Button mPauseAndResume;
   private TextView mQuestionOrder;
   private TextView mQuestionTitle;
@@ -87,8 +106,9 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   
   private QuestionResponse.Question mCurrentQuestion;
   private volatile boolean mPaused = false;
-  private int mCredit;
-  private int mPoint;
+  private int mMyCredit;
+  private int mMyPoint;
+  private int mOtherPoint;
   private List<Answer> mAnswers;
   private BaiduSpeechDialog mBaiduSpeechDialog;
   private PausedDialog mPausedDialog;
@@ -96,6 +116,10 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private LoadingDialog mLoadingDialog;
   
   private Handler mMainHandler;
+  
+  private int mEventType = Intents.EVENT_TYPE_DAILY;
+  private String mEventKey;
+  private FightStateReceiver mFightStateReceiver;
   
   private static final int CREDIT_INTERVAL = 10;
   private static final int POINT_INTERVAL = 5;
@@ -106,7 +130,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     setContentView(R.layout.question);
 
     mMatchName = (TextView) findViewById(R.id.match_name);
-    mCreditAndPoint = (TextView) findViewById(R.id.credit_and_point);
+    mPointBoard = (TextView) findViewById(R.id.credit_and_point);
     mPauseAndResume = (Button) findViewById(R.id.pause_resume);
     mQuestionOrder = (TextView) findViewById(R.id.question_order);
     mQuestionTitle = (TextView) findViewById(R.id.title);
@@ -127,7 +151,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     
     Typeface typeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
     mMatchName.setTypeface(typeface);
-    mCreditAndPoint.setTypeface(typeface);
+    mPointBoard.setTypeface(typeface);
     mQuestionOrder.setTypeface(typeface);
     mQuestionTitle.setTypeface(typeface);
     mOptionA.setTypeface(typeface);
@@ -160,7 +184,6 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     });
     
     mAnswers = new ArrayList<Answer>();
-    updateUserInfo(mCredit, mPoint);
     
     mSearchResultDialog = new WebViewDialog(this);
     mSearchResultDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -187,6 +210,19 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     
     mLoadingDialog.show(getResources().getString(R.string.get_question));
     
+    if (getIntent() != null) {
+      mEventType = getIntent().getIntExtra(Intents.EXTRA_EVENT_TYPE, Intents.EVENT_TYPE_DAILY);
+      
+      if (mEventType == Intents.EVENT_TYPE_LBS) {
+        mEventKey = getIntent().getStringExtra(Intents.EXTRA_FIGHT_KEY);
+      }
+      
+      IntentFilter filter = new IntentFilter(Intents.ACTION_FIGHTING);
+      mFightStateReceiver = new FightStateReceiver();
+      registerReceiver(mFightStateReceiver, filter);
+    }
+
+    updatePointBoard();
     mMainHandler.postDelayed(new Runnable() {
       
       @Override
@@ -194,7 +230,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
         getQuestion();
       }
     }, 1000);
-
+    
     super.onCreate(arg0);
   }
   
@@ -249,7 +285,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   }
   
   private void getQuestion() {
-    Apis.getNextQuestion(this, mCurrentQuestion == null ? 0 : mCurrentQuestion.getId(), Config.getAccessToken(this), this);
+    Apis.getNextQuestion(this, mEventType, mEventKey, mCurrentQuestion == null ? 0 : mCurrentQuestion.getId(), Config.getAccessToken(this), this);
   }
   
   @Override
@@ -285,7 +321,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private void showEventComplated() {
     Intent intent = new Intent(QuestionActivity.this, EventCompletedActivity.class);
     
-    intent.putExtra(Intents.EXTRA_POINT, mPoint);
+    intent.putExtra(Intents.EXTRA_POINT, mMyPoint);
     
     if (!Config.isLogged(QuestionActivity.this)) {
       SouShangApplication application = (SouShangApplication) getApplication();
@@ -298,7 +334,12 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   }
   
   private void updateUI(QuestionResponse.Question question) {
-    mMatchName.setText(question.getEventTitle());
+    if (mEventType == Intents.EVENT_TYPE_DAILY) {
+      mMatchName.setText(question.getEventTitle());
+    } else if (mEventType == Intents.EVENT_TYPE_LBS) {
+      mMatchName.setText(getResources().getString(R.string.lbs_event));
+    }
+
     mQuestionOrder.setText(String.format(getResources().getString(R.string.question_order), question.getIndex()+1, question.getTotal()));
     mQuestionTitle.setText(Html.fromHtml(question.getTitle()));
     
@@ -313,7 +354,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     mAnswerTime.setProgress(question.getAnswerTime() * 10);
     
     clearAnswerResult();
-    
+
     resume();
   }
   
@@ -332,8 +373,12 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     return normalizedOption;
   }
   
-  private void updateUserInfo(int credit, int point) {
-    mCreditAndPoint.setText(String.format(getResources().getString(R.string.credit_and_point), credit, point));
+  private void updatePointBoard() {
+    if (mEventType == Intents.EVENT_TYPE_DAILY) {
+      mPointBoard.setText(String.format(getResources().getString(R.string.credit_and_point), mMyCredit, mMyPoint));
+    } else if (mEventType == Intents.EVENT_TYPE_LBS) {
+      mPointBoard.setText(String.format(getResources().getString(R.string.fight_state), mMyPoint, mOtherPoint));
+    }
   }
   
   private void stopTimer() {
@@ -362,22 +407,22 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
   private void answer(int index) {
     boolean finished = false;
-    if (mCurrentQuestion != null) {
-      if (index == mCurrentQuestion.getRightAnswer()) {
-        showAnswerResult(index, true);
-        
-        mCredit += CREDIT_INTERVAL;
-        mPoint += POINT_INTERVAL;
-        
-        updateUserInfo(mCredit, mPoint);
-      } else {
-        showAnswerResult(index, false);
-      }
+    boolean correct = false;
+    if (index == mCurrentQuestion.getRightAnswer()) {
+      correct = true;
 
+      mMyCredit += CREDIT_INTERVAL;
+      mMyPoint += POINT_INTERVAL;
+
+      updatePointBoard();
+    }
+    showAnswerResult(index, correct);
+
+    if (mEventType == Intents.EVENT_TYPE_DAILY) {
       Answer answer = new Answer();
       answer.setId(mCurrentQuestion.getId());
       answer.setAnswer(index);
-      
+
       if (Config.isLogged(this)) {
         List<Answer> answers = new ArrayList<Answer>();
         answers.add(answer);
@@ -385,12 +430,12 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       } else {
         mAnswers.add(answer);
       }
-      
-      finished = mCurrentQuestion.getTotal() == (mCurrentQuestion.getIndex() + 1);
-    } else {
-      showAnswerResult(index, false);
+    } else if (mEventType == Intents.EVENT_TYPE_LBS) {
+      answerForLBS(mCurrentQuestion.getIndex(), correct);
     }
-    
+
+    finished = mCurrentQuestion.getTotal() == (mCurrentQuestion.getIndex() + 1);
+
     stopTimer();
 
     if (finished) {
@@ -418,6 +463,14 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
         getQuestion();
       }
     }, 1000);
+  }
+  
+  private void answerForLBS(int index, boolean right) {
+    Intent intent = new Intent(this, LBSService.class);
+    intent.setAction(Intents.ACTION_ANSWER);
+    intent.putExtra(Intents.EXTRA_INDEX, index);
+    intent.putExtra(Intents.EXTRA_RIGHT, right ? 1 : 0);
+    startService(intent);
   }
   
   private void showAnswerResult(int index, boolean correct) {
@@ -454,6 +507,9 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
   @Override
   protected void onDestroy() {
+    if (mEventType == Intents.EVENT_TYPE_LBS && mFightStateReceiver != null) {
+      unregisterReceiver(mFightStateReceiver);
+    }
     super.onDestroy();
   }
 

@@ -3,6 +3,7 @@ package com.baidu.soushang.cloudapis;
 import java.util.List;
 
 import com.baidu.soushang.Config;
+import com.baidu.soushang.Intents;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 
 import android.content.Context;
@@ -16,6 +17,7 @@ public class Apis {
   private static final String BASE_URL = "http://sou.baidu.com/";
   private static final String QUESTION_URL = BASE_URL + "Devent/next/s/%d.html?udid=%s";
   private static final String QUESTION_URL_LOGGED = BASE_URL + "Devent/next/s/%d.html?access_token=%s";
+  private static final String LBS_QUESTION_URL = "http://soushang.limijiaoyin.com/index.php/" + "Devent/next/s/%d.html?access_token=%s&type=lbs_fight&fight_key=%s";
   private static final String LOGIN_URL = BASE_URL + "Oauth/login.html?access_token=%s";
   private static final String ANSWER_URL = BASE_URL + "Devent/answer.html";
   private static final String USERINFO_URL = BASE_URL + "Devent/userinfo.html?access_token=%s";
@@ -50,9 +52,17 @@ public class Apis {
       }, String.format(SHARE_URL, accessToken), 2 * 1000);
   }
 
-  public static void getNextQuestion(Context context, int questionId, String accessToken, 
+  public static void getNextQuestion(Context context, int eventType, String eventKey, int questionId, String accessToken, 
       final ApiResponseCallback<QuestionResponse> callback) {
-    String url = TextUtils.isEmpty(accessToken) ? String.format(QUESTION_URL, questionId, Config.getUDID(context)) : String.format(QUESTION_URL_LOGGED, questionId, accessToken);
+    String url = null;
+    if (eventType == Intents.EVENT_TYPE_LBS) {
+      url = String.format(LBS_QUESTION_URL, questionId, accessToken, eventKey);
+    } else if (eventType == Intents.EVENT_TYPE_FEATURE) {
+      //TODO
+    } else {
+      url = TextUtils.isEmpty(accessToken) ? String.format(QUESTION_URL, questionId, Config.getUDID(context)) : String.format(QUESTION_URL_LOGGED, questionId, accessToken);
+    }
+    
     RestClientFactory.getClient().getAsync(
         new ContextAwareAPIDelegate<QuestionResponse>(context, QuestionResponse.class) {
 

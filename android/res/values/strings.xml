@@ -67,4 +67,6 @@
     <string name="reject">拒绝</string>
     <string name="be_rejected">“%1$s”拒绝了你的挑战！</string>
     <string name="be_cancelled">“%1$s”取消了比赛！</string>
+    <string name="lbs_event">1v1挑战赛</string>
+    <string name="fight_state">我：%1$d(积分)&#160;对方：%2$s(积分)</string>
 </resources>
