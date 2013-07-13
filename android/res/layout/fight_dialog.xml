@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="200dp" >
+    <RelativeLayout 
+        android:id="@+id/fight_req"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+        
+        <TextView 
+            android:id="@+id/fight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/fight" />
+        
+        <TextView 
+            android:id="@+id/somebody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/fight"
+            android:text="@string/somebody" />
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp"
+            android:orientation="horizontal">
+            <TextView 
+                android:id="@+id/raise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/raise"/>
+            <EditText 
+                android:id="@+id/raise_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <Button 
+                android:id="@+id/req_fight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fight_req"
+                android:background="@drawable/share_dialog_share"/>
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:background="@drawable/share_dialog_cancel"/>
+        </LinearLayout>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/fight_resp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" >
+        
+        <TextView 
+            android:id="@+id/receive_fight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/receive_fight" />
+        
+        <TextView 
+            android:id="@+id/somebody_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/receive_fight"
+            android:text="@string/somebody_receive" />
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/other_avatar_resp"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="@dimen/avatar_width"
+                android:src="@drawable/default_avatar" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/other_resp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#536f03"
+                        android:textSize="16sp"
+                        android:maxWidth="90dp" />
+
+                    <TextView
+                        android:id="@+id/other_network_resp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="#536f03"
+                        android:textColor="#fdfcc4"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/other_event_count_resp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#536f03"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/other_win_rate_resp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#536f03"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <Button 
+                android:id="@+id/accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accept"
+                android:background="@drawable/share_dialog_share"/>
+            <Button
+                android:id="@+id/reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reject"
+                android:background="@drawable/share_dialog_cancel"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout 
+        android:id="@+id/fight_waiting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+        
+        <TextView 
+            android:id="@+id/waiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/waiting" />
+        
+        <TextView 
+            android:id="@+id/somebody_resp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/waiting"
+            android:text="@string/somebody_resp" />
+        
+        <LinearLayout 
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <TextView 
+                android:id="@+id/vs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vs"/>
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/center"
+            android:orientation="vertical">
+            <ImageView 
+                android:id="@+id/my_avatar"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="@dimen/avatar_width"
+                android:src="@drawable/default_avatar"/>
+            <TextView 
+                android:id="@+id/me"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/me"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="marquee"/>
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/center"
+            android:orientation="vertical">
+            <ImageView 
+                android:id="@+id/other_avatar"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="@dimen/avatar_width"
+                android:src="@drawable/default_avatar"/>
+            <TextView 
+                android:id="@+id/other"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="marquee"/>
+        </LinearLayout>
+
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <Button
+                android:id="@+id/cancel_fight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:background="@drawable/share_dialog_cancel" />
+        </LinearLayout>
+        
+    </RelativeLayout>
+
+</FrameLayout>

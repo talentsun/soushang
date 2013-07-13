@@ -70,6 +70,16 @@ public class SouShangApplication extends Application {
     return mPeers;
   }
   
+  private User mCurrentPeer;
+  
+  public void setCurrentPeer(User peer) {
+    mCurrentPeer = peer;
+  }
+  
+  public User getCurrentPeer() {
+    return mCurrentPeer;
+  }
+  
   @Override
   public void onCreate() {
     super.onCreate();

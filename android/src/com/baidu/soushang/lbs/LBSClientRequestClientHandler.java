@@ -17,9 +17,10 @@ import com.baidu.soushang.lbs.Models.IClientInfo;
 import com.baidu.soushang.lbs.Models.IClientLBS;
 import com.baidu.soushang.lbs.Models.IFightReq;
 import com.baidu.soushang.lbs.Models.IFightResp;
+import com.baidu.soushang.lbs.Models.OFightReq;
+import com.baidu.soushang.lbs.Models.OFightResp;
 import com.baidu.soushang.lbs.Models.OPeerListResp;
 import com.baidu.soushang.lbs.Models.User;
-import com.baidu.soushang.utils.NetworkUtils;
 
 public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler {
   private volatile Channel mChannel;
@@ -44,6 +45,9 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
   public interface ClientListener {
     public void onClosed();
     public void onPeersUpdated(List<User> peers);
+    public void onFightReq(User peer);
+    public void onFightResp(int result);
+    public void onFightCancel();
   }
   
   private ClientListener mListener;
@@ -80,9 +84,26 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
             mListener.onPeersUpdated(resp.getUsersList());
           }
           break;
+        case FIGHT_REQ:
+          OFightReq fightReq = OFightReq.parseFrom(msg.getContent());
+          if (mListener != null) {
+            mListener.onFightReq(fightReq.getUser());
+          }
+          break;
+        case FIGHT_RESP:
+          OFightResp fightResp = OFightResp.parseFrom(msg.getContent());
+          if (mListener != null) {
+            mListener.onFightResp(fightResp.getResult());
+          }
+          break;
+        case FIGHT_CANCEL:
+          if (mListener != null) {
+            mListener.onFightCancel();
+          }
+          break;
       }
     }
-    
+
     super.messageReceived(ctx, e);
   }
   
@@ -113,7 +134,7 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     mChannel.write(msgBuilder);
   }
   
-  public void sendFightReq(int peerId) {
+  public void sendFightReq(long peerId) {
     Log.d(TAG, "send fight req");
     
     IFightReq.Builder builder = IFightReq.newBuilder();
@@ -126,14 +147,24 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     mChannel.write(msgBuilder.build());
   }
   
-  public void sendFightResp(boolean accept) {
+  public void sendFightCancel() {
+    Log.d(TAG, "send fight cancel");
+    
+    CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
+    msgBuilder.setType(FIGHT_CANCEL);
+    msgBuilder.setContent(EmptyMsg.newBuilder().build().toByteString());
+    
+    mChannel.write(msgBuilder.build());
+  }
+  
+  public void sendFightResp(int result) {
     Log.d(TAG, "send fight resp");
     
     IFightResp.Builder builder = IFightResp.newBuilder();
-    builder.setResult(accept ? 1 : 0);
+    builder.setResult(result);
     
     CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
-    msgBuilder.setType(FIGHT_REQ);
+    msgBuilder.setType(FIGHT_RESP);
     msgBuilder.setContent(builder.build().toByteString());
     
     mChannel.write(msgBuilder.build());

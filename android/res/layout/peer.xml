@@ -38,11 +38,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="#536f03"
                     android:textSize="16sp"
-                    android:maxWidth="80dp" />
+                    android:maxWidth="90dp" />
 
                 <TextView
                     android:id="@+id/network"
-                    android:layout_width="40dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:background="#536f03"
@@ -57,7 +57,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="比赛次数：10"
                 android:textColor="#536f03"
                 android:textSize="16sp" />
 
@@ -66,7 +65,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="胜率：10"
                 android:textColor="#536f03"
                 android:textSize="16sp" />
         </LinearLayout>

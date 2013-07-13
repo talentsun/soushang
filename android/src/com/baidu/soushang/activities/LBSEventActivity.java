@@ -10,6 +10,7 @@ import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
 import com.baidu.soushang.utils.NetworkUtils;
 import com.baidu.soushang.views.LoadingView;
+import com.baidu.soushang.widgets.FightDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -20,11 +21,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ClipData.Item;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -42,13 +43,21 @@ public class LBSEventActivity extends BaseActivity {
   private SouShangApplication mApplication;
   private PendingIntent mUpdatePeers;
   private AlarmManager mAlarmManager;
+  private FightDialog mFightDialog;
   
   public class PeersUpdatedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-      mAdapter.setData(mApplication.getPeers());
-      showNoPeers();
+      if (intent != null) {
+        String action = intent.getAction();
+        if (Intents.ACTION_PEERS_UPDATED.equalsIgnoreCase(action)) {
+          mAdapter.setData(mApplication.getPeers());
+          showNoPeers();
+        } else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
+          mFightDialog.show(false, mApplication.getCurrentPeer());
+        }
+      }
     }
     
   }
@@ -73,6 +82,8 @@ public class LBSEventActivity extends BaseActivity {
     mListView.setAdapter(mAdapter);
     
     mPeersUpdatedReceiver = new PeersUpdatedReceiver();
+    
+    mFightDialog = new FightDialog(this);
 
     super.onCreate(arg0);
   }
@@ -95,7 +106,9 @@ public class LBSEventActivity extends BaseActivity {
 
   @Override
   protected void onStart() {
-    IntentFilter filter = new IntentFilter(Intents.ACTION_PEERS_UPDATED);
+    IntentFilter filter = new IntentFilter();
+    filter.addAction(Intents.ACTION_PEERS_UPDATED);
+    filter.addAction(Intents.ACTION_FIGHT_REQ);
     registerReceiver(mPeersUpdatedReceiver, filter);
     
     showLoading();
@@ -182,7 +195,7 @@ public class LBSEventActivity extends BaseActivity {
         viewHolder = (ViewHolder) convertView.getTag();
       }
       
-      User peer = (User) getItem(position);
+      final User peer = (User) getItem(position);
       
       DisplayImageOptions option = new DisplayImageOptions.Builder()
         .showImageOnFail(R.drawable.default_avatar)
@@ -195,6 +208,13 @@ public class LBSEventActivity extends BaseActivity {
       viewHolder.network.setText(NetworkUtils.getNetworkStr(peer.getNetType()));
       viewHolder.eventCount.setText(String.format(mContext.getResources().getString(R.string.event_count), peer.getFightNum()));
       viewHolder.winRate.setText(String.format(mContext.getResources().getString(R.string.win_rate), (int) (peer.getWinNum() * 100.0 / (float) peer.getFightNum())));
+      viewHolder.fight.setOnClickListener(new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+          mFightDialog.show(true, peer);
+        }
+      });
       
       if (getCount() == 1) {
         viewHolder.bg.setBackgroundResource(R.drawable.lbs_event_item_bg_single);

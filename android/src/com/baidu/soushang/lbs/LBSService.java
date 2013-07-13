@@ -44,7 +44,10 @@ public class LBSService extends Service {
   private static final int HEARTBEAT = 2;
   private static final int LBS_INFO = 3;
   private static final int UPDATE_PEERS = 4;
-  private static final int SHUTDOWN = 5;
+  private static final int FIGHT_REQ = 5;
+  private static final int FIGHT_CANCEL = 6;
+  private static final int FIGHT_RESP = 7;
+  private static final int SHUTDOWN = 8;
   
   private AlarmManager mAlarmManager;
   private SouShangApplication mApplication;
@@ -81,6 +84,15 @@ public class LBSService extends Service {
           break;
         case UPDATE_PEERS:
           mHandler.sendFetchPeerListReq();
+          break;
+        case FIGHT_REQ:
+          mHandler.sendFightReq(mApplication.getCurrentPeer().getId());
+          break;
+        case FIGHT_CANCEL:
+          mHandler.sendFightCancel();
+          break;
+        case FIGHT_RESP:
+          mHandler.sendFightResp(msg.arg1);
           break;
         case SHUTDOWN:
           shutdown();
@@ -132,6 +144,14 @@ public class LBSService extends Service {
         Message.obtain(mClient, HEARTBEAT).sendToTarget();
       } else if (Intents.ACTION_UPDATE_PEERS.equalsIgnoreCase(action)) {
         Message.obtain(mClient, UPDATE_PEERS).sendToTarget();
+      } else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
+        Message.obtain(mClient, FIGHT_REQ).sendToTarget();
+      } else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
+        Message.obtain(mClient, FIGHT_CANCEL).sendToTarget();
+      } else if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
+        Message msg = Message.obtain(mClient, FIGHT_RESP);
+        msg.arg1 = intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 0);
+        msg.sendToTarget();
       }
     }
     
@@ -209,6 +229,30 @@ public class LBSService extends Service {
             
             Intent intent = new Intent();
             intent.setAction(Intents.ACTION_PEERS_UPDATED);
+            sendBroadcast(intent);
+          }
+
+          @Override
+          public void onFightReq(User peer) {
+            mApplication.setCurrentPeer(peer);
+            
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_FIGHT_REQ);
+            sendBroadcast(intent);
+          }
+
+          @Override
+          public void onFightResp(int result) {
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_FIGHT_RESP);
+            intent.putExtra(Intents.EXTRA_FIGHT_RESULT, result);
+            sendBroadcast(intent);
+          }
+
+          @Override
+          public void onFightCancel() {
+            Intent intent = new Intent();
+            intent.setAction(Intents.ACTION_FIGHT_CANCEL);
             sendBroadcast(intent);
           }
         });

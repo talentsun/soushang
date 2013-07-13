@@ -11,15 +11,15 @@ public final class Models {
   public interface UserOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required uint32 id = 1;
+    // required uint64 id = 1;
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
     boolean hasId();
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
-    int getId();
+    long getId();
 
     // required string name = 2;
     /**
@@ -126,7 +126,7 @@ public final class Models {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              id_ = input.readUInt32();
+              id_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -181,19 +181,19 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required uint32 id = 1;
+    // required uint64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
+    private long id_;
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
-    public int getId() {
+    public long getId() {
       return id_;
     }
 
@@ -332,7 +332,7 @@ public final class Models {
     }
 
     private void initFields() {
-      id_ = 0;
+      id_ = 0L;
       name_ = "";
       avatar_ = "";
       netType_ = 0;
@@ -376,7 +376,7 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getNameBytes());
@@ -403,7 +403,7 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
@@ -516,7 +516,7 @@ public final class Models {
 
       public Builder clear() {
         super.clear();
-        id_ = 0;
+        id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -653,35 +653,35 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required uint32 id = 1;
-      private int id_ ;
+      // required uint64 id = 1;
+      private long id_ ;
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
-      public int getId() {
+      public long getId() {
         return id_;
       }
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
-      public Builder setId(int value) {
+      public Builder setId(long value) {
         bitField0_ |= 0x00000001;
         id_ = value;
         
         return this;
       }
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
+        id_ = 0L;
         
         return this;
       }
@@ -4787,15 +4787,15 @@ public final class Models {
   public interface IFightReqOrBuilder
       extends com.google.protobuf.MessageLiteOrBuilder {
 
-    // required uint32 id = 1;
+    // required uint64 id = 1;
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
     boolean hasId();
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
-    int getId();
+    long getId();
   }
   /**
    * Protobuf type {@code IFightReq}
@@ -4842,7 +4842,7 @@ public final class Models {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              id_ = input.readUInt32();
+              id_ = input.readUInt64();
               break;
             }
           }
@@ -4872,24 +4872,24 @@ public final class Models {
     }
 
     private int bitField0_;
-    // required uint32 id = 1;
+    // required uint64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
+    private long id_;
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required uint32 id = 1;</code>
+     * <code>required uint64 id = 1;</code>
      */
-    public int getId() {
+    public long getId() {
       return id_;
     }
 
     private void initFields() {
-      id_ = 0;
+      id_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -4908,7 +4908,7 @@ public final class Models {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, id_);
+        output.writeUInt64(1, id_);
       }
     }
 
@@ -4920,7 +4920,7 @@ public final class Models {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -5013,7 +5013,7 @@ public final class Models {
 
       public Builder clear() {
         super.clear();
-        id_ = 0;
+        id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
@@ -5081,35 +5081,35 @@ public final class Models {
       }
       private int bitField0_;
 
-      // required uint32 id = 1;
-      private int id_ ;
+      // required uint64 id = 1;
+      private long id_ ;
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
-      public int getId() {
+      public long getId() {
         return id_;
       }
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
-      public Builder setId(int value) {
+      public Builder setId(long value) {
         bitField0_ |= 0x00000001;
         id_ = value;
         
         return this;
       }
       /**
-       * <code>required uint32 id = 1;</code>
+       * <code>required uint64 id = 1;</code>
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
+        id_ = 0L;
         
         return this;
       }
