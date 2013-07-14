@@ -64,6 +64,7 @@ class User(object):
         id = int(raw_input("other's id:"))
         cmd = IFightReq()
         cmd.id = id
+        cmd.bet = 5
         self.send_cmd(CmdType.FIGHT_REQ, cmd)
 
     def sendFightCancel(self):
@@ -148,6 +149,11 @@ class User(object):
         cmd = OFightResult()
         cmd.ParseFromString(buf)
         print "1 is win 2 is lose, your result is", cmd.result
+        print cmd.me_win_ratio
+        print cmd.other_win_ratio
+        print cmd.me_score
+        print cmd.other_score
+        print cmd.other_time_cost
 
     def showFightState(self, buf):
         cmd = OFightState()

@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='message.proto',
   package='',
-  serialized_pb='\n\rmessage.proto\"f\n\x04User\x12\n\n\x02id\x18\x01 \x02(\r\x12\x0c\n\x04name\x18\x02 \x02(\t\x12\x0e\n\x06\x61vatar\x18\x03 \x02(\t\x12\x10\n\x08net_type\x18\x04 \x02(\x05\x12\x11\n\tfight_num\x18\x05 \x02(\x05\x12\x0f\n\x07win_num\x18\x06 \x02(\x05\"+\n\nCommandMsg\x12\x0c\n\x04type\x18\x01 \x02(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x02(\x0c\"I\n\x0bIClientInfo\x12\n\n\x02id\x18\x01 \x02(\r\x12\x0c\n\x04name\x18\x02 \x02(\t\x12\x0e\n\x06\x61vatar\x18\x03 \x02(\t\x12\x10\n\x08net_type\x18\x04 \x02(\x05\"1\n\nIClientLBS\x12\x11\n\tlongitude\x18\x01 \x02(\x02\x12\x10\n\x08latitude\x18\x02 \x02(\x02\"\x1e\n\tOQuestion\x12\x11\n\tfight_key\x18\x01 \x02(\t\"\'\n\x07IAnswer\x12\r\n\x05index\x18\x01 \x02(\x05\x12\r\n\x05right\x18\x02 \x02(\x05\"7\n\x0bOFightState\x12\x0b\n\x03\x61ll\x18\x01 \x02(\x05\x12\x0c\n\x04\x64one\x18\x02 \x02(\x05\x12\r\n\x05right\x18\x03 \x02(\x05\"\x1e\n\x0cOFightResult\x12\x0e\n\x06result\x18\x01 \x02(\x05\"%\n\rOPeerListResp\x12\x14\n\x05users\x18\x01 \x03(\x0b\x32\x05.User\"\x17\n\tIFightReq\x12\n\n\x02id\x18\x01 \x02(\r\"-\n\nOFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\" \n\tOFightReq\x12\x13\n\x04user\x18\x01 \x02(\x0b\x32\x05.User\"\x1c\n\nIFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\"\n\n\x08\x45mptyMsgB\"\n\x16\x63om.baidu.soushang.lbsB\x06ModelsH\x03')
+  serialized_pb='\n\rmessage.proto\"u\n\x04User\x12\n\n\x02id\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\x12\x0e\n\x06\x61vatar\x18\x03 \x02(\t\x12\x10\n\x08net_type\x18\x04 \x02(\x05\x12\x11\n\tfight_num\x18\x05 \x02(\x05\x12\x0f\n\x07win_num\x18\x06 \x02(\x05\x12\r\n\x05state\x18\x07 \x02(\x05\"+\n\nCommandMsg\x12\x0c\n\x04type\x18\x01 \x02(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x02(\x0c\"I\n\x0bIClientInfo\x12\n\n\x02id\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\x12\x0e\n\x06\x61vatar\x18\x03 \x02(\t\x12\x10\n\x08net_type\x18\x04 \x02(\x05\"1\n\nIClientLBS\x12\x11\n\tlongitude\x18\x01 \x02(\x02\x12\x10\n\x08latitude\x18\x02 \x02(\x02\"\x1e\n\tOQuestion\x12\x11\n\tfight_key\x18\x01 \x02(\t\"\'\n\x07IAnswer\x12\r\n\x05index\x18\x01 \x02(\x05\x12\r\n\x05right\x18\x02 \x02(\x05\"7\n\x0bOFightState\x12\x0b\n\x03\x61ll\x18\x01 \x02(\x05\x12\x0c\n\x04\x64one\x18\x02 \x02(\x05\x12\r\n\x05right\x18\x03 \x02(\x05\"\x8d\x01\n\x0cOFightResult\x12\x0e\n\x06result\x18\x01 \x02(\x05\x12\x14\n\x0cme_win_ratio\x18\x02 \x02(\x02\x12\x17\n\x0fother_win_ratio\x18\x03 \x02(\x02\x12\x10\n\x08me_score\x18\x04 \x02(\x05\x12\x13\n\x0bother_score\x18\x05 \x02(\x05\x12\x17\n\x0fother_time_cost\x18\x06 \x02(\x05\"%\n\rOPeerListResp\x12\x14\n\x05users\x18\x01 \x03(\x0b\x32\x05.User\"$\n\tIFightReq\x12\n\n\x02id\x18\x01 \x02(\x04\x12\x0b\n\x03\x62\x65t\x18\x02 \x02(\x05\"-\n\nOFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\"-\n\tOFightReq\x12\x13\n\x04user\x18\x01 \x02(\x0b\x32\x05.User\x12\x0b\n\x03\x62\x65t\x18\x02 \x02(\x05\"\x1c\n\nIFightResp\x12\x0e\n\x06result\x18\x01 \x02(\x05\"\n\n\x08\x45mptyMsgB\"\n\x16\x63om.baidu.soushang.lbsB\x06ModelsH\x03')
 
 
 
@@ -27,7 +27,7 @@ _USER = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='User.id', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -67,6 +67,13 @@ _USER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='User.state', index=6,
+      number=7, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -77,7 +84,7 @@ _USER = _descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=17,
-  serialized_end=119,
+  serialized_end=134,
 )
 
 
@@ -111,8 +118,8 @@ _COMMANDMSG = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=121,
-  serialized_end=164,
+  serialized_start=136,
+  serialized_end=179,
 )
 
 
@@ -125,7 +132,7 @@ _ICLIENTINFO = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='IClientInfo.id', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -160,8 +167,8 @@ _ICLIENTINFO = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=166,
-  serialized_end=239,
+  serialized_start=181,
+  serialized_end=254,
 )
 
 
@@ -195,8 +202,8 @@ _ICLIENTLBS = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=241,
-  serialized_end=290,
+  serialized_start=256,
+  serialized_end=305,
 )
 
 
@@ -223,8 +230,8 @@ _OQUESTION = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=292,
-  serialized_end=322,
+  serialized_start=307,
+  serialized_end=337,
 )
 
 
@@ -258,8 +265,8 @@ _IANSWER = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=324,
-  serialized_end=363,
+  serialized_start=339,
+  serialized_end=378,
 )
 
 
@@ -300,8 +307,8 @@ _OFIGHTSTATE = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=365,
-  serialized_end=420,
+  serialized_start=380,
+  serialized_end=435,
 )
 
 
@@ -319,6 +326,41 @@ _OFIGHTRESULT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='me_win_ratio', full_name='OFightResult.me_win_ratio', index=1,
+      number=2, type=2, cpp_type=6, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='other_win_ratio', full_name='OFightResult.other_win_ratio', index=2,
+      number=3, type=2, cpp_type=6, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='me_score', full_name='OFightResult.me_score', index=3,
+      number=4, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='other_score', full_name='OFightResult.other_score', index=4,
+      number=5, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='other_time_cost', full_name='OFightResult.other_time_cost', index=5,
+      number=6, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -328,8 +370,8 @@ _OFIGHTRESULT = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=422,
-  serialized_end=452,
+  serialized_start=438,
+  serialized_end=579,
 )
 
 
@@ -356,8 +398,8 @@ _OPEERLISTRESP = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=454,
-  serialized_end=491,
+  serialized_start=581,
+  serialized_end=618,
 )
 
 
@@ -370,7 +412,14 @@ _IFIGHTREQ = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='IFightReq.id', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='bet', full_name='IFightReq.bet', index=1,
+      number=2, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -384,8 +433,8 @@ _IFIGHTREQ = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=493,
-  serialized_end=516,
+  serialized_start=620,
+  serialized_end=656,
 )
 
 
@@ -419,8 +468,8 @@ _OFIGHTRESP = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=518,
-  serialized_end=563,
+  serialized_start=658,
+  serialized_end=703,
 )
 
 
@@ -438,6 +487,13 @@ _OFIGHTREQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='bet', full_name='OFightReq.bet', index=1,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -447,8 +503,8 @@ _OFIGHTREQ = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=565,
-  serialized_end=597,
+  serialized_start=705,
+  serialized_end=750,
 )
 
 
@@ -475,8 +531,8 @@ _IFIGHTRESP = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=599,
-  serialized_end=627,
+  serialized_start=752,
+  serialized_end=780,
 )
 
 
@@ -496,8 +552,8 @@ _EMPTYMSG = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=629,
-  serialized_end=639,
+  serialized_start=782,
+  serialized_end=792,
 )
 
 _OPEERLISTRESP.fields_by_name['users'].message_type = _USER

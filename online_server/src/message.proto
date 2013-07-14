@@ -9,6 +9,7 @@ message User {
     required int32 net_type = 4;
     required int32 fight_num = 5;
     required int32 win_num = 6;
+    required int32 state = 7;
 }
 
 message CommandMsg {
@@ -44,6 +45,11 @@ message OFightResult {
     // 1 is win 2 is lose
     // 3 is other lose connect, you win
     required int32 result = 1;
+    required float me_win_ratio = 2;
+    required float other_win_ratio = 3;
+    required int32 me_score = 4;
+    required int32 other_score = 5;
+    required int32 other_time_cost = 6;
 }
 
 message OPeerListResp {
@@ -52,6 +58,7 @@ message OPeerListResp {
 
 message IFightReq {
     required uint64 id = 1;
+    required int32 bet = 2;
 }
 
 message OFightResp {
@@ -62,6 +69,7 @@ message OFightResp {
 }
 message OFightReq {
     required User user = 1;
+    required int32 bet = 2;
 }
 message IFightResp {
     // 0 is agree, others disagree

@@ -64,11 +64,16 @@ class Client(object):
         self.state = Client.INIT_INFO
         self.cmd_buf = ''
         self.peer_client = None
-        self.question_index = 0
         self.timeout = None
-        self.right = 0
         self.longitude = None
         self.latitude = None
+
+        self.question_index = 0
+        self.start_time = 0
+        self.end_time = 0
+        self.bet = 0
+        self.right = 0
+        self.last_answer_time = 0
         pass
 
     def __del__(self):
@@ -143,22 +148,7 @@ class Client(object):
             self.peer_client.peer_client = None
             self.peer_client = None
         elif self.state == Client.WAIT_FOR_ANSWER:
-            self.state = Client.IDLE
-            self.peer_client.state = Client.IDLE
-
-            cmd = OFightResult()
-            cmd.result = 1
-            self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, cmd))
-            self.peer_client.user_info.fight_num += 1
-            self.peer_client.user_info.win_num += 1
-            self.peer_client.user_info.store()
-            cmd.result = 2
-            self.user_info.fight_num += 1
-            self.user_info.store()
-            self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, cmd))
-
-            self.peer_client.peer_client = None
-            self.peer_client = None
+            self.check_answer_timeout()
         pass
 
     def read_and_deal_cmd(self):
@@ -194,6 +184,67 @@ class Client(object):
             self.timeout.cancel()
             self.timeout = None
         
+    def deal_fight_result(self, me_win):
+        #me
+        resp = OFightResult()
+        if me_win:
+            resp.result = 1
+            self.user_info.win_num += 1
+            self.user_info.fight_num += 1
+            self.peer_client.user_info.fight_num += 1
+        else:
+            resp.result = 2
+            self.user_info.fight_num += 1
+            self.peer_client.user_info.win_num += 1
+            self.peer_client.user_info.fight_num += 1
+        self.user_info.store()
+        self.peer_client.user_info.store()
+
+        resp.me_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
+        resp.other_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
+        if me_win:
+            resp.me_score = (self.right + self.peer_client.right) * 5 + self.bet
+            resp.other_score = -1 * self.bet
+        else:
+            resp.other_score = (self.right + self.peer_client.right) * 5 + self.bet
+            resp.me_score = -1 * self.bet
+        resp.other_time_cost = int(self.peer_client.end_time - self.peer_client.start_time)
+        self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
+
+        #other
+        if not me_win:
+            resp.result = 2
+        else:
+            resp.result = 1
+
+        resp.other_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
+        resp.me_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
+        if not me_win:
+            resp.me_score = (self.right + self.peer_client.right) * 5 + self.bet
+            resp.other_score = -1 * self.bet
+        else:
+            resp.other_score = (self.right + self.peer_client.right) * 5 + self.bet
+            resp.me_score = -1 * self.bet
+        resp.other_time_cost = int(self.end_time - self.start_time)
+        self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
+        self.end_game()
+
+    def end_game(self):
+        if self.peer_client:
+            self.peer_client.state = Client.IDLE
+            self.peer_client.peer_client = None
+        self.state = Client.IDLE
+        self.peer_client = None
+
+    def check_answer_timeout(self):
+        cur_time = time.time()
+        #because the time may be not exact
+        if self.last_answer_time <= cur_time - ONE_MOVE_MAX_TIME + 1:
+            self.deal_fight_result(0)
+        if self.peer_client.last_answer_time <= cur_time - ONE_MOVE_MAX_TIME + 1:
+            self.deal_fight_result(1)
+
+
 
     def deal_cmd(self, cmd_type, buf):
         logger.debug("receive cmd type %d state %d", cmd_type, self.state)
@@ -249,8 +300,9 @@ class Client(object):
                 u.id = c.id
                 u.fight_num = c.user_info.fight_num
                 u.win_num = c.user_info.win_num
-                u.avatar = self.avatar
-                u.net_type = self.net_type
+                u.avatar = c.avatar
+                u.net_type = c.net_type
+                u.state = c.state
 
             self.send_msg(self.build_cmd(CmdType.FETCH_PEER_LIST_RESP, resp))
         elif cmd_type == CmdType.FIGHT_REQ and self.state == Client.IDLE:
@@ -259,7 +311,13 @@ class Client(object):
             logger.debug("client fight req %d" % req.id)
             client = client_mgr.get(req.id)
             if client:
+                if client.state != Client.IDLE:
+                    resp = OFightResp()
+                    resp.result = 1
+                    resp.message = u'other is busy'
+                    self.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
                 self.state = Client.FIGHT_REQ_A
+                self.bet = self.peer_client.bet
                 resp = OFightReq()
                 resp.user.id = self.id
                 resp.user.name = self.name
@@ -267,11 +325,13 @@ class Client(object):
                 resp.user.net_type = self.net_type
                 resp.user.fight_num = self.user_info.fight_num
                 resp.user.win_num = self.user_info.win_num
+                resp.user.state = self.state
+                resp.bet = req.bet
                 client.send_msg(self.build_cmd(CmdType.FIGHT_REQ, resp))
                 client.state = Client.FIGHT_REQ_B
                 self.peer_client = client
                 client.peer_client = self
-                self.start_timeout(2 * 60)
+                self.start_timeout(ONE_MOVE_MAX_TIME)
             else:
                 resp = OFightResp()
                 resp.result = 1
@@ -288,8 +348,10 @@ class Client(object):
                 self.peer_client.send_msg(self.build_cmd(CmdType.QUESTION, question))
                 self.send_msg(self.build_cmd(CmdType.QUESTION, question))
                 self.state = self.peer_client.state = Client.WAIT_FOR_ANSWER
-                self.start_timeout(2 * 60)
+                self.start_timeout(ONE_MOVE_MAX_TIME)
                 self.question_index = self.peer_client.question_index = 0
+                self.start_time = self.peer_client.start_time = time.time()
+                self.peer_client.last_answer_time = self.last_answer_time = time.time()
             else:
                 resp = OFightResp()
                 resp.result = 1
@@ -309,6 +371,10 @@ class Client(object):
 
         elif cmd_type == CmdType.ANSWER and self.state == Client.WAIT_FOR_ANSWER:
             self.cancel_timeout()
+            self.last_answer_time = time.time()
+            if self.check_answer_timeout():
+                #timeout end of game
+                return
             req = IAnswer()
             req.ParseFromString(buf)
             if req.index != self.question_index:
@@ -323,31 +389,23 @@ class Client(object):
                 self.right += 1
             cmd.right = self.right
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_STATE, cmd))
-            if req.index >= 9:
+            if req.index >= QUESTION_NUM_PER_GAME - 1:
                 logger.debug("%d finish" % self.id)
+                self.end_time = time.time()
                 if self.peer_client.state == Client.WAIT_FOR_RESULT:
-                    resp = OFightResult()
-                    resp.result = 1
-                    self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
-                    self.peer_client.user_info.fight_num += 1
-                    self.peer_client.user_info.win_num += 1
-                    self.peer_client.user_info.store()
-                    resp.result = 2
-                    self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
-                    self.user_info.fight_num += 1
-                    self.user_info.store()
-                    self.state = Client.IDLE
-                    self.peer_client.state = Client.IDLE
+                    self.deal_fight_result(self.right > self.peer_client.right)
                 else:
                     self.state = Client.WAIT_FOR_RESULT
             else:
-                self.start_timeout(2 * 60)
+                self.start_timeout(ONE_MOVE_MAX_TIME)
         else:
             self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 
 
 client_id = 0
 client_mgr = LBSClientManager()
+QUESTION_NUM_PER_GAME = 10
+ONE_MOVE_MAX_TIME = 120
 
 def main(socket, address):
     global client_mgr
