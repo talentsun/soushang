@@ -182,7 +182,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       if (Config.isLogged(this)) {
         Apis.getDayEvent(this, Config.getAccessToken(this), mDayEventCallback);
       } else {
-        Apis.getNextQuestion(this, 0, null, mNextQuestionCallback);
+        Apis.getNextQuestion(this, 0, null, Intents.EVENT_TYPE_DAILY, null, mNextQuestionCallback);
       }
     } else if (v == mRank) {
       Intent intent = new Intent(this, RankActivity.class);

@@ -19,7 +19,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -41,6 +40,7 @@ import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.widgets.LoadingDialog;
 import com.baidu.soushang.widgets.PausedDialog;
+import com.baidu.soushang.widgets.QuitLBSEventDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 
 public class QuestionActivity extends BaseActivity implements ApiResponseCallback<QuestionResponse>, OnClickListener {
@@ -81,6 +81,15 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
         if (Intents.ACTION_FIGHTING.equalsIgnoreCase(action)) {
           mOtherPoint = intent.getIntExtra(Intents.EXTRA_RIGHT, 0) * POINT_INTERVAL;
           updatePointBoard();
+        } else if (Intents.ACTION_FIGHT_END.equalsIgnoreCase(action)) {
+          showLBSEventCompleted(
+            intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 0) > 0, 
+            intent.getIntExtra(Intents.EXTRA_MY_POINT, 0), 
+            intent.getIntExtra(Intents.EXTRA_MY_TIME, 0), 
+            intent.getIntExtra(Intents.EXTRA_OTHER_POINT, 0), 
+            intent.getIntExtra(Intents.EXTRA_OTHER_TIME, 0), 
+            intent.getIntExtra(Intents.EXTRA_MY_POINT_DELTA, 0), 
+            intent.getIntExtra(Intents.EXTRA_MY_WIN_RATE, 0));
         }
       }
     }
@@ -89,7 +98,8 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   
   private TextView mMatchName;
   private TextView mPointBoard;
-  private Button mPauseAndResume;
+  private Button mPauseResume;
+  private Button mQuit;
   private TextView mQuestionOrder;
   private TextView mQuestionTitle;
   private ProgressBar mAnswerTime;
@@ -112,6 +122,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private List<Answer> mAnswers;
   private BaiduSpeechDialog mBaiduSpeechDialog;
   private PausedDialog mPausedDialog;
+  private QuitLBSEventDialog mQuitDialog;
   private WebViewDialog mSearchResultDialog;
   private LoadingDialog mLoadingDialog;
   
@@ -120,6 +131,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   private int mEventType = Intents.EVENT_TYPE_DAILY;
   private String mEventKey;
   private FightStateReceiver mFightStateReceiver;
+  private long mStartTime;
   
   private static final int CREDIT_INTERVAL = 10;
   private static final int POINT_INTERVAL = 5;
@@ -131,7 +143,8 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
 
     mMatchName = (TextView) findViewById(R.id.match_name);
     mPointBoard = (TextView) findViewById(R.id.credit_and_point);
-    mPauseAndResume = (Button) findViewById(R.id.pause_resume);
+    mPauseResume = (Button) findViewById(R.id.pause_resume);
+    mQuit = (Button) findViewById(R.id.quit);
     mQuestionOrder = (TextView) findViewById(R.id.question_order);
     mQuestionTitle = (TextView) findViewById(R.id.title);
     mAnswerTime = (ProgressBar) findViewById(R.id.time);
@@ -142,12 +155,13 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     mOptionD = (Button) findViewById(R.id.option_d);
     mTimeout = (ImageView) findViewById(R.id.timeout);
     
-    mPauseAndResume.setOnClickListener(this);
+    mPauseResume.setOnClickListener(this);
     mOptionA.setOnClickListener(this);
     mOptionB.setOnClickListener(this);
     mOptionC.setOnClickListener(this);
     mOptionD.setOnClickListener(this);
     mHelp.setOnClickListener(this);
+    mQuit.setOnClickListener(this);
     
     Typeface typeface = Typeface.createFromAsset(getAssets(), SouShangApplication.FONT);
     mMatchName.setTypeface(typeface);
@@ -180,6 +194,24 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       @Override
       public void onHome() {
         finish();
+      }
+    });
+    
+    mQuitDialog = new QuitLBSEventDialog(this);
+    mQuitDialog.setOnClickListener(new QuitLBSEventDialog.OnClickListener() {
+      
+      @Override
+      public void onQuit() {
+        Intent intent = new Intent(QuestionActivity.this, LBSService.class);
+        intent.setAction(Intents.ACTION_FIGHT_QUIT);
+        QuestionActivity.this.startService(intent);
+
+        finish();
+      }
+      
+      @Override
+      public void onCancel() {
+        resume();
       }
     });
     
@@ -218,10 +250,12 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       }
       
       IntentFilter filter = new IntentFilter(Intents.ACTION_FIGHTING);
+      filter.addAction(Intents.ACTION_FIGHT_END);
       mFightStateReceiver = new FightStateReceiver();
       registerReceiver(mFightStateReceiver, filter);
     }
 
+    mStartTime = System.currentTimeMillis();
     updatePointBoard();
     mMainHandler.postDelayed(new Runnable() {
       
@@ -232,6 +266,14 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     }, 1000);
     
     super.onCreate(arg0);
+    
+    if (mEventType == Intents.EVENT_TYPE_DAILY || mEventType == Intents.EVENT_TYPE_FEATURE) {
+      mPauseResume.setVisibility(View.VISIBLE);
+      mQuit.setVisibility(View.GONE);
+    } else if (mEventType == Intents.EVENT_TYPE_LBS) {
+      mPauseResume.setVisibility(View.GONE);
+      mQuit.setVisibility(View.VISIBLE);
+    }
   }
   
   private void initBaiduSpeechDialog() {
@@ -319,18 +361,42 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   }
 
   private void showEventComplated() {
-    Intent intent = new Intent(QuestionActivity.this, EventCompletedActivity.class);
-    
-    intent.putExtra(Intents.EXTRA_POINT, mMyPoint);
-    
-    if (!Config.isLogged(QuestionActivity.this)) {
-      SouShangApplication application = (SouShangApplication) getApplication();
-      application.setAnswers(mAnswers);
+    if (mEventType == Intents.EVENT_TYPE_DAILY) {
+      Intent intent = new Intent(QuestionActivity.this, DailyEventCompletedActivity.class);
+      intent.putExtra(Intents.EXTRA_POINT, mMyPoint);
+
+      if (!Config.isLogged(QuestionActivity.this)) {
+        SouShangApplication application = (SouShangApplication) getApplication();
+        application.setAnswers(mAnswers);
+      }
+
+      startActivity(intent);
+    } else if (mEventType == Intents.EVENT_TYPE_LBS) {
+      Intent intent = new Intent(QuestionActivity.this, LBSEventCompletedActivity.class);
+      intent.setAction(Intents.ACTION_LBS_WAIT);
+      intent.putExtra(Intents.EXTRA_MY_POINT, mMyPoint);
+      intent.putExtra(Intents.EXTRA_MY_TIME, (System.currentTimeMillis() - mStartTime) / 1000);
+      
+      startActivity(intent);
     }
     
-    startActivity(intent);
     finish();
     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+  }
+  
+  private void showLBSEventCompleted(boolean win, int myPoint, int myTime, int otherPoint, int otherTime, int eventPoint, int winRate) {
+    Intent intent = new Intent(QuestionActivity.this, LBSEventCompletedActivity.class);
+    
+    intent.setAction(Intents.ACTION_LBS_RESULT);
+    intent.putExtra(Intents.EXTRA_WIN, win);
+    intent.putExtra(Intents.EXTRA_MY_POINT, myPoint);
+    intent.putExtra(Intents.EXTRA_MY_TIME, myTime);
+    intent.putExtra(Intents.EXTRA_OTHER_POINT, otherPoint);
+    intent.putExtra(Intents.EXTRA_OTHER_TIME, otherTime);
+    intent.putExtra(Intents.EXTRA_MY_POINT_DELTA, eventPoint);
+    intent.putExtra(Intents.EXTRA_MY_WIN_RATE, winRate);
+    
+    startActivity(intent);
   }
   
   private void updateUI(QuestionResponse.Question question) {
@@ -395,13 +461,13 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   
   private void pause() {
     stopTimer();
-    mPauseAndResume.setBackgroundResource(R.drawable.resume);
+    mPauseResume.setBackgroundResource(R.drawable.resume);
     mPaused = true;
   }
   
   private void resume() {
     startTimer();
-    mPauseAndResume.setBackgroundResource(R.drawable.pause);
+    mPauseResume.setBackgroundResource(R.drawable.pause);
     mPaused = false;
   }
 
@@ -527,12 +593,16 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
   @Override
   public void onBackPressed() {
     pause();
-    mPausedDialog.show();
+    if (mEventType == Intents.EVENT_TYPE_DAILY || mEventType == Intents.EVENT_TYPE_FEATURE) {
+      mPausedDialog.show();
+    } else if (mEventType == Intents.EVENT_TYPE_LBS) {
+      mQuitDialog.show();
+    }
   }
 
   @Override
   public void onClick(View v) {
-    if (v == mPauseAndResume) {
+    if (v == mPauseResume) {
       if (mPaused) {
         resume();
       } else {
@@ -549,6 +619,9 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       answer(3);
     } else if (v == mHelp) {
       mBaiduSpeechDialog.show();
+    } else if (v == mQuit) {
+      pause();
+      mQuitDialog.show();
     }
   }
 

@@ -36,7 +36,7 @@ import com.baidu.soushang.utils.SystemUtils;
 import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
 import com.umeng.analytics.MobclickAgent;
 
-public class EventCompletedActivity extends BaseActivity implements
+public class DailyEventCompletedActivity extends BaseActivity implements
         OnClickListener {
   private LinearLayout mNotLoggedArea;
   private Button mLogin;
@@ -91,7 +91,7 @@ public class EventCompletedActivity extends BaseActivity implements
 
   @Override
   protected void onCreate(Bundle arg0) {
-    setContentView(R.layout.event_completed);
+    setContentView(R.layout.daily_event_completed);
 
     mNotLoggedArea = (LinearLayout) findViewById(R.id.not_logged_area);
     mEventScoreNoLogged = (TextView) findViewById(R.id.event_score_no_logged);
@@ -190,9 +190,9 @@ public class EventCompletedActivity extends BaseActivity implements
           
           @Override
           public void run() {
-            Apis.answer(EventCompletedActivity.this,
+            Apis.answer(DailyEventCompletedActivity.this,
               mApplication.getAnswers(),
-              Config.getAccessToken(EventCompletedActivity.this),
+              Config.getAccessToken(DailyEventCompletedActivity.this),
               null);
             initLoggedArea(null);
           }
@@ -205,7 +205,7 @@ public class EventCompletedActivity extends BaseActivity implements
           
           @Override
           public void run() {
-            Toast.makeText(EventCompletedActivity.this,
+            Toast.makeText(DailyEventCompletedActivity.this,
               getResources().getString(R.string.login_failed),
               Toast.LENGTH_SHORT).show();
           }
@@ -218,7 +218,7 @@ public class EventCompletedActivity extends BaseActivity implements
           
           @Override
           public void run() {
-            Toast.makeText(EventCompletedActivity.this,
+            Toast.makeText(DailyEventCompletedActivity.this,
               getResources().getString(R.string.login_failed),
               Toast.LENGTH_SHORT).show();
           }
@@ -238,23 +238,23 @@ public class EventCompletedActivity extends BaseActivity implements
   @Override
   public void onClick(View v) {
     if (v == mLogin) {
-      mApplication.login(EventCompletedActivity.this);
+      mApplication.login(DailyEventCompletedActivity.this);
     } else if (v == mShop) {
-      Intent intent = new Intent(EventCompletedActivity.this,
+      Intent intent = new Intent(DailyEventCompletedActivity.this,
                     ShopActivity.class);
       startActivity(intent);
 
       finish();
       overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mRank) {
-      Intent intent = new Intent(EventCompletedActivity.this,
+      Intent intent = new Intent(DailyEventCompletedActivity.this,
                     RankActivity.class);
       startActivity(intent);
 
       finish();
       overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mHome) {
-      Intent intent = new Intent(EventCompletedActivity.this,
+      Intent intent = new Intent(DailyEventCompletedActivity.this,
                     HomeActivity.class);
       startActivity(intent);
 
@@ -266,11 +266,11 @@ public class EventCompletedActivity extends BaseActivity implements
 
         @Override
         public void onShared() {
-          Apis.share(EventCompletedActivity.this, Config.getAccessToken(EventCompletedActivity.this), new ApiResponseCallback<CommonResponse>() {
+          Apis.share(DailyEventCompletedActivity.this, Config.getAccessToken(DailyEventCompletedActivity.this), new ApiResponseCallback<CommonResponse>() {
             
             @Override
             public void onResults(CommonResponse arg0) {
-              Apis.getUserInfo(EventCompletedActivity.this, Config.getAccessToken(EventCompletedActivity.this), mUserInfoCallback);
+              Apis.getUserInfo(DailyEventCompletedActivity.this, Config.getAccessToken(DailyEventCompletedActivity.this), mUserInfoCallback);
             }
             
             @Override

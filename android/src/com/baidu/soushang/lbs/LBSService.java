@@ -88,7 +88,7 @@ public class LBSService extends Service {
           mHandler.sendFetchPeerListReq();
           break;
         case FIGHT_REQ:
-          mHandler.sendFightReq(mApplication.getCurrentPeer().getId());
+          mHandler.sendFightReq(mApplication.getCurrentPeer().getId(), msg.arg1);
           break;
         case FIGHT_CANCEL:
           mHandler.sendFightCancel();
@@ -106,6 +106,7 @@ public class LBSService extends Service {
           shutdown();
           break;
       }
+      
       super.handleMessage(msg);
     }
     
@@ -146,14 +147,16 @@ public class LBSService extends Service {
   
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    if (intent != null) {
+    if (intent != null && mStartup) {
       String action = intent.getAction();
       if (Intents.ACTION_HEARTBEAT.equalsIgnoreCase(action)) {
         Message.obtain(mClient, HEARTBEAT).sendToTarget();
       } else if (Intents.ACTION_UPDATE_PEERS.equalsIgnoreCase(action)) {
         Message.obtain(mClient, UPDATE_PEERS).sendToTarget();
       } else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
-        Message.obtain(mClient, FIGHT_REQ).sendToTarget();
+        Message msg = Message.obtain(mClient, FIGHT_REQ);
+        msg.arg1 = intent.getIntExtra(Intents.EXTRA_BET, 0);
+        msg.sendToTarget();
       } else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
         Message.obtain(mClient, FIGHT_CANCEL).sendToTarget();
       } else if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
@@ -246,11 +249,12 @@ public class LBSService extends Service {
           }
 
           @Override
-          public void onFightReq(User peer) {
+          public void onFightReq(User peer, int bet) {
             mApplication.setCurrentPeer(peer);
             
             Intent intent = new Intent();
             intent.setAction(Intents.ACTION_FIGHT_REQ);
+            intent.putExtra(Intents.EXTRA_BET, bet);
             sendBroadcast(intent);
           }
 
@@ -320,7 +324,8 @@ public class LBSService extends Service {
 
         Log.d(TAG, "connect success!");
       } else {
-        Log.d(TAG, "connect failed!");
+        Log.d(TAG, "connect failed! stop service!");
+        stopSelf();
       }
     }
   }

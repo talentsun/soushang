@@ -49,7 +49,7 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
   public interface ClientListener {
     public void onClosed();
     public void onPeersUpdated(List<User> peers);
-    public void onFightReq(User peer);
+    public void onFightReq(User peer, int bet);
     public void onFightResp(int result);
     public void onFightCancel();
     public void onFightBegin(String fightKey);
@@ -94,7 +94,7 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
         case FIGHT_REQ:
           OFightReq fightReq = OFightReq.parseFrom(msg.getContent());
           if (mListener != null) {
-            mListener.onFightReq(fightReq.getUser());
+            mListener.onFightReq(fightReq.getUser(), fightReq.getBet());
           }
           break;
         case FIGHT_RESP:
@@ -159,11 +159,12 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     mChannel.write(msgBuilder);
   }
   
-  public void sendFightReq(long peerId) {
+  public void sendFightReq(long peerId, int bet) {
     Log.d(TAG, "send fight req");
     
     IFightReq.Builder builder = IFightReq.newBuilder();
     builder.setId(peerId);
+    builder.setBet(bet);
     
     CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
     msgBuilder.setType(FIGHT_REQ);

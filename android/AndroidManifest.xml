@@ -62,7 +62,7 @@
         </activity>
         
         <activity 
-            android:name=".activities.EventCompletedActivity"
+            android:name=".activities.DailyEventCompletedActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
@@ -71,6 +71,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".activities.LBSEventCompletedActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         
         <activity 

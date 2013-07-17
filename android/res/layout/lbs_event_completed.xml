@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/waiting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/popup_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/popup_bg" />
+
+        <TextView
+            android:id="@+id/lbs_event_completed"
+            style="@style/PopupSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@id/popup_bg"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
+            android:text="@string/lbs_event_completed" />
+
+        <TextView
+            android:id="@+id/wait_somebody"
+            style="@style/PopupSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbs_event_completed"
+            android:layout_centerHorizontal="true"
+            android:text="@string/wait_somebody" />
+
+        <TextView
+            android:id="@+id/current_event_score"
+            style="@style/GreenText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/current_event_score" />
+
+        <TextView
+            android:id="@+id/current_event_score_value"
+            style="@style/GreenText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/current_event_score"
+            android:layout_centerHorizontal="true"
+            android:text="@string/current_event_score_value" />
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/lbs_event_waiting"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/popup_bg"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2"
+        android:visibility="visible" >
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+            
+            <ImageView 
+                android:id="@+id/result_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lbs_event_win"
+                android:visibility="visible" />
+            
+        </LinearLayout>
+        
+        <RelativeLayout 
+            android:layout_gravity="center_horizontal"
+            android:layout_width="@dimen/popup_dialog_width"
+            android:layout_height="@dimen/popup_dialog_height"
+            android:background="@drawable/popup_bg">
+            
+            <TextView
+                android:id="@+id/result_title1"
+                style="@style/PopupSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/popup_title_marginTop"
+                android:text="@string/congratulation" />
+
+            <TextView
+                android:id="@+id/result_title2"
+                style="@style/PopupSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/result_title1"
+                android:layout_centerHorizontal="true"
+                android:text="@string/win_current_event" />
+
+            <ImageView 
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/result_title2"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/dotted_line"/>
+
+            <LinearLayout 
+                android:id="@+id/score_board"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_below="@id/result_title2"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:baselineAligned="false">
+                
+                <LinearLayout 
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    
+                    <TextView 
+                        android:id="@+id/me"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me"
+                        style="@style/GreenText"/>
+                    
+                    <TextView 
+                        android:id="@+id/my_current_event_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/current_event_point"
+                        style="@style/GreenText"/>
+                    
+                    <TextView 
+                        android:id="@+id/my_current_event_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/current_event_time"
+                        style="@style/GreenText"/>
+                    
+                </LinearLayout>
+                
+                <LinearLayout 
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    
+                    <TextView 
+                        android:id="@+id/other"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/other"
+                        style="@style/GreenText"/>
+                    
+                    <TextView 
+                        android:id="@+id/other_current_event_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/current_event_point"
+                        style="@style/GreenText"/>
+                    
+                    <TextView 
+                        android:id="@+id/other_current_event_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/current_event_time"
+                        style="@style/GreenText"/>
+                    
+                </LinearLayout>
+            </LinearLayout>
+            
+        </RelativeLayout>
+        
+        <LinearLayout 
+            android:id="@+id/event_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-18dp"
+            android:background="@drawable/lbs_event_win_score" >
+            <TextView 
+                android:id="@+id/event_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get_point"
+                android:textSize="18sp"
+                android:textColor="#fdfcc5"/>
+                
+            <TextView 
+                android:id="@+id/win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/win_rate"
+                android:textSize="16sp"
+                android:textColor="#fdfcc5"/>
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            
+            <Button 
+                android:id="@+id/continue_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/continue_event"
+                android:background="@drawable/go_shop"
+                style="@style/ButtonText" />
+            
+            <Button 
+                android:id="@+id/back_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/home"
+                android:background="@drawable/back_home"
+                style="@style/ButtonText" />
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</LinearLayout>

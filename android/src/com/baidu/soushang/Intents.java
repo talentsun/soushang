@@ -18,6 +18,8 @@ public class Intents {
   public static final String EXTRA_TOTAL = "com.baidu.soushang.extra.TOTAL";
   public static final String EXTRA_EVENT_TYPE = "com.baidu.soushang.extra.EVENT_TYPE";
   public static final String EXTRA_INDEX = "com.baidu.soushang.extra.INDEX";
+  public static final String EXTRA_BET = "com.baidu.soushang.extra.BET";
+  public static final String EXTRA_WIN = "com.baidu.soushang.extra.WIN";
   
   public static final int EVENT_TYPE_DAILY = 1;
   public static final int EVENT_TYPE_LBS = 2;
@@ -33,7 +35,10 @@ public class Intents {
   public static final String ACTION_FIGHT_RESP = "com.baidu.soushang.action.FIGHT_RESP";
   public static final String ACTION_FIGHT_CANCEL = "com.baidu.soushang.action.FIGHT_CANCEL";
   public static final String ACTION_FIGHT_BEGIN = "com.baidu.soushang.action.FIGHT_BEGIN";
+  public static final String ACTION_FIGHT_QUIT = "com.baidu.soushang.action.FIGHT_QUIT";
   public static final String ACTION_FIGHT_END = "com.baidu.soushang.FIGHT_END";
   public static final String ACTION_FIGHTING = "com.baidu.soushang.FIGHTING";
   public static final String ACTION_ANSWER = "com.baidu.soushang.ANSWER";
+  public static final String ACTION_LBS_RESULT = "com.baidu.soushang.LBS_RESULT";
+  public static final String ACTION_LBS_WAIT = "com.baidu.soushang.LBS_WAIT";
 }

@@ -55,7 +55,7 @@ public class LBSEventActivity extends BaseActivity {
           mAdapter.setData(mApplication.getPeers());
           showNoPeers();
         } else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
-          mFightDialog.show(false, mApplication.getCurrentPeer());
+          mFightDialog.show(false, mApplication.getCurrentPeer(), intent.getIntExtra(Intents.EXTRA_BET, 0));
         }
       }
     }
@@ -212,7 +212,7 @@ public class LBSEventActivity extends BaseActivity {
         
         @Override
         public void onClick(View v) {
-          mFightDialog.show(true, peer);
+          mFightDialog.show(true, peer, 0);
         }
       });
       

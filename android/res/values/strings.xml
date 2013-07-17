@@ -69,4 +69,22 @@
     <string name="be_cancelled">“%1$s”取消了比赛！</string>
     <string name="lbs_event">1v1挑战赛</string>
     <string name="fight_state">我：%1$d(积分)&#160;对方：%2$s(积分)</string>
+    <string name="quit_lbs_event">退出比赛</string>
+    <string name="quit_lbs_event_notes">如果您提前退出本场比赛，您的加注将拱手让给对方哦，是否继续退出比赛？</string>
+    
+    <string name="lbs_event_completed">您已经完成比赛</string>
+    <string name="wait_somebody">正在等待“%1$s”</string>
+    <string name="current_event_score">您本次比赛的成绩是：</string>
+    <string name="current_event_score_value">积分%1$d，用时%2$d秒</string>
+    <string name="congratulation">恭喜您！</string>
+    <string name="win_current_event">赢得了本场比赛</string>
+    <string name="current_event_point">积分：%1$d</string>
+    <string name="current_event_time">用时：%1$d秒</string>
+    <string name="get_point">获得积分：%1$d</string>
+    <string name="win_rate">胜率：%1$d%%</string>
+    <string name="other">对方</string>
+    <string name="continue_event">继续比赛</string>
+    <string name="regret">这不科学呀！</string>
+    <string name="lose_current_event">您在本场比赛中落了下风</string>
+    <string name="drop_point">扣除积分</string>
 </resources>

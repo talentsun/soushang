@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="200dp" >
+    android:layout_width="@dimen/popup_dialog_width"
+    android:layout_height="@dimen/popup_dialog_height"
+    android:background="@drawable/popup_bg" >
     <RelativeLayout 
         android:id="@+id/fight_req"
         android:layout_width="match_parent"
@@ -12,9 +13,11 @@
             android:id="@+id/fight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:text="@string/fight" />
+            android:text="@string/fight"
+            style="@style/PopupTitle" />
         
         <TextView 
             android:id="@+id/somebody"
@@ -22,24 +25,29 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/fight"
-            android:text="@string/somebody" />
+            android:text="@string/somebody"
+            style="@style/PopupSubTitle" />
         
         <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="8dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
             <TextView 
                 android:id="@+id/raise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/raise"/>
+                android:text="@string/raise"
+                style="@style/GreenText"/>
             <EditText 
                 android:id="@+id/raise_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:inputType="number"
+                android:hint="0"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bet"
+                style="@style/GreenText" />
         </LinearLayout>
         
         <LinearLayout 
@@ -48,19 +56,22 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="16dp">
             <Button 
                 android:id="@+id/req_fight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fight_req"
-                android:background="@drawable/share_dialog_share"/>
+                android:background="@drawable/popup_ok"
+                style="@style/ButtonText" />
             <Button
                 android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:text="@string/cancel"
-                android:background="@drawable/share_dialog_cancel"/>
+                android:background="@drawable/popup_cancel"
+                style="@style/ButtonText" />
         </LinearLayout>
     </RelativeLayout>
     
@@ -68,15 +79,17 @@
         android:id="@+id/fight_resp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" >
+        android:visibility="gone" >
         
         <TextView 
             android:id="@+id/receive_fight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:text="@string/receive_fight" />
+            android:text="@string/receive_fight"
+            style="@style/PopupTitle" />
         
         <TextView 
             android:id="@+id/somebody_receive"
@@ -84,12 +97,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/receive_fight"
-            android:text="@string/somebody_receive" />
+            android:text="@string/somebody_receive"
+            style="@style/PopupSubTitle" />
         
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:paddingTop="16dp"
             android:layout_centerInParent="true"
             android:orientation="horizontal" >
 
@@ -105,44 +120,26 @@
                 android:layout_marginLeft="16dp"
                 android:orientation="vertical" >
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/other_resp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/other_resp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#536f03"
-                        android:textSize="16sp"
-                        android:maxWidth="90dp" />
-
-                    <TextView
-                        android:id="@+id/other_network_resp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="#536f03"
-                        android:textColor="#fdfcc4"
-                        android:textSize="15sp" />
-                </LinearLayout>
+                    style="@style/GreenText"
+                    android:maxWidth="90dp" />
 
                 <TextView
                     android:id="@+id/other_event_count_resp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:textColor="#536f03"
-                    android:textSize="16sp" />
+                    style="@style/GreenText" />
 
                 <TextView
                     android:id="@+id/other_win_rate_resp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:textColor="#536f03"
-                    android:textSize="16sp" />
+                    style="@style/GreenText" />
             </LinearLayout>
         </LinearLayout>
         
@@ -152,19 +149,22 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="@dimen/popup_button_marginBottom">
             <Button 
                 android:id="@+id/accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/accept"
-                android:background="@drawable/share_dialog_share"/>
+                style="@style/ButtonText"
+                android:background="@drawable/popup_ok"/>
             <Button
                 android:id="@+id/reject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:text="@string/reject"
-                android:background="@drawable/share_dialog_cancel"/>
+                style="@style/ButtonText"
+                android:background="@drawable/popup_cancel"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -172,15 +172,17 @@
         android:id="@+id/fight_waiting"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" >
+        android:visibility="visible" >
         
         <TextView 
             android:id="@+id/waiting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:text="@string/waiting" />
+            android:text="@string/waiting" 
+            style="@style/PopupTitle"/>
         
         <TextView 
             android:id="@+id/somebody_resp"
@@ -188,19 +190,31 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/waiting"
-            android:text="@string/somebody_resp" />
+            android:text="@string/somebody_resp"
+            style="@style/PopupSubTitle" />
         
         <LinearLayout 
             android:id="@+id/center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="24dp"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
             android:orientation="vertical">
             <TextView 
                 android:id="@+id/vs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/GreenText"
                 android:text="@string/vs"/>
+            <ImageView 
+                android:id="@+id/connecting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/connecting"/>
         </LinearLayout>
         
         <LinearLayout 
@@ -208,6 +222,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/center"
+            android:paddingTop="24dp"
             android:orientation="vertical">
             <ImageView 
                 android:id="@+id/my_avatar"
@@ -220,6 +235,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/me"
+                style="@style/GreenText"
                 android:gravity="center"
                 android:maxLines="1"
                 android:ellipsize="marquee"/>
@@ -230,6 +246,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/center"
+            android:paddingTop="24dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
             <ImageView 
                 android:id="@+id/other_avatar"
@@ -238,10 +256,12 @@
                 android:src="@drawable/default_avatar"/>
             <TextView 
                 android:id="@+id/other"
-                android:layout_width="@dimen/avatar_width"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="@dimen/avatar_width"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
+                style="@style/GreenText"
                 android:maxLines="1"
                 android:ellipsize="marquee"/>
         </LinearLayout>
@@ -252,15 +272,23 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="@dimen/popup_button_marginBottom">
             <Button
                 android:id="@+id/cancel_fight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/ButtonText"
                 android:text="@string/cancel"
-                android:background="@drawable/share_dialog_cancel" />
+                android:background="@drawable/popup_cancel" />
         </LinearLayout>
         
+        <ImageView 
+            android:id="@+id/countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:background="@drawable/countdown" />
     </RelativeLayout>
 
 </FrameLayout>

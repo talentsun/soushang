@@ -80,6 +80,16 @@ public final class Models {
      * <code>required int32 win_num = 6;</code>
      */
     int getWinNum();
+
+    // required int32 state = 7;
+    /**
+     * <code>required int32 state = 7;</code>
+     */
+    boolean hasState();
+    /**
+     * <code>required int32 state = 7;</code>
+     */
+    int getState();
   }
   /**
    * Protobuf type {@code User}
@@ -152,6 +162,11 @@ public final class Models {
             case 48: {
               bitField0_ |= 0x00000020;
               winNum_ = input.readInt32();
+              break;
+            }
+            case 56: {
+              bitField0_ |= 0x00000040;
+              state_ = input.readInt32();
               break;
             }
           }
@@ -331,6 +346,22 @@ public final class Models {
       return winNum_;
     }
 
+    // required int32 state = 7;
+    public static final int STATE_FIELD_NUMBER = 7;
+    private int state_;
+    /**
+     * <code>required int32 state = 7;</code>
+     */
+    public boolean hasState() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>required int32 state = 7;</code>
+     */
+    public int getState() {
+      return state_;
+    }
+
     private void initFields() {
       id_ = 0L;
       name_ = "";
@@ -338,6 +369,7 @@ public final class Models {
       netType_ = 0;
       fightNum_ = 0;
       winNum_ = 0;
+      state_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -368,6 +400,10 @@ public final class Models {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasState()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -392,6 +428,9 @@ public final class Models {
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeInt32(6, winNum_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeInt32(7, state_);
       }
     }
 
@@ -424,6 +463,10 @@ public final class Models {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(6, winNum_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, state_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -528,6 +571,8 @@ public final class Models {
         bitField0_ = (bitField0_ & ~0x00000010);
         winNum_ = 0;
         bitField0_ = (bitField0_ & ~0x00000020);
+        state_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -575,6 +620,10 @@ public final class Models {
           to_bitField0_ |= 0x00000020;
         }
         result.winNum_ = winNum_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.state_ = state_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -603,6 +652,9 @@ public final class Models {
         if (other.hasWinNum()) {
           setWinNum(other.getWinNum());
         }
+        if (other.hasState()) {
+          setState(other.getState());
+        }
         return this;
       }
 
@@ -628,6 +680,10 @@ public final class Models {
           return false;
         }
         if (!hasWinNum()) {
+          
+          return false;
+        }
+        if (!hasState()) {
           
           return false;
         }
@@ -929,6 +985,39 @@ public final class Models {
       public Builder clearWinNum() {
         bitField0_ = (bitField0_ & ~0x00000020);
         winNum_ = 0;
+        
+        return this;
+      }
+
+      // required int32 state = 7;
+      private int state_ ;
+      /**
+       * <code>required int32 state = 7;</code>
+       */
+      public boolean hasState() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>required int32 state = 7;</code>
+       */
+      public int getState() {
+        return state_;
+      }
+      /**
+       * <code>required int32 state = 7;</code>
+       */
+      public Builder setState(int value) {
+        bitField0_ |= 0x00000040;
+        state_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 state = 7;</code>
+       */
+      public Builder clearState() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        state_ = 0;
         
         return this;
       }
@@ -3952,6 +4041,56 @@ public final class Models {
      * </pre>
      */
     int getResult();
+
+    // required float me_win_ratio = 2;
+    /**
+     * <code>required float me_win_ratio = 2;</code>
+     */
+    boolean hasMeWinRatio();
+    /**
+     * <code>required float me_win_ratio = 2;</code>
+     */
+    float getMeWinRatio();
+
+    // required float other_win_ratio = 3;
+    /**
+     * <code>required float other_win_ratio = 3;</code>
+     */
+    boolean hasOtherWinRatio();
+    /**
+     * <code>required float other_win_ratio = 3;</code>
+     */
+    float getOtherWinRatio();
+
+    // required int32 me_score = 4;
+    /**
+     * <code>required int32 me_score = 4;</code>
+     */
+    boolean hasMeScore();
+    /**
+     * <code>required int32 me_score = 4;</code>
+     */
+    int getMeScore();
+
+    // required int32 other_score = 5;
+    /**
+     * <code>required int32 other_score = 5;</code>
+     */
+    boolean hasOtherScore();
+    /**
+     * <code>required int32 other_score = 5;</code>
+     */
+    int getOtherScore();
+
+    // required int32 other_time_cost = 6;
+    /**
+     * <code>required int32 other_time_cost = 6;</code>
+     */
+    boolean hasOtherTimeCost();
+    /**
+     * <code>required int32 other_time_cost = 6;</code>
+     */
+    int getOtherTimeCost();
   }
   /**
    * Protobuf type {@code OFightResult}
@@ -3999,6 +4138,31 @@ public final class Models {
             case 8: {
               bitField0_ |= 0x00000001;
               result_ = input.readInt32();
+              break;
+            }
+            case 21: {
+              bitField0_ |= 0x00000002;
+              meWinRatio_ = input.readFloat();
+              break;
+            }
+            case 29: {
+              bitField0_ |= 0x00000004;
+              otherWinRatio_ = input.readFloat();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              meScore_ = input.readInt32();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              otherScore_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              otherTimeCost_ = input.readInt32();
               break;
             }
           }
@@ -4054,8 +4218,93 @@ public final class Models {
       return result_;
     }
 
+    // required float me_win_ratio = 2;
+    public static final int ME_WIN_RATIO_FIELD_NUMBER = 2;
+    private float meWinRatio_;
+    /**
+     * <code>required float me_win_ratio = 2;</code>
+     */
+    public boolean hasMeWinRatio() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required float me_win_ratio = 2;</code>
+     */
+    public float getMeWinRatio() {
+      return meWinRatio_;
+    }
+
+    // required float other_win_ratio = 3;
+    public static final int OTHER_WIN_RATIO_FIELD_NUMBER = 3;
+    private float otherWinRatio_;
+    /**
+     * <code>required float other_win_ratio = 3;</code>
+     */
+    public boolean hasOtherWinRatio() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required float other_win_ratio = 3;</code>
+     */
+    public float getOtherWinRatio() {
+      return otherWinRatio_;
+    }
+
+    // required int32 me_score = 4;
+    public static final int ME_SCORE_FIELD_NUMBER = 4;
+    private int meScore_;
+    /**
+     * <code>required int32 me_score = 4;</code>
+     */
+    public boolean hasMeScore() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 me_score = 4;</code>
+     */
+    public int getMeScore() {
+      return meScore_;
+    }
+
+    // required int32 other_score = 5;
+    public static final int OTHER_SCORE_FIELD_NUMBER = 5;
+    private int otherScore_;
+    /**
+     * <code>required int32 other_score = 5;</code>
+     */
+    public boolean hasOtherScore() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required int32 other_score = 5;</code>
+     */
+    public int getOtherScore() {
+      return otherScore_;
+    }
+
+    // required int32 other_time_cost = 6;
+    public static final int OTHER_TIME_COST_FIELD_NUMBER = 6;
+    private int otherTimeCost_;
+    /**
+     * <code>required int32 other_time_cost = 6;</code>
+     */
+    public boolean hasOtherTimeCost() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>required int32 other_time_cost = 6;</code>
+     */
+    public int getOtherTimeCost() {
+      return otherTimeCost_;
+    }
+
     private void initFields() {
       result_ = 0;
+      meWinRatio_ = 0F;
+      otherWinRatio_ = 0F;
+      meScore_ = 0;
+      otherScore_ = 0;
+      otherTimeCost_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -4063,6 +4312,26 @@ public final class Models {
       if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasResult()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMeWinRatio()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasOtherWinRatio()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMeScore()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasOtherScore()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasOtherTimeCost()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -4076,6 +4345,21 @@ public final class Models {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, result_);
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeFloat(2, meWinRatio_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeFloat(3, otherWinRatio_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, meScore_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, otherScore_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt32(6, otherTimeCost_);
+      }
     }
 
     private int memoizedSerializedSize = -1;
@@ -4087,6 +4371,26 @@ public final class Models {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, result_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, meWinRatio_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(3, otherWinRatio_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, meScore_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, otherScore_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, otherTimeCost_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -4181,6 +4485,16 @@ public final class Models {
         super.clear();
         result_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
+        meWinRatio_ = 0F;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        otherWinRatio_ = 0F;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        meScore_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        otherScore_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        otherTimeCost_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -4208,6 +4522,26 @@ public final class Models {
           to_bitField0_ |= 0x00000001;
         }
         result.result_ = result_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.meWinRatio_ = meWinRatio_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.otherWinRatio_ = otherWinRatio_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.meScore_ = meScore_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.otherScore_ = otherScore_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.otherTimeCost_ = otherTimeCost_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -4217,11 +4551,46 @@ public final class Models {
         if (other.hasResult()) {
           setResult(other.getResult());
         }
+        if (other.hasMeWinRatio()) {
+          setMeWinRatio(other.getMeWinRatio());
+        }
+        if (other.hasOtherWinRatio()) {
+          setOtherWinRatio(other.getOtherWinRatio());
+        }
+        if (other.hasMeScore()) {
+          setMeScore(other.getMeScore());
+        }
+        if (other.hasOtherScore()) {
+          setOtherScore(other.getOtherScore());
+        }
+        if (other.hasOtherTimeCost()) {
+          setOtherTimeCost(other.getOtherTimeCost());
+        }
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasResult()) {
+          
+          return false;
+        }
+        if (!hasMeWinRatio()) {
+          
+          return false;
+        }
+        if (!hasOtherWinRatio()) {
+          
+          return false;
+        }
+        if (!hasMeScore()) {
+          
+          return false;
+        }
+        if (!hasOtherScore()) {
+          
+          return false;
+        }
+        if (!hasOtherTimeCost()) {
           
           return false;
         }
@@ -4296,6 +4665,171 @@ public final class Models {
       public Builder clearResult() {
         bitField0_ = (bitField0_ & ~0x00000001);
         result_ = 0;
+        
+        return this;
+      }
+
+      // required float me_win_ratio = 2;
+      private float meWinRatio_ ;
+      /**
+       * <code>required float me_win_ratio = 2;</code>
+       */
+      public boolean hasMeWinRatio() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required float me_win_ratio = 2;</code>
+       */
+      public float getMeWinRatio() {
+        return meWinRatio_;
+      }
+      /**
+       * <code>required float me_win_ratio = 2;</code>
+       */
+      public Builder setMeWinRatio(float value) {
+        bitField0_ |= 0x00000002;
+        meWinRatio_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required float me_win_ratio = 2;</code>
+       */
+      public Builder clearMeWinRatio() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        meWinRatio_ = 0F;
+        
+        return this;
+      }
+
+      // required float other_win_ratio = 3;
+      private float otherWinRatio_ ;
+      /**
+       * <code>required float other_win_ratio = 3;</code>
+       */
+      public boolean hasOtherWinRatio() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required float other_win_ratio = 3;</code>
+       */
+      public float getOtherWinRatio() {
+        return otherWinRatio_;
+      }
+      /**
+       * <code>required float other_win_ratio = 3;</code>
+       */
+      public Builder setOtherWinRatio(float value) {
+        bitField0_ |= 0x00000004;
+        otherWinRatio_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required float other_win_ratio = 3;</code>
+       */
+      public Builder clearOtherWinRatio() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        otherWinRatio_ = 0F;
+        
+        return this;
+      }
+
+      // required int32 me_score = 4;
+      private int meScore_ ;
+      /**
+       * <code>required int32 me_score = 4;</code>
+       */
+      public boolean hasMeScore() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 me_score = 4;</code>
+       */
+      public int getMeScore() {
+        return meScore_;
+      }
+      /**
+       * <code>required int32 me_score = 4;</code>
+       */
+      public Builder setMeScore(int value) {
+        bitField0_ |= 0x00000008;
+        meScore_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 me_score = 4;</code>
+       */
+      public Builder clearMeScore() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        meScore_ = 0;
+        
+        return this;
+      }
+
+      // required int32 other_score = 5;
+      private int otherScore_ ;
+      /**
+       * <code>required int32 other_score = 5;</code>
+       */
+      public boolean hasOtherScore() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required int32 other_score = 5;</code>
+       */
+      public int getOtherScore() {
+        return otherScore_;
+      }
+      /**
+       * <code>required int32 other_score = 5;</code>
+       */
+      public Builder setOtherScore(int value) {
+        bitField0_ |= 0x00000010;
+        otherScore_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 other_score = 5;</code>
+       */
+      public Builder clearOtherScore() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        otherScore_ = 0;
+        
+        return this;
+      }
+
+      // required int32 other_time_cost = 6;
+      private int otherTimeCost_ ;
+      /**
+       * <code>required int32 other_time_cost = 6;</code>
+       */
+      public boolean hasOtherTimeCost() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>required int32 other_time_cost = 6;</code>
+       */
+      public int getOtherTimeCost() {
+        return otherTimeCost_;
+      }
+      /**
+       * <code>required int32 other_time_cost = 6;</code>
+       */
+      public Builder setOtherTimeCost(int value) {
+        bitField0_ |= 0x00000020;
+        otherTimeCost_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 other_time_cost = 6;</code>
+       */
+      public Builder clearOtherTimeCost() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        otherTimeCost_ = 0;
         
         return this;
       }
@@ -4796,6 +5330,16 @@ public final class Models {
      * <code>required uint64 id = 1;</code>
      */
     long getId();
+
+    // required int32 bet = 2;
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    boolean hasBet();
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    int getBet();
   }
   /**
    * Protobuf type {@code IFightReq}
@@ -4845,6 +5389,11 @@ public final class Models {
               id_ = input.readUInt64();
               break;
             }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              bet_ = input.readInt32();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -4888,8 +5437,25 @@ public final class Models {
       return id_;
     }
 
+    // required int32 bet = 2;
+    public static final int BET_FIELD_NUMBER = 2;
+    private int bet_;
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    public boolean hasBet() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    public int getBet() {
+      return bet_;
+    }
+
     private void initFields() {
       id_ = 0L;
+      bet_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -4897,6 +5463,10 @@ public final class Models {
       if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasBet()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -4910,6 +5480,9 @@ public final class Models {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt64(1, id_);
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, bet_);
+      }
     }
 
     private int memoizedSerializedSize = -1;
@@ -4921,6 +5494,10 @@ public final class Models {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, bet_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -5015,6 +5592,8 @@ public final class Models {
         super.clear();
         id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
+        bet_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -5042,6 +5621,10 @@ public final class Models {
           to_bitField0_ |= 0x00000001;
         }
         result.id_ = id_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.bet_ = bet_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -5051,11 +5634,18 @@ public final class Models {
         if (other.hasId()) {
           setId(other.getId());
         }
+        if (other.hasBet()) {
+          setBet(other.getBet());
+        }
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasId()) {
+          
+          return false;
+        }
+        if (!hasBet()) {
           
           return false;
         }
@@ -5110,6 +5700,39 @@ public final class Models {
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
         id_ = 0L;
+        
+        return this;
+      }
+
+      // required int32 bet = 2;
+      private int bet_ ;
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public boolean hasBet() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public int getBet() {
+        return bet_;
+      }
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public Builder setBet(int value) {
+        bitField0_ |= 0x00000002;
+        bet_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public Builder clearBet() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        bet_ = 0;
         
         return this;
       }
@@ -5674,6 +6297,16 @@ public final class Models {
      * <code>required .User user = 1;</code>
      */
     com.baidu.soushang.lbs.Models.User getUser();
+
+    // required int32 bet = 2;
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    boolean hasBet();
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    int getBet();
   }
   /**
    * Protobuf type {@code OFightReq}
@@ -5731,6 +6364,11 @@ public final class Models {
               bitField0_ |= 0x00000001;
               break;
             }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              bet_ = input.readInt32();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -5774,8 +6412,25 @@ public final class Models {
       return user_;
     }
 
+    // required int32 bet = 2;
+    public static final int BET_FIELD_NUMBER = 2;
+    private int bet_;
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    public boolean hasBet() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 bet = 2;</code>
+     */
+    public int getBet() {
+      return bet_;
+    }
+
     private void initFields() {
       user_ = com.baidu.soushang.lbs.Models.User.getDefaultInstance();
+      bet_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -5783,6 +6438,10 @@ public final class Models {
       if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasUser()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasBet()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -5800,6 +6459,9 @@ public final class Models {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeMessage(1, user_);
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, bet_);
+      }
     }
 
     private int memoizedSerializedSize = -1;
@@ -5811,6 +6473,10 @@ public final class Models {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, user_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, bet_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -5905,6 +6571,8 @@ public final class Models {
         super.clear();
         user_ = com.baidu.soushang.lbs.Models.User.getDefaultInstance();
         bitField0_ = (bitField0_ & ~0x00000001);
+        bet_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -5932,6 +6600,10 @@ public final class Models {
           to_bitField0_ |= 0x00000001;
         }
         result.user_ = user_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.bet_ = bet_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -5941,11 +6613,18 @@ public final class Models {
         if (other.hasUser()) {
           mergeUser(other.getUser());
         }
+        if (other.hasBet()) {
+          setBet(other.getBet());
+        }
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasUser()) {
+          
+          return false;
+        }
+        if (!hasBet()) {
           
           return false;
         }
@@ -6033,6 +6712,39 @@ public final class Models {
         user_ = com.baidu.soushang.lbs.Models.User.getDefaultInstance();
 
         bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      // required int32 bet = 2;
+      private int bet_ ;
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public boolean hasBet() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public int getBet() {
+        return bet_;
+      }
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public Builder setBet(int value) {
+        bitField0_ |= 0x00000002;
+        bet_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 bet = 2;</code>
+       */
+      public Builder clearBet() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        bet_ = 0;
+        
         return this;
       }
 
