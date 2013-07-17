@@ -19,6 +19,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -83,7 +84,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
           updatePointBoard();
         } else if (Intents.ACTION_FIGHT_END.equalsIgnoreCase(action)) {
           showLBSEventCompleted(
-            intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 0) > 0, 
+            intent.getBooleanExtra(Intents.EXTRA_WIN, false), 
             intent.getIntExtra(Intents.EXTRA_MY_POINT, 0), 
             intent.getIntExtra(Intents.EXTRA_MY_TIME, 0), 
             intent.getIntExtra(Intents.EXTRA_OTHER_POINT, 0), 
@@ -346,10 +347,12 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
             }
           }, 100);
         } else {
+          Log.d("Question", "get next question is null");
           mLoadingDialog.dismiss();
           showEventComplated();
         }
       } else {
+        Log.d("Question", "get next question error");
         mCurrentQuestion = null;
         mLoadingDialog.dismiss();
         showEventComplated();
@@ -375,7 +378,7 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
       Intent intent = new Intent(QuestionActivity.this, LBSEventCompletedActivity.class);
       intent.setAction(Intents.ACTION_LBS_WAIT);
       intent.putExtra(Intents.EXTRA_MY_POINT, mMyPoint);
-      intent.putExtra(Intents.EXTRA_MY_TIME, (System.currentTimeMillis() - mStartTime) / 1000);
+      intent.putExtra(Intents.EXTRA_MY_TIME, (int) (System.currentTimeMillis() - mStartTime) / 1000);
       
       startActivity(intent);
     }
@@ -397,6 +400,9 @@ public class QuestionActivity extends BaseActivity implements ApiResponseCallbac
     intent.putExtra(Intents.EXTRA_MY_WIN_RATE, winRate);
     
     startActivity(intent);
+    
+    finish();
+    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
   }
   
   private void updateUI(QuestionResponse.Question question) {

@@ -71,10 +71,18 @@ public class FightDialog extends Dialog implements View.OnClickListener {
         if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
           int result = intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 1);
           if (result > 0) {
-            Toast.makeText(
+            if (result == 2) {
+              Toast.makeText(
+                getContext(),
+                String.format(getContext().getString(R.string.bet_more_than_five), mApplication
+                    .getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
+            } else {
+              Toast.makeText(
                 getContext(),
                 String.format(getContext().getString(R.string.be_rejected), mApplication
                     .getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
+            }
+            
             mApplication.setCurrentPeer(null);
             cancel();
           }
@@ -104,6 +112,11 @@ public class FightDialog extends Dialog implements View.OnClickListener {
               questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE, Intents.EVENT_TYPE_LBS);
               questionIntent.putExtra(Intents.EXTRA_FIGHT_KEY, fightKey);
               getContext().startActivity(questionIntent);
+              
+              if (getOwnerActivity() != null) {
+                getOwnerActivity().finish();
+                getOwnerActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+              }
             }
           }, 4000);
         }
@@ -308,6 +321,10 @@ public class FightDialog extends Dialog implements View.OnClickListener {
     ImageLoader.getInstance().displayImage(Config.getAvatar(getContext()), mMyAvatar, mOption);
     ImageLoader.getInstance().displayImage(mApplication.getCurrentPeer().getAvatar(), mOtherAvatar,
         mOption);
+  }
+
+  @Override
+  public void onBackPressed() {
   }
 
 }

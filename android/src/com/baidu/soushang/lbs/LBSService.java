@@ -294,9 +294,17 @@ public class LBSService extends Service {
           @Override
           public void onFightEnd(int result, int myPoint, int myTime, int myPointDelta,
               int myWinRate, int otherPoint, int otherTime) {
+            Log.d(TAG, "result: " + result);
+            Log.d(TAG, "myPoint: " + myPoint);
+            Log.d(TAG, "myTime: " + myTime);
+            Log.d(TAG, "myPointDelta: " + myPointDelta);
+            Log.d(TAG, "myWinRate: " + myWinRate);
+            Log.d(TAG, "otherPoint: " + otherPoint);
+            Log.d(TAG, "otherTime: " + otherTime);
+            
             Intent intent = new Intent();
             intent.setAction(Intents.ACTION_FIGHT_END);
-            intent.putExtra(Intents.EXTRA_FIGHT_RESULT, result);
+            intent.putExtra(Intents.EXTRA_WIN, result == 1);
             intent.putExtra(Intents.EXTRA_MY_POINT, myPoint);
             intent.putExtra(Intents.EXTRA_MY_TIME, myTime);
             intent.putExtra(Intents.EXTRA_MY_POINT_DELTA, myPointDelta);

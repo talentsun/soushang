@@ -158,7 +158,7 @@ public class LBSEventCompletedActivity extends BaseActivity implements OnClickLi
       mEventScore.setBackgroundResource(R.drawable.lbs_event_win_score);
       mResultTitle1.setText(getString(R.string.congratulation));
       mResultTitle2.setText(getString(R.string.win_current_event));
-      mEventPoint.setText(String.format(getString(R.string.get_point), winPoint));
+      mEventPoint.setText(String.format(getString(R.string.get_point), Math.abs(winPoint)));
     } else {
       mResultImage.setImageResource(R.drawable.lbs_event_lose);
       mEventScore.setBackgroundResource(R.drawable.lbs_event_lose_score);
@@ -171,7 +171,9 @@ public class LBSEventCompletedActivity extends BaseActivity implements OnClickLi
     mMyCurrentEventTime.setText(String.format(getString(R.string.current_event_time), myTime));
     mOtherCurrentEventPoint.setText(String.format(getString(R.string.current_event_point), otherPoint));
     mOtherCurrentEventTime.setText(String.format(getString(R.string.current_event_time), otherTime));
-    mWinRate.setText(String.format(getString(R.string.win_rate), winRate));
+    mWinRate.setText(String.format(getString(R.string.win_rate), Math.abs(winRate)));
+    
+    mApplication.setCurrentPeer(null);
   }
 
   @Override

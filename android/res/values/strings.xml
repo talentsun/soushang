@@ -66,6 +66,7 @@
     <string name="accept">接受</string>
     <string name="reject">拒绝</string>
     <string name="be_rejected">“%1$s”拒绝了你的挑战！</string>
+    <string name="bet_more_than_five">加注次数超过5次，今天不能再加注了！</string>
     <string name="be_cancelled">“%1$s”取消了比赛！</string>
     <string name="lbs_event">1v1挑战赛</string>
     <string name="fight_state">我：%1$d(积分)&#160;对方：%2$s(积分)</string>
@@ -86,5 +87,5 @@
     <string name="continue_event">继续比赛</string>
     <string name="regret">这不科学呀！</string>
     <string name="lose_current_event">您在本场比赛中落了下风</string>
-    <string name="drop_point">扣除积分</string>
+    <string name="drop_point">扣除积分：%1$d</string>
 </resources>

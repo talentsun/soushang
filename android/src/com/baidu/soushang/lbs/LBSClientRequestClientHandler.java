@@ -123,7 +123,7 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
         case FIGHT_RESULT:
           OFightResult fightResult = OFightResult.parseFrom(msg.getContent());
           if (mListener != null) {
-            mListener.onFightEnd(fightResult.getResult(), 0, 0, 0, 0, 0, 0);
+            mListener.onFightEnd(fightResult.getResult(), 0, 0, fightResult.getMeScore(), (int) (fightResult.getMeWinRatio() * 100), fightResult.getOtherScore(), fightResult.getOtherTimeCost());
           }
           break;
       }
