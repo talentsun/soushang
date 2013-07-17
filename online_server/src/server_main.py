@@ -4,6 +4,7 @@ import struct
 import traceback
 import logging
 import time
+import urllib2
 
 from gevent.server import StreamServer
 from gevent import monkey; monkey.patch_socket()
@@ -74,6 +75,8 @@ class Client(object):
         self.bet = 0
         self.right = 0
         self.last_answer_time = 0
+        self.today_bet_num = 0
+        self.last_bet_time = 0
         pass
 
     def __del__(self):
@@ -106,37 +109,43 @@ class Client(object):
     def lose_hb(self):
         logger.debug("%d lose hb" % self.id)
         if self.state == Client.FIGHT_REQ_A or self.state == Client.FIGHT_REQ_B:
-            self.state = Client.IDLE
-            self.peer_client.state = Client.IDLE
 
             self.cancel_timeout()
             cmd = OFightResp()
             cmd.result = 1
             cmd.message = 'other lose connection'
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
+            self.end_game()
 
-            self.peer_client.peer_client = None
-            self.peer_client = None
         elif self.state == Client.WAIT_FOR_ANSWER or self.state == Client.WAIT_FOR_RESULT:
-            self.state = Client.IDLE
-            self.peer_client.state = Client.IDLE
 
             self.cancel_timeout()
             cmd = OFightResult()
-            cmd.result = 3
+            cmd.result = 1
+            self.peer_client.user_info.win_num += 1
+            self.peer_client.user_info.fight_num += 1
+            self.user_info.fight_num += 1
+            self.user_info.store()
+            self.peer_client.user_info.store()
+
+            cmd.other_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
+            cmd.me_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
+            cmd.me_score = (self.right + self.peer_client.right) * 5 + self.bet
+            cmd.other_score = -1 * self.bet
+            cmd.other_time_cost = int(time.time() - self.start_time)
+            if cmd.me_score != 0:
+                urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.peer_client.id, cmd.me_score))
+            if cmd.other_score != 0:
+                urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.id, cmd.other_score))
+
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
+            self.end_game()
 
-            self.peer_client.peer_client = None
-            self.peer_client = None
-
-            
 
     def deal_timeout(self):
         logger.debug("%d timeout %d" % (self.id, self.state))
         self.timeout = None
         if self.state == Client.FIGHT_REQ_A:
-            self.state = Client.IDLE
-            self.peer_client.state = Client.IDLE
 
             cmd = OFightResp()
             cmd.result = 1
@@ -145,8 +154,8 @@ class Client(object):
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
             self.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
 
-            self.peer_client.peer_client = None
-            self.peer_client = None
+            self.end_game()
+
         elif self.state == Client.WAIT_FOR_ANSWER:
             self.check_answer_timeout()
         pass
@@ -199,6 +208,7 @@ class Client(object):
             self.peer_client.user_info.fight_num += 1
         self.user_info.store()
         self.peer_client.user_info.store()
+        logger.debug("%d right %d %d right %d bet %d" % (self.id, self.right, self.peer_client.id, self.peer_client.right, self.bet))
 
         resp.me_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
         resp.other_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
@@ -210,12 +220,14 @@ class Client(object):
             resp.me_score = -1 * self.bet
         resp.other_time_cost = int(self.peer_client.end_time - self.peer_client.start_time)
         self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
+        urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.id, resp.me_score))
+        urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.peer_client.id, resp.other_score))
 
         #other
         if not me_win:
-            resp.result = 2
-        else:
             resp.result = 1
+        else:
+            resp.result = 2
 
         resp.other_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
         resp.me_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
@@ -233,16 +245,21 @@ class Client(object):
         if self.peer_client:
             self.peer_client.state = Client.IDLE
             self.peer_client.peer_client = None
+            self.peer_client.cancel_timeout()
         self.state = Client.IDLE
         self.peer_client = None
+        self.cancel_timeout()
 
     def check_answer_timeout(self):
         cur_time = time.time()
         #because the time may be not exact
         if self.last_answer_time <= cur_time - ONE_MOVE_MAX_TIME + 1:
             self.deal_fight_result(0)
+            return True
         if self.peer_client.last_answer_time <= cur_time - ONE_MOVE_MAX_TIME + 1:
             self.deal_fight_result(1)
+            return True
+        return False
 
 
 
@@ -308,6 +325,17 @@ class Client(object):
         elif cmd_type == CmdType.FIGHT_REQ and self.state == Client.IDLE:
             req = IFightReq()
             req.ParseFromString(buf)
+            today_begin_time = int((time.time()  + 8 * 3600) / (24 * 3600)) * 24 * 3600 - 8 * 3600
+            if self.last_bet_time < today_begin_time:
+                self.bet_num = 0
+            if req.bet > 0 and self.bet_num >= 5:
+                resp = OFightReq()
+                resp.result = 2
+                resp.message = 'bet too much'
+                logger.error("not find user %d" % req.id)
+                self.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
+                return
+
             logger.debug("client fight req %d" % req.id)
             client = client_mgr.get(req.id)
             if client:
@@ -316,8 +344,10 @@ class Client(object):
                     resp.result = 1
                     resp.message = u'other is busy'
                     self.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
+                    return
                 self.state = Client.FIGHT_REQ_A
-                self.bet = self.peer_client.bet
+                self.bet = req.bet
+                client.bet = req.bet
                 resp = OFightReq()
                 resp.user.id = self.id
                 resp.user.name = self.name
@@ -352,6 +382,10 @@ class Client(object):
                 self.question_index = self.peer_client.question_index = 0
                 self.start_time = self.peer_client.start_time = time.time()
                 self.peer_client.last_answer_time = self.last_answer_time = time.time()
+                #start game
+                if self.bet > 0:
+                    self.peer_client.bet_num += 1
+                    self.peer_client.last_bet_time = time.time()
             else:
                 resp = OFightResp()
                 resp.result = 1
@@ -398,6 +432,8 @@ class Client(object):
                     self.state = Client.WAIT_FOR_RESULT
             else:
                 self.start_timeout(ONE_MOVE_MAX_TIME)
+        elif cmd_type == CmdType.FIGHT_QUIT and (self.state == Client.WAIT_FOR_ANSWER or self.state == Client.WAIT_FOR_RESULT):
+            self.deal_fight_result(0)
         else:
             self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 
@@ -415,7 +451,7 @@ def main(socket, address):
     hbTimer = None
     while True:
         try:
-            hbTimer = Timeout(60 * 2)
+            hbTimer = Timeout(ONE_MOVE_MAX_TIME)
             hbTimer.start()
             client.read_and_deal_cmd()
             hbTimer.cancel()
@@ -423,6 +459,7 @@ def main(socket, address):
             if t == hbTimer:
                 print "client lose"
                 client.lose_hb()
+                client.cancel_timeout()
                 if client.latitude != None:
                     client_mgr.remove_client(client)
                 client = None
@@ -438,6 +475,7 @@ def main(socket, address):
             logger.error(traceback.format_exc())
             print "client close"
             client.lose_hb()
+            client.cancel_timeout()
             if client.latitude != None:
                 client_mgr.remove_client(client)
             client = None

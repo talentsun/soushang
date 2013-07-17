@@ -46,10 +46,11 @@ message OFightResult {
     // 3 is other lose connect, you win
     required int32 result = 1;
     required float me_win_ratio = 2;
-    required float other_win_ratio = 3;
-    required int32 me_score = 4;
-    required int32 other_score = 5;
-    required int32 other_time_cost = 6;
+    required int32 me_score = 3;
+    required int32 me_point = 4;
+    required int32 other_point = 5;
+    required int32 other_time = 6;
+    required int32 me_time = 7;
 }
 
 message OPeerListResp {
@@ -64,6 +65,7 @@ message IFightReq {
 message OFightResp {
     // 0 shows success
     // 1 shows failed
+    // 2 shows bet too much
     required int32 result = 1; 
     optional string message = 2;
 }
