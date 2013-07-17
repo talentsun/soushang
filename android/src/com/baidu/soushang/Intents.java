@@ -41,4 +41,6 @@ public class Intents {
   public static final String ACTION_ANSWER = "com.baidu.soushang.ANSWER";
   public static final String ACTION_LBS_RESULT = "com.baidu.soushang.LBS_RESULT";
   public static final String ACTION_LBS_WAIT = "com.baidu.soushang.LBS_WAIT";
+  public static final String ACTION_LBS_ONLINE = "com.baidu.soushang.LBS_ONLINE";
+  public static final String ACTION_LBS_OFFLINE = "com.baidu.soushang.LBS_OFFLINE";
 }

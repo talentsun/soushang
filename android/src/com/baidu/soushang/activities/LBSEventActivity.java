@@ -143,6 +143,22 @@ public class LBSEventActivity extends BaseActivity {
     super.onStop();
   }
   
+  @Override
+  protected void onPause() {
+    Intent intent = new Intent(this, LBSService.class);
+    intent.setAction(Intents.ACTION_LBS_OFFLINE);
+    startService(intent);
+    super.onPause();
+  }
+
+  @Override
+  protected void onResume() {
+    Intent intent = new Intent(this, LBSService.class);
+    intent.setAction(Intents.ACTION_LBS_ONLINE);
+    startService(intent);
+    super.onResume();
+  }
+
   public class LBSAdapter extends BaseAdapter {
     private List<User> mData;
     private LayoutInflater mInflater;

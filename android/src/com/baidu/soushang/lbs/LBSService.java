@@ -49,7 +49,9 @@ public class LBSService extends Service {
   private static final int FIGHT_RESP = 7;
   private static final int ANSWER = 8;
   private static final int FIGHT_QUIT = 9;
-  private static final int SHUTDOWN = 10;
+  private static final int ONLINE = 10;
+  private static final int OFFLINE = 11;
+  private static final int SHUTDOWN = 12;
   
   private AlarmManager mAlarmManager;
   private SouShangApplication mApplication;
@@ -101,6 +103,12 @@ public class LBSService extends Service {
           break;
         case FIGHT_QUIT:
           mHandler.sendFightQuit();
+          break;
+        case ONLINE:
+          mHandler.sendOnline();
+          break;
+        case OFFLINE:
+          mHandler.sendOffline();
           break;
         case SHUTDOWN:
           shutdown();
@@ -170,6 +178,10 @@ public class LBSService extends Service {
         msg.sendToTarget();
       } else if (Intents.ACTION_FIGHT_QUIT.equalsIgnoreCase(action)) {
         Message.obtain(mClient, FIGHT_QUIT).sendToTarget();
+      } else if (Intents.ACTION_LBS_ONLINE.equalsIgnoreCase(action)) {
+        Message.obtain(mClient, ONLINE).sendToTarget();
+      } else if (Intents.ACTION_LBS_OFFLINE.equalsIgnoreCase(action)) {
+        Message.obtain(mClient, OFFLINE).sendToTarget();
       }
     }
     

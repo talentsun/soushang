@@ -43,6 +43,8 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
   private static final int CLIENT_LBS = 11;
   private static final int FIGHT_CANCEL = 12;
   private static final int FIGHT_QUIT = 13;
+  private static final int ONLINE = 14;
+  private static final int OFFLINE = 15;
   private static final int UNKNOWN_OP = 1000;
   private static final int HEARTBEAT = 1001;
   
@@ -178,6 +180,26 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
     
     CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
     msgBuilder.setType(FIGHT_CANCEL);
+    msgBuilder.setContent(EmptyMsg.newBuilder().build().toByteString());
+    
+    mChannel.write(msgBuilder.build());
+  }
+  
+  public void sendOnline() {
+    Log.d(TAG, "send online");
+    
+    CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
+    msgBuilder.setType(ONLINE);
+    msgBuilder.setContent(EmptyMsg.newBuilder().build().toByteString());
+    
+    mChannel.write(msgBuilder.build());
+  }
+  
+  public void sendOffline() {
+    Log.d(TAG, "send offline");
+    
+    CommandMsg.Builder msgBuilder = CommandMsg.newBuilder();
+    msgBuilder.setType(OFFLINE);
     msgBuilder.setContent(EmptyMsg.newBuilder().build().toByteString());
     
     mChannel.write(msgBuilder.build());

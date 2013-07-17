@@ -4,7 +4,6 @@ import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.activities.QuestionActivity;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -92,6 +91,8 @@ public class FightDialog extends Dialog implements View.OnClickListener {
           mApplication.setCurrentPeer(null);
           cancel();
         } else if (Intents.ACTION_FIGHT_BEGIN.equalsIgnoreCase(action)) {
+          mCancelFight.setEnabled(false);
+          
           mCountdown.setVisibility(View.VISIBLE);
           AnimationDrawable countdown = (AnimationDrawable) mCountdown.getBackground();
           if (countdown.isRunning()) {
