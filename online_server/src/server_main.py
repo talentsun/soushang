@@ -128,15 +128,17 @@ class Client(object):
             self.user_info.store()
             self.peer_client.user_info.store()
 
-            cmd.other_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
             cmd.me_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
             cmd.me_score = (self.right + self.peer_client.right) * 5 + self.bet
-            cmd.other_score = -1 * self.bet
-            cmd.other_time_cost = int(time.time() - self.start_time)
+            cmd.me_point = self.right * 5
+            cmd.other_point = self.peer_client.right * 5
+            cmd.other_time = int(time.time() - self.start_time)
+            cmd.me_time = int(time.time() - self.peer_client.start_time)
+            other_score = -1 * self.bet
             if cmd.me_score != 0:
                 urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.peer_client.id, cmd.me_score))
-            if cmd.other_score != 0:
-                urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.id, cmd.other_score))
+            if other_score != 0:
+                urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.id, other_score))
 
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESP, cmd))
             self.end_game()
@@ -194,6 +196,7 @@ class Client(object):
             self.timeout = None
         
     def deal_fight_result(self, me_win):
+        logger.debug("deal fight result %d" % me_win)
         #me
         resp = OFightResult()
         if me_win:
@@ -211,17 +214,16 @@ class Client(object):
         logger.debug("%d right %d %d right %d bet %d" % (self.id, self.right, self.peer_client.id, self.peer_client.right, self.bet))
 
         resp.me_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
-        resp.other_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
+        resp.me_point = self.right * 5;
+        resp.other_point = self.peer_client.right * 5;
         if me_win:
             resp.me_score = (self.right + self.peer_client.right) * 5 + self.bet
-            resp.other_score = -1 * self.bet
         else:
-            resp.other_score = (self.right + self.peer_client.right) * 5 + self.bet
             resp.me_score = -1 * self.bet
-        resp.other_time_cost = int(self.peer_client.end_time - self.peer_client.start_time)
+        resp.other_time = int(self.peer_client.end_time - self.peer_client.start_time)
+        resp.me_time = int(self.end_time - self.start_time)
         self.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
         urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.id, resp.me_score))
-        urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.peer_client.id, resp.other_score))
 
         #other
         if not me_win:
@@ -229,15 +231,19 @@ class Client(object):
         else:
             resp.result = 2
 
-        resp.other_win_ratio = float(self.user_info.win_num) / self.user_info.fight_num
         resp.me_win_ratio = float(self.peer_client.user_info.win_num) / self.peer_client.user_info.fight_num
         if not me_win:
             resp.me_score = (self.right + self.peer_client.right) * 5 + self.bet
-            resp.other_score = -1 * self.bet
         else:
-            resp.other_score = (self.right + self.peer_client.right) * 5 + self.bet
             resp.me_score = -1 * self.bet
-        resp.other_time_cost = int(self.end_time - self.start_time)
+
+
+        resp.other_point = self.right * 5;
+        resp.me_point = self.peer_client.right * 5;
+        resp.me_time = int(self.peer_client.end_time - self.peer_client.start_time)
+        resp.other_time = int(self.end_time - self.start_time)
+
+        urllib2.urlopen("http://soushang.limijiaoyin.com/index.php/Devent/addScore.html?uid=%d&score=%d" % (self.peer_client.id, resp.me_score))
         self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_RESULT, resp))
         self.end_game()
 
@@ -329,10 +335,10 @@ class Client(object):
             if self.last_bet_time < today_begin_time:
                 self.bet_num = 0
             if req.bet > 0 and self.bet_num >= 5:
-                resp = OFightReq()
+                resp = OFightResp()
                 resp.result = 2
                 resp.message = 'bet too much'
-                logger.error("not find user %d" % req.id)
+                logger.error("bet too much %d" % self.id)
                 self.send_msg(self.build_cmd(CmdType.FIGHT_RESP, resp))
                 return
 
@@ -382,10 +388,12 @@ class Client(object):
                 self.question_index = self.peer_client.question_index = 0
                 self.start_time = self.peer_client.start_time = time.time()
                 self.peer_client.last_answer_time = self.last_answer_time = time.time()
+                self.right = self.peer_client.right = 0
                 #start game
                 if self.bet > 0:
                     self.peer_client.bet_num += 1
                     self.peer_client.last_bet_time = time.time()
+                    logger.debug("%d bet num %d %d" % (self.peer_client.id, self.peer_client.bet_num, int(self.peer_client.last_bet_time)))
             else:
                 resp = OFightResp()
                 resp.result = 1
@@ -398,6 +406,7 @@ class Client(object):
                 self.peer_client = None
 
         elif cmd_type == CmdType.FIGHT_CANCEL and (self.state == Client.FIGHT_REQ_A or self.state == Client.WAIT_FOR_ANSWER):
+            logger.debug("%d fight cancel" % self.id)
             self.peer_client.send_msg(self.build_cmd(CmdType.FIGHT_CANCEL, EmptyMsg()))
             self.peer_client.state = self.state = Client.IDLE
             self.peer_client.peer_client = None
@@ -433,6 +442,8 @@ class Client(object):
             else:
                 self.start_timeout(ONE_MOVE_MAX_TIME)
         elif cmd_type == CmdType.FIGHT_QUIT and (self.state == Client.WAIT_FOR_ANSWER or self.state == Client.WAIT_FOR_RESULT):
+            logger.debug("%d quit" % self.id)
+            self.end_time = self.peer_client.end_time = time.time()
             self.deal_fight_result(0)
         else:
             self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
