@@ -7,7 +7,6 @@ import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.activities.QuestionActivity;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
-import com.baidu.soushang.utils.NetworkUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -20,7 +19,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,15 +105,8 @@ public class FightDialog extends Dialog implements View.OnClickListener {
             @Override
             public void run() {
               dismiss();
-
-              Intent questionIntent = new Intent(getContext(), QuestionActivity.class);
-              questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE, Intents.EVENT_TYPE_LBS);
-              questionIntent.putExtra(Intents.EXTRA_FIGHT_KEY, fightKey);
-              getContext().startActivity(questionIntent);
-              
-              if (getOwnerActivity() != null) {
-                getOwnerActivity().finish();
-                getOwnerActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+              if (mListener != null) {
+                mListener.onFight(fightKey);
               }
             }
           }, 4000);
@@ -127,6 +118,14 @@ public class FightDialog extends Dialog implements View.OnClickListener {
 
   private FightRespReceiver mFightRespReceiver;
 
+  public interface Listener {
+    public void onFight(String fightKey);
+  }
+  private Listener mListener;
+  public void setListener(Listener listener) {
+    mListener = listener;
+  }
+  
   public FightDialog(Context context) {
     this(context, R.style.PopupDialog);
   }

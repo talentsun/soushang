@@ -199,6 +199,9 @@ public class LBSEventCompletedActivity extends BaseActivity implements OnClickLi
     if (v == mBackHome) {
       Intent intent = new Intent(LBSEventCompletedActivity.this, HomeActivity.class);
       startActivity(intent);
+    } else {
+      Intent intent = new Intent(LBSEventCompletedActivity.this, LBSEventActivity.class);
+      startActivity(intent);
     }
     
     finish();

@@ -4052,45 +4052,55 @@ public final class Models {
      */
     float getMeWinRatio();
 
-    // required float other_win_ratio = 3;
+    // required int32 me_score = 3;
     /**
-     * <code>required float other_win_ratio = 3;</code>
-     */
-    boolean hasOtherWinRatio();
-    /**
-     * <code>required float other_win_ratio = 3;</code>
-     */
-    float getOtherWinRatio();
-
-    // required int32 me_score = 4;
-    /**
-     * <code>required int32 me_score = 4;</code>
+     * <code>required int32 me_score = 3;</code>
      */
     boolean hasMeScore();
     /**
-     * <code>required int32 me_score = 4;</code>
+     * <code>required int32 me_score = 3;</code>
      */
     int getMeScore();
 
-    // required int32 other_score = 5;
+    // required int32 me_point = 4;
     /**
-     * <code>required int32 other_score = 5;</code>
+     * <code>required int32 me_point = 4;</code>
      */
-    boolean hasOtherScore();
+    boolean hasMePoint();
     /**
-     * <code>required int32 other_score = 5;</code>
+     * <code>required int32 me_point = 4;</code>
      */
-    int getOtherScore();
+    int getMePoint();
 
-    // required int32 other_time_cost = 6;
+    // required int32 other_point = 5;
     /**
-     * <code>required int32 other_time_cost = 6;</code>
+     * <code>required int32 other_point = 5;</code>
      */
-    boolean hasOtherTimeCost();
+    boolean hasOtherPoint();
     /**
-     * <code>required int32 other_time_cost = 6;</code>
+     * <code>required int32 other_point = 5;</code>
      */
-    int getOtherTimeCost();
+    int getOtherPoint();
+
+    // required int32 other_time = 6;
+    /**
+     * <code>required int32 other_time = 6;</code>
+     */
+    boolean hasOtherTime();
+    /**
+     * <code>required int32 other_time = 6;</code>
+     */
+    int getOtherTime();
+
+    // required int32 me_time = 7;
+    /**
+     * <code>required int32 me_time = 7;</code>
+     */
+    boolean hasMeTime();
+    /**
+     * <code>required int32 me_time = 7;</code>
+     */
+    int getMeTime();
   }
   /**
    * Protobuf type {@code OFightResult}
@@ -4145,24 +4155,29 @@ public final class Models {
               meWinRatio_ = input.readFloat();
               break;
             }
-            case 29: {
+            case 24: {
               bitField0_ |= 0x00000004;
-              otherWinRatio_ = input.readFloat();
+              meScore_ = input.readInt32();
               break;
             }
             case 32: {
               bitField0_ |= 0x00000008;
-              meScore_ = input.readInt32();
+              mePoint_ = input.readInt32();
               break;
             }
             case 40: {
               bitField0_ |= 0x00000010;
-              otherScore_ = input.readInt32();
+              otherPoint_ = input.readInt32();
               break;
             }
             case 48: {
               bitField0_ |= 0x00000020;
-              otherTimeCost_ = input.readInt32();
+              otherTime_ = input.readInt32();
+              break;
+            }
+            case 56: {
+              bitField0_ |= 0x00000040;
+              meTime_ = input.readInt32();
               break;
             }
           }
@@ -4234,77 +4249,94 @@ public final class Models {
       return meWinRatio_;
     }
 
-    // required float other_win_ratio = 3;
-    public static final int OTHER_WIN_RATIO_FIELD_NUMBER = 3;
-    private float otherWinRatio_;
+    // required int32 me_score = 3;
+    public static final int ME_SCORE_FIELD_NUMBER = 3;
+    private int meScore_;
     /**
-     * <code>required float other_win_ratio = 3;</code>
+     * <code>required int32 me_score = 3;</code>
      */
-    public boolean hasOtherWinRatio() {
+    public boolean hasMeScore() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required float other_win_ratio = 3;</code>
-     */
-    public float getOtherWinRatio() {
-      return otherWinRatio_;
-    }
-
-    // required int32 me_score = 4;
-    public static final int ME_SCORE_FIELD_NUMBER = 4;
-    private int meScore_;
-    /**
-     * <code>required int32 me_score = 4;</code>
-     */
-    public boolean hasMeScore() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    /**
-     * <code>required int32 me_score = 4;</code>
+     * <code>required int32 me_score = 3;</code>
      */
     public int getMeScore() {
       return meScore_;
     }
 
-    // required int32 other_score = 5;
-    public static final int OTHER_SCORE_FIELD_NUMBER = 5;
-    private int otherScore_;
+    // required int32 me_point = 4;
+    public static final int ME_POINT_FIELD_NUMBER = 4;
+    private int mePoint_;
     /**
-     * <code>required int32 other_score = 5;</code>
+     * <code>required int32 me_point = 4;</code>
      */
-    public boolean hasOtherScore() {
+    public boolean hasMePoint() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 me_point = 4;</code>
+     */
+    public int getMePoint() {
+      return mePoint_;
+    }
+
+    // required int32 other_point = 5;
+    public static final int OTHER_POINT_FIELD_NUMBER = 5;
+    private int otherPoint_;
+    /**
+     * <code>required int32 other_point = 5;</code>
+     */
+    public boolean hasOtherPoint() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>required int32 other_score = 5;</code>
+     * <code>required int32 other_point = 5;</code>
      */
-    public int getOtherScore() {
-      return otherScore_;
+    public int getOtherPoint() {
+      return otherPoint_;
     }
 
-    // required int32 other_time_cost = 6;
-    public static final int OTHER_TIME_COST_FIELD_NUMBER = 6;
-    private int otherTimeCost_;
+    // required int32 other_time = 6;
+    public static final int OTHER_TIME_FIELD_NUMBER = 6;
+    private int otherTime_;
     /**
-     * <code>required int32 other_time_cost = 6;</code>
+     * <code>required int32 other_time = 6;</code>
      */
-    public boolean hasOtherTimeCost() {
+    public boolean hasOtherTime() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>required int32 other_time_cost = 6;</code>
+     * <code>required int32 other_time = 6;</code>
      */
-    public int getOtherTimeCost() {
-      return otherTimeCost_;
+    public int getOtherTime() {
+      return otherTime_;
+    }
+
+    // required int32 me_time = 7;
+    public static final int ME_TIME_FIELD_NUMBER = 7;
+    private int meTime_;
+    /**
+     * <code>required int32 me_time = 7;</code>
+     */
+    public boolean hasMeTime() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>required int32 me_time = 7;</code>
+     */
+    public int getMeTime() {
+      return meTime_;
     }
 
     private void initFields() {
       result_ = 0;
       meWinRatio_ = 0F;
-      otherWinRatio_ = 0F;
       meScore_ = 0;
-      otherScore_ = 0;
-      otherTimeCost_ = 0;
+      mePoint_ = 0;
+      otherPoint_ = 0;
+      otherTime_ = 0;
+      meTime_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -4319,19 +4351,23 @@ public final class Models {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasOtherWinRatio()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasMeScore()) {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasOtherScore()) {
+      if (!hasMePoint()) {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasOtherTimeCost()) {
+      if (!hasOtherPoint()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasOtherTime()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMeTime()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -4349,16 +4385,19 @@ public final class Models {
         output.writeFloat(2, meWinRatio_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeFloat(3, otherWinRatio_);
+        output.writeInt32(3, meScore_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeInt32(4, meScore_);
+        output.writeInt32(4, mePoint_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt32(5, otherScore_);
+        output.writeInt32(5, otherPoint_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeInt32(6, otherTimeCost_);
+        output.writeInt32(6, otherTime_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeInt32(7, meTime_);
       }
     }
 
@@ -4378,19 +4417,23 @@ public final class Models {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, otherWinRatio_);
+          .computeInt32Size(3, meScore_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, meScore_);
+          .computeInt32Size(4, mePoint_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, otherScore_);
+          .computeInt32Size(5, otherPoint_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, otherTimeCost_);
+          .computeInt32Size(6, otherTime_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, meTime_);
       }
       memoizedSerializedSize = size;
       return size;
@@ -4487,14 +4530,16 @@ public final class Models {
         bitField0_ = (bitField0_ & ~0x00000001);
         meWinRatio_ = 0F;
         bitField0_ = (bitField0_ & ~0x00000002);
-        otherWinRatio_ = 0F;
-        bitField0_ = (bitField0_ & ~0x00000004);
         meScore_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        mePoint_ = 0;
         bitField0_ = (bitField0_ & ~0x00000008);
-        otherScore_ = 0;
+        otherPoint_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
-        otherTimeCost_ = 0;
+        otherTime_ = 0;
         bitField0_ = (bitField0_ & ~0x00000020);
+        meTime_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -4529,19 +4574,23 @@ public final class Models {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.otherWinRatio_ = otherWinRatio_;
+        result.meScore_ = meScore_;
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.meScore_ = meScore_;
+        result.mePoint_ = mePoint_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.otherScore_ = otherScore_;
+        result.otherPoint_ = otherPoint_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        result.otherTimeCost_ = otherTimeCost_;
+        result.otherTime_ = otherTime_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.meTime_ = meTime_;
         result.bitField0_ = to_bitField0_;
         return result;
       }
@@ -4554,17 +4603,20 @@ public final class Models {
         if (other.hasMeWinRatio()) {
           setMeWinRatio(other.getMeWinRatio());
         }
-        if (other.hasOtherWinRatio()) {
-          setOtherWinRatio(other.getOtherWinRatio());
-        }
         if (other.hasMeScore()) {
           setMeScore(other.getMeScore());
         }
-        if (other.hasOtherScore()) {
-          setOtherScore(other.getOtherScore());
+        if (other.hasMePoint()) {
+          setMePoint(other.getMePoint());
         }
-        if (other.hasOtherTimeCost()) {
-          setOtherTimeCost(other.getOtherTimeCost());
+        if (other.hasOtherPoint()) {
+          setOtherPoint(other.getOtherPoint());
+        }
+        if (other.hasOtherTime()) {
+          setOtherTime(other.getOtherTime());
+        }
+        if (other.hasMeTime()) {
+          setMeTime(other.getMeTime());
         }
         return this;
       }
@@ -4578,19 +4630,23 @@ public final class Models {
           
           return false;
         }
-        if (!hasOtherWinRatio()) {
-          
-          return false;
-        }
         if (!hasMeScore()) {
           
           return false;
         }
-        if (!hasOtherScore()) {
+        if (!hasMePoint()) {
           
           return false;
         }
-        if (!hasOtherTimeCost()) {
+        if (!hasOtherPoint()) {
+          
+          return false;
+        }
+        if (!hasOtherTime()) {
+          
+          return false;
+        }
+        if (!hasMeTime()) {
           
           return false;
         }
@@ -4702,134 +4758,167 @@ public final class Models {
         return this;
       }
 
-      // required float other_win_ratio = 3;
-      private float otherWinRatio_ ;
+      // required int32 me_score = 3;
+      private int meScore_ ;
       /**
-       * <code>required float other_win_ratio = 3;</code>
+       * <code>required int32 me_score = 3;</code>
        */
-      public boolean hasOtherWinRatio() {
+      public boolean hasMeScore() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required float other_win_ratio = 3;</code>
-       */
-      public float getOtherWinRatio() {
-        return otherWinRatio_;
-      }
-      /**
-       * <code>required float other_win_ratio = 3;</code>
-       */
-      public Builder setOtherWinRatio(float value) {
-        bitField0_ |= 0x00000004;
-        otherWinRatio_ = value;
-        
-        return this;
-      }
-      /**
-       * <code>required float other_win_ratio = 3;</code>
-       */
-      public Builder clearOtherWinRatio() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        otherWinRatio_ = 0F;
-        
-        return this;
-      }
-
-      // required int32 me_score = 4;
-      private int meScore_ ;
-      /**
-       * <code>required int32 me_score = 4;</code>
-       */
-      public boolean hasMeScore() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      /**
-       * <code>required int32 me_score = 4;</code>
+       * <code>required int32 me_score = 3;</code>
        */
       public int getMeScore() {
         return meScore_;
       }
       /**
-       * <code>required int32 me_score = 4;</code>
+       * <code>required int32 me_score = 3;</code>
        */
       public Builder setMeScore(int value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         meScore_ = value;
         
         return this;
       }
       /**
-       * <code>required int32 me_score = 4;</code>
+       * <code>required int32 me_score = 3;</code>
        */
       public Builder clearMeScore() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         meScore_ = 0;
         
         return this;
       }
 
-      // required int32 other_score = 5;
-      private int otherScore_ ;
+      // required int32 me_point = 4;
+      private int mePoint_ ;
       /**
-       * <code>required int32 other_score = 5;</code>
+       * <code>required int32 me_point = 4;</code>
        */
-      public boolean hasOtherScore() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+      public boolean hasMePoint() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required int32 other_score = 5;</code>
+       * <code>required int32 me_point = 4;</code>
        */
-      public int getOtherScore() {
-        return otherScore_;
+      public int getMePoint() {
+        return mePoint_;
       }
       /**
-       * <code>required int32 other_score = 5;</code>
+       * <code>required int32 me_point = 4;</code>
        */
-      public Builder setOtherScore(int value) {
-        bitField0_ |= 0x00000010;
-        otherScore_ = value;
+      public Builder setMePoint(int value) {
+        bitField0_ |= 0x00000008;
+        mePoint_ = value;
         
         return this;
       }
       /**
-       * <code>required int32 other_score = 5;</code>
+       * <code>required int32 me_point = 4;</code>
        */
-      public Builder clearOtherScore() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        otherScore_ = 0;
+      public Builder clearMePoint() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        mePoint_ = 0;
         
         return this;
       }
 
-      // required int32 other_time_cost = 6;
-      private int otherTimeCost_ ;
+      // required int32 other_point = 5;
+      private int otherPoint_ ;
       /**
-       * <code>required int32 other_time_cost = 6;</code>
+       * <code>required int32 other_point = 5;</code>
        */
-      public boolean hasOtherTimeCost() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+      public boolean hasOtherPoint() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>required int32 other_time_cost = 6;</code>
+       * <code>required int32 other_point = 5;</code>
        */
-      public int getOtherTimeCost() {
-        return otherTimeCost_;
+      public int getOtherPoint() {
+        return otherPoint_;
       }
       /**
-       * <code>required int32 other_time_cost = 6;</code>
+       * <code>required int32 other_point = 5;</code>
        */
-      public Builder setOtherTimeCost(int value) {
-        bitField0_ |= 0x00000020;
-        otherTimeCost_ = value;
+      public Builder setOtherPoint(int value) {
+        bitField0_ |= 0x00000010;
+        otherPoint_ = value;
         
         return this;
       }
       /**
-       * <code>required int32 other_time_cost = 6;</code>
+       * <code>required int32 other_point = 5;</code>
        */
-      public Builder clearOtherTimeCost() {
+      public Builder clearOtherPoint() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        otherPoint_ = 0;
+        
+        return this;
+      }
+
+      // required int32 other_time = 6;
+      private int otherTime_ ;
+      /**
+       * <code>required int32 other_time = 6;</code>
+       */
+      public boolean hasOtherTime() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>required int32 other_time = 6;</code>
+       */
+      public int getOtherTime() {
+        return otherTime_;
+      }
+      /**
+       * <code>required int32 other_time = 6;</code>
+       */
+      public Builder setOtherTime(int value) {
+        bitField0_ |= 0x00000020;
+        otherTime_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 other_time = 6;</code>
+       */
+      public Builder clearOtherTime() {
         bitField0_ = (bitField0_ & ~0x00000020);
-        otherTimeCost_ = 0;
+        otherTime_ = 0;
+        
+        return this;
+      }
+
+      // required int32 me_time = 7;
+      private int meTime_ ;
+      /**
+       * <code>required int32 me_time = 7;</code>
+       */
+      public boolean hasMeTime() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>required int32 me_time = 7;</code>
+       */
+      public int getMeTime() {
+        return meTime_;
+      }
+      /**
+       * <code>required int32 me_time = 7;</code>
+       */
+      public Builder setMeTime(int value) {
+        bitField0_ |= 0x00000040;
+        meTime_ = value;
+        
+        return this;
+      }
+      /**
+       * <code>required int32 me_time = 7;</code>
+       */
+      public Builder clearMeTime() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        meTime_ = 0;
         
         return this;
       }
@@ -5758,6 +5847,7 @@ public final class Models {
      * <pre>
      * 0 shows success
      * 1 shows failed
+     * 2 shows bet too much
      * </pre>
      */
     boolean hasResult();
@@ -5767,6 +5857,7 @@ public final class Models {
      * <pre>
      * 0 shows success
      * 1 shows failed
+     * 2 shows bet too much
      * </pre>
      */
     int getResult();
@@ -5875,6 +5966,7 @@ public final class Models {
      * <pre>
      * 0 shows success
      * 1 shows failed
+     * 2 shows bet too much
      * </pre>
      */
     public boolean hasResult() {
@@ -5886,6 +5978,7 @@ public final class Models {
      * <pre>
      * 0 shows success
      * 1 shows failed
+     * 2 shows bet too much
      * </pre>
      */
     public int getResult() {
@@ -6155,6 +6248,7 @@ public final class Models {
        * <pre>
        * 0 shows success
        * 1 shows failed
+       * 2 shows bet too much
        * </pre>
        */
       public boolean hasResult() {
@@ -6166,6 +6260,7 @@ public final class Models {
        * <pre>
        * 0 shows success
        * 1 shows failed
+       * 2 shows bet too much
        * </pre>
        */
       public int getResult() {
@@ -6177,6 +6272,7 @@ public final class Models {
        * <pre>
        * 0 shows success
        * 1 shows failed
+       * 2 shows bet too much
        * </pre>
        */
       public Builder setResult(int value) {
@@ -6191,6 +6287,7 @@ public final class Models {
        * <pre>
        * 0 shows success
        * 1 shows failed
+       * 2 shows bet too much
        * </pre>
        */
       public Builder clearResult() {

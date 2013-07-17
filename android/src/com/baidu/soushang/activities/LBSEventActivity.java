@@ -11,6 +11,7 @@ import com.baidu.soushang.lbs.Models.User;
 import com.baidu.soushang.utils.NetworkUtils;
 import com.baidu.soushang.views.LoadingView;
 import com.baidu.soushang.widgets.FightDialog;
+import com.baidu.soushang.widgets.FightDialog.Listener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -84,6 +85,19 @@ public class LBSEventActivity extends BaseActivity {
     mPeersUpdatedReceiver = new PeersUpdatedReceiver();
     
     mFightDialog = new FightDialog(this);
+    mFightDialog.setListener(new Listener() {
+      
+      @Override
+      public void onFight(String fightKey) {
+        Intent questionIntent = new Intent(LBSEventActivity.this, QuestionActivity.class);
+        questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE, Intents.EVENT_TYPE_LBS);
+        questionIntent.putExtra(Intents.EXTRA_FIGHT_KEY, fightKey);
+        LBSEventActivity.this.startActivity(questionIntent);
+        
+        finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      }
+    });
 
     super.onCreate(arg0);
   }

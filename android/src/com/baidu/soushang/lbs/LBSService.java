@@ -168,6 +168,8 @@ public class LBSService extends Service {
         msg.arg1 = intent.getIntExtra(Intents.EXTRA_INDEX, -1);
         msg.arg2 = intent.getIntExtra(Intents.EXTRA_RIGHT, -1);
         msg.sendToTarget();
+      } else if (Intents.ACTION_FIGHT_QUIT.equalsIgnoreCase(action)) {
+        Message.obtain(mClient, FIGHT_QUIT).sendToTarget();
       }
     }
     
