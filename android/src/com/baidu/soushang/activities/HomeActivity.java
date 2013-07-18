@@ -8,11 +8,13 @@ import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.SouShangApplication.LoginListener;
+import com.baidu.soushang.SouShangApplication.UpdateUserInfoListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
 import com.baidu.soushang.cloudapis.QuestionResponse;
+import com.baidu.soushang.cloudapis.User;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.widgets.TipsDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
@@ -141,6 +143,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     }
     
     if (Config.isLogged(this)) {
+      mApplication.updateUserExtraInfo();
+      
       Intent lbsIntent = new Intent(this, LBSService.class);
       startService(lbsIntent);
     }

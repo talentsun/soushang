@@ -72,6 +72,8 @@
     <string name="fight_state">我：%1$d(积分)&#160;对方：%2$s(积分)</string>
     <string name="quit_lbs_event">退出比赛</string>
     <string name="quit_lbs_event_notes">如果您提前退出本场比赛，您的加注将拱手让给对方哦，是否继续退出比赛？</string>
+    <string name="max_bet">最高加注%1$d分</string>
+    <string name="more_than_max_bet">您的加注超过了最高加注，请重新加注！</string>
     
     <string name="lbs_event_completed">您已经完成比赛</string>
     <string name="wait_somebody">正在等待“%1$s”</string>

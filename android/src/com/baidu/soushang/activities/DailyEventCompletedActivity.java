@@ -27,9 +27,11 @@ import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.SouShangApplication.LoginListener;
+import com.baidu.soushang.SouShangApplication.UpdateUserInfoListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
+import com.baidu.soushang.cloudapis.User;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.utils.SystemUtils;
@@ -58,37 +60,6 @@ public class DailyEventCompletedActivity extends BaseActivity implements
   private int mEventPoint;
   private SouShangApplication mApplication;
 
-  private ApiResponseCallback<UserInfoResponse> mUserInfoCallback =
-      new ApiResponseCallback<UserInfoResponse>() {
-
-        @Override
-        public void onResults(UserInfoResponse arg0) {
-          if (arg0 != null && arg0.getRetCode() == 0
-                    && arg0.getUser() != null) {
-            final int point = arg0.getUser().getPoint();
-
-            mMainHandler.post(new Runnable() {
-
-              @Override
-              public void run() {
-                updateTotalScore(point);
-              }
-            });
-          }
-        }
-
-        @Override
-        public void onError(Throwable arg0) {
-          mMainHandler.post(new Runnable() {
-
-            @Override
-            public void run() {
-              updateTotalScore(0);
-            }
-          });
-        }
-      };
-
   @Override
   protected void onCreate(Bundle arg0) {
     setContentView(R.layout.daily_event_completed);
@@ -107,6 +78,34 @@ public class DailyEventCompletedActivity extends BaseActivity implements
     mHome = (Button) findViewById(R.id.home);
     mShare = (Button) findViewById(R.id.share);
 
+    mApplication = (SouShangApplication) getApplication();
+    mApplication.setUpdateUserInfoListener(new UpdateUserInfoListener() {
+      
+      @Override
+      public void onUpdated(User user) {
+        final int point = user.getPoint();
+
+        mMainHandler.post(new Runnable() {
+
+          @Override
+          public void run() {
+            updateTotalScore(point);
+          }
+        });
+      }
+      
+      @Override
+      public void onError() {
+        mMainHandler.post(new Runnable() {
+
+          @Override
+          public void run() {
+            updateTotalScore(0);
+          }
+        });
+      }
+    });
+    
     if (!Config.isLogged(this)) {
       initNotLoggedArea(getIntent());
     } else {
@@ -141,8 +140,6 @@ public class DailyEventCompletedActivity extends BaseActivity implements
     } else {
       mShare.setVisibility(View.GONE);
     }
-    
-    mApplication = (SouShangApplication) getApplication();
 
     super.onCreate(arg0);
   }
@@ -164,11 +161,16 @@ public class DailyEventCompletedActivity extends BaseActivity implements
 
     if (intent != null) {
       mEventPoint = intent.getIntExtra(Intents.EXTRA_POINT, 0);
-
     }
+    
     mEventScoreLogged.setText("" + mEventPoint);
-
-    Apis.getUserInfo(this, Config.getAccessToken(this), mUserInfoCallback);
+    if (mApplication.getUser() != null) {
+      updateTotalScore(mApplication.getUser().getPoint());
+    } else {
+      updateTotalScore(0);
+    }
+    
+    mApplication.updateUserExtraInfo();
   }
 
   private void updateTotalScore(int point) {
@@ -270,7 +272,7 @@ public class DailyEventCompletedActivity extends BaseActivity implements
             
             @Override
             public void onResults(CommonResponse arg0) {
-              Apis.getUserInfo(DailyEventCompletedActivity.this, Config.getAccessToken(DailyEventCompletedActivity.this), mUserInfoCallback);
+              mApplication.updateUserExtraInfo();
             }
             
             @Override

@@ -16,6 +16,7 @@ import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
 import com.baidu.soushang.utils.SystemUtils;
@@ -58,6 +59,23 @@ public class SouShangApplication extends Application {
   
   public void setLoginListener(LoginListener listener) {
     mLoginListener = listener;
+  }
+  
+  public interface UpdateUserInfoListener{
+    public void onUpdated(com.baidu.soushang.cloudapis.User user);
+    public void onError();
+  }
+  
+  private UpdateUserInfoListener mUpdateUserInfoListener;
+  
+  public void setUpdateUserInfoListener(UpdateUserInfoListener listener) {
+    mUpdateUserInfoListener = listener;
+  }
+  
+  private com.baidu.soushang.cloudapis.User mUser;
+  
+  public com.baidu.soushang.cloudapis.User getUser() {
+    return mUser;
   }
   
   private List<User> mPeers;
@@ -105,7 +123,7 @@ public class SouShangApplication extends Application {
       public void onResults(CommonResponse arg0) {
         if (arg0 != null && arg0.getRetCode() == 0) {
           Config.setLogged(getApplicationContext(), true);
-          updateUserInfo();
+          updateBaseUserInfo();
         } else {
           Config.setLogged(getApplicationContext(), false);
           
@@ -124,6 +142,7 @@ public class SouShangApplication extends Application {
         }
       }
     };
+    
   
   public void login(Activity context) {
     Log.d("app", "login");
@@ -156,12 +175,38 @@ public class SouShangApplication extends Application {
       });
   }
   
-  private void updateUserInfo() {
+  private ApiResponseCallback<UserInfoResponse> mUserExtraInfoCallback =
+    new ApiResponseCallback<UserInfoResponse>() {
+
+      @Override
+      public void onResults(UserInfoResponse arg0) {
+        if (arg0 != null && arg0.getRetCode() == 0
+                  && arg0.getUser() != null) {
+          mUser = arg0.getUser();
+          if (mUpdateUserInfoListener != null) {
+            mUpdateUserInfoListener.onUpdated(mUser);
+          }
+        }
+      }
+
+      @Override
+      public void onError(Throwable arg0) {
+        if (mUpdateUserInfoListener != null) {
+          mUpdateUserInfoListener.onError();
+        }
+      }
+    };
+  
+  public void updateUserExtraInfo() {
+    Apis.getUserInfo(this, Config.getAccessToken(this), mUserExtraInfoCallback);
+  }
+  
+  private void updateBaseUserInfo() {
     new AsyncBaiduRunner(mBaidu).request(USERINFO_URL, null, "GET", new RequestListener() {
       
       @Override
       public void onIOException(IOException arg0) {
-        updateUserInfoError();
+        updateUserBaseInfoError();
       }
       
       @Override
@@ -181,18 +226,18 @@ public class SouShangApplication extends Application {
             mLoginListener.onSuccess();
           }
         } catch (Exception e) {
-          updateUserInfoError();
+          updateUserBaseInfoError();
         }
       }
       
       @Override
       public void onBaiduException(BaiduException arg0) {
-        updateUserInfoError();
+        updateUserBaseInfoError();
       }
     });
   }
 
-  private void updateUserInfoError() {
+  private void updateUserBaseInfoError() {
     Config.setUserName(SouShangApplication.this, SystemUtils.getDeviceName(SouShangApplication.this));
     Config.setAvatar(SouShangApplication.this, "http://tb.himg.baidu.com/sys/portrait/item/");
     Config.setUserId(SouShangApplication.this, 0);

@@ -174,6 +174,7 @@ public class LBSEventCompletedActivity extends BaseActivity implements OnClickLi
     mWinRate.setText(String.format(getString(R.string.win_rate), Math.abs(winRate)));
     
     mApplication.setCurrentPeer(null);
+    mApplication.updateUserExtraInfo();
   }
 
   @Override

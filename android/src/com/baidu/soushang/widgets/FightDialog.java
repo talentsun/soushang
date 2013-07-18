@@ -58,6 +58,7 @@ public class FightDialog extends Dialog implements View.OnClickListener {
   private DisplayImageOptions mOption;
 
   private SouShangApplication mApplication;
+  private int mMaxBet = 0;
 
   public class FightRespReceiver extends BroadcastReceiver {
 
@@ -230,6 +231,12 @@ public class FightDialog extends Dialog implements View.OnClickListener {
       mSomebody.setText(String.format(getContext().getResources().getString(R.string.somebody),
           mApplication.getCurrentPeer().getName()));
 
+      if (mApplication.getUser() != null) {
+        mMaxBet = mApplication.getUser().getPoint() / 10;
+      } 
+      
+      mRaiseValue.setHint(String.format(getContext().getString(R.string.max_bet), mMaxBet));
+
       mFightReq.setVisibility(View.VISIBLE);
       mFightResp.setVisibility(View.GONE);
       mFightWaiting.setVisibility(View.GONE);
@@ -265,12 +272,17 @@ public class FightDialog extends Dialog implements View.OnClickListener {
         bet = Integer.parseInt(mRaiseValue.getText().toString());
       } catch (Exception e) {}
       
-      Intent intent = new Intent(getContext(), LBSService.class);
-      intent.setAction(Intents.ACTION_FIGHT_REQ);
-      intent.putExtra(Intents.EXTRA_BET, bet);
-      getContext().startService(intent);
+      if (bet > mMaxBet) {
+        Toast.makeText(
+          getContext(), getContext().getString(R.string.more_than_max_bet), Toast.LENGTH_LONG).show();
+      } else {
+        Intent intent = new Intent(getContext(), LBSService.class);
+        intent.setAction(Intents.ACTION_FIGHT_REQ);
+        intent.putExtra(Intents.EXTRA_BET, bet);
+        getContext().startService(intent);
 
-      showWaiting();
+        showWaiting();
+      }
     } else if (v == mCancel) {
       mApplication.setCurrentPeer(null);
       cancel();
