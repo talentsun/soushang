@@ -23,6 +23,7 @@ import com.baidu.soushang.utils.SystemUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.app.Activity;
 import android.app.Application;
@@ -98,6 +99,12 @@ public class SouShangApplication extends Application {
     return mCurrentPeer;
   }
   
+  private DisplayImageOptions mOption;
+  
+  public DisplayImageOptions getAvatarDisplayOption() {
+    return mOption;
+  }
+  
   @Override
   public void onCreate() {
     super.onCreate();
@@ -108,6 +115,14 @@ public class SouShangApplication extends Application {
         new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(
             displayOptions).build();
     ImageLoader.getInstance().init(config);
+    mOption = new DisplayImageOptions.Builder()
+    .showImageOnFail(R.drawable.default_avatar)
+    .showImageForEmptyUri(R.drawable.default_avatar)
+    .showStubImage(R.drawable.default_avatar)
+    .displayer(
+        new RoundedBitmapDisplayer(getResources().getDimensionPixelSize(
+            R.dimen.avatar_width) / 2))
+    .build();
     
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);

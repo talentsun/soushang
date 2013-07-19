@@ -104,6 +104,14 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         
+        <activity 
+            android:name=".activities.ProfileActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

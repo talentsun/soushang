@@ -55,7 +55,6 @@ public class FightDialog extends Dialog implements View.OnClickListener {
   private Button mCancelFight;
   private ImageView mConnecting;
   private ImageView mCountdown;
-  private DisplayImageOptions mOption;
 
   private SouShangApplication mApplication;
   private int mMaxBet = 0;
@@ -194,14 +193,6 @@ public class FightDialog extends Dialog implements View.OnClickListener {
 
     mApplication = (SouShangApplication) ((Activity) context).getApplication();
 
-    mOption = new DisplayImageOptions.Builder()
-          .showImageOnFail(R.drawable.default_avatar)
-          .showImageForEmptyUri(R.drawable.default_avatar)
-          .showStubImage(R.drawable.default_avatar)
-          .displayer(
-              new RoundedBitmapDisplayer(getContext().getResources().getDimensionPixelSize(
-                  R.dimen.avatar_width) / 2))
-          .build();
     mFightRespReceiver = new FightRespReceiver();
     
     setCanceledOnTouchOutside(false);
@@ -246,7 +237,7 @@ public class FightDialog extends Dialog implements View.OnClickListener {
               .getCurrentPeer().getName(), bet));
 
       ImageLoader.getInstance().displayImage(mApplication.getCurrentPeer().getAvatar(),
-          mOtherAvatarResp, mOption);
+          mOtherAvatarResp, mApplication.getAvatarDisplayOption());
       mOtherUserNameResp.setText(mApplication.getCurrentPeer().getName());
       mOtherEventCountResp.setText(String.format(
           getContext().getResources().getString(R.string.event_count), mApplication
@@ -330,9 +321,9 @@ public class FightDialog extends Dialog implements View.OnClickListener {
       connecting.start();
     }
 
-    ImageLoader.getInstance().displayImage(Config.getAvatar(getContext()), mMyAvatar, mOption);
+    ImageLoader.getInstance().displayImage(Config.getAvatar(getContext()), mMyAvatar, mApplication.getAvatarDisplayOption());
     ImageLoader.getInstance().displayImage(mApplication.getCurrentPeer().getAvatar(), mOtherAvatar,
-        mOption);
+        mApplication.getAvatarDisplayOption());
   }
 
   @Override

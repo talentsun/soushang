@@ -158,7 +158,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   
   private void logged() {
     mLogin.setText(Config.getUserName(HomeActivity.this));
-    mLogin.setEnabled(false);
   }
   
   private void notLogged() {
@@ -166,7 +165,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     Config.setLogged(HomeActivity.this, false);
     
     mLogin.setText(getResources().getText(R.string.not_logged));
-    mLogin.setEnabled(true);
   }
 
   @Override
@@ -197,7 +195,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       startActivity(intent);
       overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mLogin) {
-      mApplication.login(HomeActivity.this);
+      if (Config.isLogged(HomeActivity.this)) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      } else {
+        mApplication.login(HomeActivity.this);
+      }
     } else if (v == mLBSEvent) {
       if (Config.isLogged(HomeActivity.this)) {
         Intent intent = new Intent(this, LBSEventActivity.class);
