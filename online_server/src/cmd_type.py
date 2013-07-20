@@ -18,6 +18,9 @@ class CmdType(object):
     FIGHT_CANCEL = 12
     FIGHT_QUIT = 13
 
+    ON_LINE = 14
+    OFF_LINE = 15
+
     UNKNOWN_OP = 1000
     HEARTBEAT = 1001
 

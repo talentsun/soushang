@@ -77,6 +77,8 @@ class Client(object):
         self.last_answer_time = 0
         self.today_bet_num = 0
         self.last_bet_time = 0
+
+        self.visible = False
         pass
 
     def __del__(self):
@@ -296,7 +298,11 @@ class Client(object):
                 self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                 return
 
-        if cmd_type == CmdType.CLIENT_LBS:
+        if cmd_type == CmdType.ON_LINE:
+            self.visible = True
+        elif cmd_type == CmdType.OFF_LINE:
+            self.visible = False
+        elif cmd_type == CmdType.CLIENT_LBS:
             cmd = IClientLBS()
             cmd.ParseFromString(buf)
             if self.latitude != None:
@@ -318,6 +324,8 @@ class Client(object):
             logger.debug("client fetch peer list")
             clients = client_mgr.get_near(self, 5)
             for c in clients:
+                if not c.visible:
+                    continue
                 u = resp.users.add()
                 u.name = c.name
                 u.id = c.id
