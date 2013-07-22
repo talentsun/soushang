@@ -7,6 +7,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;

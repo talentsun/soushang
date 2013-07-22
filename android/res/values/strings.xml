@@ -50,7 +50,7 @@
     <string name="share_add_5_point">分享一次加5个积分哦！</string>
     
     <string name="no_peers">周围没有朋友，快邀请你的好友加入！</string>
-    <string name="lbs_event_need_logged">1v1挑战赛需要登录之后才可以玩，赶快登录吧！</string>
+    <string name="lbs_event_need_logged">针锋相对需要登录之后才可以玩，赶快登录吧！</string>
     <string name="event_count">比赛次数：%1$d</string>
     <string name="win_rate">胜率：%1$d%%</string>
     <string name="fight">挑战</string>
@@ -98,4 +98,8 @@
     <string name="rank">排名：%1$d</string>
     <string name="fight_count">挑战次数：%1$d</string>
     <string name="be_fight_count">被挑战次数：%1$d</string>
+    
+    <string name="no_feature_event">暂无专题赛，请继续保持关注！</string>
+    <string name="competitor_count">参赛人数：%1$d</string>
+    <string name="feature_event_date">%1$s - %2$s</string>
 </resources>

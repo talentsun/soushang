@@ -24,6 +24,7 @@ public class Apis {
   private static final String USERRANK_URL = BASE_URL + "Devent/userrank.html";
   private static final String DAYEVENT_URL = BASE_URL + "Devent/dayevent.html?access_token=%s";
   private static final String SHARE_URL = BASE_URL + "Devent/share_add_point.html?access_token=%s";
+  private static final String FEATURE_EVENT_URL = "http://soushang.limijiaoyin.com/index.php/" + "Devent/getRooms.html";
   
   public interface ApiResponseCallback<T extends AbstractJSONResponse> {
     public void onResults(T arg0);
@@ -170,6 +171,27 @@ public class Apis {
       }
 
     }, ANSWER_URL, request);
+  }
+  
+  public static void getFeatureEvents(Context context, final ApiResponseCallback<FeatureEventResponse> callback) {
+    RestClientFactory.getClient().getAsync(new ContextAwareAPIDelegate<FeatureEventResponse>(context, FeatureEventResponse.class) {
+
+      @Override
+      public void onError(Throwable arg0) {
+        if (callback != null) {
+          callback.onError(arg0);
+        }
+      }
+
+      @Override
+      public void onResults(FeatureEventResponse arg0) {
+        if (callback != null) {
+          callback.onResults(arg0);
+        }
+      }
+      
+    }, FEATURE_EVENT_URL, 2 * 1000);
+    
   }
   
   public static void getDayEvent(Context context, String accessToken,

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/rank_bg" >
+    
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/feature_event_title"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:clipToPadding="false"
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="#00000000"/>
+    
+    <ListView 
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+    </ListView>
+    
+    <LinearLayout 
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="140dp"
+        android:gravity="center_vertical|center_horizontal">
+        <TextView
+            android:id="@+id/no_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#536f03"
+            android:text="@string/no_feature_event"
+            android:visibility="gone" />
+        
+        <com.baidu.soushang.views.LoadingView 
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
