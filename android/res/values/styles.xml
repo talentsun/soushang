@@ -1,7 +1,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Light" />
+
     <style name="OptionFont">
+       
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#fdfcc5</item>
         <item name="android:shadowColor">#7f2100</item>
@@ -12,75 +14,85 @@
 
     <style name="PausedDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item> 
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/pause_dialog_bg</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    
+
     <style name="WebViewDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item> 
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/dialog_bg</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    
+
     <style name="TipsDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item> 
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/tips_bg</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    
+
+    <style name="FeatureDialog" parent="@android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="LoadingDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item> 
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/loading_bg</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-    
+
     <style name="PopupDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item> 
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/popup_bg</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-    
+
     <style name="ScoreFont">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#b93f06</item>
     </style>
-    
+
     <style name="PopupTitle">
         <item name="android:textSize">23sp</item>
         <item name="android:textColor">#fdfcc5</item>
     </style>
-    
+
     <style name="PopupSubTitle">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#fdfcc5</item>
     </style>
-    
+
     <style name="ButtonText">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#fdfcc5</item>
     </style>
-    
+
     <style name="GreenText">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#536f03</item>
     </style>
-    
+
     <style name="LargeGreenText">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#536f03</item>
     </style>
+
+
 </resources>

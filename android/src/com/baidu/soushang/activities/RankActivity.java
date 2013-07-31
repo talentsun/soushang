@@ -49,6 +49,7 @@ public class RankActivity extends BaseActivity {
   
   @Override
   protected void onCreate(Bundle arg0) {
+	  
     setContentView(R.layout.rank);
     
     mListView = (ListView) findViewById(R.id.list);
@@ -101,7 +102,7 @@ public class RankActivity extends BaseActivity {
     private List<User> mData;
     private LayoutInflater mInflater;
     
-    public List<User> getData() {
+    public List<User> getData() { 
       return mData;
     }
     
@@ -147,7 +148,7 @@ public class RankActivity extends BaseActivity {
       if (user == null) {
         return -1L;
       } else {
-        return user.getUserId();
+        return Long.parseLong(user.getUserId());
       }
     }
 

@@ -1,75 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/rank_bg" >
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginTop="@dimen/hangtag_marginTop">
-        <LinearLayout 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/shop_word_bg">
-            <TextView 
-                android:id="@+id/go_shop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="#536f03"
-                android:text="@string/go_shop_web" />
-            <TextView 
-                android:id="@+id/shop_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="#6f4203"
-                android:text="@string/shop_url" />
-        </LinearLayout>
-        
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shop_window" >
-            <Button
-                android:id="@+id/left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/left"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true" />
-            <Button
-                android:id="@+id/right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/right"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" />
-            <android.support.v4.view.ViewPager
-                android:id="@+id/gifts" 
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/left"
-                android:layout_toLeftOf="@id/right"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
-    </LinearLayout>
-    
-    <ImageView 
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/gift_title_rel"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/shop_title" />
-</FrameLayout>
+        android:background="@drawable/gift_title" >
+
+        <TextView
+            android:id="@+id/gift_interal_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="13sp"
+            android:layout_marginTop="90dp"
+            android:gravity="right"
+            android:maxEms="5"
+            android:text="@string/gift_integral_title"
+            android:textColor="#536f03"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/gift_interal_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/gift_interal_title"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/gift_interal_title"
+            android:layout_marginRight="13sp"
+            android:gravity="left"
+            android:maxEms="5"
+            android:text="@string/intergralnum"
+            android:textColor="#536f03"
+            android:textSize="21sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/shop_lin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gift_title_rel"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:layout_marginTop="7dp"
+            >
+
+            <TextView
+                android:id="@+id/shop_daliy_prize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_ch_selected"
+                android:gravity="center"
+                android:maxEms="5"
+                android:text="@string/daily_prize"
+                android:textColor="#fdfcc4"
+                android:textSize="17sp" 
+                />  
+
+            <TextView
+                android:id="@+id/shop_feature_prize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_zt_normal"
+                android:gravity="center"
+                android:maxEms="5"
+                android:text="@string/feature_prize"
+                android:textColor="#fdfcc4"
+                android:textSize="17sp"
+                 />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/shop_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="false"
+            android:columnWidth="130dp"
+            android:duplicateParentState="true"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@null"
+            android:numColumns="2"
+            android:smoothScrollbar="true"
+            android:soundEffectsEnabled="true"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" >
+        </GridView>
+
+     
+    </LinearLayout>
+
+       <LinearLayout
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+             >
+
+            <TextView
+                android:id="@+id/shop_nogifts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/daliy_nogifts"
+                android:textColor="#536f03"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <com.baidu.soushang.views.LoadingView
+                android:id="@+id/shop_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+</RelativeLayout>

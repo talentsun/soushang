@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg" >
+
+    <TextView
+        android:id="@+id/shop_dialog_title_exchange"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_title"
+        android:gravity="center"
+        android:text="@string/shop_dialog_exchange"
+        android:textColor="#ffffff"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/shop_dialog_ymark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_title_exchange"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/shop_dialog_ymark"
+        android:textColor="#536f03"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/shop_dialog_nmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_ymark"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/shop_dialog_nmark"
+        android:textColor="#536f03"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/shop_dialog_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/shop_dialog_nmark"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="20dp"
+        android:background="#c6c6c6"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/shop_dialog_rece_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_line"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="23dp"
+        android:text="@string/shop_dialog_rec_msg"
+        android:textColor="#536f03"
+        android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/shop_dialog_rece_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_rece_msg"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/shop_dialog_rec_name"
+        android:textColor="#536f03"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/shop_dialog_edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/shop_dialog_rece_name"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shop_dialog_edit_shape"
+        android:paddingLeft="8dp" />
+
+    <TextView
+        android:id="@+id/shop_dialog_rece_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_edit_name"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/shop_dialog_rec_add"
+        android:textColor="#536f03"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/shop_dialog_edit_address"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/shop_dialog_rece_address"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shop_dialog_edit_shape"
+        android:paddingLeft="8dp" />
+
+    <TextView
+        android:id="@+id/shop_dialog_rece_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_edit_address"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/shop_dialog_rec_phone"
+        android:textColor="#536f03"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/shop_dialog_edit_phone"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/shop_dialog_rece_phone"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="5dp"
+         android:inputType="phone" 
+        android:background="@drawable/shop_dialog_edit_shape"
+        android:paddingLeft="8dp" />
+
+    <LinearLayout
+        android:id="@+id/shop_dialog_lin_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_dialog_edit_phone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:paddingBottom="40dp" >
+
+        <Button
+            android:id="@+id/shop_dialog_btn_exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shop_dialog_btn_exchange"
+            android:text="@string/intergralexchange"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/shop_dialog_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shop_dialog_btn_cancel"
+            android:text="@string/shop_dialog_btn_cancel"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+</RelativeLayout>

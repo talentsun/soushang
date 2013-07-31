@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="6dip"
+        android:background="@drawable/introbg"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="12dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="7dp"
+            android:text="@string/lbs_dialog_title"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+        <TextView
+            style="@style/GreenText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:paddingLeft="14dp"
+            android:text="@string/lbs_dialog_welcome" />
+
+        <TextView
+            style="@style/GreenText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:paddingLeft="14dp"
+            android:text="@string/lbs_dialog_introduce" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:paddingLeft="14dp"
+            android:text="@string/lbs_dialog_rule_title"
+            android:textColor="#ff0000"
+            android:textSize="14sp" />
+
+        <TextView
+            style="@style/GreenText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="14dp"
+            android:text="@string/lbs_dialog_rule_content" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:paddingLeft="14dp"
+            android:text="@string/lbs_dialog_invite"
+            android:textColor="#ff0000" 
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="20dp" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/lbs_dialog_challenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/feature_dialog_start"
+                    android:gravity="center"
+                    android:text="@string/lbs_dialog_challenge"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/lbs_dialog_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/feature_dialog_cancel"
+                    android:gravity="center"
+                    android:text="@string/lbs_dialog_cancel"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -11,7 +11,6 @@
     <string name="get_question_failed">哎呦，肿么没找到题目呢？要不你重试一下？</string>
     <string name="get_question">正在取题...</string>
     <string name="complete_answer">正在交卷...</string>
-    
     <string name="event_score">本次积分</string>
     <string name="total_score">总积分</string>
     <string name="login">登录</string>
@@ -22,35 +21,30 @@
     <string name="event_score_no_logged">本次获得积分：%1$d</string>
     <string name="why_login">登录之后可以保存积分换礼品哦！快去登录吧！</string>
     <string name="share_add_point">分享得积分</string>
-    
     <string name="news">比赛资讯</string>
     <string name="get_dayevent_failed">获取日赛失败，请检查网络连接</string>
     <string name="no_day_event">现在还没有比赛可以做哦，请稍后再来！</string>
     <string name="day_event_finished">您已完成今天的全部题目，明天再来呦！</string>
     <string name="not_logged">使用百度帐号登录</string>
-    
     <string name="no_rank">暂无积分排名</string>
     <string name="no_network">网络不可用</string>
     <string name="ranking">名次</string>
     <string name="user">用户</string>
     <string name="credit">荣誉值</string>
-    
     <string name="soushang">搜商：</string>
     <string name="soushang_title">科普搜商</string>
     <string name="soushang_content">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;即通过搜索获取知识，解决问题的能力，是一种与智商、情商并列的人类智力因素，也是人类在信息时代需要具备的第三种能力。在信息爆炸的21世纪，除了智商、情商，面对海量信息包围的困境，决定人生成败与否的关键因素是什么？是“搜商”，即一种通过工具获取新知识的能力——搜索能力。而搜索引擎是人类获取信息的伟大发明，善用搜索成为高效获取信息，提高搜商的重要途径。百度作为全球最大的中文搜索引擎，一直在不断努力优化搜索结果，百度一下，能更快捷地通过搜索获取更有价值的信息，百度帮你提高搜商，成为互联网时代的信息达人！</string>
-    
     <string name="go_shop_web">去网页版兑换礼品吧!</string>
     <string name="shop_url">http://sou.baidu.com/integral.html</string>
     <string name="gift_name_1">iPad2</string>
     <string name="gift_name_2">百度钱包</string>
     <string name="gift_name_3">青花瓷套装</string>
     <string name="need_point">所需积分：</string>
-    
     <string name="share_content">如今最夯最in的是搜商高，我就是搜商超高的搜神，快来跟我一起成为搜神，挑战搜商极限吧。还有精美礼品拿哦。  http://as.baidu.com/a/item?docid=3199169</string>
     <string name="share_add_5_point">分享一次加5个积分哦！</string>
-    
     <string name="no_peers">周围没有朋友，快邀请你的好友加入！</string>
     <string name="lbs_event_need_logged">针锋相对需要登录之后才可以玩，赶快登录吧！</string>
+    <string name="shop_event_need_logged">需要登录之后才可以用积分兑换礼品，赶快登录吧！</string>
     <string name="event_count">比赛次数：%1$d</string>
     <string name="win_rate">胜率：%1$d%%</string>
     <string name="fight">挑战</string>
@@ -69,12 +63,19 @@
     <string name="bet_more_than_five">加注次数超过5次，今天不能再加注了！</string>
     <string name="be_cancelled">“%1$s”取消了比赛！</string>
     <string name="lbs_event">针锋相对</string>
+    <string name="lbs_dialog_title">小搜为你介绍针锋相对</string>
+    <string name="lbs_dialog_welcome">欢迎进入针锋相对的游戏世界。</string>
+    <string name="lbs_dialog_introduce">针锋相对是一对一的挑战赛，在这里，你可以呼朋唤友；在这里，你可以向你周围在线的好友发起挑战；在这里，你可以用搜商，与朋友共成长。</string>
+    <string name="lbs_dialog_rule_title">针锋相对的赛制：</string>
+    <string name="lbs_dialog_rule_content">1、  游戏为你筛选出附近的人，选择一位发出挑战邀请，可以添加赌注（赌注≤每个人总积分x15%）。\n2、	系统会给对方发送信号，当他接受邀请后，针锋相对正式启动。\n3、	你和你的对手将同时答一套题，游戏将通过正确率和答题时间来决定你们的胜负。\n4、	获胜的人将获取全部题目的分数和全部的赌注。\n5、	每人每天可以发起五次挑战。</string>
+<string name="lbs_dialog_invite">规则已清晰，一起来针锋相对吧~~</string>
+<string name="lbs_dialog_challenge">开始挑战</string>
+<string name="lbs_dialog_cancel">不参加了</string>
     <string name="fight_state">我：%1$d(积分)&#160;对方：%2$s(积分)</string>
     <string name="quit_lbs_event">退出比赛</string>
     <string name="quit_lbs_event_notes">如果您提前退出本场比赛，您的加注将拱手让给对方哦，是否继续退出比赛？</string>
     <string name="max_bet">最高加注%1$d分</string>
     <string name="more_than_max_bet">您的加注超过了最高加注，请重新加注！</string>
-    
     <string name="lbs_event_completed">您已经完成比赛</string>
     <string name="wait_somebody">正在等待“%1$s”</string>
     <string name="current_event_score">您本次比赛的成绩是：</string>
@@ -90,16 +91,47 @@
     <string name="regret">这不科学呀！</string>
     <string name="lose_current_event">您在本场比赛中落了下风</string>
     <string name="drop_point">扣除积分：%1$d</string>
-    
     <string name="event_info">比赛信息</string>
     <string name="gift_info">礼品信息</string>
     <string name="integral">荣誉值：%1$d</string>
     <string name="point">积分：%1$d</string>
     <string name="rank">排名：%1$d</string>
     <string name="fight_count">挑战次数：%1$d</string>
-    <string name="be_fight_count">被挑战次数：%1$d</string>
-    
+    <string name="win_count">比赛次数：%1$d</string>
+    <string name="feature_event_title">专题赛</string>
+    <string name="feature_event">专题赛需要登录之后才可以玩，赶快登录吧!</string>
     <string name="no_feature_event">暂无专题赛，请继续保持关注！</string>
     <string name="competitor_count">参赛人数：%1$d</string>
     <string name="feature_event_date">%1$s - %2$s</string>
+    <string name="feature_count">参赛人数：</string>
+    <string name="gift_test_name">青花瓷套装</string>
+    <string name="gift_test_num">40000点</string>
+    <string name="feature_dialog_start">开始参加</string>   
+    <string name="feature_dialog_cancel">不参加了</string>
+    <string name="name">全国中小学创新大赛题库</string>
+	<string name="gift_integral_title">您的积分是</string>
+	<string name="gift_internal_content">13000</string>
+	<string name="daily_prize">常规赛奖品</string>
+	<string name="feature_prize">专题赛奖品</string>
+	<string name="shop_item_name">百度云手机</string>
+	<string name="intergraltitle">积分：</string>
+	<string name="intergralnum">%1$d点</string>
+	<string name="intergralexchange">兑换</string>
+	
+	<string name="daliy_nogifts">日赛暂无奖品</string>
+	<string name="feature_nogifts">专题赛暂无奖品</string>
+	<string name="shop_dialog_exchange">兑换“百度钱包”</string>
+	<string name="shop_dialog_ymark">您的积分：</string>
+	<string name="shop_dialog_nmark">所需积分：</string>
+	<string name="shop_dialog_rec_msg">收货人信息：</string>
+	<string name="shop_dialog_rec_add">寄送地址：</string>
+	<string name="shop_dialog_rec_name">收货人：</string>
+	<string name="shop_dialog_rec_phone">联系电话：</string>
+	<string name="shop_dialog_btn_cancel">取消</string>
+	
+	<string name="shop_dialog_rec_name_erro">收货人不能为空</string>
+	<string name="shop_dialog_rec_addr_erro">寄送地址不能为空</string>
+	<string name="shop_dialog_rec_phone_erro">寄送电话不能为空</string>
+	<string name="shop_dialog_tips">对不起，您的积分不够，继续努力吧！</string>
+	<string name="shop_dialog_rec_suc">恭喜您！兑换成功</string>
 </resources>

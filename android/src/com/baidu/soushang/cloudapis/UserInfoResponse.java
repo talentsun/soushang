@@ -1,7 +1,6 @@
 package com.baidu.soushang.cloudapis;
 
 import it.restrung.rest.annotations.JsonProperty;
-import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class UserInfoResponse extends CommonResponse {
   private static final long serialVersionUID = 1L;

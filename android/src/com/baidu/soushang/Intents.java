@@ -21,10 +21,12 @@ public class Intents {
   public static final String EXTRA_BET = "com.baidu.soushang.extra.BET";
   public static final String EXTRA_WIN = "com.baidu.soushang.extra.WIN";
   
+  public static final String EXTRA_LBS_DIALOG_JUDGE="lbsdialog";
+  public static final String EXTRA_SHOP_SEND_ADDRESS="address";
   public static final int EVENT_TYPE_DAILY = 1;
   public static final int EVENT_TYPE_LBS = 2;
   public static final int EVENT_TYPE_FEATURE = 3;
-  
+ 
   public static final String ACTION_STARTUP = "com.baidu.soushang.action.STARTUP";
   public static final String ACTION_HEARTBEAT = "com.baidu.soushang.action.HEARTBEAT";
   public static final String ACTION_UPDATE_PEERS = "com.baidu.soushang.action.UPDATE_PEERS";

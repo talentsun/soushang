@@ -1,14 +1,10 @@
 package com.baidu.soushang.activities;
 
-import java.io.IOException;
-
-import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,25 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.api.AsyncBaiduRunner;
-import com.baidu.api.AsyncBaiduRunner.RequestListener;
-import com.baidu.api.Baidu;
-import com.baidu.api.BaiduDialog.BaiduDialogListener;
-import com.baidu.api.BaiduDialogError;
-import com.baidu.api.BaiduException;
 import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.SouShangApplication.LoginListener;
 import com.baidu.soushang.SouShangApplication.UpdateUserInfoListener;
+import com.baidu.soushang.Variables;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.User;
-import com.baidu.soushang.cloudapis.UserInfoResponse;
-import com.baidu.soushang.lbs.LBSService;
-import com.baidu.soushang.utils.SystemUtils;
 import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -86,7 +74,7 @@ public class DailyEventCompletedActivity extends BaseActivity implements
         final int point = user.getPoint();
 
         mMainHandler.post(new Runnable() {
-
+   
           @Override
           public void run() {
             updateTotalScore(point);
@@ -192,11 +180,13 @@ public class DailyEventCompletedActivity extends BaseActivity implements
           
           @Override
           public void run() {
+        	  
             Apis.answer(DailyEventCompletedActivity.this,
               mApplication.getAnswers(),
-              Config.getAccessToken(DailyEventCompletedActivity.this),
+              Config.getAccessToken(DailyEventCompletedActivity.this), Variables.daliyFeatureFlag,
               null);
             initLoggedArea(null);
+            Variables.daliyFeatureFlag=0;
           }
         });
       }

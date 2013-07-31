@@ -121,7 +121,7 @@ public class SouShangApplication extends Application {
     .showStubImage(R.drawable.default_avatar)
     .displayer(
         new RoundedBitmapDisplayer(getResources().getDimensionPixelSize(
-            R.dimen.avatar_width) / 2))
+           R.dimen.avatar_width) /2 ))
     .build();
     
     SpeechConfig.setAppId(APP_KEY);
@@ -216,7 +216,7 @@ public class SouShangApplication extends Application {
     Apis.getUserInfo(this, Config.getAccessToken(this), mUserExtraInfoCallback);
   }
   
-  private void updateBaseUserInfo() {
+  public void updateBaseUserInfo() {
     new AsyncBaiduRunner(mBaidu).request(USERINFO_URL, null, "GET", new RequestListener() {
       
       @Override
@@ -239,10 +239,13 @@ public class SouShangApplication extends Application {
           
           if (mLoginListener != null) {
             mLoginListener.onSuccess();
+           
           }
         } catch (Exception e) {
           updateUserBaseInfoError();
         }
+        
+        updateUserExtraInfo();
       }
       
       @Override

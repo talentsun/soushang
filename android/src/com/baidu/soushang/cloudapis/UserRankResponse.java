@@ -21,4 +21,5 @@ public class UserRankResponse extends CommonResponse {
   public UserRankResponse() {
     
   }
+  
 }
