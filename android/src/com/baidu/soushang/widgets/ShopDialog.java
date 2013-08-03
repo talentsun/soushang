@@ -27,6 +27,7 @@ public class ShopDialog extends Dialog {
 	private TextView title;
 	private TextView yMark;
 	private TextView nMark;
+	private TextView receMsg,receName,receAddr,recePhone;
 	private EditText editName, editAddr, editPhone;
 	private Button exchange;
 	private Button cancel;
@@ -62,12 +63,21 @@ public class ShopDialog extends Dialog {
 				R.string.shop_dialog_nmark)
 				+ Variables.shBean.getIntegral());
 
+		receMsg=(TextView)findViewById(R.id.shop_dialog_rece_msg);
+		receMsg.setTypeface(typeface);
+		
+		receName=(TextView)findViewById(R.id.shop_dialog_rece_name);
+		receName.setTypeface(typeface);
 		editName = (EditText) findViewById(R.id.shop_dialog_edit_name);
 		editName.setTypeface(typeface);
 
+		receAddr=(TextView)findViewById(R.id.shop_dialog_rece_address);
+		receAddr.setTypeface(typeface);
 		editAddr = (EditText) findViewById(R.id.shop_dialog_edit_address);
 		editAddr.setTypeface(typeface);
 
+		recePhone=(TextView)findViewById(R.id.shop_dialog_rece_phone);
+		recePhone.setTypeface(typeface);
 		editPhone = (EditText) findViewById(R.id.shop_dialog_edit_phone);
 		editPhone.setTypeface(typeface);
 

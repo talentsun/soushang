@@ -1,19 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="match_name_max_width">56dp</dimen>
 
+    <dimen name="match_name_max_width">56dp</dimen>
     <dimen name="home_daily_event_marginRight">12dp</dimen>
     <dimen name="home_feature_event_marginLeft">12dp</dimen>
     <dimen name="home_paddingBottom">20dp</dimen>
     <dimen name="tips_dialog_width">275dp</dimen>
     <dimen name="tips_dialog_height">238dp</dimen>
-    
     <dimen name="hangtag_marginTop">128dp</dimen>
-    
     <dimen name="webview_dialog_padding">32dp</dimen>
     <dimen name="webview_dialog_content_height">460dp</dimen>
-    
     <dimen name="question_section_margin">10dp</dimen>
     <dimen name="timer_height">113dp</dimen>
     <dimen name="loading_content_height">85dp</dimen>
+    
+    <dimen name="lbs_event_dialog_lin_paddingleft">16dp</dimen>
+    <dimen name="lbs_event_dialog_lin_paddingtop">12dp</dimen>
+    <dimen name="lbs_event_dialog_lin_margintop">6dp</dimen>
+	<dimen name="lbs_dialog_tv_title_padding">7dp</dimen>
+	<dimen name="lbs_dialog_tv_welcome_margintop">25dp</dimen>
+	<dimen name="lbs_dialog_tv_paddingleft">14dp</dimen>
+	<dimen name="lbs_dialog_tv_margintop">20dp</dimen>
+	<dimen name="lbs_dialog_tv_size">17sp</dimen>
+	<dimen name="lbs_dialog_tv_content_size">16sp</dimen>
+	<dimen name="lbs_dialog_rel_margintop">25dp</dimen>
+	<dimen name="lbs_dialog_btn_margin">15dp</dimen>
+	
+	
+	<dimen name="feature_event_item_lin_margintop">6dp</dimen>
+	<dimen name="feature_event_item_lin_paddingbt">12dp</dimen>
+	<dimen name="feature_event_item_lin_paddingleft">16dp</dimen>
+	<dimen name="feature_event_item_name_size">19sp</dimen>
+	<dimen name="feature_event_item_date_margintop">4dp</dimen>
+	
+	
+	<dimen name="question_edit_marginleft">15dp</dimen>
+	<dimen name="question_edit_paddingleft">17dp</dimen>
+	<dimen name="question_btn_search_marginleft">-39dp</dimen>
+	<dimen name="question_btn_btn_help_marginleft">8dp</dimen>
+	
+	<dimen name="gift_interal_title_size">15sp</dimen>
+	<dimen name="gift_interal_title_marginright">13dp</dimen>
+	<dimen name="gift_interal_title_margintop">90dp</dimen>
+	<dimen name="gift_interal_content_size">21sp</dimen>
+	<dimen name="shop_daliy_prize_size">17sp</dimen>
+	<dimen name="shop_lin_margintop">7dp</dimen>
+	<dimen name="shop_grid_margintop">8dp</dimen>	
+	<dimen name="shop_grid_columnwidth">130dp</dimen>
+	<dimen name="shop_grid_horizontalspacing">10dp</dimen>	
+	<dimen name="shop_nogifts_size">16sp</dimen>
+	
+	<dimen name="shop_item_name_margintop">5dp</dimen>	
+	<dimen name="shop_item_name_size">15sp</dimen>	
+	<dimen name="shop_item_btn_marginbottom">10dp</dimen>
+	
+	
+	<dimen name="gift_name_margintop">12dp</dimen>
+	<dimen name="gift_name_size">18sp</dimen>
+	<dimen name="gift_integral_marginTop">7dp</dimen>
 </resources>

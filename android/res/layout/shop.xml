@@ -15,13 +15,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="13sp"
-            android:layout_marginTop="90dp"
+            android:layout_marginRight="@dimen/gift_interal_title_marginright"
+            android:layout_marginTop="@dimen/gift_interal_title_margintop"
             android:gravity="right"
             android:maxEms="5"
             android:text="@string/gift_integral_title"
             android:textColor="#536f03"
-            android:textSize="15sp" />
+            android:textSize="@dimen/gift_interal_title_size" />
 
         <TextView
             android:id="@+id/gift_interal_content"
@@ -30,12 +30,11 @@
             android:layout_alignLeft="@id/gift_interal_title"
             android:layout_alignParentRight="true"
             android:layout_below="@id/gift_interal_title"
-            android:layout_marginRight="13sp"
             android:gravity="left"
             android:maxEms="5"
             android:text="@string/intergralnum"
             android:textColor="#536f03"
-            android:textSize="21sp" />
+            android:textSize="@dimen/gift_interal_content_size" />
     </RelativeLayout>
 
     <LinearLayout
@@ -49,19 +48,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" 
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="@dimen/shop_lin_margintop"
             >
 
             <TextView
                 android:id="@+id/shop_daliy_prize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gift_ch_selected"
+                android:background="@drawable/gift_cg_pressed"
                 android:gravity="center"
                 android:maxEms="5"
                 android:text="@string/daily_prize"
                 android:textColor="#fdfcc4"
-                android:textSize="17sp" 
+                android:textSize="@dimen/shop_daliy_prize_size" 
                 />  
 
             <TextView
@@ -73,7 +72,7 @@
                 android:maxEms="5"
                 android:text="@string/feature_prize"
                 android:textColor="#fdfcc4"
-                android:textSize="17sp"
+                android:textSize="@dimen/shop_daliy_prize_size"
                  />
         </LinearLayout>
 
@@ -81,18 +80,18 @@
             android:id="@+id/shop_grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/shop_grid_margintop"
             android:clickable="false"
-            android:columnWidth="130dp"
+            android:columnWidth="@dimen/shop_grid_columnwidth"
             android:duplicateParentState="true"
             android:gravity="center"
-            android:horizontalSpacing="10dp"
+            android:horizontalSpacing="@dimen/shop_grid_horizontalspacing"
             android:listSelector="@null"
             android:numColumns="2"
             android:smoothScrollbar="true"
             android:soundEffectsEnabled="true"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp" >
+            android:verticalSpacing="@dimen/shop_grid_horizontalspacing" >
         </GridView>
 
      
@@ -113,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/daliy_nogifts"
                 android:textColor="#536f03"
-                android:textSize="16sp"
+                android:textSize="@dimen/shop_nogifts_size"
                 android:visibility="gone" />
 
             <com.baidu.soushang.views.LoadingView
