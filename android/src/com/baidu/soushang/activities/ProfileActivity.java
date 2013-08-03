@@ -181,7 +181,7 @@ public class ProfileActivity extends BaseActivity {
 			mWinCount.setText(String.format(getString(R.string.win_count),
 					mApplication.getUser().getWinNum()));
 			mWinRate.setText(String.format(getString(R.string.win_rate),
-					mApplication.getUser().getWinRatio()));
+					mApplication.getUser().getWinNum()));
 			
 			// 获取礼品信息
 			list=new ArrayList<Gift>();
