@@ -20,11 +20,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/gift_imag"
         android:layout_centerInParent="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/gift_name_margintop"
         android:gravity="center"
         android:text="@string/gift_test_name"
         android:textColor="#536f03"
-        android:textSize="30px" />
+        android:textSize="@dimen/gift_name_size" />
 
     <TextView
         android:id="@+id/gift_integral"
@@ -32,10 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/gift_name"
         android:layout_centerInParent="true"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="@dimen/gift_integral_marginTop"
         android:gravity="center"
         android:text="@string/gift_test_num"
         android:textColor="#536f03"
-        android:textSize="30px" />
+        android:textSize="@dimen/gift_name_size" />
 
 </RelativeLayout>

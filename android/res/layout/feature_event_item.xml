@@ -11,12 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="6dip"
-        android:background="@drawable/feature_event_item_future_bg"
+        android:layout_marginTop="@dimen/feature_event_item_lin_margintop"
         android:orientation="vertical"
-        android:paddingBottom="12dp"
-        android:paddingLeft="16dp"
-        android:paddingTop="12dp" >
+        android:paddingBottom="@dimen/feature_event_item_lin_paddingbt"
+        android:paddingLeft="@dimen/feature_event_item_lin_paddingleft"
+        android:paddingTop="@dimen/feature_event_item_lin_paddingbt" 
+        android:background="@drawable/zhuanti_willbeboard"
+        >
 
         <TextView
             android:id="@+id/name"
@@ -26,14 +27,14 @@
             android:drawablePadding="4dp"
             android:text="@string/name"
             android:textColor="#6f5203"
-            android:textSize="19sp" />
+            android:textSize="@dimen/feature_event_item_name_size" />
 
         <TextView
             android:id="@+id/competitor_count"
             style="@style/GreenText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/feature_event_item_lin_paddingbt"
             android:drawableLeft="@drawable/feature_icon_competitor"
             android:drawablePadding="4dp"
             android:text="@string/competitor_count" />
@@ -43,7 +44,7 @@
             style="@style/GreenText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/feature_event_item_date_margintop"
             android:drawableLeft="@drawable/feature_icon_date"
             android:drawablePadding="4dp"
             android:text="@string/feature_event_date" />

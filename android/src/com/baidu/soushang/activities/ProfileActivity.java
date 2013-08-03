@@ -43,9 +43,10 @@ public class ProfileActivity extends BaseActivity {
 	private TextView mFightCount;
 	private TextView mWinCount;
 	private TextView mWinRate;
-
+	
 	private LinearLayout mGiftInfo;
 	private GridView mGift_grid;
+	private TextView tipsMsg;
 	private ProfileGiftAdapter pGiftAdapter;
 	private int h;
 	private Timer timer;
@@ -73,6 +74,8 @@ public class ProfileActivity extends BaseActivity {
 
 		mGiftInfo = (LinearLayout) findViewById(R.id.gift_info);
 		mGift_grid = (GridView) findViewById(R.id.gift_grid);
+		tipsMsg=(TextView)findViewById(R.id.gift_tips_msg);
+		
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				SouShangApplication.FONT);
 		mUserName.setTypeface(tf);
@@ -86,7 +89,8 @@ public class ProfileActivity extends BaseActivity {
 		mFightCount.setTypeface(tf);
 		mWinCount.setTypeface(tf);
 		mWinRate.setTypeface(tf);
-
+		tipsMsg.setTypeface(tf);
+		
 		mApplication = (SouShangApplication) getApplication();
 
 		// 开启一个定时器监听mEventInfo高的变化，一旦绘制完成立即获取
@@ -98,6 +102,10 @@ public class ProfileActivity extends BaseActivity {
 					if (mEventInfo.getHeight() != 0) {
 						
 					    h=mEventInfo.getHeight();
+					    LayoutParams mLayoutParams = (LayoutParams) mGiftInfo
+								 .getLayoutParams();
+								 mLayoutParams.height = h;
+								 mGiftInfo.setLayoutParams(mLayoutParams);
 					    System.out.println("at handleMessage h==" + h);
 						// 取消定时器
 						timer.cancel();
@@ -129,6 +137,7 @@ public class ProfileActivity extends BaseActivity {
 				if (isChecked) {
 					mEventInfo.setVisibility(View.VISIBLE);
 					mGiftInfo.setVisibility(View.GONE);
+					 
 				}
 			}
 		});
@@ -140,18 +149,19 @@ public class ProfileActivity extends BaseActivity {
 					boolean isChecked) {
 				if (isChecked) {
 
-
 					mEventInfo.setVisibility(View.GONE);
 					mGiftInfo.setVisibility(View.VISIBLE);
 
-					 LayoutParams mLayoutParams = (LayoutParams) mGiftInfo
-					 .getLayoutParams();
-					 mLayoutParams.height = h;
-					 mGiftInfo.setLayoutParams(mLayoutParams);
+					if (list!=null) {
+						tipsMsg.setVisibility(View.GONE);
+						pGiftAdapter = new ProfileGiftAdapter(mApplication,
+								ProfileActivity.this,list);      
+						mGift_grid.setAdapter(pGiftAdapter);
+						
+					}else {
+						tipsMsg.setVisibility(View.VISIBLE);
+					}
 					
-					pGiftAdapter = new ProfileGiftAdapter(mApplication,
-							ProfileActivity.this,list);      
-					mGift_grid.setAdapter(pGiftAdapter);
 
 					System.out.println("at mGiftInfoTab-----");
 				}
@@ -176,12 +186,14 @@ public class ProfileActivity extends BaseActivity {
 					mApplication.getUser().getPoint()));
 			mRank.setText(String.format(getString(R.string.rank), mApplication
 					.getUser().getUserRank()));
+			System.out.println("at ProfileActivity===="+mApplication
+					.getUser().getUserRank());
 			mFightCount.setText(String.format(getString(R.string.fight_count),
 					mApplication.getUser().getFightNum()));
 			mWinCount.setText(String.format(getString(R.string.win_count),
 					mApplication.getUser().getWinNum()));
 			mWinRate.setText(String.format(getString(R.string.win_rate),
-					mApplication.getUser().getWinRatio()));
+					mApplication.getUser().getWinNum()));
 			
 			// 获取礼品信息
 			list=new ArrayList<Gift>();

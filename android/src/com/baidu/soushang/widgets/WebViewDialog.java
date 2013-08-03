@@ -108,4 +108,5 @@ public class WebViewDialog extends Dialog {
     mWebView.loadUrl(url);
     super.show();
   }
+  
 }

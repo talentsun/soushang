@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.IntentFilter;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +45,7 @@ import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.widgets.LoadingDialog;
 import com.baidu.soushang.widgets.PausedDialog;
 import com.baidu.soushang.widgets.QuitLBSEventDialog;
+
 import com.baidu.soushang.widgets.WebViewDialog;
 
 public class QuestionActivity extends BaseActivity implements
@@ -73,7 +76,6 @@ public class QuestionActivity extends BaseActivity implements
 			// mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer));
 			// }
 		}
-
 	}
 
 	public class FightStateReceiver extends BroadcastReceiver {
@@ -109,6 +111,8 @@ public class QuestionActivity extends BaseActivity implements
 	private TextView mQuestionTitle;
 	private ProgressBar mAnswerTime;
 	private Button mHelp;
+	private Button mSearch;
+	private EditText mEdit;
 	private Button mOptionA;
 	private Button mOptionB;
 	private Button mOptionC;
@@ -141,11 +145,12 @@ public class QuestionActivity extends BaseActivity implements
 	private static final int CREDIT_INTERVAL = 10;
 	private static final int POINT_INTERVAL = 5;
 
+	
 	@Override
 	protected void onCreate(Bundle arg0) {
 
 		setContentView(R.layout.question);
-
+		
 		mMatchName = (TextView) findViewById(R.id.match_name);
 		mPointBoard = (TextView) findViewById(R.id.credit_and_point);
 		mPauseResume = (Button) findViewById(R.id.pause_resume);
@@ -154,6 +159,8 @@ public class QuestionActivity extends BaseActivity implements
 		mQuestionTitle = (TextView) findViewById(R.id.title);
 		mAnswerTime = (ProgressBar) findViewById(R.id.time);
 		mHelp = (Button) findViewById(R.id.help);
+		mSearch = (Button) findViewById(R.id.search);
+		mEdit = (EditText) findViewById(R.id.question_edit);
 		mOptionA = (Button) findViewById(R.id.option_a);
 		mOptionB = (Button) findViewById(R.id.option_b);
 		mOptionC = (Button) findViewById(R.id.option_c);
@@ -166,6 +173,7 @@ public class QuestionActivity extends BaseActivity implements
 		mOptionC.setOnClickListener(this);
 		mOptionD.setOnClickListener(this);
 		mHelp.setOnClickListener(this);
+		mSearch.setOnClickListener(this);
 		mQuit.setOnClickListener(this);
 
 		Typeface typeface = Typeface.createFromAsset(getAssets(),
@@ -174,6 +182,7 @@ public class QuestionActivity extends BaseActivity implements
 		mPointBoard.setTypeface(typeface);
 		mQuestionOrder.setTypeface(typeface);
 		mQuestionTitle.setTypeface(typeface);
+		mEdit.setTypeface(typeface);
 		mOptionA.setTypeface(typeface);
 		mOptionB.setTypeface(typeface);
 		mOptionC.setTypeface(typeface);
@@ -226,6 +235,17 @@ public class QuestionActivity extends BaseActivity implements
 		mAnswers = new ArrayList<Answer>();
 
 		mSearchResultDialog = new WebViewDialog(this);
+		
+		
+		mSearchResultDialog.setOnShowListener(new OnShowListener() {
+			
+			@Override
+			public void onShow(DialogInterface dialog) {
+				// TODO Auto-generated method stub
+				pause();
+			}
+		});
+		
 		mSearchResultDialog
 				.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
@@ -267,6 +287,7 @@ public class QuestionActivity extends BaseActivity implements
 			filter.addAction(Intents.ACTION_FIGHT_END);
 			mFightStateReceiver = new FightStateReceiver();
 			registerReceiver(mFightStateReceiver, filter);
+			
 		}
 
 		mStartTime = System.currentTimeMillis();
@@ -292,6 +313,8 @@ public class QuestionActivity extends BaseActivity implements
 	}
 
 	private void initBaiduSpeechDialog() {
+		
+		
 		mBaiduSpeechDialog = new BaiduSpeechDialog(QuestionActivity.this);
 		mBaiduSpeechDialog.setOnShowListener(new OnShowListener() {
 
@@ -307,6 +330,16 @@ public class QuestionActivity extends BaseActivity implements
 				resume();
 			}
 		});
+		
+		mBaiduSpeechDialog.setOnDismissListener(new OnDismissListener() {
+			
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				// TODO Auto-generated method stub
+				resume();
+			}
+		});
+		
 		mBaiduSpeechDialog
 				.setDialogRecognitionListener(new DialogRecognitionListener() {
 
@@ -357,12 +390,14 @@ public class QuestionActivity extends BaseActivity implements
 				Config.getAccessToken(this), this);
 	}
 
+	
 	@Override
 	public void onResults(QuestionResponse arg0) {
 		if (arg0 != null) {
+			
 			if (arg0.getRetCode() == 0) {
 				mCurrentQuestion = arg0.getQuestion();
-
+				System.out.println("at onResults mCurrentQuestion=="+mCurrentQuestion);
 				if (mCurrentQuestion != null) {
 					updateUI(mCurrentQuestion);
 					mMainHandler.postDelayed(new Runnable() {
@@ -393,7 +428,7 @@ public class QuestionActivity extends BaseActivity implements
 
 	private void showEventComplated() {
 		if (mEventType == Intents.EVENT_TYPE_DAILY) {
-			Variables.daliyFeatureFlag=0;
+			Variables.daliyFeatureFlag = 0;
 			Intent intent = new Intent(QuestionActivity.this,
 					DailyEventCompletedActivity.class);
 			intent.putExtra(Intents.EXTRA_POINT, mMyPoint);
@@ -414,7 +449,7 @@ public class QuestionActivity extends BaseActivity implements
 
 			startActivity(intent);
 		} else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
-			Variables.daliyFeatureFlag=1;
+			Variables.daliyFeatureFlag = 1;
 			Intent intent = new Intent(QuestionActivity.this,
 					DailyEventCompletedActivity.class);
 			intent.putExtra(Intents.EXTRA_POINT, mMyPoint);
@@ -446,6 +481,7 @@ public class QuestionActivity extends BaseActivity implements
 	}
 
 	private void updateUI(QuestionResponse.Question question) {
+		
 		if (mEventType == Intents.EVENT_TYPE_DAILY) {
 			mMatchName.setText(question.getEventTitle());
 		} else if (mEventType == Intents.EVENT_TYPE_LBS) {
@@ -453,7 +489,13 @@ public class QuestionActivity extends BaseActivity implements
 		} else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
 			mMatchName.setText(Variables.feBean.getTitle());
 		}
-
+		
+		System.out.println("at updateUI ------"+question.getSearchRecom());
+		System.out.println("at t updateUI ------"+question.getId());
+		if (TextUtils.isEmpty(question.getSearchRecom())) {
+			mEdit.setText(question.getSearchRecom());
+		}
+	
 		mQuestionOrder.setText(String.format(
 				getResources().getString(R.string.question_order),
 				question.getIndex() + 1, question.getTotal()));
@@ -550,7 +592,7 @@ public class QuestionActivity extends BaseActivity implements
 			updatePointBoard();
 		}
 		showAnswerResult(index, correct);
-		
+
 		Answer answer = new Answer();
 		answer.setId(mCurrentQuestion.getId());
 		answer.setAnswer(index);
@@ -560,7 +602,8 @@ public class QuestionActivity extends BaseActivity implements
 				List<Answer> answers = new ArrayList<Answer>();
 				answers.add(answer);
 				Apis.answer(this, answers,
-						Config.getAccessToken(QuestionActivity.this), Intents.EVENT_TYPE_DAILY, null);
+						Config.getAccessToken(QuestionActivity.this),
+						Intents.EVENT_TYPE_DAILY, null);
 			} else {
 				mAnswers.add(answer);
 			}
@@ -569,9 +612,10 @@ public class QuestionActivity extends BaseActivity implements
 		} else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
 			List<Answer> answers = new ArrayList<Answer>();
 			answers.add(answer);
-			System.out.println(""+answer.getId()+""+answer.getAnswer());
+			System.out.println("" + answer.getId() + "" + answer.getAnswer());
 			Apis.answer(this, answers,
-					Config.getAccessToken(QuestionActivity.this), Intents.EVENT_TYPE_FEATURE, null);
+					Config.getAccessToken(QuestionActivity.this),
+					Intents.EVENT_TYPE_FEATURE, null);
 		}
 
 		finished = mCurrentQuestion.getTotal() == (mCurrentQuestion.getIndex() + 1);
@@ -697,6 +741,17 @@ public class QuestionActivity extends BaseActivity implements
 			answer(3);
 		} else if (v == mHelp) {
 			mBaiduSpeechDialog.show();
+		} else if (v == mSearch) {
+			String edit = mEdit.getText().toString();
+			if (TextUtils.isEmpty(edit)) {
+				Toast.makeText(QuestionActivity.this,
+						getResources().getString(R.string.searchcontent),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			mSearchResultDialog.show(edit, "http://m.baidu.com/s?word="
+					+ edit);
 		} else if (v == mQuit) {
 			pause();
 			mQuitDialog.show();

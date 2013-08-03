@@ -7,82 +7,85 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="6dip"
+        android:layout_marginTop="@dimen/lbs_event_dialog_lin_margintop"
         android:background="@drawable/introbg"
         android:orientation="vertical"
-        android:paddingBottom="12dp"
-        android:paddingLeft="16dp"
-        android:paddingTop="12dp" >
+        android:paddingLeft="@dimen/lbs_event_dialog_lin_paddingleft"
+        android:paddingTop="@dimen/lbs_event_dialog_lin_paddingtop" >
 
         <TextView
+            android:id="@+id/lbs_tv_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:padding="7dp"
+            android:padding="@dimen/lbs_dialog_tv_title_padding"
             android:text="@string/lbs_dialog_title"
             android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textSize="@dimen/lbs_dialog_tv_size" />
 
         <TextView
+            android:id="@+id/lbs_tv_welcome"
             style="@style/GreenText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:paddingLeft="14dp"
+            android:layout_marginTop="@dimen/lbs_dialog_tv_welcome_margintop"
+            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
             android:text="@string/lbs_dialog_welcome" />
 
         <TextView
+            android:id="@+id/lbs_tv_introduce"
             style="@style/GreenText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:paddingLeft="14dp"
+            android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
+            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
             android:text="@string/lbs_dialog_introduce" />
 
         <TextView
+            android:id="@+id/lbs_tv_rule_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:paddingLeft="14dp"
+            android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
+            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
             android:text="@string/lbs_dialog_rule_title"
             android:textColor="#ff0000"
-            android:textSize="14sp" />
+            android:textSize="@dimen/lbs_dialog_tv_content_size" />
 
         <TextView
+            android:id="@+id/lbs_tv_rule_content"
             style="@style/GreenText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:paddingLeft="14dp"
+            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
             android:text="@string/lbs_dialog_rule_content" />
 
         <TextView
+            android:id="@+id/lbs_tv_invite"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:paddingLeft="14dp"
+            android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
+            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
             android:text="@string/lbs_dialog_invite"
             android:textColor="#ff0000" 
-            android:textSize="14sp" />
+            android:textSize="@dimen/lbs_dialog_tv_content_size" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="20dp" >
+            android:layout_marginTop="@dimen/lbs_dialog_rel_margintop" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="4dp"
                 android:orientation="horizontal" >
 
                 <Button
                     android:id="@+id/lbs_dialog_challenge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/lbs_dialog_btn_margin"
                     android:background="@drawable/feature_dialog_start"
                     android:gravity="center"
                     android:text="@string/lbs_dialog_challenge"
@@ -92,12 +95,13 @@
                     android:id="@+id/lbs_dialog_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/lbs_dialog_btn_margin"
                     android:background="@drawable/feature_dialog_cancel"
                     android:gravity="center"
                     android:text="@string/lbs_dialog_cancel"
                     android:textColor="#ffffff" />
             </LinearLayout>
+            
         </RelativeLayout>
     </LinearLayout>
 

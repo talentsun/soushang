@@ -4,7 +4,7 @@
     <dimen name="home_daily_event_marginRight">8dp</dimen>
     <dimen name="home_feature_event_marginLeft">8dp</dimen>
     
-    <dimen name="avatar_width">70dp</dimen>
+    <dimen name="avatar_width">65dp</dimen>
     <dimen name="popup_title_marginTop">22dp</dimen>
     <dimen name="popup_button_marginBottom">12dp</dimen>
     <dimen name="special_item_name">15dp</dimen>
