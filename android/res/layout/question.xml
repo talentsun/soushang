@@ -1,140 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.baidu.soushang.widgets.ResizeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical"
-    android:paddingTop="4dp"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="@drawable/bg" >
+    android:paddingTop="4dp" 
+    android:id="@+id/root_layout"
+    >
 
-   <RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/match_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="@string/daily_match"
-            android:textSize="14sp"
             android:maxWidth="@dimen/match_name_max_width"
-            android:textColor="#b93f06" />
-        
-        <TextView 
+            android:text="@string/daily_match"
+            android:textColor="#b93f06"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/credit_and_point"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/credit_and_point"
-            android:gravity="center"
             android:background="@drawable/credit_and_point_bg"
-            android:textSize="14sp"
-            android:textColor="#fdfcc5"
+            android:gravity="center"
+            android:shadowColor="#b46900"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="1"
-            android:shadowColor="#b46900" />
-        
-        <Button 
+            android:text="@string/credit_and_point"
+            android:textColor="#fdfcc5"
+            android:textSize="14sp" />
+
+        <Button
             android:id="@+id/pause_resume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/pause" />
-        
-        <Button 
+
+        <Button
             android:id="@+id/quit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:background="@drawable/quit" />
+            android:background="@drawable/quit"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/blackboard"
         android:orientation="vertical"
-        android:paddingTop="16dp"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:background="@drawable/blackboard" >
-        
-        <TextView 
+        android:paddingTop="16dp" >
+
+        <TextView
             android:id="@+id/question_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="14sp"
-            android:textColor="#fdfcc5" />
-        
+            android:textColor="#fdfcc5"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:textColor="#fdfcc5" />
+            android:textColor="#fdfcc5"
+            android:textSize="16sp" />
     </LinearLayout>
-    
-    <FrameLayout 
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/timer_height"
+        android:layout_marginTop="-120dp"
         android:orientation="horizontal"
-        android:paddingLeft="4dp"
-        android:layout_marginTop="-120dp" >
-        <ImageView 
+        android:paddingLeft="4dp" >
+
+        <ImageView
             android:id="@+id/clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/clock"
             android:layout_gravity="left|top"
-            android:layout_marginTop="60dp" />
-        
-        <ImageView 
+            android:layout_marginTop="60dp"
+            android:src="@drawable/clock" />
+
+        <ImageView
             android:id="@+id/timeout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/time_up"
             android:layout_gravity="left|top"
             android:layout_marginLeft="28dp"
+            android:src="@drawable/time_up"
             android:visibility="visible" />
-        
-        <ProgressBar 
+
+        <ProgressBar
             android:id="@+id/time"
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
-            android:progressDrawable="@drawable/answer_timer"
             android:layout_marginTop="80dp"
-            style="@android:style/Widget.ProgressBar.Horizontal" />
+            android:progressDrawable="@drawable/answer_timer" />
     </FrameLayout>
-    
-    <RelativeLayout 
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp"
         android:layout_marginTop="@dimen/question_section_margin"
-        android:gravity="center_horizontal" >
-        
-        <Button 
-            android:id="@+id/option_a"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingRight="8dp" >
+
+        <EditText
+            android:id="@+id/question_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/option_a"
+            android:background="@drawable/zhuanti_searchbox"
+            android:layout_marginLeft="@dimen/question_edit_marginleft"
+            android:paddingLeft="@dimen/question_edit_paddingleft"
+            />
+		
+           <Button
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search"
+            android:layout_marginLeft="@dimen/question_btn_search_marginleft"
+             />
+        <Button
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/help"
+            android:layout_marginLeft="@dimen/question_btn_btn_help_marginleft"
+             />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/question_section_margin"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp" >
+
+        <Button
+            android:id="@+id/option_a"
+            style="@style/OptionFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            style="@style/OptionFont" />
-        
-        <ImageView 
+            android:background="@drawable/option_a" />
+
+        <ImageView
             android:id="@+id/a_correct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,8 +179,8 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/correct"
             android:visibility="gone" />
-        
-        <ImageView 
+
+        <ImageView
             android:id="@+id/a_incorrect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,17 +189,17 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/incorrect"
             android:visibility="gone" />
-        
-        <Button 
+
+        <Button
             android:id="@+id/option_b"
+            style="@style/OptionFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/option_b" 
             android:layout_below="@id/option_a"
             android:layout_centerHorizontal="true"
-            style="@style/OptionFont" />
-        
-        <ImageView 
+            android:background="@drawable/option_b" />
+
+        <ImageView
             android:id="@+id/b_correct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -172,8 +208,8 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/correct"
             android:visibility="gone" />
-        
-        <ImageView 
+
+        <ImageView
             android:id="@+id/b_incorrect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,17 +218,17 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/incorrect"
             android:visibility="gone" />
-        
-        <Button 
+
+        <Button
             android:id="@+id/option_c"
+            style="@style/OptionFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/option_c" 
             android:layout_below="@id/option_b"
             android:layout_centerHorizontal="true"
-            style="@style/OptionFont" />
-        
-        <ImageView 
+            android:background="@drawable/option_c" />
+
+        <ImageView
             android:id="@+id/c_correct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,8 +237,8 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/correct"
             android:visibility="gone" />
-        
-        <ImageView 
+
+        <ImageView
             android:id="@+id/c_incorrect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -211,17 +247,17 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/incorrect"
             android:visibility="gone" />
-        
-        <Button 
+
+        <Button
             android:id="@+id/option_d"
+            style="@style/OptionFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/option_d" 
             android:layout_below="@id/option_c"
             android:layout_centerHorizontal="true"
-            style="@style/OptionFont" />
-        
-        <ImageView 
+            android:background="@drawable/option_d" />
+
+        <ImageView
             android:id="@+id/d_correct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -230,8 +266,8 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/correct"
             android:visibility="gone" />
-        
-        <ImageView 
+
+        <ImageView
             android:id="@+id/d_incorrect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -240,27 +276,6 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/incorrect"
             android:visibility="gone" />
-        
     </RelativeLayout>
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingRight="8dp"
-        android:layout_marginTop="@dimen/question_section_margin"
-        android:gravity="center" >
-        
-        <ImageView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/help_sa" />
-        
-        <Button 
-            android:id="@+id/help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/help" />
-    </LinearLayout>
 
-</LinearLayout>
+</com.baidu.soushang.widgets.ResizeLayout>

@@ -134,4 +134,7 @@
 	<string name="shop_dialog_rec_phone_erro">寄送电话不能为空</string>
 	<string name="shop_dialog_tips">对不起，您的积分不够，继续努力吧！</string>
 	<string name="shop_dialog_rec_suc">恭喜您！兑换成功</string>
+	<string name="searchcontent">搜索的内容不能为空！</string>
+	<string name="shop_item_test">读卡器手机做得得得得</string>
+	<string name="gift_tips_msg">您还没有兑换过礼品，快去加油答题吧！积分商城有更多精美礼品哦！</string>
 </resources>

@@ -35,6 +35,9 @@ public class QuestionResponse extends CommonResponse {
     @JsonProperty(value="right_answer")
     private int rightAnswer;
     
+    @JsonProperty(value="search_recom")
+    private String mSearchRecom;
+    
     @JsonProperty(value="question_title")
     private String title;
     
@@ -77,7 +80,16 @@ public class QuestionResponse extends CommonResponse {
       this.rightAnswer = rightAnswer;
     }
 
-    public String getTitle() {
+    
+    public String getSearchRecom() {
+		return mSearchRecom;
+	}
+
+	public void setSearchRecom(String searchRecom) {
+		this.mSearchRecom = searchRecom;
+	}
+
+	public String getTitle() {
       return title;
     }
 

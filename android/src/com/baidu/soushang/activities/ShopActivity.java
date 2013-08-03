@@ -128,7 +128,7 @@ public class ShopActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mDaliyPrize.setBackgroundResource(R.drawable.gift_ch_selected);
+				mDaliyPrize.setBackgroundResource(R.drawable.gift_cg_pressed);
 				mDaliyPrize.setTextColor(getResources().getColor(
 						R.color.light_green));
 				mFeaturePrize.setBackgroundResource(R.drawable.gift_zt_normal);
@@ -154,7 +154,7 @@ public class ShopActivity extends BaseActivity {
 				mDaliyPrize.setTextColor(getResources().getColor(
 						R.color.dark_green));
 				mFeaturePrize
-						.setBackgroundResource(R.drawable.gift_zt_selected);
+						.setBackgroundResource(R.drawable.gift_zt_pressed);
 				mFeaturePrize.setTextColor(getResources().getColor(
 						R.color.light_green));
 				Variables.CATID = "2";

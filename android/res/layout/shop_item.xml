@@ -8,7 +8,9 @@
         android:id="@+id/shop_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/gift_showcover" />
+        android:background="@drawable/gift_showcover"
+        android:layout_centerHorizontal="true"
+         />
 
     <ImageView
         android:id="@+id/shop_item_imag"
@@ -25,19 +27,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/shop_item_imag"
         android:background="@drawable/gift_showbg2"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+         >
 
         <TextView
             android:id="@+id/shop_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/shop_item_name_margintop"
             android:gravity="center"
             android:maxEms="9"
-            android:text="读卡器手机做得得得得"
+            android:text="@string/shop_item_test"
             android:textColor="#536f03"
-            android:textSize="15sp" />
+            android:textSize="@dimen/shop_item_name_size"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,24 +55,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/shop_item_name_margintop"
                 android:gravity="center"
                 android:maxEms="5"
                 android:text="@string/intergraltitle"
                 android:textColor="#536f03"
-                android:textSize="15sp" />
+                android:textSize="@dimen/shop_item_name_size" />
 
             <TextView
                 android:id="@+id/shop_item_marknum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/shop_item_name_margintop"
                 android:gravity="center"
                 android:maxEms="5"
                 android:text="@string/intergralnum"
                 android:textColor="#b93f06"
-                android:textSize="15sp" />
+                android:textSize="@dimen/shop_item_name_size" />
         </LinearLayout>
     </LinearLayout>
 
@@ -82,8 +86,8 @@
         android:gravity="center"
         android:text="@string/intergralexchange"
         android:textColor="#fdfcc4"
-        android:textSize="15sp" 
-        android:layout_marginBottom="37dp"
+        android:textSize="@dimen/shop_item_name_size" 
+        android:layout_marginBottom="@dimen/shop_item_btn_marginbottom"
         />
 
 </RelativeLayout>

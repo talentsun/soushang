@@ -87,6 +87,16 @@ public class FeatureDialog extends Dialog {
 			introduce.setText(mIntroduce);
 		}
 
+		System.out.println("Variables.feBean.isRunning()=="
+				+ Variables.feBean.isRunning());
+		if (!Variables.feBean.isRunning()) {
+			start.setEnabled(false);
+			start.setBackgroundResource(R.drawable.zhuanti_intro_startbtdisable);
+		} else {
+			start.setEnabled(true);
+			start.setBackgroundResource(R.drawable.feature_dialog_start);
+		}
+
 	}
 
 }
