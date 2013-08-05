@@ -280,8 +280,8 @@ class Client(object):
                 cmd = IClientInfo()
                 cmd.ParseFromString(buf)
                 if client_mgr.get(cmd.id):
-                    self.send_msg(self.build_cmd(CmdType.UNKNOWN_OP, EmptyMsg()))
                     logger.error("id %d already in system" % cmd.id)
+                    self.send_msg(self.build_cmd(CmdType.LOGIN_FAIL, EmptyMsg()))
                     return
                 self.name = cmd.name
                 self.id = cmd.id
@@ -292,6 +292,7 @@ class Client(object):
                     self.user_info = UserInfo()
                     self.user_info.id = self.id
                 logger.debug("client name %s", cmd.name)
+                self.send_msg(self.build_cmd(CmdType.LOGIN_SUCC, EmptyMsg()))
                 return
             else:
                 logger.debug("client not set client info")

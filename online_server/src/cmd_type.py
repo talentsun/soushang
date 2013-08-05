@@ -21,6 +21,9 @@ class CmdType(object):
     ON_LINE = 14
     OFF_LINE = 15
 
+    LOGIN_SUCC = 16
+    LOGIN_FAIL = 17
+
     UNKNOWN_OP = 1000
     HEARTBEAT = 1001
 
