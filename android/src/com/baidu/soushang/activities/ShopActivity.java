@@ -17,10 +17,8 @@ import com.baidu.soushang.views.LoadingView;
 import com.baidu.soushang.widgets.ShopDialog;
 import com.baidu.soushang.widgets.TipsDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.content.Context;
-import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +36,7 @@ public class ShopActivity extends BaseActivity {
 
 	private SouShangApplication mApplication;
 	private Typeface mTypeface;
+	private TextView mTitle;
 	private TextView mInterral;
 	private TextView mDaliyPrize;
 	private TextView mFeaturePrize;
@@ -84,12 +83,13 @@ public class ShopActivity extends BaseActivity {
 		mTypeface = Typeface.createFromAsset(getAssets(),
 				SouShangApplication.FONT);
 		mMainHandler = new Handler();
-
+		mTitle = (TextView) findViewById(R.id.gift_interal_title);
 		mInterral = (TextView) findViewById(R.id.gift_interal_content);
 
 		// String contet=mInterral.getText().toString();
 		// String strs[]=contet.split("\n");
 
+		mTitle.setTypeface(mTypeface);
 		mInterral.setTypeface(mTypeface);
 
 		mApplication = (SouShangApplication) getApplication();
@@ -153,8 +153,7 @@ public class ShopActivity extends BaseActivity {
 				mDaliyPrize.setBackgroundResource(R.drawable.gift_cg_normal);
 				mDaliyPrize.setTextColor(getResources().getColor(
 						R.color.dark_green));
-				mFeaturePrize
-						.setBackgroundResource(R.drawable.gift_zt_pressed);
+				mFeaturePrize.setBackgroundResource(R.drawable.gift_zt_pressed);
 				mFeaturePrize.setTextColor(getResources().getColor(
 						R.color.light_green));
 				Variables.CATID = "2";
@@ -191,8 +190,6 @@ public class ShopActivity extends BaseActivity {
 		mAdapter = new ShopInfokAdapter(ShopActivity.this);
 		mGrid.setAdapter(mAdapter);
 		showLoading();
-		System.out.println("at onCreate of ShopActivity Variables.CATID=="
-				+ Variables.CATID);
 		Apis.getShopInfo(ShopActivity.this, Variables.CATID, mShopInfoCallback);
 	}
 
@@ -200,7 +197,6 @@ public class ShopActivity extends BaseActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		System.out.println("at onDestory of ShopActivity");
 	}
 
 	private void showLoading() {
@@ -273,12 +269,9 @@ public class ShopActivity extends BaseActivity {
 
 		@Override
 		public long getItemId(int position) {
-			User user = (User) getItem(position);
-			if (user == null) {
-				return -1L;
-			} else {
-				return Long.parseLong(user.getUserId());
-			}
+
+			return Long.parseLong(mData.get(position).getId());
+
 		}
 
 		@Override
@@ -289,16 +282,20 @@ public class ShopActivity extends BaseActivity {
 
 				convertView = mInflater.inflate(R.layout.shop_item, parent,
 						false);
+				
 				viewHolder.shop_item_imag = (ImageView) convertView
 						.findViewById(R.id.shop_item_imag);
 				viewHolder.shop_item_name = (TextView) convertView
 						.findViewById(R.id.shop_item_name);
+				viewHolder.shop_item_marktitle = (TextView) convertView
+						.findViewById(R.id.shop_item_marktitle);
 				viewHolder.shop_item_marknum = (TextView) convertView
 						.findViewById(R.id.shop_item_marknum);
 				viewHolder.shop_item_exchange = (Button) convertView
 						.findViewById(R.id.shop_item_exchange);
 
 				viewHolder.shop_item_name.setTypeface(mTypeface);
+				viewHolder.shop_item_marktitle.setTypeface(mTypeface);
 				viewHolder.shop_item_marknum.setTypeface(mTypeface);
 				viewHolder.shop_item_exchange.setTypeface(mTypeface);
 
@@ -310,14 +307,8 @@ public class ShopActivity extends BaseActivity {
 			final ShopInfo shopInfo = (ShopInfo) getItem(position);
 
 			String endUrl = BASEURL + urlList.get(position);
-			// System.out.println("at getView endUrl of ShopInfokAdapter =="
-			// + endUrl);
 			ImageLoader imageLoader = ImageLoader.getInstance();
-			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-					ShopActivity.this).memoryCacheExtraOptions(304, 240)
-					.discCacheExtraOptions(306, 240, CompressFormat.JPEG, 75)
-					.build();
-			imageLoader.init(config);
+			
 			imageLoader.displayImage(endUrl, viewHolder.shop_item_imag);
 
 			viewHolder.shop_item_name.setText(shopInfo.getTitle());
@@ -359,6 +350,7 @@ public class ShopActivity extends BaseActivity {
 		class ViewHolder {
 			public ImageView shop_item_imag;
 			public TextView shop_item_name;
+			public TextView shop_item_marktitle;
 			public TextView shop_item_marknum;
 			public Button shop_item_exchange;
 		}

@@ -5,10 +5,12 @@ public class FeatureEventBean {
 	private int mStartTime;
 	private int mEndTime;
 	private boolean mRunning;
+	private boolean mFinished;
 	private int mId;
 	private int mPnum;
 	private String mTitle;
 	private String mIntroduce;
+	
 	public int getStartTime() {
 		return mStartTime;
 	}
@@ -26,6 +28,13 @@ public class FeatureEventBean {
 	}
 	public void setRunning(boolean running) {
 		this.mRunning = running;
+	}
+	
+	public boolean isFinished() {
+		return mFinished;
+	}
+	public void setFinished(boolean finished) {
+		this.mFinished = finished;
 	}
 	public int getId() {
 		return mId;

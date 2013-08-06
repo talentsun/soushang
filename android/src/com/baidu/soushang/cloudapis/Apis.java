@@ -87,7 +87,6 @@ public class Apis {
 			// TODO
 			url = String.format(FEATURE_QUESTION_URL, questionId, accessToken,
 					Integer.parseInt(eventKey));
-			System.out.println("at getNextQuestion url=" + url);
 		} else {
 			url = TextUtils.isEmpty(accessToken) ? String.format(QUESTION_URL,
 					questionId, Config.getUDID(context)) : String.format(
@@ -101,16 +100,14 @@ public class Apis {
 					@Override
 					public void onError(Throwable arg0) {
 						if (callback != null) {
-							System.out.println("at onError of getNextQuestion Throwable="
-									+ arg0);
+
 							callback.onError(arg0);
 						}
 					}
 
 					@Override
 					public void onResults(QuestionResponse arg0) {
-						System.out.println("at onResults of getNextQuestion arg0.getRetMsg()="
-								+ arg0.getRetMsg());
+
 						if (callback != null) {
 							callback.onResults(arg0);
 						}
@@ -150,7 +147,6 @@ public class Apis {
 					public void onError(Throwable arg0) {
 						if (callback != null) {
 							callback.onError(arg0);
-							System.out.println("at error===" + arg0);
 						}
 					}
 
@@ -203,8 +199,6 @@ public class Apis {
 					@Override
 					public void onResults(ShopInfoResponse arg0) {
 
-						System.out.println("at getShopInfo String.format(SHOPINFO_URL, catid)"
-								+ String.format(SHOPINFO_URL, "1"));
 						if (callback != null) {
 							callback.onResults(arg0);
 						}
@@ -229,9 +223,6 @@ public class Apis {
 			request.setRid(Variables.feBean.getId());
 			url = FEATURE_ANSWER_URL;
 
-			System.out.println("at answer of API Constant.bean.getId()="
-					+ Variables.feBean.getId() + "access token " + accessToken);
-			System.out.println(request.toJSON());
 		}
 		RestClientFactory.getClient().postAsync(
 				new ContextAwareAPIDelegate<CommonResponse>(context,
@@ -248,8 +239,6 @@ public class Apis {
 
 					@Override
 					public void onResults(CommonResponse arg0) {
-						System.out.println("at Results of answer arg0.getRetMsg()=="
-								+ arg0.getRetMsg());
 						if (callback != null) {
 							callback.onResults(arg0);
 						}
@@ -277,45 +266,20 @@ public class Apis {
 
 					@Override
 					public void onResults(CommonResponse arg0) {
-						System.out.println("at Results of exchange arg0.getRetMsg()=="
-								+ arg0.getRetMsg());
+
 						if (arg0.getRetMsg().equals("success")) {
-							Toast.makeText(context, "¹§Ï²Äú£¡¶Ò»»³É¹¦", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, "¹§Ï²Äú£¡¶Ò»»³É¹¦",
+									Toast.LENGTH_SHORT).show();
 						}
 						if (callback != null) {
 							callback.onResults(arg0);
 						}
-					}   
+					}
 
 				}, SHOP_EXCHANGE_URL, sExchangeInfo);
 	}
 
-	public static void getFeatureEvents(Context context,
-			final ApiResponseCallback<FeatureEventResponse> callback) {
-		RestClientFactory.getClient().getAsync(
-				new ContextAwareAPIDelegate<FeatureEventResponse>(context,
-						FeatureEventResponse.class) {
-
-					@Override
-					public void onError(Throwable arg0) {
-						System.out.println("at onError=" + arg0);
-						if (callback != null) {
-							callback.onError(arg0);
-						}
-					}
-
-					@Override
-					public void onResults(FeatureEventResponse arg0) {
-						System.out.println("at FeatureEventResponse=" + arg0);
-
-						if (callback != null) {
-							callback.onResults(arg0);
-						}
-					}
-
-				}, FEATURE_EVENT_URL, 2 * 1000);
-
-	}
+	
 
 	public static void getDayEvent(Context context, String accessToken,
 			final ApiResponseCallback<DayEventResponse> callback) {

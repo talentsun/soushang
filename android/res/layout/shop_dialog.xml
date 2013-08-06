@@ -6,10 +6,11 @@
 
     <TextView
         android:id="@+id/shop_dialog_title_exchange"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_title"
         android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:text="@string/shop_dialog_exchange"
         android:textColor="#ffffff"
         android:textSize="21sp" />
@@ -88,7 +89,7 @@
         android:layout_below="@id/shop_dialog_edit_name"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="12dp"
-        android:text="@string/shop_dialog_rec_add"
+        android:text="@string/shop_dialog_rec_add"  
         android:textColor="#536f03"
         android:textSize="14sp" />
 
@@ -132,9 +133,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/shop_dialog_edit_phone"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/shop_dialog_lin_bottom_top"
         android:orientation="horizontal"
-        android:paddingBottom="40dp" >
+       >
 
         <Button
             android:id="@+id/shop_dialog_btn_exchange"
