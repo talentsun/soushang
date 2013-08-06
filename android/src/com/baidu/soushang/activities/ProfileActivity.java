@@ -17,13 +17,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.view.View.OnClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class ProfileActivity extends BaseActivity {
@@ -31,8 +29,8 @@ public class ProfileActivity extends BaseActivity {
 
 	private ImageView mAvatar;
 	private TextView mUserName;
-	private RadioButton mEventInfoTab;
-	private RadioButton mGiftInfoTab;
+	private TextView mEventInfoTab;
+	private TextView mGiftInfoTab;
 
 	private LinearLayout mEventInfo;
 	private TextView mDailyEvent;
@@ -41,9 +39,9 @@ public class ProfileActivity extends BaseActivity {
 	private TextView mPoint;
 	private TextView mRank;
 	private TextView mFightCount;
-	private TextView mWinCount;
+	private TextView mGameCount;
 	private TextView mWinRate;
-	
+
 	private LinearLayout mGiftInfo;
 	private GridView mGift_grid;
 	private TextView tipsMsg;
@@ -51,7 +49,8 @@ public class ProfileActivity extends BaseActivity {
 	private int h;
 	private Timer timer;
 
-	private List<Gift> list=null;
+	private List<Gift> list = null;
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 
@@ -59,8 +58,8 @@ public class ProfileActivity extends BaseActivity {
 
 		mAvatar = (ImageView) findViewById(R.id.avatar);
 		mUserName = (TextView) findViewById(R.id.username);
-		mEventInfoTab = (RadioButton) findViewById(R.id.event_info_tab);
-		mGiftInfoTab = (RadioButton) findViewById(R.id.gift_info_tab);
+		mEventInfoTab = (TextView) findViewById(R.id.event_info_tab);
+		mGiftInfoTab = (TextView) findViewById(R.id.gift_info_tab);
 
 		mEventInfo = (LinearLayout) findViewById(R.id.event_info);
 		mDailyEvent = (TextView) findViewById(R.id.daily_event);
@@ -69,13 +68,13 @@ public class ProfileActivity extends BaseActivity {
 		mRank = (TextView) findViewById(R.id.rank);
 		mLBSEvent = (TextView) findViewById(R.id.lbs_event);
 		mFightCount = (TextView) findViewById(R.id.fight_count);
-		mWinCount = (TextView) findViewById(R.id.win_count);
+		mGameCount = (TextView) findViewById(R.id.game_count);
 		mWinRate = (TextView) findViewById(R.id.win_rate);
 
 		mGiftInfo = (LinearLayout) findViewById(R.id.gift_info);
 		mGift_grid = (GridView) findViewById(R.id.gift_grid);
-		tipsMsg=(TextView)findViewById(R.id.gift_tips_msg);
-		
+		tipsMsg = (TextView) findViewById(R.id.gift_tips_msg);
+
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				SouShangApplication.FONT);
 		mUserName.setTypeface(tf);
@@ -87,10 +86,10 @@ public class ProfileActivity extends BaseActivity {
 		mRank.setTypeface(tf);
 		mLBSEvent.setTypeface(tf);
 		mFightCount.setTypeface(tf);
-		mWinCount.setTypeface(tf);
+		mGameCount.setTypeface(tf);
 		mWinRate.setTypeface(tf);
 		tipsMsg.setTypeface(tf);
-		
+
 		mApplication = (SouShangApplication) getApplication();
 
 		// 开启一个定时器监听mEventInfo高的变化，一旦绘制完成立即获取
@@ -100,21 +99,20 @@ public class ProfileActivity extends BaseActivity {
 			public void handleMessage(Message msg) {
 				if (msg.what == 1) {
 					if (mEventInfo.getHeight() != 0) {
-						
-					    h=mEventInfo.getHeight();
-					    LayoutParams mLayoutParams = (LayoutParams) mGiftInfo
-								 .getLayoutParams();
-								 mLayoutParams.height = h;
-								 mGiftInfo.setLayoutParams(mLayoutParams);
-					    System.out.println("at handleMessage h==" + h);
-						// 取消定时器
+
+						h = mEventInfo.getHeight();
+						LayoutParams mLayoutParams = (LayoutParams) mGiftInfo
+								.getLayoutParams();
+						mLayoutParams.height = h;
+						mGiftInfo.setLayoutParams(mLayoutParams);
+
 						timer.cancel();
 
 					}
 				}
 			}
 		};
-		
+
 		timer = new Timer();
 		TimerTask task = new TimerTask() {
 
@@ -126,49 +124,53 @@ public class ProfileActivity extends BaseActivity {
 				myHandler.sendMessage(message);
 			}
 		};
+
+		timer.schedule(task, 10, 10);
+
+		mEventInfoTab.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mEventInfo.setVisibility(View.VISIBLE);
+				mEventInfoTab.setBackgroundResource(R.drawable.profile_gift);
+				mGiftInfoTab.setBackgroundResource(R.drawable.profile_tab_unselected);
+				mGiftInfo.setVisibility(View.GONE);
+			}
+		});
 		
-		timer.schedule(task, 10,10);
-
-		mEventInfoTab.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
+		
+		mGiftInfoTab.setOnClickListener(new OnClickListener() {
+			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				if (isChecked) {
-					mEventInfo.setVisibility(View.VISIBLE);
-					mGiftInfo.setVisibility(View.GONE);
-					 
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+
+				mEventInfo.setVisibility(View.GONE);
+				mGiftInfo.setVisibility(View.VISIBLE);
+				mEventInfoTab.setBackgroundResource(R.drawable.profile_tab_unselected);
+				mGiftInfoTab.setBackgroundResource(R.drawable.profile_gift);
+			
+				if (list.size()!=0) {
+					mGift_grid.setVisibility(View.VISIBLE);
+					tipsMsg.setVisibility(View.GONE);
+					pGiftAdapter = new ProfileGiftAdapter(mApplication,
+							ProfileActivity.this, list);
+					mGift_grid.setAdapter(pGiftAdapter);
+
+				} else {
+				
+					mGift_grid.setVisibility(View.GONE);
+					tipsMsg.setVisibility(View.VISIBLE);
 				}
+
+			
 			}
 		});
+	
 
-		mGiftInfoTab.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				if (isChecked) {
-
-					mEventInfo.setVisibility(View.GONE);
-					mGiftInfo.setVisibility(View.VISIBLE);
-
-					if (list!=null) {
-						tipsMsg.setVisibility(View.GONE);
-						pGiftAdapter = new ProfileGiftAdapter(mApplication,
-								ProfileActivity.this,list);      
-						mGift_grid.setAdapter(pGiftAdapter);
-						
-					}else {
-						tipsMsg.setVisibility(View.VISIBLE);
-					}
-					
-
-					System.out.println("at mGiftInfoTab-----");
-				}
-			}
-		});
-    
-		mEventInfoTab.setChecked(true);
+		mEventInfoTab.setBackgroundResource(R.drawable.profile_gift);
 
 		if (mApplication.getUser() != null) {
 
@@ -179,35 +181,29 @@ public class ProfileActivity extends BaseActivity {
 			mIntegral.setText(String.format(getString(R.string.integral),
 					mApplication.getUser().getIntegral()));
 
-			System.out.println("Integral"
-					+ mApplication.getUser().getIntegral());
-
 			mPoint.setText(String.format(getString(R.string.point),
 					mApplication.getUser().getPoint()));
 			mRank.setText(String.format(getString(R.string.rank), mApplication
 					.getUser().getUserRank()));
-			System.out.println("at ProfileActivity===="+mApplication
-					.getUser().getUserRank());
+			
 			mFightCount.setText(String.format(getString(R.string.fight_count),
 					mApplication.getUser().getFightNum()));
-			mWinCount.setText(String.format(getString(R.string.win_count),
+			mGameCount.setText(String.format(getString(R.string.game_count),
 					mApplication.getUser().getWinNum()));
 			mWinRate.setText(String.format(getString(R.string.win_rate),
-					mApplication.getUser().getWinNum()));
-			
+					mApplication.getUser().getWinRatio()));
+
 			// 获取礼品信息
-			list=new ArrayList<Gift>();
-			list=mApplication.getUser().getGifts();
-		    
-			System.out.println("FightNum="
-					+ mApplication.getUser().getFightNum());
+			list = new ArrayList<Gift>();
+			list = mApplication.getUser().getGifts();
+
 		}
 
 		super.onCreate(arg0);
 	}
 
 	@Override
-	protected void onDestroy() { 
+	protected void onDestroy() {
 		super.onDestroy();
 	}
 

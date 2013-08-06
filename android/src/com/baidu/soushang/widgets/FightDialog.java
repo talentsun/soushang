@@ -56,7 +56,6 @@ public class FightDialog extends Dialog implements View.OnClickListener {
 
   private SouShangApplication mApplication;
   private int mMaxBet = 0;
-
   public class FightRespReceiver extends BroadcastReceiver {
 
     @Override
@@ -92,11 +91,17 @@ public class FightDialog extends Dialog implements View.OnClickListener {
           mCancelFight.setEnabled(false);
           
           mCountdown.setVisibility(View.VISIBLE);
-          AnimationDrawable countdown = (AnimationDrawable) mCountdown.getBackground();
-          if (countdown.isRunning()) {
-            countdown.stop();
+          AnimationDrawable anim = new AnimationDrawable();  
+          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_3), 1000);
+          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_2), 1000);
+          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_1), 1000);
+          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_go), 1000);
+          mCountdown.setBackgroundDrawable(anim);
+          
+          if (anim.isRunning()) {
+            anim.stop();
           }
-          countdown.start();
+          anim.start();
 
           final String fightKey =  intent.getStringExtra(Intents.EXTRA_FIGHT_KEY);
           mCountdown.postDelayed(new Runnable() {
@@ -133,7 +138,7 @@ public class FightDialog extends Dialog implements View.OnClickListener {
     super(context, theme);
 
     setContentView(R.layout.fight_dialog);
-
+    
     mFightReq = (RelativeLayout) findViewById(R.id.fight_req);
     mFight = (TextView) findViewById(R.id.fight);
     mSomebody = (TextView) findViewById(R.id.somebody);

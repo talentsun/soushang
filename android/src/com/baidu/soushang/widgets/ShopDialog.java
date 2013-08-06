@@ -140,13 +140,8 @@ public class ShopDialog extends Dialog {
 				sExchangeInfo.setDelivery(addr);
 				sExchangeInfo.setPhone(phone);
 				sExchangeInfo.setGid(Variables.shBean.getId());
-				// System.out.println("at ShopDialog sExchangeInfo.toJSON()=="
-				// + sExchangeInfo.toJSON());
 				Apis.exchange(context, sExchangeInfo, null);
 				
-				System.out
-						.println("at onclick of ShopDialog mApplication.getUser().getPoint()=="
-								+ mApplication.getUser().getPoint());
 				yMark.setText(context.getResources().getString(
 						R.string.shop_dialog_ymark)
 						+ mApplication.getUser().getPoint());

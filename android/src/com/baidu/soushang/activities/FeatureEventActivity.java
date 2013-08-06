@@ -36,7 +36,8 @@ public class FeatureEventActivity extends BaseActivity {
 
 	private EventAdapter mAdapter;
 	private List<FeatureEventBean> list = new ArrayList<FeatureEventBean>();
-	private static final String FEATURE_EVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/getRooms.html";
+	private List<FeatureEventBean> li=new ArrayList<FeatureEventBean>();
+	private static final String FEATURE_EVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/getRooms.html?access_token=%s";
 
 	private FeatureDialog fDialog;
 
@@ -68,7 +69,7 @@ public class FeatureEventActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Variables.feBean = list.get(position);
+				Variables.feBean = li.get(position);
 				fDialog.show();
 			}
 		});
@@ -78,7 +79,7 @@ public class FeatureEventActivity extends BaseActivity {
 
 	class ThreadForFeature extends
 			AsyncTask<String, String, List<FeatureEventBean>> {
-
+	
 		public ThreadForFeature() {
 			// TODO Auto-generated constructor stub
 		}
@@ -86,8 +87,23 @@ public class FeatureEventActivity extends BaseActivity {
 		@Override
 		protected List<FeatureEventBean> doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			list = JsonTool.getFeatureData(FEATURE_EVENT_URL);
-			return list;
+			list = JsonTool.getFeatureData(FEATURE_EVENT_URL,FeatureEventActivity.this);
+			if (list != null) {
+				
+				for (int i = 0; i < list.size(); i++) {
+				
+					if (list.get(i).isRunning()) {
+						li.add(list.get(i));
+						list.remove(i);
+						i--;
+					}
+				}
+				
+				li.addAll(list);
+				
+			}
+
+			return li;
 		}
 
 		@Override
@@ -131,7 +147,7 @@ public class FeatureEventActivity extends BaseActivity {
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
-
+		finish();
 		super.onStop();
 	}
 
@@ -245,7 +261,7 @@ public class FeatureEventActivity extends BaseActivity {
 			Date endDate = new Date(Long.parseLong(sBean.getEndTime() + ""));
 			String startTime = sdf.format(startDate);
 			String end_Time = sdf.format(endDate);
-			viewHolder.dateView.setText(startTime + "¡ª¡ª" + end_Time);
+			viewHolder.dateView.setText(startTime + "¡ª" + end_Time);
 
 			return convertView;
 		}

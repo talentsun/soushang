@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FeatureDialog extends Dialog {
 	private TextView title;
@@ -40,12 +41,25 @@ public class FeatureDialog extends Dialog {
 
 			@Override
 			public void onClick(View v) {
-				// 参加，进入下一个页面
-				Intent questionIntent = new Intent(context,
-						QuestionActivity.class);
-				questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE,
-						Intents.EVENT_TYPE_FEATURE);
-				context.startActivity(questionIntent);
+
+				if (!Variables.feBean.isFinished()) {
+					
+					Intent intent = null;
+					intent = new Intent(context, QuestionActivity.class);
+					intent.putExtra(Intents.EXTRA_EVENT_TYPE,
+							Intents.EVENT_TYPE_FEATURE);
+					
+					context.startActivity(intent);
+				} else {
+					
+					dismiss();
+					Toast.makeText(
+							context,
+							context.getResources().getString(
+									R.string.feature_join_tips),
+							Toast.LENGTH_SHORT).show();
+				}
+
 			}
 		});
 
@@ -86,9 +100,6 @@ public class FeatureDialog extends Dialog {
 		if (!TextUtils.isEmpty(mIntroduce)) {
 			introduce.setText(mIntroduce);
 		}
-
-		System.out.println("Variables.feBean.isRunning()=="
-				+ Variables.feBean.isRunning());
 		if (!Variables.feBean.isRunning()) {
 			start.setEnabled(false);
 			start.setBackgroundResource(R.drawable.zhuanti_intro_startbtdisable);

@@ -67,7 +67,9 @@
                     android:background="@drawable/feature_dialog_cancel"
                     android:gravity="center"
                     android:text="@string/feature_dialog_cancel"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff" 
+                    android:layout_marginTop="@dimen/feature_cancel_margintop"
+                    />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

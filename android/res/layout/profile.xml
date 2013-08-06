@@ -38,35 +38,37 @@
             android:textColor="#fdfcc4"
             android:textSize="16sp" />
 
-        <RadioGroup
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/profile_lin_margintop"
             android:background="@drawable/profile_tab_bg"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:layout_gravity="center"
+            >
 
-            <RadioButton
+            <TextView
                 android:id="@+id/event_info_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/profile_tab"
-                android:button="@null"
                 android:gravity="center"
+                android:layout_gravity="center_vertical|left"
+                android:layout_marginLeft="2dp"
                 android:text="@string/event_info"
                 android:textColor="@color/profile_tab_text_color"
                 android:textSize="16sp" />
 
-            <RadioButton
+            <TextView
                 android:id="@+id/gift_info_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/profile_tab"
-                android:button="@null"
                 android:gravity="center"
+                android:layout_gravity="center_vertical|right"
                 android:text="@string/gift_info"
+                android:layout_marginRight="2dp"
                 android:textColor="@color/profile_tab_text_color"
                 android:textSize="16sp" />
-        </RadioGroup>
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -170,11 +172,11 @@
                         android:text="@string/fight_count" />
 
                     <TextView
-                        android:id="@+id/win_count"
+                        android:id="@+id/game_count"
                         style="@style/GreenText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/win_count" />
+                        android:text="@string/game_count" />
 
                     <TextView
                         android:id="@+id/win_rate"
@@ -208,7 +210,8 @@
                 android:smoothScrollbar="true"
                 android:soundEffectsEnabled="true"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" >
+                android:verticalSpacing="10dp"
+                android:visibility="gone" >
             </GridView>
 
             <TextView
@@ -216,11 +219,10 @@
                 style="@style/GreenText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gift_tips_msg" 
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:visibility="gone"
-                />
+                android:text="@string/gift_tips_msg"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

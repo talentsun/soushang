@@ -1,13 +1,10 @@
 package com.baidu.soushang.widgets;
 
-import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.lbs.LBSService;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.Button;

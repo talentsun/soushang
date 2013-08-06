@@ -85,10 +85,11 @@ public class ProfileGiftAdapter extends BaseAdapter {
 		gift=list.get(position);
 		
 		String endUrl=BASEURL+urlList.get(position);
+		mlayout.gift_imag.setBackgroundResource(R.drawable.self_gift_stroke);
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(endUrl,
 				mlayout.gift_imag, mApplication.getAvatarDisplayOption());
-		
+		   
 		Typeface tf = Typeface.createFromAsset(context.getAssets(),
 				SouShangApplication.FONT);
 		mlayout.gift_name.setTypeface(tf);

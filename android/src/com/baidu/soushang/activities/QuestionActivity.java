@@ -70,11 +70,7 @@ public class QuestionActivity extends BaseActivity implements
 		public void onTick(long millisUntilFinished) {
 			int progress = (int) (millisUntilFinished / 100);
 			mProgressBar.setProgress(progress);
-			// if (progress <= 50) {
-			// mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer_red));
-			// } else {
-			// mProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.answer_timer));
-			// }
+
 		}
 	}
 
@@ -397,7 +393,6 @@ public class QuestionActivity extends BaseActivity implements
 			
 			if (arg0.getRetCode() == 0) {
 				mCurrentQuestion = arg0.getQuestion();
-				System.out.println("at onResults mCurrentQuestion=="+mCurrentQuestion);
 				if (mCurrentQuestion != null) {
 					updateUI(mCurrentQuestion);
 					mMainHandler.postDelayed(new Runnable() {
@@ -490,9 +485,7 @@ public class QuestionActivity extends BaseActivity implements
 			mMatchName.setText(Variables.feBean.getTitle());
 		}
 		
-		System.out.println("at updateUI ------"+question.getSearchRecom());
-		System.out.println("at t updateUI ------"+question.getId());
-		if (TextUtils.isEmpty(question.getSearchRecom())) {
+		if (!TextUtils.isEmpty(question.getSearchRecom())) {
 			mEdit.setText(question.getSearchRecom());
 		}
 	
@@ -612,7 +605,6 @@ public class QuestionActivity extends BaseActivity implements
 		} else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
 			List<Answer> answers = new ArrayList<Answer>();
 			answers.add(answer);
-			System.out.println("" + answer.getId() + "" + answer.getAnswer());
 			Apis.answer(this, answers,
 					Config.getAccessToken(QuestionActivity.this),
 					Intents.EVENT_TYPE_FEATURE, null);
