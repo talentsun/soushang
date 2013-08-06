@@ -97,7 +97,7 @@
     <string name="point">积分：%1$d</string>
     <string name="rank">排名：%1$d</string>
     <string name="fight_count">挑战次数：%1$d</string>
-    <string name="win_count">比赛次数：%1$d</string>
+    <string name="game_count">比赛次数：%1$d</string>
     <string name="feature_event_title">专题赛</string>
     <string name="feature_event">专题赛需要登录之后才可以玩，赶快登录吧!</string>
     <string name="no_feature_event">暂无专题赛，请继续保持关注！</string>
@@ -137,4 +137,6 @@
 	<string name="searchcontent">搜索的内容不能为空！</string>
 	<string name="shop_item_test">读卡器手机做得得得得</string>
 	<string name="gift_tips_msg">您还没有兑换过礼品，快去加油答题吧！积分商城有更多精美礼品哦！</string>
+	
+	<string name="feature_join_tips">您已参加过该专题赛，不能再参加！</string>
 </resources>

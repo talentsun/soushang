@@ -22,16 +22,16 @@ public class User extends AbstractJSONResponse {
 
 
 	@JsonProperty(value = "fight_num")
-	private String mFightNum;
+	private int fightNum;
 
 	@JsonProperty(value="win_num")
-	private String mWinNum;
+	private int winNum;
 	
-	// @JsonProperty(value = "win_ratio")
-	// private int mWinRatio;
+	@JsonProperty(value = "win_ratio")
+	 private int winRatio;
 
 	@JsonProperty(value = "user_rank")
-	private int mUserRank;
+	private int userRank;
 	
 	@JsonProperty(value="gifts")
 	private List<Gift> gifts;
@@ -52,42 +52,38 @@ public class User extends AbstractJSONResponse {
 		this.userId = userId;
 	}
 
-	public String getFightNum() {
-		return mFightNum;
+	public int getFightNum() {
+		return fightNum;
 	}
 
-	public void setFightNum(String fightNum) {
-		this.mFightNum = fightNum;
+	public void setFightNum(int fightNum) {
+		this.fightNum = fightNum;
 	}
 
-	public String getWinNum() {
-		return mWinNum;
+	public int getWinNum() {
+		return winNum;
 	}
 
-	public void setWinNum(String winNum) {
-		this.mWinNum = winNum;
+	public void setWinNum(int winNum) {
+		this.winNum = winNum;
 	}
 
-	// public float getWinRatio() {
-	// return mWinRatio;
-	// }
-	//
-	// public void setWinRatio(int winRatio) {
-	// this.mWinRatio = winRatio;
-	// }
+	 public int getWinRatio() {
+	 return winRatio;
+	 }
+	
+	 public void setWinRatio(int winRatio) {
+	 this.winRatio = winRatio;
+	 }
 
 	public int getUserRank() {
-		return mUserRank;
+		return userRank;
 	}
 
 	public void setUserRank(int userRank) {
-		this.mUserRank = userRank;
+		this.userRank = userRank;
 	}
 
-	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	   
 	public String getUsername() {

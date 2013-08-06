@@ -11,17 +11,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
+import com.baidu.soushang.Config;
 import com.baidu.soushang.bean.FeatureEventBean;
 
 
 public class JsonTool {
 
     private static ArrayList<FeatureEventBean> list;
-	public static ArrayList<FeatureEventBean> getFeatureData(String addr) {
+	public static ArrayList<FeatureEventBean> getFeatureData(String addr,Context context) {
 		try {
 
 			list=new ArrayList<FeatureEventBean>();
-			HttpPost request = new HttpPost(addr);
+			
+			String url=String.format(addr,Config.getAccessToken(context));
+			System.out.println("url="+url);
+			HttpPost request = new HttpPost(url);
+			
+			
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = httpClient.execute(request);
 
@@ -54,11 +62,11 @@ public class JsonTool {
 				sBean.setmStartTime(jsonObj.getInt("starttime"));
 				sBean.setmEndTime(jsonObj.getInt("endtime"));
 				sBean.setRunning(jsonObj.getBoolean("running"));
+				sBean.setFinished(jsonObj.getBoolean("finished"));
 				sBean.setId(jsonObj.getInt("id"));
 				sBean.setPnum(jsonObj.getInt("pnum"));
 				sBean.setTitle(jsonObj.getString("title"));
 				sBean.setmIntroduce(jsonObj.getString("introduce"));
-				System.out.println("at  parparseJsonMulti of JsonTool introduce=="+sBean.getIntroduce());
 				list.add(sBean);
 			}
 		} catch (JSONException e) {

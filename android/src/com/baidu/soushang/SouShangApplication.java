@@ -206,6 +206,8 @@ public class SouShangApplication extends Application {
 
       @Override
       public void onError(Throwable arg0) {
+    	  
+    	  System.out.println(arg0.toString()+"at mUserExtraInfoCallback");
         if (mUpdateUserInfoListener != null) {
           mUpdateUserInfoListener.onError();
         }

@@ -91,7 +91,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="@dimen/popup_dialog_width"
             android:layout_height="@dimen/popup_dialog_height"
-            android:background="@drawable/popup_bg">
+            android:background="@drawable/popup_bg"
+            >
             
             <TextView
                 android:id="@+id/result_title1"
@@ -209,8 +210,10 @@
             android:orientation="vertical"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-18dp"
-            android:background="@drawable/lbs_event_win_score" >
+            android:layout_marginTop="@dimen/event_score_margintop"
+            android:background="@drawable/lbs_event_win_score"
+            android:layout_marginRight="@dimen/event_score_margin_right"
+             >
             <TextView 
                 android:id="@+id/event_point"
                 android:layout_width="wrap_content"
@@ -247,7 +250,7 @@
                 android:id="@+id/back_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/back_home_margintop"
                 android:text="@string/home"
                 android:background="@drawable/back_home"
                 style="@style/ButtonText" />

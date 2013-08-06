@@ -15,7 +15,7 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/home_line_margintop"
         android:layout_below="@id/appname"
         android:orientation="vertical"
         android:weightSum="4">
@@ -26,7 +26,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-           	android:layout_marginTop="2dip"
              >
             <Button
                 android:id="@+id/daily_event"
@@ -34,41 +33,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/home_daily_event_marginRight"
                 android:background="@drawable/home_daily_event"
-                android:layout_marginTop="-10dp"
+                android:layout_marginTop="@dimen/daily_event_margintop"
                  />
         </LinearLayout>
-        
-        <LinearLayout 
+
+          <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="2dp"
+          
              >
             <Button
                 android:id="@+id/lbs_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/home_lbs_event" />
-        </LinearLayout>
-        
-        <LinearLayout 
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" 
-            android:layout_marginTop="15dp"
-            >
-            <Button
-                android:id="@+id/feature_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/home_feature_event_marginLeft"
-                android:background="@drawable/home_feature_event" />
+                android:background="@drawable/home_lbs_event"
+                 />
         </LinearLayout>
 
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_marginTop="@dimen/feature_event_lin_margintop"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="vertical" >
+
+              <Button
+                  android:id="@+id/feature_event"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/home_feature_event_marginLeft"
+                  android:background="@drawable/home_feature_event" />
+          </LinearLayout>
+      
         <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -107,5 +107,6 @@
         android:paddingRight="8dp"
         android:paddingLeft="40dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/appname"/>
+        android:layout_below="@id/appname"
+        />
 </RelativeLayout>

@@ -5,20 +5,11 @@
     android:background="@drawable/gift_showbg1" >
 
     <ImageView
-        android:id="@+id/shop_item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gift_showcover"
-        android:layout_centerHorizontal="true"
-         />
-
-    <ImageView
         android:id="@+id/shop_item_imag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shop_item_title"
+        android:layout_width="@dimen/shop_item_imag_width"
+        android:layout_height="@dimen/shop_item_imag_height"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/gift_qinghuaci2"
+        android:layout_marginTop="@dimen/shop_item_imag_margintop" 
          />
 
     <LinearLayout
@@ -26,10 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/shop_item_imag"
-        android:background="@drawable/gift_showbg2"
-        android:orientation="vertical"
         android:layout_centerHorizontal="true"
-         >
+        android:background="@drawable/gift_showbg2"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/shop_item_name"
@@ -41,7 +31,7 @@
             android:maxEms="9"
             android:text="@string/shop_item_test"
             android:textColor="#536f03"
-            android:textSize="@dimen/shop_item_name_size"/>
+            android:textSize="@dimen/shop_item_name_size" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -82,12 +72,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/shop_item_backlin"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/shop_item_btn_margintop"
         android:background="@drawable/exchange"
         android:gravity="center"
         android:text="@string/intergralexchange"
         android:textColor="#fdfcc4"
-        android:textSize="@dimen/shop_item_name_size" 
-        android:layout_marginBottom="@dimen/shop_item_btn_marginbottom"
-        />
+        android:textSize="@dimen/shop_item_name_size" />
 
+    <ImageView
+        android:id="@+id/shop_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/gift_showcover"
+        android:layout_alignParentTop="true"
+       />
+  
 </RelativeLayout>

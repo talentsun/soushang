@@ -11,7 +11,7 @@
         android:layout_height="@dimen/avatar_width"
         android:src="@drawable/default_avatar" 
         android:layout_centerHorizontal="true"
-        android:background="@drawable/self_gift_stroke"
+     
         />
 
     <TextView

@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/feature_event_item_lin_paddingbt"
+            android:layout_marginLeft="2dp"
             android:drawableLeft="@drawable/feature_icon_competitor"
             android:drawablePadding="4dp"
             android:text="@string/competitor_count" />
@@ -45,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/feature_event_item_date_margintop"
+            android:layout_marginLeft="2dp"
             android:drawableLeft="@drawable/feature_icon_date"
             android:drawablePadding="4dp"
             android:text="@string/feature_event_date" />
