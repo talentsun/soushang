@@ -3,30 +3,30 @@ package com.baidu.soushang.cloudapis;
 import it.restrung.rest.annotations.JsonProperty;
 import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
-public class Gift  extends AbstractJSONResponse {
- 
-	@JsonProperty(value="userid")
+public class Gift extends AbstractJSONResponse {
+
+	@JsonProperty(value = "userid")
 	private String mUserId;
-	
-	@JsonProperty(value="username")
+
+	@JsonProperty(value = "username")
 	private String mUserName;
-	
-	@JsonProperty(value="nums")
+
+	@JsonProperty(value = "nums")
 	private String mNums;
-	
-	@JsonProperty(value="addtime")
+
+	@JsonProperty(value = "addtime")
 	private String mAddTime;
-	
-	@JsonProperty(value="catid")
+
+	@JsonProperty(value = "catid")
 	private String mCatid;
-	
-	@JsonProperty(value="title")
+
+	@JsonProperty(value = "title")
 	private String mTitle;
-	
-	@JsonProperty(value="gif")
+
+	@JsonProperty(value = "gif")
 	private String mGif;
-	
-	@JsonProperty(value="thumb")
+
+	@JsonProperty(value = "thumb")
 	private String mThumb;
 
 	public String getmUserId() {

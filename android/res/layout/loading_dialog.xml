@@ -2,37 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:background="@drawable/loading_bg"
     android:gravity="center_horizontal"
-    android:background="@drawable/loading_bg" >
-    <FrameLayout 
+    android:orientation="vertical" >
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/loading_content_height">
-        <ImageView 
+        android:layout_height="@dimen/loading_content_height" >
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/loading_book"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:layout_gravity="center" />
+            android:layout_marginTop="16dp"
+            android:src="@drawable/loading_book" />
 
-        <ImageView 
+        <ImageView
             android:id="@+id/pencil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="-18dp"
-            android:src="@drawable/loading_pencil"/>
+            android:src="@drawable/loading_pencil" />
     </FrameLayout>
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:textSize="16sp"
+        android:text="@string/get_question"
         android:textColor="#fdfcc4"
-        android:text="@string/get_question"/>
+        android:textSize="16sp" />
 
 </LinearLayout>

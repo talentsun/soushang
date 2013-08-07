@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:paddingTop="4dp" 
-    android:id="@+id/root_layout"
-    >
+    android:paddingTop="4dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -131,25 +130,23 @@
             android:id="@+id/question_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/zhuanti_searchbox"
             android:layout_marginLeft="@dimen/question_edit_marginleft"
-            android:paddingLeft="@dimen/question_edit_paddingleft"
-            />
-		
-           <Button
+            android:background="@drawable/zhuanti_searchbox"
+            android:paddingLeft="@dimen/question_edit_paddingleft" />
+
+        <Button
             android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/search"
             android:layout_marginLeft="@dimen/question_btn_search_marginleft"
-             />
+            android:background="@drawable/search" />
+
         <Button
             android:id="@+id/help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/help"
             android:layout_marginLeft="@dimen/question_btn_btn_help_marginleft"
-             />
+            android:background="@drawable/help" />
     </LinearLayout>
 
     <RelativeLayout

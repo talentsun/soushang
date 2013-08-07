@@ -141,12 +141,11 @@ public class QuestionActivity extends BaseActivity implements
 	private static final int CREDIT_INTERVAL = 10;
 	private static final int POINT_INTERVAL = 5;
 
-	
 	@Override
 	protected void onCreate(Bundle arg0) {
 
 		setContentView(R.layout.question);
-		
+
 		mMatchName = (TextView) findViewById(R.id.match_name);
 		mPointBoard = (TextView) findViewById(R.id.credit_and_point);
 		mPauseResume = (Button) findViewById(R.id.pause_resume);
@@ -231,17 +230,16 @@ public class QuestionActivity extends BaseActivity implements
 		mAnswers = new ArrayList<Answer>();
 
 		mSearchResultDialog = new WebViewDialog(this);
-		
-		
+
 		mSearchResultDialog.setOnShowListener(new OnShowListener() {
-			
+
 			@Override
 			public void onShow(DialogInterface dialog) {
 				// TODO Auto-generated method stub
 				pause();
 			}
 		});
-		
+
 		mSearchResultDialog
 				.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
@@ -283,7 +281,7 @@ public class QuestionActivity extends BaseActivity implements
 			filter.addAction(Intents.ACTION_FIGHT_END);
 			mFightStateReceiver = new FightStateReceiver();
 			registerReceiver(mFightStateReceiver, filter);
-			
+
 		}
 
 		mStartTime = System.currentTimeMillis();
@@ -309,8 +307,7 @@ public class QuestionActivity extends BaseActivity implements
 	}
 
 	private void initBaiduSpeechDialog() {
-		
-		
+
 		mBaiduSpeechDialog = new BaiduSpeechDialog(QuestionActivity.this);
 		mBaiduSpeechDialog.setOnShowListener(new OnShowListener() {
 
@@ -326,16 +323,16 @@ public class QuestionActivity extends BaseActivity implements
 				resume();
 			}
 		});
-		
+
 		mBaiduSpeechDialog.setOnDismissListener(new OnDismissListener() {
-			
+
 			@Override
 			public void onDismiss(DialogInterface dialog) {
 				// TODO Auto-generated method stub
 				resume();
 			}
 		});
-		
+
 		mBaiduSpeechDialog
 				.setDialogRecognitionListener(new DialogRecognitionListener() {
 
@@ -386,11 +383,10 @@ public class QuestionActivity extends BaseActivity implements
 				Config.getAccessToken(this), this);
 	}
 
-	
 	@Override
 	public void onResults(QuestionResponse arg0) {
 		if (arg0 != null) {
-			
+
 			if (arg0.getRetCode() == 0) {
 				mCurrentQuestion = arg0.getQuestion();
 				if (mCurrentQuestion != null) {
@@ -476,7 +472,7 @@ public class QuestionActivity extends BaseActivity implements
 	}
 
 	private void updateUI(QuestionResponse.Question question) {
-		
+
 		if (mEventType == Intents.EVENT_TYPE_DAILY) {
 			mMatchName.setText(question.getEventTitle());
 		} else if (mEventType == Intents.EVENT_TYPE_LBS) {
@@ -484,11 +480,11 @@ public class QuestionActivity extends BaseActivity implements
 		} else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
 			mMatchName.setText(Variables.feBean.getTitle());
 		}
-		
+
 		if (!TextUtils.isEmpty(question.getSearchRecom())) {
 			mEdit.setText(question.getSearchRecom());
 		}
-	
+
 		mQuestionOrder.setText(String.format(
 				getResources().getString(R.string.question_order),
 				question.getIndex() + 1, question.getTotal()));
@@ -741,9 +737,8 @@ public class QuestionActivity extends BaseActivity implements
 						Toast.LENGTH_SHORT).show();
 				return;
 			}
-			
-			mSearchResultDialog.show(edit, "http://m.baidu.com/s?word="
-					+ edit);
+
+			mSearchResultDialog.show(edit, "http://m.baidu.com/s?word=" + edit);
 		} else if (v == mQuit) {
 			pause();
 			mQuitDialog.show();

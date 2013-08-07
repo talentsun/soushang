@@ -2,9 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
     android:background="#00000000"
-     >
+    android:minHeight="?android:attr/listPreferredItemHeight" >
 
     <LinearLayout
         android:id="@+id/feature_back"
@@ -12,12 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/feature_event_item_lin_margintop"
+        android:background="@drawable/zhuanti_willbeboard"
         android:orientation="vertical"
         android:paddingBottom="@dimen/feature_event_item_lin_paddingbt"
         android:paddingLeft="@dimen/feature_event_item_lin_paddingleft"
-        android:paddingTop="@dimen/feature_event_item_lin_paddingbt" 
-        android:background="@drawable/zhuanti_willbeboard"
-        >
+        android:paddingTop="@dimen/feature_event_item_lin_paddingbt" >
 
         <TextView
             android:id="@+id/name"
@@ -34,8 +32,8 @@
             style="@style/GreenText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/feature_event_item_lin_paddingbt"
             android:layout_marginLeft="2dp"
+            android:layout_marginTop="@dimen/feature_event_item_lin_paddingbt"
             android:drawableLeft="@drawable/feature_icon_competitor"
             android:drawablePadding="4dp"
             android:text="@string/competitor_count" />
@@ -45,8 +43,8 @@
             style="@style/GreenText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/feature_event_item_date_margintop"
             android:layout_marginLeft="2dp"
+            android:layout_marginTop="@dimen/feature_event_item_date_margintop"
             android:drawableLeft="@drawable/feature_icon_date"
             android:drawablePadding="4dp"
             android:text="@string/feature_event_date" />

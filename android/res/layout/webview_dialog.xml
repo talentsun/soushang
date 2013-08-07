@@ -2,56 +2,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@drawable/dialog_bg" >
-    <TextView 
+    android:weightSum="1" >
+
+    <TextView
         android:id="@+id/dialog_title"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:background="@drawable/dialog_title"
+        android:gravity="center"
         android:textColor="#fdfcc5"
-        android:background="@drawable/dialog_title"/>
-    <FrameLayout 
+        android:textSize="20sp" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingLeft="@dimen/webview_dialog_padding"
-        android:paddingRight="@dimen/webview_dialog_padding">
+        android:paddingRight="@dimen/webview_dialog_padding" >
+
         <TextView
             android:id="@+id/no_network"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="20sp"
-            android:textColor="#b93f06"
             android:gravity="center"
             android:text="@string/no_network"
+            android:textColor="#b93f06"
+            android:textSize="20sp"
             android:visibility="gone" />
 
-        <WebView 
+        <WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="@dimen/webview_dialog_content_height" />
-        
-        <com.baidu.soushang.views.LoadingView 
+
+        <com.baidu.soushang.views.LoadingView
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </FrameLayout>
-    
-    <Button 
+
+    <Button
         android:id="@+id/know"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:textSize="20sp"
-        android:textColor="#fdfcc5"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/iknow"
         android:text="@string/i_know"
-        android:background="@drawable/iknow"/>
+        android:textColor="#fdfcc5"
+        android:textSize="20sp" />
 
 </LinearLayout>

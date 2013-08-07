@@ -15,7 +15,7 @@
     
     
     <dimen name="lbs_event_dialog_lin_paddingleft">16dp</dimen>
-    <dimen name="lbs_event_dialog_lin_paddingtop">12dp</dimen>
+    <dimen name="lbs_event_dialog_lin_paddingtop">14dp</dimen>
     <dimen name="lbs_event_dialog_lin_margintop">10dp</dimen>
     <dimen name="lbs_dialog_tv_title_padding">7dp</dimen>
     <dimen name="lbs_dialog_tv_welcome_margintop">20dp</dimen>
@@ -25,13 +25,22 @@
     <dimen name="lbs_dialog_tv_content_size">14sp</dimen>
     <dimen name="lbs_dialog_rel_margintop">20dp</dimen>
     <dimen name="lbs_dialog_btn_margin">12dp</dimen>
-
+    <dimen name="lbs_event_line_length">100dp</dimen>
+    <dimen name="lbs_event_line_margintop">32dp</dimen>
+    <dimen name="lbs_event_score_board_padding">24dp</dimen>
+    <dimen name="lbs_event_score_board_margintop">32dp</dimen>
+    
+    
+    
     <dimen name="feature_event_item_lin_margintop">5dp</dimen>
 	<dimen name="feature_event_item_lin_paddingbt">10dp</dimen>
 	<dimen name="feature_event_item_lin_paddingleft">14dp</dimen>
 	<dimen name="feature_event_item_name_size">17sp</dimen>
 	<dimen name="feature_event_item_date_margintop">3dp</dimen>
-	
+	<dimen name="feature_event_dialog_btn_margintop">20dp</dimen>
+	<dimen name="feature_event_dialog_btn_marginbottom">15dp</dimen>
+    <dimen name="feature_dialog_introduce_marginleft">20dp</dimen>
+		
 	<dimen name="question_edit_marginleft">13dp</dimen>
 	<dimen name="question_edit_paddingleft">15dp</dimen>
 	<dimen name="question_btn_search_marginleft">-33dp</dimen>
@@ -66,11 +75,21 @@
 	
 	<dimen name="event_score_margintop">-17dp</dimen>
     <dimen name="back_home_margintop">0dp</dimen>
-    <dimen name="event_score_margin_right">10dp</dimen>
+    <dimen name="event_score_margin_right">13dp</dimen>
     
     
     <dimen name="profile_lin_margintop">24dp</dimen>
     <dimen name="shop_dialog_lin_bottom_top">33dp</dimen>
     
     <dimen name="feature_cancel_margintop">2dp</dimen>
+    
+    <dimen name="soushang_content_size">16sp</dimen>
+    <dimen name="soushang_size">24sp</dimen>
+    <dimen name="popup_dialog_width">275dp</dimen>
+    <dimen name="popup_dialog_height">238dp</dimen>
+
+    <dimen name="fight_dialog_waiting_size">23dp</dimen>
+    
+    <dimen name="lbs_event_result_title2_size">18sp</dimen>
+    <dimen name="fight_dialog_btn_range">5dp</dimen>
 </resources>

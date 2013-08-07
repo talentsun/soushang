@@ -3,51 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rank_bg" >
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/hangtag_marginTop"
         android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        android:background="@drawable/rank_list_bg" >
-        
-        <ListView 
+        android:layout_marginTop="@dimen/hangtag_marginTop"
+        android:background="@drawable/rank_list_bg"
+        android:orientation="vertical" >
+
+        <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:clipToPadding="false"
             android:divider="@drawable/rank_list_divider"
             android:dividerHeight="1dp"
-            android:clipToPadding="false"
-            android:cacheColorHint="@android:color/transparent"
             android:listSelector="#00000000" >
         </ListView>
-        
+
         <LinearLayout
             android:id="@android:id/empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center" >
+            android:gravity="center"
+            android:orientation="vertical" >
+
             <TextView
                 android:id="@+id/norank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="#536f03"
                 android:text="@string/no_rank"
+                android:textColor="#536f03"
+                android:textSize="16sp"
                 android:visibility="gone" />
-            <com.baidu.soushang.views.LoadingView 
+
+            <com.baidu.soushang.views.LoadingView
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-    
-    <ImageView 
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

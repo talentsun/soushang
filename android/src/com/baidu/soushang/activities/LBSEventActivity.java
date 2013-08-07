@@ -110,11 +110,11 @@ public class LBSEventActivity extends BaseActivity {
 		});
 
 		lDialog = new LBSFirstDialog(this);
-		sp = getSharedPreferences(Intents.EXTRA_LBS_DIALOG_JUDGE, 
+		sp = getSharedPreferences(Intents.EXTRA_LBS_DIALOG_JUDGE,
 				Activity.MODE_PRIVATE);
 		et = sp.edit();
 		int lbs = sp.getInt("lbs", -1);
-		if (lbs==-1) {
+		if (lbs == -1) {
 			lDialog.show();
 		}
 		super.onCreate(arg0);

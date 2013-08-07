@@ -198,7 +198,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		} else if (v == mDailyEvent) {
 			if (Config.isLogged(this)) {
 				Apis.getDayEvent(this, Config.getAccessToken(this),
-						mDayEventCallback);    
+						mDayEventCallback);
 			} else {
 				Apis.getNextQuestion(this, 0, null, Intents.EVENT_TYPE_DAILY,
 						null, mNextQuestionCallback);
@@ -292,9 +292,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		Variables.homeFlag=1;
+		Variables.homeFlag = 1;
 	}
-	
+
 	@Override
 	protected void onStop() {
 		Variables.homeFlag = 1;

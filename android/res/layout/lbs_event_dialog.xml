@@ -23,52 +23,64 @@
             android:textColor="#ffffff"
             android:textSize="@dimen/lbs_dialog_tv_size" />
 
-        <TextView
-            android:id="@+id/lbs_tv_welcome"
-            style="@style/GreenText"
+        <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/feature_dialog_svieww_height"
             android:layout_marginTop="@dimen/lbs_dialog_tv_welcome_margintop"
-            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
-            android:text="@string/lbs_dialog_welcome" />
+            android:fillViewport="true" >
 
-        <TextView
-            android:id="@+id/lbs_tv_introduce"
-            style="@style/GreenText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
-            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
-            android:text="@string/lbs_dialog_introduce" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/lbs_tv_rule_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
-            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
-            android:text="@string/lbs_dialog_rule_title"
-            android:textColor="#ff0000"
-            android:textSize="@dimen/lbs_dialog_tv_content_size" />
+                <TextView
+                    android:id="@+id/lbs_tv_welcome"
+                    style="@style/GreenText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
+                    android:text="@string/lbs_dialog_welcome" />
 
-        <TextView
-            android:id="@+id/lbs_tv_rule_content"
-            style="@style/GreenText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
-            android:text="@string/lbs_dialog_rule_content" />
+                <TextView
+                    android:id="@+id/lbs_tv_introduce"
+                    style="@style/GreenText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
+                    android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
+                    android:text="@string/lbs_dialog_introduce" />
 
-        <TextView
-            android:id="@+id/lbs_tv_invite"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
-            android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
-            android:text="@string/lbs_dialog_invite"
-            android:textColor="#ff0000" 
-            android:textSize="@dimen/lbs_dialog_tv_content_size" />
+                <TextView
+                    android:id="@+id/lbs_tv_rule_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
+                    android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
+                    android:text="@string/lbs_dialog_rule_title"
+                    android:textColor="#ff0000"
+                    android:textSize="@dimen/lbs_dialog_tv_content_size" />
+
+                <TextView
+                    android:id="@+id/lbs_tv_rule_content"
+                    style="@style/GreenText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
+                    android:text="@string/lbs_dialog_rule_content" />
+
+                <TextView
+                    android:id="@+id/lbs_tv_invite"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/lbs_dialog_tv_margintop"
+                    android:paddingLeft="@dimen/lbs_dialog_tv_paddingleft"
+                    android:text="@string/lbs_dialog_invite"
+                    android:textColor="#ff0000"
+                    android:textSize="@dimen/lbs_dialog_tv_content_size" />
+            </LinearLayout>
+        </ScrollView>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -101,7 +113,6 @@
                     android:text="@string/lbs_dialog_cancel"
                     android:textColor="#ffffff" />
             </LinearLayout>
-            
         </RelativeLayout>
     </LinearLayout>
 

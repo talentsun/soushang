@@ -20,20 +20,19 @@ public class User extends AbstractJSONResponse {
 	@JsonProperty(value = "integral")
 	private int integral;
 
-
 	@JsonProperty(value = "fight_num")
 	private int fightNum;
 
-	@JsonProperty(value="win_num")
+	@JsonProperty(value = "win_num")
 	private int winNum;
-	
+
 	@JsonProperty(value = "win_ratio")
-	 private int winRatio;
+	private int winRatio;
 
 	@JsonProperty(value = "user_rank")
 	private int userRank;
-	
-	@JsonProperty(value="gifts")
+
+	@JsonProperty(value = "gifts")
 	private List<Gift> gifts;
 
 	public List<Gift> getGifts() {
@@ -68,13 +67,13 @@ public class User extends AbstractJSONResponse {
 		this.winNum = winNum;
 	}
 
-	 public int getWinRatio() {
-	 return winRatio;
-	 }
-	
-	 public void setWinRatio(int winRatio) {
-	 this.winRatio = winRatio;
-	 }
+	public int getWinRatio() {
+		return winRatio;
+	}
+
+	public void setWinRatio(int winRatio) {
+		this.winRatio = winRatio;
+	}
 
 	public int getUserRank() {
 		return userRank;
@@ -84,8 +83,6 @@ public class User extends AbstractJSONResponse {
 		this.userRank = userRank;
 	}
 
-
-	   
 	public String getUsername() {
 		return username;
 	}

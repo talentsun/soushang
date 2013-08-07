@@ -92,8 +92,6 @@ public class ProfileActivity extends BaseActivity {
 
 		mApplication = (SouShangApplication) getApplication();
 
-		// 开启一个定时器监听mEventInfo高的变化，一旦绘制完成立即获取
-
 		final Handler myHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -128,31 +126,31 @@ public class ProfileActivity extends BaseActivity {
 		timer.schedule(task, 10, 10);
 
 		mEventInfoTab.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				mEventInfo.setVisibility(View.VISIBLE);
 				mEventInfoTab.setBackgroundResource(R.drawable.profile_gift);
-				mGiftInfoTab.setBackgroundResource(R.drawable.profile_tab_unselected);
+				mGiftInfoTab
+						.setBackgroundResource(R.drawable.profile_tab_unselected);
 				mGiftInfo.setVisibility(View.GONE);
 			}
 		});
-		
-		
+
 		mGiftInfoTab.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-
 				mEventInfo.setVisibility(View.GONE);
 				mGiftInfo.setVisibility(View.VISIBLE);
-				mEventInfoTab.setBackgroundResource(R.drawable.profile_tab_unselected);
+				mEventInfoTab
+						.setBackgroundResource(R.drawable.profile_tab_unselected);
 				mGiftInfoTab.setBackgroundResource(R.drawable.profile_gift);
-			
-				if (list.size()!=0) {
+
+				if (list.size() != 0) {
 					mGift_grid.setVisibility(View.VISIBLE);
 					tipsMsg.setVisibility(View.GONE);
 					pGiftAdapter = new ProfileGiftAdapter(mApplication,
@@ -160,15 +158,13 @@ public class ProfileActivity extends BaseActivity {
 					mGift_grid.setAdapter(pGiftAdapter);
 
 				} else {
-				
+
 					mGift_grid.setVisibility(View.GONE);
 					tipsMsg.setVisibility(View.VISIBLE);
 				}
 
-			
 			}
 		});
-	
 
 		mEventInfoTab.setBackgroundResource(R.drawable.profile_gift);
 
@@ -185,7 +181,7 @@ public class ProfileActivity extends BaseActivity {
 					mApplication.getUser().getPoint()));
 			mRank.setText(String.format(getString(R.string.rank), mApplication
 					.getUser().getUserRank()));
-			
+
 			mFightCount.setText(String.format(getString(R.string.fight_count),
 					mApplication.getUser().getFightNum()));
 			mGameCount.setText(String.format(getString(R.string.game_count),

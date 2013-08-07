@@ -47,9 +47,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" 
             android:layout_marginTop="@dimen/shop_lin_margintop"
-            >
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/shop_daliy_prize"
@@ -60,8 +59,7 @@
                 android:maxEms="5"
                 android:text="@string/daily_prize"
                 android:textColor="#fdfcc4"
-                android:textSize="@dimen/shop_daliy_prize_size" 
-                />  
+                android:textSize="@dimen/shop_daliy_prize_size" />
 
             <TextView
                 android:id="@+id/shop_feature_prize"
@@ -72,8 +70,7 @@
                 android:maxEms="5"
                 android:text="@string/feature_prize"
                 android:textColor="#fdfcc4"
-                android:textSize="@dimen/shop_daliy_prize_size"
-                 />
+                android:textSize="@dimen/shop_daliy_prize_size" />
         </LinearLayout>
 
         <GridView
@@ -93,31 +90,29 @@
             android:stretchMode="columnWidth"
             android:verticalSpacing="@dimen/shop_grid_horizontalspacing" >
         </GridView>
-
-     
     </LinearLayout>
 
-       <LinearLayout
-            android:id="@android:id/empty"
+    <LinearLayout
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/shop_nogifts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
-             >
+            android:text="@string/daliy_nogifts"
+            android:textColor="#536f03"
+            android:textSize="@dimen/shop_nogifts_size"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/shop_nogifts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/daliy_nogifts"
-                android:textColor="#536f03"
-                android:textSize="@dimen/shop_nogifts_size"
-                android:visibility="gone" />
+        <com.baidu.soushang.views.LoadingView
+            android:id="@+id/shop_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-            <com.baidu.soushang.views.LoadingView
-                android:id="@+id/shop_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
 </RelativeLayout>

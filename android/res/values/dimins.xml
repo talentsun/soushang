@@ -8,6 +8,5 @@
     <dimen name="popup_title_marginTop">22dp</dimen>
     <dimen name="popup_button_marginBottom">12dp</dimen>
     <dimen name="special_item_name">15dp</dimen>
-    <dimen name="popup_dialog_width">275dp</dimen>
-    <dimen name="popup_dialog_height">238dp</dimen>
+
 </resources>
