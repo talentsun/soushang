@@ -10,7 +10,7 @@ import android.text.TextUtils;
 public class Config {
 	public static final String PREFS_NAME = "com.baidu.soushang";
 	public static final String KEY_ACCESS_TOKEN = "access_token";
-	public static final String KEY_LOGGED = "logged";
+	public static final String KEY_LOGGED = "logged_v2";
 	public static final String KEY_LATEST_NEWS_DATE = "latest_news_date";
 	public static final String KEY_UDID = "udid";
 	public static final String KEY_USERNAME = "user_name";
