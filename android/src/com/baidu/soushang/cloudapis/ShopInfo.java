@@ -5,20 +5,20 @@ import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class ShopInfo extends AbstractJSONResponse {
 	private static final long serialVersionUID = 1L;
-	
-	@JsonProperty(value="id")
+
+	@JsonProperty(value = "id")
 	private String mId;
-	
-	@JsonProperty(value="title")
+
+	@JsonProperty(value = "title")
 	private String mTitle;
-	
-	@JsonProperty(value="integral")
+
+	@JsonProperty(value = "integral")
 	private String mIntegral;
-	
-	@JsonProperty(value="image")
+
+	@JsonProperty(value = "image")
 	private String mImage;
-	
-	@JsonProperty(value="catid")
+
+	@JsonProperty(value = "catid")
 	private String mCatid;
 
 	public String getId() {

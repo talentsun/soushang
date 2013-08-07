@@ -4,31 +4,31 @@ import it.restrung.rest.annotations.JsonProperty;
 import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class CommonResponse extends AbstractJSONResponse {
-  private static final long serialVersionUID = 1L;
-  
-  @JsonProperty(value="ret_code")
-  protected int retCode;
+	private static final long serialVersionUID = 1L;
 
-  @JsonProperty(value="ret_msg")
-  protected String retMsg;
-  
-  public int getRetCode() {
-    return retCode;
-  }
+	@JsonProperty(value = "ret_code")
+	protected int retCode;
 
-  public void setRetCode(int retCode) {
-    this.retCode = retCode;
-  }
+	@JsonProperty(value = "ret_msg")
+	protected String retMsg;
 
-  public String getRetMsg() {
-    return retMsg;
-  }
+	public int getRetCode() {
+		return retCode;
+	}
 
-  public void setRetMsg(String retMsg) {
-    this.retMsg = retMsg;
-  }
+	public void setRetCode(int retCode) {
+		this.retCode = retCode;
+	}
 
-  public CommonResponse() {
-    
-  }
+	public String getRetMsg() {
+		return retMsg;
+	}
+
+	public void setRetMsg(String retMsg) {
+		this.retMsg = retMsg;
+	}
+
+	public CommonResponse() {
+
+	}
 }

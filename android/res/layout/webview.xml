@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <TextView
         android:id="@+id/no_network"
         android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         android:text="@string/no_network"
         android:visibility="gone" />
 
-    <WebView 
+    <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

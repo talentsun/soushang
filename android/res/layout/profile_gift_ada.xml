@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" 
-    android:clickable="false"
-    >
+    android:layout_height="wrap_content"
+    android:clickable="false" >
 
     <ImageView
         android:id="@+id/gift_imag"
         android:layout_width="@dimen/avatar_width"
         android:layout_height="@dimen/avatar_width"
-        android:src="@drawable/default_avatar" 
         android:layout_centerHorizontal="true"
-     
-        />
+        android:src="@drawable/default_avatar" />
 
     <TextView
         android:id="@+id/gift_name"

@@ -3,49 +3,51 @@
     android:layout_width="@dimen/popup_dialog_width"
     android:layout_height="@dimen/popup_dialog_height"
     android:background="@drawable/popup_bg" >
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/title"
+        style="@style/PopupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/PopupTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:text="@string/quit_lbs_event" />
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/content"
+        style="@style/GreenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingTop="12dp"
         android:paddingLeft="36dp"
         android:paddingRight="36dp"
-        style="@style/GreenText"
-        android:text="@string/quit_lbs_event_notes"/>
-    
-    <LinearLayout 
+        android:paddingTop="12dp"
+        android:text="@string/quit_lbs_event_notes" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" >
+
         <Button
             android:id="@+id/quit"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/quit_lbs_event"
-            style="@style/ButtonText"
-            android:background="@drawable/popup_ok" />
+            android:background="@drawable/popup_ok"
+            android:text="@string/quit_lbs_event" />
+
         <Button
             android:id="@+id/cancel"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="@string/cancel"
-            style="@style/ButtonText"
-            android:background="@drawable/popup_cancel" />
+            android:background="@drawable/popup_cancel"
+            android:text="@string/cancel" />
     </LinearLayout>
-    
+
 </RelativeLayout>

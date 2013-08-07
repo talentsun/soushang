@@ -27,7 +27,7 @@ public class ShopDialog extends Dialog {
 	private TextView title;
 	private TextView yMark;
 	private TextView nMark;
-	private TextView receMsg,receName,receAddr,recePhone;
+	private TextView receMsg, receName, receAddr, recePhone;
 	private EditText editName, editAddr, editPhone;
 	private Button exchange;
 	private Button cancel;
@@ -35,7 +35,7 @@ public class ShopDialog extends Dialog {
 	private SharedPreferences.Editor et;
 
 	public ShopDialog(Context context) {
-		this(context, R.style.FeatureDialog);
+		this(context, R.style.ShareDialog);
 	}
 
 	public ShopDialog(final Context context, int theme) {
@@ -44,9 +44,10 @@ public class ShopDialog extends Dialog {
 
 		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(),
 				SouShangApplication.FONT);
-		
-		mApplication = (SouShangApplication) ((Activity) context).getApplication();
-		
+
+		mApplication = (SouShangApplication) ((Activity) context)
+				.getApplication();
+
 		title = (TextView) findViewById(R.id.shop_dialog_title_exchange);
 		title.setTypeface(typeface);
 		title.setText(Variables.shBean.getTitle());
@@ -63,20 +64,20 @@ public class ShopDialog extends Dialog {
 				R.string.shop_dialog_nmark)
 				+ Variables.shBean.getIntegral());
 
-		receMsg=(TextView)findViewById(R.id.shop_dialog_rece_msg);
+		receMsg = (TextView) findViewById(R.id.shop_dialog_rece_msg);
 		receMsg.setTypeface(typeface);
-		
-		receName=(TextView)findViewById(R.id.shop_dialog_rece_name);
+
+		receName = (TextView) findViewById(R.id.shop_dialog_rece_name);
 		receName.setTypeface(typeface);
 		editName = (EditText) findViewById(R.id.shop_dialog_edit_name);
 		editName.setTypeface(typeface);
 
-		receAddr=(TextView)findViewById(R.id.shop_dialog_rece_address);
+		receAddr = (TextView) findViewById(R.id.shop_dialog_rece_address);
 		receAddr.setTypeface(typeface);
 		editAddr = (EditText) findViewById(R.id.shop_dialog_edit_address);
 		editAddr.setTypeface(typeface);
 
-		recePhone=(TextView)findViewById(R.id.shop_dialog_rece_phone);
+		recePhone = (TextView) findViewById(R.id.shop_dialog_rece_phone);
 		recePhone.setTypeface(typeface);
 		editPhone = (EditText) findViewById(R.id.shop_dialog_edit_phone);
 		editPhone.setTypeface(typeface);
@@ -141,7 +142,7 @@ public class ShopDialog extends Dialog {
 				sExchangeInfo.setPhone(phone);
 				sExchangeInfo.setGid(Variables.shBean.getId());
 				Apis.exchange(context, sExchangeInfo, null);
-				
+
 				yMark.setText(context.getResources().getString(
 						R.string.shop_dialog_ymark)
 						+ mApplication.getUser().getPoint());
@@ -149,7 +150,7 @@ public class ShopDialog extends Dialog {
 						R.string.shop_dialog_nmark)
 						+ Variables.shBean.getIntegral());
 				dismiss();
-				
+
 				mApplication.updateUserExtraInfo();
 			}
 		});

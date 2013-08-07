@@ -25,312 +25,350 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class FightDialog extends Dialog implements View.OnClickListener {
-  private RelativeLayout mFightReq;
-  private TextView mFight;
-  private TextView mSomebody;
-  private TextView mRaise;
-  private EditText mRaiseValue;
-  private Button mReqFight;
-  private Button mCancel;
+	private RelativeLayout mFightReq;
+	private TextView mFight;
+	private TextView mSomebody;
+	private TextView mRaise;
+	private EditText mRaiseValue;
+	private Button mReqFight;
+	private Button mCancel;
 
-  private RelativeLayout mFightResp;
-  private TextView mReceiveFight;
-  private TextView mSomebodyReceive;
-  private ImageView mOtherAvatarResp;
-  private TextView mOtherUserNameResp;
-  private TextView mOtherEventCountResp;
-  private TextView mOtherWinRateResp;
-  private Button mAccept;
-  private Button mReject;
+	private RelativeLayout mFightResp;
+	private TextView mReceiveFight;
+	private TextView mSomebodyReceive;
+	private ImageView mOtherAvatarResp;
+	private TextView mOtherUserNameResp;
+	private TextView mOtherEventCountResp;
+	private TextView mOtherWinRateResp;
+	private Button mAccept;
+	private Button mReject;
 
-  private RelativeLayout mFightWaiting;
-  private TextView mWaiting;
-  private TextView mSomebodyResp;
-  private ImageView mMyAvatar;
-  private TextView mMyUserName;
-  private ImageView mOtherAvatar;
-  private TextView mOtherUserName;
-  private Button mCancelFight;
-  private ImageView mConnecting;
-  private ImageView mCountdown;
+	private RelativeLayout mFightWaiting;
+	private TextView mWaiting;
+	private TextView mSomebodyResp;
+	private ImageView mMyAvatar;
+	private TextView mMyUserName;
+	private ImageView mOtherAvatar;
+	private TextView mOtherUserName;
+	private Button mCancelFight;
+	private ImageView mConnecting;
+	private ImageView mCountdown;
 
-  private SouShangApplication mApplication;
-  private int mMaxBet = 0;
-  public class FightRespReceiver extends BroadcastReceiver {
+	private SouShangApplication mApplication;
+	private int mMaxBet = 0;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-      if (intent != null) {
-        String action = intent.getAction();
-        if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
-          int result = intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 1);
-          if (result > 0) {
-            if (result == 2) {
-              Toast.makeText(
-                getContext(),
-                String.format(getContext().getString(R.string.bet_more_than_five), mApplication
-                    .getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
-            } else {
-              Toast.makeText(
-                getContext(),
-                String.format(getContext().getString(R.string.be_rejected), mApplication
-                    .getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
-            }
-            
-            mApplication.setCurrentPeer(null);
-            cancel();
-          }
-        } else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
-          Toast.makeText(
-              getContext(),
-              String.format(getContext().getString(R.string.be_cancelled), mApplication
-                  .getCurrentPeer().getName()), Toast.LENGTH_LONG).show();
-          mApplication.setCurrentPeer(null);
-          cancel();
-        } else if (Intents.ACTION_FIGHT_BEGIN.equalsIgnoreCase(action)) {
-          mCancelFight.setEnabled(false);
-          
-          mCountdown.setVisibility(View.VISIBLE);
-          AnimationDrawable anim = new AnimationDrawable();  
-          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_3), 1000);
-          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_2), 1000);
-          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_1), 1000);
-          anim.addFrame(context.getResources().getDrawable(R.drawable.countdown_go), 1000);
-          mCountdown.setBackgroundDrawable(anim);
-          
-          if (anim.isRunning()) {
-            anim.stop();
-          }
-          anim.start();
+	public class FightRespReceiver extends BroadcastReceiver {
 
-          final String fightKey =  intent.getStringExtra(Intents.EXTRA_FIGHT_KEY);
-          mCountdown.postDelayed(new Runnable() {
-            
-            @Override
-            public void run() {
-              dismiss();
-              if (mListener != null) {
-                mListener.onFight(fightKey);
-              }
-            }
-          }, 4000);
-        }
-      }
-    }
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent != null) {
+				String action = intent.getAction();
+				if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
+					int result = intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT,
+							1);
+					if (result > 0) {
+						if (result == 2) {
+							Toast.makeText(
+									getContext(),
+									String.format(
+											getContext()
+													.getString(
+															R.string.bet_more_than_five),
+											mApplication.getCurrentPeer()
+													.getName()),
+									Toast.LENGTH_LONG).show();
+						} else {
+							Toast.makeText(
+									getContext(),
+									String.format(
+											getContext().getString(
+													R.string.be_rejected),
+											mApplication.getCurrentPeer()
+													.getName()),
+									Toast.LENGTH_LONG).show();
+						}
 
-  }
+						mApplication.setCurrentPeer(null);
+						cancel();
+					}
+				} else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
+					Toast.makeText(
+							getContext(),
+							String.format(
+									getContext().getString(
+											R.string.be_cancelled),
+									mApplication.getCurrentPeer().getName()),
+							Toast.LENGTH_LONG).show();
+					mApplication.setCurrentPeer(null);
+					cancel();
+				} else if (Intents.ACTION_FIGHT_BEGIN.equalsIgnoreCase(action)) {
+					mCancelFight.setEnabled(false);
 
-  private FightRespReceiver mFightRespReceiver;
+					mCountdown.setVisibility(View.VISIBLE);
+					AnimationDrawable anim = new AnimationDrawable();
+					anim.addFrame(
+							context.getResources().getDrawable(
+									R.drawable.countdown_3), 1000);
+					anim.addFrame(
+							context.getResources().getDrawable(
+									R.drawable.countdown_2), 1000);
+					anim.addFrame(
+							context.getResources().getDrawable(
+									R.drawable.countdown_1), 1000);
+					anim.addFrame(
+							context.getResources().getDrawable(
+									R.drawable.countdown_go), 1000);
+					mCountdown.setBackgroundDrawable(anim);
 
-  public interface Listener {
-    public void onFight(String fightKey);
-  }
-  private Listener mListener;
-  public void setListener(Listener listener) {
-    mListener = listener;
-  }
-  
-  public FightDialog(Context context) {
-    this(context, R.style.PopupDialog);
-  }
+					if (anim.isRunning()) {
+						anim.stop();
+					}
+					anim.start();
 
-  public FightDialog(Context context, int theme) {
-    super(context, theme);
+					final String fightKey = intent
+							.getStringExtra(Intents.EXTRA_FIGHT_KEY);
+					mCountdown.postDelayed(new Runnable() {
 
-    setContentView(R.layout.fight_dialog);
-    
-    mFightReq = (RelativeLayout) findViewById(R.id.fight_req);
-    mFight = (TextView) findViewById(R.id.fight);
-    mSomebody = (TextView) findViewById(R.id.somebody);
-    mRaise = (TextView) findViewById(R.id.raise);
-    mRaiseValue = (EditText) findViewById(R.id.raise_value);
-    mReqFight = (Button) findViewById(R.id.req_fight);
-    mCancel = (Button) findViewById(R.id.cancel);
+						@Override
+						public void run() {
+							dismiss();
+							if (mListener != null) {
+								mListener.onFight(fightKey);
+							}
+						}
+					}, 4000);
+				}
+			}
+		}
 
-    mFightResp = (RelativeLayout) findViewById(R.id.fight_resp);
-    mReceiveFight = (TextView) findViewById(R.id.receive_fight);
-    mSomebodyReceive = (TextView) findViewById(R.id.somebody_receive);
-    mOtherAvatarResp = (ImageView) findViewById(R.id.other_avatar_resp);
-    mOtherUserNameResp = (TextView) findViewById(R.id.other_resp);
-    mOtherEventCountResp = (TextView) findViewById(R.id.other_event_count_resp);
-    mOtherWinRateResp = (TextView) findViewById(R.id.other_win_rate_resp);
-    mAccept = (Button) findViewById(R.id.accept);
-    mReject = (Button) findViewById(R.id.reject);
+	}
 
-    mFightWaiting = (RelativeLayout) findViewById(R.id.fight_waiting);
-    mWaiting = (TextView) findViewById(R.id.waiting);
-    mSomebodyResp = (TextView) findViewById(R.id.somebody_resp);
-    mMyAvatar = (ImageView) findViewById(R.id.my_avatar);
-    mMyUserName = (TextView) findViewById(R.id.me);
-    mOtherAvatar = (ImageView) findViewById(R.id.other_avatar);
-    mOtherUserName = (TextView) findViewById(R.id.other);
-    mCancelFight = (Button) findViewById(R.id.cancel_fight);
-    mConnecting = (ImageView) findViewById(R.id.connecting);
-    mCountdown = (ImageView) findViewById(R.id.countdown);
+	private FightRespReceiver mFightRespReceiver;
 
-    Typeface typeface = Typeface.createFromAsset(context.getAssets(), SouShangApplication.FONT);
-    mFight.setTypeface(typeface);
-    mSomebody.setTypeface(typeface);
-    mRaise.setTypeface(typeface);
-    mRaiseValue.setTypeface(typeface);
-    mReqFight.setTypeface(typeface);
-    mCancel.setTypeface(typeface);
-    mWaiting.setTypeface(typeface);
-    mSomebodyResp.setTypeface(typeface);
-    mMyUserName.setTypeface(typeface);
-    mOtherUserName.setTypeface(typeface);
-    mCancelFight.setTypeface(typeface);
-    mReceiveFight.setTypeface(typeface);
-    mSomebodyReceive.setTypeface(typeface);
-    mOtherUserNameResp.setTypeface(typeface);
-    mOtherEventCountResp.setTypeface(typeface);
-    mOtherWinRateResp.setTypeface(typeface);
-    mAccept.setTypeface(typeface);
-    mReject.setTypeface(typeface);
+	public interface Listener {
+		public void onFight(String fightKey);
+	}
 
-    mReqFight.setOnClickListener(this);
-    mCancel.setOnClickListener(this);
-    mCancelFight.setOnClickListener(this);
-    mAccept.setOnClickListener(this);
-    mReject.setOnClickListener(this);
+	private Listener mListener;
 
-    mApplication = (SouShangApplication) ((Activity) context).getApplication();
+	public void setListener(Listener listener) {
+		mListener = listener;
+	}
 
-    mFightRespReceiver = new FightRespReceiver();
-    
-    setCanceledOnTouchOutside(false);
-  }
+	public FightDialog(Context context) {
+		this(context, R.style.PopupDialog);
+	}
 
-  @Override
-  protected void onStart() {
-    IntentFilter filter = new IntentFilter();
-    filter.addAction(Intents.ACTION_FIGHT_RESP);
-    filter.addAction(Intents.ACTION_FIGHT_CANCEL);
-    filter.addAction(Intents.ACTION_FIGHT_BEGIN);
-    getContext().registerReceiver(mFightRespReceiver, filter);
+	public FightDialog(Context context, int theme) {
+		super(context, theme);
 
-    super.onStart();
-  }
+		setContentView(R.layout.fight_dialog);
 
-  @Override
-  protected void onStop() {
-    getContext().unregisterReceiver(mFightRespReceiver);
-    super.onStop();
-  }
+		mFightReq = (RelativeLayout) findViewById(R.id.fight_req);
+		mFight = (TextView) findViewById(R.id.fight);
+		mSomebody = (TextView) findViewById(R.id.somebody);
+		mRaise = (TextView) findViewById(R.id.raise);
+		mRaiseValue = (EditText) findViewById(R.id.raise_value);
+		mReqFight = (Button) findViewById(R.id.req_fight);
+		mCancel = (Button) findViewById(R.id.cancel);
 
-  public void show(boolean req, User peer, int bet) {
-    mApplication.setCurrentPeer(peer);
+		mFightResp = (RelativeLayout) findViewById(R.id.fight_resp);
+		mReceiveFight = (TextView) findViewById(R.id.receive_fight);
+		mSomebodyReceive = (TextView) findViewById(R.id.somebody_receive);
+		mOtherAvatarResp = (ImageView) findViewById(R.id.other_avatar_resp);
+		mOtherUserNameResp = (TextView) findViewById(R.id.other_resp);
+		mOtherEventCountResp = (TextView) findViewById(R.id.other_event_count_resp);
+		mOtherWinRateResp = (TextView) findViewById(R.id.other_win_rate_resp);
+		mAccept = (Button) findViewById(R.id.accept);
+		mReject = (Button) findViewById(R.id.reject);
 
-    if (req) {
-      mSomebody.setText(String.format(getContext().getResources().getString(R.string.somebody),
-          mApplication.getCurrentPeer().getName()));
+		mFightWaiting = (RelativeLayout) findViewById(R.id.fight_waiting);
+		mWaiting = (TextView) findViewById(R.id.waiting);
+		mSomebodyResp = (TextView) findViewById(R.id.somebody_resp);
+		mMyAvatar = (ImageView) findViewById(R.id.my_avatar);
+		mMyUserName = (TextView) findViewById(R.id.me);
+		mOtherAvatar = (ImageView) findViewById(R.id.other_avatar);
+		mOtherUserName = (TextView) findViewById(R.id.other);
+		mCancelFight = (Button) findViewById(R.id.cancel_fight);
+		mConnecting = (ImageView) findViewById(R.id.connecting);
+		mCountdown = (ImageView) findViewById(R.id.countdown);
 
-      if (mApplication.getUser() != null) {
-        mMaxBet = mApplication.getUser().getPoint() / 10;
-      } 
-      
-      mRaiseValue.setHint(String.format(getContext().getString(R.string.max_bet), mMaxBet));
+		Typeface typeface = Typeface.createFromAsset(context.getAssets(),
+				SouShangApplication.FONT);
+		mFight.setTypeface(typeface);
+		mSomebody.setTypeface(typeface);
+		mRaise.setTypeface(typeface);
+		mRaiseValue.setTypeface(typeface);
+		mReqFight.setTypeface(typeface);
+		mCancel.setTypeface(typeface);
+		mWaiting.setTypeface(typeface);
+		mSomebodyResp.setTypeface(typeface);
+		mMyUserName.setTypeface(typeface);
+		mOtherUserName.setTypeface(typeface);
+		mCancelFight.setTypeface(typeface);
+		mReceiveFight.setTypeface(typeface);
+		mSomebodyReceive.setTypeface(typeface);
+		mOtherUserNameResp.setTypeface(typeface);
+		mOtherEventCountResp.setTypeface(typeface);
+		mOtherWinRateResp.setTypeface(typeface);
+		mAccept.setTypeface(typeface);
+		mReject.setTypeface(typeface);
 
-      mFightReq.setVisibility(View.VISIBLE);
-      mFightResp.setVisibility(View.GONE);
-      mFightWaiting.setVisibility(View.GONE);
-    } else {
-      mSomebodyReceive.setText(String.format(
-          getContext().getResources().getString(R.string.somebody_receive), mApplication
-              .getCurrentPeer().getName(), bet));
+		mReqFight.setOnClickListener(this);
+		mCancel.setOnClickListener(this);
+		mCancelFight.setOnClickListener(this);
+		mAccept.setOnClickListener(this);
+		mReject.setOnClickListener(this);
 
-      ImageLoader.getInstance().displayImage(mApplication.getCurrentPeer().getAvatar(),
-          mOtherAvatarResp, mApplication.getAvatarDisplayOption());
-      mOtherUserNameResp.setText(mApplication.getCurrentPeer().getName());
-      mOtherEventCountResp.setText(String.format(
-          getContext().getResources().getString(R.string.event_count), mApplication
-              .getCurrentPeer().getFightNum()));
-      mOtherWinRateResp.setText(String.format(
-          getContext().getResources().getString(R.string.win_rate), (int) (mApplication
-              .getCurrentPeer().getWinNum() * 100.0 / (float) mApplication.getCurrentPeer()
-              .getFightNum())));
+		mApplication = (SouShangApplication) ((Activity) context)
+				.getApplication();
 
-      mFightReq.setVisibility(View.GONE);
-      mFightResp.setVisibility(View.VISIBLE);
-      mFightWaiting.setVisibility(View.GONE);
-    }
+		mFightRespReceiver = new FightRespReceiver();
 
-    show();
-  }
+		setCanceledOnTouchOutside(false);
+	}
 
-  @Override
-  public void onClick(View v) {
-    if (v == mReqFight) {
-      int bet = 0;
-      try {
-        bet = Integer.parseInt(mRaiseValue.getText().toString());
-      } catch (Exception e) {}
-      
-      if (bet > mMaxBet) {
-        Toast.makeText(
-          getContext(), getContext().getString(R.string.more_than_max_bet), Toast.LENGTH_LONG).show();
-      } else {
-        Intent intent = new Intent(getContext(), LBSService.class);
-        intent.setAction(Intents.ACTION_FIGHT_REQ);
-        intent.putExtra(Intents.EXTRA_BET, bet);
-        getContext().startService(intent);
+	@Override
+	protected void onStart() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Intents.ACTION_FIGHT_RESP);
+		filter.addAction(Intents.ACTION_FIGHT_CANCEL);
+		filter.addAction(Intents.ACTION_FIGHT_BEGIN);
+		getContext().registerReceiver(mFightRespReceiver, filter);
 
-        showWaiting();
-      }
-    } else if (v == mCancel) {
-      mApplication.setCurrentPeer(null);
-      cancel();
-    } else if (v == mCancelFight) {
-      mApplication.setCurrentPeer(null);
+		super.onStart();
+	}
 
-      Intent intent = new Intent(getContext(), LBSService.class);
-      intent.setAction(Intents.ACTION_FIGHT_CANCEL);
-      getContext().startService(intent);
+	@Override
+	protected void onStop() {
+		getContext().unregisterReceiver(mFightRespReceiver);
+		super.onStop();
+	}
 
-      cancel();
-    } else if (v == mAccept) {
-      Intent intent = new Intent(getContext(), LBSService.class);
-      intent.setAction(Intents.ACTION_FIGHT_RESP);
-      intent.putExtra(Intents.EXTRA_FIGHT_RESULT, 0);
-      getContext().startService(intent);
+	public void show(boolean req, User peer, int bet) {
+		mApplication.setCurrentPeer(peer);
 
-      showWaiting();
-    } else if (v == mReject) {
-      mApplication.setCurrentPeer(null);
+		if (req) {
+			mSomebody.setText(String.format(getContext().getResources()
+					.getString(R.string.somebody), mApplication
+					.getCurrentPeer().getName()));
 
-      Intent intent = new Intent(getContext(), LBSService.class);
-      intent.setAction(Intents.ACTION_FIGHT_RESP);
-      intent.putExtra(Intents.EXTRA_FIGHT_RESULT, 1);
-      getContext().startService(intent);
+			if (mApplication.getUser() != null) {
+				mMaxBet = mApplication.getUser().getPoint() / 10;
+			}
 
-      cancel();
-    }
-  }
+			mRaiseValue.setHint(String.format(
+					getContext().getString(R.string.max_bet), mMaxBet));
 
-  private void showWaiting() {
-    mFightReq.setVisibility(View.GONE);
-    mFightResp.setVisibility(View.GONE);
-    mFightWaiting.setVisibility(View.VISIBLE);
-    
-    mCountdown.setVisibility(View.GONE);
+			mFightReq.setVisibility(View.VISIBLE);
+			mFightResp.setVisibility(View.GONE);
+			mFightWaiting.setVisibility(View.GONE);
+		} else {
+			mSomebodyReceive.setText(String.format(getContext().getResources()
+					.getString(R.string.somebody_receive), mApplication
+					.getCurrentPeer().getName(), bet));
 
-    mSomebodyResp.setText(String.format(
-        getContext().getResources().getString(R.string.somebody_resp), mApplication
-            .getCurrentPeer().getName()));
-    mOtherUserName.setText(mApplication.getCurrentPeer().getName());
+			ImageLoader.getInstance().displayImage(
+					mApplication.getCurrentPeer().getAvatar(),
+					mOtherAvatarResp, mApplication.getAvatarDisplayOption());
+			mOtherUserNameResp.setText(mApplication.getCurrentPeer().getName());
+			mOtherEventCountResp.setText(String.format(getContext()
+					.getResources().getString(R.string.event_count),
+					mApplication.getCurrentPeer().getFightNum()));
+			mOtherWinRateResp
+					.setText(String
+							.format(getContext().getResources().getString(
+									R.string.win_rate),
+									(int) (mApplication.getCurrentPeer()
+											.getWinNum() * 100.0 / (float) mApplication
+											.getCurrentPeer().getFightNum())));
 
-    AnimationDrawable connecting = (AnimationDrawable) mConnecting.getBackground();
-    if (!connecting.isRunning()) {
-      connecting.start();
-    }
+			mFightReq.setVisibility(View.GONE);
+			mFightResp.setVisibility(View.VISIBLE);
+			mFightWaiting.setVisibility(View.GONE);
+		}
 
-    ImageLoader.getInstance().displayImage(Config.getAvatar(getContext()), mMyAvatar, mApplication.getAvatarDisplayOption());
-    ImageLoader.getInstance().displayImage(mApplication.getCurrentPeer().getAvatar(), mOtherAvatar,
-        mApplication.getAvatarDisplayOption());
-  }
+		show();
+	}
 
-  @Override
-  public void onBackPressed() {
-  }
+	@Override
+	public void onClick(View v) {
+		if (v == mReqFight) {
+			int bet = 0;
+			try {
+				bet = Integer.parseInt(mRaiseValue.getText().toString());
+			} catch (Exception e) {
+			}
+
+			if (bet > mMaxBet) {
+				Toast.makeText(getContext(),
+						getContext().getString(R.string.more_than_max_bet),
+						Toast.LENGTH_LONG).show();
+			} else {
+				Intent intent = new Intent(getContext(), LBSService.class);
+				intent.setAction(Intents.ACTION_FIGHT_REQ);
+				intent.putExtra(Intents.EXTRA_BET, bet);
+				getContext().startService(intent);
+
+				showWaiting();
+			}
+		} else if (v == mCancel) {
+			mApplication.setCurrentPeer(null);
+			cancel();
+		} else if (v == mCancelFight) {
+			mApplication.setCurrentPeer(null);
+
+			Intent intent = new Intent(getContext(), LBSService.class);
+			intent.setAction(Intents.ACTION_FIGHT_CANCEL);
+			getContext().startService(intent);
+
+			cancel();
+		} else if (v == mAccept) {
+			Intent intent = new Intent(getContext(), LBSService.class);
+			intent.setAction(Intents.ACTION_FIGHT_RESP);
+			intent.putExtra(Intents.EXTRA_FIGHT_RESULT, 0);
+			getContext().startService(intent);
+
+			showWaiting();
+		} else if (v == mReject) {
+			mApplication.setCurrentPeer(null);
+
+			Intent intent = new Intent(getContext(), LBSService.class);
+			intent.setAction(Intents.ACTION_FIGHT_RESP);
+			intent.putExtra(Intents.EXTRA_FIGHT_RESULT, 1);
+			getContext().startService(intent);
+
+			cancel();
+		}
+	}
+
+	private void showWaiting() {
+		mFightReq.setVisibility(View.GONE);
+		mFightResp.setVisibility(View.GONE);
+		mFightWaiting.setVisibility(View.VISIBLE);
+
+		mCountdown.setVisibility(View.GONE);
+
+		mSomebodyResp.setText(String.format(getContext().getResources()
+				.getString(R.string.somebody_resp), mApplication
+				.getCurrentPeer().getName()));
+		mOtherUserName.setText(mApplication.getCurrentPeer().getName());
+
+		AnimationDrawable connecting = (AnimationDrawable) mConnecting
+				.getBackground();
+		if (!connecting.isRunning()) {
+			connecting.start();
+		}
+
+		ImageLoader.getInstance().displayImage(Config.getAvatar(getContext()),
+				mMyAvatar, mApplication.getAvatarDisplayOption());
+		ImageLoader.getInstance().displayImage(
+				mApplication.getCurrentPeer().getAvatar(), mOtherAvatar,
+				mApplication.getAvatarDisplayOption());
+	}
+
+	@Override
+	public void onBackPressed() {
+	}
 
 }

@@ -55,7 +55,7 @@ public class PausedDialog extends Dialog implements
 				mOnClickListener.onResume();
 			}
 		} else if (v == mHome) {
-			Variables.homeFlag=0;
+			Variables.homeFlag = 0;
 			home();
 		}
 

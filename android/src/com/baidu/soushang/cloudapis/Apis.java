@@ -279,8 +279,6 @@ public class Apis {
 				}, SHOP_EXCHANGE_URL, sExchangeInfo);
 	}
 
-	
-
 	public static void getDayEvent(Context context, String accessToken,
 			final ApiResponseCallback<DayEventResponse> callback) {
 		RestClientFactory.getClient().getAsync(

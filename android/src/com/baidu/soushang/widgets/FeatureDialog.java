@@ -43,15 +43,15 @@ public class FeatureDialog extends Dialog {
 			public void onClick(View v) {
 
 				if (!Variables.feBean.isFinished()) {
-					
+
 					Intent intent = null;
 					intent = new Intent(context, QuestionActivity.class);
 					intent.putExtra(Intents.EXTRA_EVENT_TYPE,
 							Intents.EVENT_TYPE_FEATURE);
-					
+
 					context.startActivity(intent);
 				} else {
-					
+
 					dismiss();
 					Toast.makeText(
 							context,
