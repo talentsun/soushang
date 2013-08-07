@@ -3,40 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rank_bg"
-    android:orientation="vertical"
-    android:gravity="center_horizontal" >
-    
-    <ImageView 
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/lbs_event_title"/>
-    
-    <ListView 
+        android:src="@drawable/lbs_event_title" />
+
+    <ListView
         android:id="@+id/peers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:divider="@null"
-        android:clipToPadding="false"
         android:cacheColorHint="@android:color/transparent"
-        android:listSelector="#00000000">
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:listSelector="#00000000" >
     </ListView>
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="140dp"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingBottom="140dp" >
+
         <TextView
             android:id="@+id/no_peers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#536f03"
             android:text="@string/no_peers"
+            android:textColor="#536f03"
+            android:textSize="16sp"
             android:visibility="gone" />
-        <com.baidu.soushang.views.LoadingView 
+
+        <com.baidu.soushang.views.LoadingView
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

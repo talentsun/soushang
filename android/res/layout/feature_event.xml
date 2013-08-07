@@ -2,48 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/rank_bg"
     android:gravity="center_horizontal"
-    android:background="@drawable/rank_bg" >
-    
-    <ImageView 
+    android:orientation="vertical" >
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/feature_event_title"
-        android:dividerHeight="0dp"
-        android:divider="@null"
-        android:clipToPadding="false"
         android:cacheColorHint="@android:color/transparent"
-        android:listSelector="#00000000"/>
-    
-    <ListView 
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:listSelector="#00000000"
+        android:src="@drawable/feature_event_title" />
+
+    <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:cacheColorHint="#00000000"
         android:divider="#00000000"
-        android:listSelector="@drawable/feature_list_item"
-        android:layout_gravity="center_horizontal"
-        
-        >
+        android:listSelector="@drawable/feature_list_item" >
     </ListView>
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="140dp"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingBottom="140dp" >
+
         <TextView
             android:id="@+id/no_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#536f03"
             android:text="@string/no_feature_event"
+            android:textColor="#536f03"
+            android:textSize="16sp"
             android:visibility="gone" />
-        
-        <com.baidu.soushang.views.LoadingView 
+
+        <com.baidu.soushang.views.LoadingView
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

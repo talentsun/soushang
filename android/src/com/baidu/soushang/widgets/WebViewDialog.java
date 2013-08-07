@@ -16,97 +16,97 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class WebViewDialog extends Dialog {
-  private WebView mWebView;
-  private TextView mNoNetwork;
-  private Button mKnow;
-  private TextView mTitle;
-  private LoadingView mLoadingView;
+	private WebView mWebView;
+	private TextView mNoNetwork;
+	private Button mKnow;
+	private TextView mTitle;
+	private LoadingView mLoadingView;
 
-  public WebViewDialog(Context context) {
-    this(context, R.style.WebViewDialog);
-  }
+	public WebViewDialog(Context context) {
+		this(context, R.style.WebViewDialog);
+	}
 
-  public WebViewDialog(Context context, int theme) {
-    super(context, theme);
+	public WebViewDialog(Context context, int theme) {
+		super(context, theme);
 
-    setContentView(R.layout.webview_dialog);
+		setContentView(R.layout.webview_dialog);
 
-    mWebView = (WebView) findViewById(R.id.webview);
-    mNoNetwork = (TextView) findViewById(R.id.no_network);
-    mKnow = (Button) findViewById(R.id.know);
-    mTitle = (TextView) findViewById(R.id.dialog_title);
-    mLoadingView = (LoadingView) findViewById(R.id.loading);
+		mWebView = (WebView) findViewById(R.id.webview);
+		mNoNetwork = (TextView) findViewById(R.id.no_network);
+		mKnow = (Button) findViewById(R.id.know);
+		mTitle = (TextView) findViewById(R.id.dialog_title);
+		mLoadingView = (LoadingView) findViewById(R.id.loading);
 
-    mWebView.getSettings().setJavaScriptEnabled(true);
-    mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-    mWebView.setWebViewClient(new WebViewClient() {
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+		mWebView.setWebViewClient(new WebViewClient() {
 
-      @Override
-      public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        // TODO Auto-generated method stub
-        return super.shouldOverrideUrlLoading(view, url);
-      }
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				// TODO Auto-generated method stub
+				return super.shouldOverrideUrlLoading(view, url);
+			}
 
-      @Override
-      public void onPageFinished(WebView view, String url) {
-        mLoadingView.hide();
-        super.onPageFinished(view, url);
-      }
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				mLoadingView.hide();
+				super.onPageFinished(view, url);
+			}
 
-      @Override
-      public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        mLoadingView.show();
-        super.onPageStarted(view, url, favicon);
-      }
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				mLoadingView.show();
+				super.onPageStarted(view, url, favicon);
+			}
 
-    });
+		});
 
-    mKnow.setOnClickListener(new View.OnClickListener() {
+		mKnow.setOnClickListener(new View.OnClickListener() {
 
-      @Override
-      public void onClick(View v) {
-        dismiss();
-      }
-    });
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
-    Typeface typeface =
-        Typeface.createFromAsset(getContext().getAssets(), SouShangApplication.FONT);
-    mNoNetwork.setTypeface(typeface);
-    mKnow.setTypeface(typeface);
-    mTitle.setTypeface(typeface);
+		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(),
+				SouShangApplication.FONT);
+		mNoNetwork.setTypeface(typeface);
+		mKnow.setTypeface(typeface);
+		mTitle.setTypeface(typeface);
 
-    setCanceledOnTouchOutside(false);
-  }
+		setCanceledOnTouchOutside(false);
+	}
 
-  @Override
-  public void onBackPressed() {
-    if (mWebView.canGoBack()) {
-      mWebView.goBack();
-    } else {
-      super.onBackPressed();
-    }
-  }
+	@Override
+	public void onBackPressed() {
+		if (mWebView.canGoBack()) {
+			mWebView.goBack();
+		} else {
+			super.onBackPressed();
+		}
+	}
 
-  @Override
-  protected void onStart() {
-    if (!NetworkUtils.isNetworkConnected(getContext())) {
-      mNoNetwork.setVisibility(View.VISIBLE);
-      mWebView.setVisibility(View.GONE);
-    }
+	@Override
+	protected void onStart() {
+		if (!NetworkUtils.isNetworkConnected(getContext())) {
+			mNoNetwork.setVisibility(View.VISIBLE);
+			mWebView.setVisibility(View.GONE);
+		}
 
-    super.onStart();
-  }
+		super.onStart();
+	}
 
-  @Override
-  protected void onStop() {
-    super.onStop();
-  }
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
 
-  public void show(String title, String url) {
-    mTitle.setText(title);
-    mWebView.clearHistory();
-    mWebView.loadUrl(url);
-    super.show();
-  }
-  
+	public void show(String title, String url) {
+		mTitle.setText(title);
+		mWebView.clearHistory();
+		mWebView.loadUrl(url);
+		super.show();
+	}
+
 }

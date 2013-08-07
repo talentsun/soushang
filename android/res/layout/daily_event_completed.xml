@@ -124,7 +124,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/share"
             android:text="@string/share_add_point" />
-        
+
         <Button
             android:id="@+id/shop"
             style="@style/OptionFont"

@@ -67,7 +67,7 @@
     <string name="lbs_dialog_welcome">欢迎进入针锋相对的游戏世界。</string>
     <string name="lbs_dialog_introduce">针锋相对是一对一的挑战赛，在这里，你可以呼朋唤友；在这里，你可以向你周围在线的好友发起挑战；在这里，你可以用搜商，与朋友共成长。</string>
     <string name="lbs_dialog_rule_title">针锋相对的赛制：</string>
-    <string name="lbs_dialog_rule_content">1、  游戏为你筛选出附近的人，选择一位发出挑战邀请，可以添加赌注（赌注≤每个人总积分x15%）。\n2、	系统会给对方发送信号，当他接受邀请后，针锋相对正式启动。\n3、	你和你的对手将同时答一套题，游戏将通过正确率和答题时间来决定你们的胜负。\n4、	获胜的人将获取全部题目的分数和全部的赌注。\n5、	每人每天可以发起五次挑战。</string>
+    <string name="lbs_dialog_rule_content">1、 游戏为你筛选出附近的人，选择一位发出挑战邀请，可以添加赌注（赌注≤每个人总积分x15%）。\n2、系统会给对方发送信号，当他接受邀请后，针锋相对正式启动。\n3、你和你的对手将同时答一套题，游戏将通过正确率和答题时间来决定你们的胜负。\n4、 获胜的人将获取全部题目的分数和全部的赌注。\n5、每人每天可以发起五次挑战。</string>
 <string name="lbs_dialog_invite">规则已清晰，一起来针锋相对吧~~</string>
 <string name="lbs_dialog_challenge">开始挑战</string>
 <string name="lbs_dialog_cancel">不参加了</string>

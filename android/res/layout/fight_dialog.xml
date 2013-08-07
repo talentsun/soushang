@@ -3,110 +3,115 @@
     android:layout_width="@dimen/popup_dialog_width"
     android:layout_height="@dimen/popup_dialog_height"
     android:background="@drawable/popup_bg" >
-    <RelativeLayout 
+
+    <RelativeLayout
         android:id="@+id/fight_req"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" >
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/fight"
+            style="@style/PopupTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/popup_title_marginTop"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:text="@string/fight"
-            style="@style/PopupTitle" />
-        
-        <TextView 
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
+            android:text="@string/fight" />
+
+        <TextView
             android:id="@+id/somebody"
+            style="@style/PopupSubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/fight"
-            android:text="@string/somebody"
-            style="@style/PopupSubTitle" />
-        
-        <LinearLayout 
+            android:layout_centerHorizontal="true"
+            android:text="@string/somebody" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
-            <TextView 
+            android:orientation="horizontal" >
+
+            <TextView
                 android:id="@+id/raise"
+                style="@style/GreenText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/raise"
-                style="@style/GreenText"/>
-            <EditText 
+                android:text="@string/raise" />
+
+            <EditText
                 android:id="@+id/raise_value"
-                android:inputType="number"
-                android:hint="0"
+                style="@style/GreenText"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bet"
-                style="@style/GreenText" />
+                android:hint="0"
+                android:inputType="number" />
         </LinearLayout>
-        
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-            <Button 
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal" >
+
+            <Button
                 android:id="@+id/req_fight"
+                style="@style/ButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fight_req"
                 android:background="@drawable/popup_ok"
-                style="@style/ButtonText" />
+                android:text="@string/fight_req" />
+
             <Button
                 android:id="@+id/cancel"
+                style="@style/ButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="@string/cancel"
                 android:background="@drawable/popup_cancel"
-                style="@style/ButtonText" />
+                android:text="@string/cancel" />
         </LinearLayout>
     </RelativeLayout>
-    
-    <RelativeLayout 
+
+    <RelativeLayout
         android:id="@+id/fight_resp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" >
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/receive_fight"
+            style="@style/PopupTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/popup_title_marginTop"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:text="@string/receive_fight"
-            style="@style/PopupTitle" />
-        
-        <TextView 
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
+            android:text="@string/receive_fight" />
+
+        <TextView
             android:id="@+id/somebody_receive"
+            style="@style/PopupSubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/receive_fight"
-            android:text="@string/somebody_receive"
-            style="@style/PopupSubTitle" />
-        
+            android:layout_centerHorizontal="true"
+            android:text="@string/somebody_receive" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingTop="16dp"
             android:layout_centerInParent="true"
-            android:orientation="horizontal" >
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="16dp" >
 
             <ImageView
                 android:id="@+id/other_avatar_resp"
@@ -122,173 +127,181 @@
 
                 <TextView
                     android:id="@+id/other_resp"
+                    style="@style/GreenText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/GreenText"
                     android:maxWidth="90dp" />
 
                 <TextView
                     android:id="@+id/other_event_count_resp"
+                    style="@style/GreenText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    style="@style/GreenText" />
+                    android:layout_marginTop="4dp" />
 
                 <TextView
                     android:id="@+id/other_win_rate_resp"
+                    style="@style/GreenText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    style="@style/GreenText" />
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
         </LinearLayout>
-        
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/popup_button_marginBottom">
-            <Button 
+            android:layout_marginBottom="@dimen/popup_button_marginBottom"
+            android:orientation="horizontal" >
+
+            <Button
                 android:id="@+id/accept"
+                style="@style/ButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/accept"
-                style="@style/ButtonText"
-                android:background="@drawable/popup_ok"/>
+                android:background="@drawable/popup_ok"
+                android:text="@string/accept" />
+
             <Button
                 android:id="@+id/reject"
+                style="@style/ButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="@string/reject"
-                style="@style/ButtonText"
-                android:background="@drawable/popup_cancel"/>
+                android:background="@drawable/popup_cancel"
+                android:text="@string/reject" />
         </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout 
+    <RelativeLayout
         android:id="@+id/fight_waiting"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible" >
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/waiting"
+            style="@style/PopupTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/popup_title_marginTop"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:text="@string/waiting" 
-            style="@style/PopupTitle"/>
-        
-        <TextView 
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/popup_title_marginTop"
+            android:text="@string/waiting" />
+
+        <TextView
             android:id="@+id/somebody_resp"
+            style="@style/PopupSubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/waiting"
-            android:text="@string/somebody_resp"
-            style="@style/PopupSubTitle" />
-        
-        <LinearLayout 
+            android:layout_centerHorizontal="true"
+            android:text="@string/somebody_resp" />
+
+        <LinearLayout
             android:id="@+id/center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingTop="24dp"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-            <TextView 
+            android:paddingTop="24dp" >
+
+            <TextView
                 android:id="@+id/vs"
+                style="@style/GreenText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/GreenText"
-                android:text="@string/vs"/>
-            <ImageView 
+                android:text="@string/vs" />
+
+            <ImageView
                 android:id="@+id/connecting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/connecting"/>
+                android:background="@drawable/connecting" />
         </LinearLayout>
-        
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/center"
-            android:paddingTop="24dp"
-            android:orientation="vertical">
-            <ImageView 
+            android:orientation="vertical"
+            android:paddingTop="24dp" >
+
+            <ImageView
                 android:id="@+id/my_avatar"
                 android:layout_width="@dimen/avatar_width"
                 android:layout_height="@dimen/avatar_width"
-                android:src="@drawable/default_avatar"/>
-            <TextView 
+                android:src="@drawable/default_avatar" />
+
+            <TextView
                 android:id="@+id/me"
+                style="@style/GreenText"
                 android:layout_width="@dimen/avatar_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/me"
-                style="@style/GreenText"
+                android:ellipsize="marquee"
                 android:gravity="center"
                 android:maxLines="1"
-                android:ellipsize="marquee"/>
+                android:text="@string/me" />
         </LinearLayout>
-        
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/center"
-            android:paddingTop="24dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <ImageView 
+            android:orientation="vertical"
+            android:paddingTop="24dp" >
+
+            <ImageView
                 android:id="@+id/other_avatar"
                 android:layout_width="@dimen/avatar_width"
                 android:layout_height="@dimen/avatar_width"
-                android:src="@drawable/default_avatar"/>
-            <TextView 
+                android:src="@drawable/default_avatar" />
+
+            <TextView
                 android:id="@+id/other"
+                style="@style/GreenText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/avatar_width"
                 android:layout_marginTop="4dp"
+                android:ellipsize="marquee"
                 android:gravity="center"
-                style="@style/GreenText"
                 android:maxLines="1"
-                android:ellipsize="marquee"/>
+                android:maxWidth="@dimen/avatar_width" />
         </LinearLayout>
 
-        <LinearLayout 
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/popup_button_marginBottom">
+            android:layout_marginBottom="@dimen/popup_button_marginBottom"
+            android:orientation="horizontal" >
+
             <Button
                 android:id="@+id/cancel_fight"
+                style="@style/ButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ButtonText"
-                android:text="@string/cancel"
-                android:background="@drawable/popup_cancel" />
+                android:background="@drawable/popup_cancel"
+                android:text="@string/cancel" />
         </LinearLayout>
-        
-        <ImageView 
+
+        <ImageView
             android:id="@+id/countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
 </FrameLayout>

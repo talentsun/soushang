@@ -118,7 +118,12 @@ public class ShopActivity extends BaseActivity {
 		});
 
 		if (mApplication.getUser() != null) {
+			mTitle.setVisibility(View.VISIBLE);
+			mInterral.setVisibility(View.VISIBLE);
 			mInterral.setText(mApplication.getUser().getPoint() + "");
+		} else {
+			mTitle.setVisibility(View.GONE);
+			mInterral.setVisibility(View.GONE);
 		}
 		mDaliyPrize = (TextView) findViewById(R.id.shop_daliy_prize);
 		mDaliyPrize.setTypeface(mTypeface);
@@ -282,7 +287,7 @@ public class ShopActivity extends BaseActivity {
 
 				convertView = mInflater.inflate(R.layout.shop_item, parent,
 						false);
-				
+
 				viewHolder.shop_item_imag = (ImageView) convertView
 						.findViewById(R.id.shop_item_imag);
 				viewHolder.shop_item_name = (TextView) convertView
@@ -308,7 +313,7 @@ public class ShopActivity extends BaseActivity {
 
 			String endUrl = BASEURL + urlList.get(position);
 			ImageLoader imageLoader = ImageLoader.getInstance();
-			
+
 			imageLoader.displayImage(endUrl, viewHolder.shop_item_imag);
 
 			viewHolder.shop_item_name.setText(shopInfo.getTitle());

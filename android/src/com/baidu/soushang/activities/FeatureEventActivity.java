@@ -17,9 +17,11 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -36,7 +38,7 @@ public class FeatureEventActivity extends BaseActivity {
 
 	private EventAdapter mAdapter;
 	private List<FeatureEventBean> list = new ArrayList<FeatureEventBean>();
-	private List<FeatureEventBean> li=new ArrayList<FeatureEventBean>();
+	private List<FeatureEventBean> li = new ArrayList<FeatureEventBean>();
 	private static final String FEATURE_EVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/getRooms.html?access_token=%s";
 
 	private FeatureDialog fDialog;
@@ -57,6 +59,8 @@ public class FeatureEventActivity extends BaseActivity {
 		mNoEvent.setTypeface(mTypeface);
 
 		fDialog = new FeatureDialog(this);
+		Window dialWindow = fDialog.getWindow();
+		dialWindow.setGravity(Gravity.CENTER);
 
 		showLoading();
 
@@ -79,7 +83,7 @@ public class FeatureEventActivity extends BaseActivity {
 
 	class ThreadForFeature extends
 			AsyncTask<String, String, List<FeatureEventBean>> {
-	
+
 		public ThreadForFeature() {
 			// TODO Auto-generated constructor stub
 		}
@@ -87,20 +91,21 @@ public class FeatureEventActivity extends BaseActivity {
 		@Override
 		protected List<FeatureEventBean> doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			list = JsonTool.getFeatureData(FEATURE_EVENT_URL,FeatureEventActivity.this);
+			list = JsonTool.getFeatureData(FEATURE_EVENT_URL,
+					FeatureEventActivity.this);
 			if (list != null) {
-				
+
 				for (int i = 0; i < list.size(); i++) {
-				
+
 					if (list.get(i).isRunning()) {
 						li.add(list.get(i));
 						list.remove(i);
 						i--;
 					}
 				}
-				
+
 				li.addAll(list);
-				
+
 			}
 
 			return li;

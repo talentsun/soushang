@@ -22,23 +22,25 @@ public class ProfileGiftAdapter extends BaseAdapter {
 	private Context context;
 	private LayoutInflater layoutInflater;
 	private SouShangApplication mApplication;
-	private List<Gift> list=new ArrayList<Gift>();
+	private List<Gift> list = new ArrayList<Gift>();
 	private Gift gift;
-	private List<String> urlList=null; 
-	private String url=null;
-	private static final String BASEURL="http://soushang.limijiaoyin.com";
-	public ProfileGiftAdapter(SouShangApplication mApplication, Context context,List<Gift> list2) {
+	private List<String> urlList = null;
+	private String url = null;
+	private static final String BASEURL = "http://soushang.limijiaoyin.com";
+
+	public ProfileGiftAdapter(SouShangApplication mApplication,
+			Context context, List<Gift> list2) {
 		this.mApplication = mApplication;
 		this.context = context;
-		this.list=list2;
+		this.list = list2;
 		layoutInflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		urlList=new ArrayList<String>();
-		for(int i=0;i<list2.size();i++){
-			gift=new Gift();
-			gift=list2.get(i);
-			url=gift.getThumb();
+
+		urlList = new ArrayList<String>();
+		for (int i = 0; i < list2.size(); i++) {
+			gift = new Gift();
+			gift = list2.get(i);
+			url = gift.getThumb();
 			url.replace("\\", "");
 			urlList.add(url);
 		}
@@ -82,14 +84,14 @@ public class ProfileGiftAdapter extends BaseAdapter {
 			mlayout = (MyLayout) convertView.getTag();
 		}
 
-		gift=list.get(position);
-		
-		String endUrl=BASEURL+urlList.get(position);
+		gift = list.get(position);
+
+		String endUrl = BASEURL + urlList.get(position);
 		mlayout.gift_imag.setBackgroundResource(R.drawable.self_gift_stroke);
 		ImageLoader imageLoader = ImageLoader.getInstance();
-		imageLoader.displayImage(endUrl,
-				mlayout.gift_imag, mApplication.getAvatarDisplayOption());
-		   
+		imageLoader.displayImage(endUrl, mlayout.gift_imag,
+				mApplication.getAvatarDisplayOption());
+
 		Typeface tf = Typeface.createFromAsset(context.getAssets(),
 				SouShangApplication.FONT);
 		mlayout.gift_name.setTypeface(tf);

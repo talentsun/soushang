@@ -5,29 +5,29 @@
     android:layout_gravity="center"
     android:background="@drawable/tips_bg"
     android:orientation="vertical" >
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#b93f06"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:layout_centerInParent="true"
-        android:text="@string/no_day_event"/>
-    
+        android:text="@string/no_day_event"
+        android:textColor="#b93f06"
+        android:textSize="16sp" />
+
     <Button
         android:id="@+id/know"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/i_know"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:textSize="20sp"
+        android:background="@drawable/tips_iknow"
+        android:text="@string/i_know"
         android:textColor="#fdfcc5"
-        android:background="@drawable/tips_iknow" />
+        android:textSize="20sp" />
 
 </RelativeLayout>
