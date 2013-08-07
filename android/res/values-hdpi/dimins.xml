@@ -91,5 +91,5 @@
     <dimen name="fight_dialog_waiting_size">23dp</dimen>
     
     <dimen name="lbs_event_result_title2_size">18sp</dimen>
-    <dimen name="fight_dialog_btn_range">5dp</dimen>
+    <dimen name="fight_dialog_btn_range">10dp</dimen>
 </resources>
