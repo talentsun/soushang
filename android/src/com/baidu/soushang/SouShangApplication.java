@@ -244,6 +244,7 @@ public class SouShangApplication extends Application {
 
 							Intent lbsIntent = new Intent(
 									SouShangApplication.this, LBSService.class);
+
 							startService(lbsIntent);
 
 							if (mLoginListener != null) {

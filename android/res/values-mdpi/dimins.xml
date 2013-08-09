@@ -50,5 +50,5 @@
     <dimen name="feature_dialog_svieww_height">280dp</dimen>
      
     <dimen name="fight_dialog_waiting_size">17sp</dimen>
-    <dimen name="fight_dialog_btn_range">5dp</dimen>
+    <dimen name="fight_dialog_btn_range">10dp</dimen>
 </resources>

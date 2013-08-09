@@ -20,7 +20,10 @@ import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +43,24 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private WebViewDialog mNewsDialog;
 	private TipsDialog mTipsDialog;
 	private SouShangApplication mApplication;
+
+	private FightLoginFailReceiver failReceiver;
+
+	public class FightLoginFailReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent != null) {
+				String action = intent.getAction();
+				if (Intents.ACTION_FIGHT_LOGIN_FAIL.equalsIgnoreCase(action)) {
+
+					mTipsDialog.show(getResources().getString(
+							R.string.lbs_loginfail_tips));
+				}
+			}
+		}
+
+	}
 
 	private ApiResponseCallback<DayEventResponse> mDayEventCallback = new ApiResponseCallback<DayEventResponse>() {
 
@@ -105,6 +126,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle arg0) {
 		setContentView(R.layout.home);
 		Variables.homeFlag = 1;
+
+		failReceiver = new FightLoginFailReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Intents.ACTION_FIGHT_LOGIN_FAIL);
+		registerReceiver(failReceiver, filter);
+
 		mSouShang = (Button) findViewById(R.id.soushang);
 		mDailyEvent = (Button) findViewById(R.id.daily_event);
 		mRank = (Button) findViewById(R.id.rank);
@@ -161,7 +188,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			mApplication.updateUserExtraInfo();
 
 			Intent lbsIntent = new Intent(this, LBSService.class);
+			lbsIntent.setAction(Intents.ACTION_STARTUP);
 			startService(lbsIntent);
+
+			System.out.println("at HomeActivity------------");
+
 		}
 
 		super.onCreate(arg0);
@@ -184,9 +215,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onDestroy() {
+
+		unregisterReceiver(failReceiver);
+
 		Intent intent = new Intent(this, LBSService.class);
 		stopService(intent);
+
 		super.onDestroy();
+
 	}
 
 	@Override

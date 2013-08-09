@@ -262,8 +262,8 @@ public class FeatureEventActivity extends BaseActivity {
 					R.string.feature_count)
 					+ sBean.getPnum());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			Date startDate = new Date(Long.parseLong(sBean.getStartTime() + ""));
-			Date endDate = new Date(Long.parseLong(sBean.getEndTime() + ""));
+			Date startDate = new Date(Long.parseLong((long)sBean.getStartTime()*1000 + ""));
+			Date endDate = new Date(Long.parseLong((long)sBean.getEndTime()*1000 + ""));
 			String startTime = sdf.format(startDate);
 			String end_Time = sdf.format(endDate);
 			viewHolder.dateView.setText(startTime + "¡ª" + end_Time);

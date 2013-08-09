@@ -45,7 +45,7 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
 	private static final int FIGHT_QUIT = 13;
 	private static final int ONLINE = 14;
 	private static final int OFFLINE = 15;
-	private static final int UNKNOWN_OP = 1000;
+	private static final int LOGIN_FAIL = 17;
 	private static final int HEARTBEAT = 1001;
 
 	public interface ClientListener {
@@ -54,6 +54,8 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
 		public void onPeersUpdated(List<User> peers);
 
 		public void onFightReq(User peer, int bet);
+
+		public void onLoginFail();
 
 		public void onFightResp(int result);
 
@@ -147,6 +149,15 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
 							fightResult.getOtherTime());
 				}
 				break;
+
+			case LOGIN_FAIL:
+
+				if (mListener != null) {
+					mListener.onLoginFail();
+				}
+
+				break;
+
 			}
 		}
 

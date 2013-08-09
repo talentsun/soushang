@@ -48,6 +48,7 @@ public class LBSEventActivity extends BaseActivity {
 	private PendingIntent mUpdatePeers;
 	private AlarmManager mAlarmManager;
 	private FightDialog mFightDialog;
+
 	private LBSFirstDialog lDialog;
 	private SharedPreferences sp;
 	private SharedPreferences.Editor et;
@@ -74,8 +75,11 @@ public class LBSEventActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
+
 		setContentView(R.layout.lbs_event);
+
 		mApplication = (SouShangApplication) getApplication();
+
 		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		mListView = (ListView) findViewById(R.id.peers);
