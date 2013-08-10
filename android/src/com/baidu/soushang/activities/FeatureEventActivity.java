@@ -17,11 +17,9 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -52,16 +50,11 @@ public class FeatureEventActivity extends BaseActivity {
 		mTypeface = Typeface.createFromAsset(getAssets(),
 				SouShangApplication.FONT);
 		mListView.setEmptyView(findViewById(android.R.id.empty));
-
 		mLoading = (LoadingView) findViewById(R.id.loading);
-
 		mNoEvent = (TextView) findViewById(R.id.no_event);
 		mNoEvent.setTypeface(mTypeface);
 
 		fDialog = new FeatureDialog(this);
-		Window dialWindow = fDialog.getWindow();
-		dialWindow.setGravity(Gravity.CENTER);
-
 		showLoading();
 
 		ThreadForFeature tFeature = new ThreadForFeature();
@@ -77,6 +70,7 @@ public class FeatureEventActivity extends BaseActivity {
 				fDialog.show();
 			}
 		});
+		
 		super.onCreate(arg0);
 
 	}
@@ -91,8 +85,10 @@ public class FeatureEventActivity extends BaseActivity {
 		@Override
 		protected List<FeatureEventBean> doInBackground(String... params) {
 			// TODO Auto-generated method stub
+			
 			list = JsonTool.getFeatureData(FEATURE_EVENT_URL,
 					FeatureEventActivity.this);
+			
 			if (list != null) {
 
 				for (int i = 0; i < list.size(); i++) {
@@ -102,6 +98,7 @@ public class FeatureEventActivity extends BaseActivity {
 						list.remove(i);
 						i--;
 					}
+					
 				}
 
 				li.addAll(list);
@@ -120,8 +117,10 @@ public class FeatureEventActivity extends BaseActivity {
 			if (result != null) {
 				mAdapter.setData(result);
 			}
+			
 			mListView.setAdapter(mAdapter);
 			super.onPostExecute(result);
+			
 		}
 	}
 
@@ -262,8 +261,8 @@ public class FeatureEventActivity extends BaseActivity {
 					R.string.feature_count)
 					+ sBean.getPnum());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			Date startDate = new Date(Long.parseLong(sBean.getStartTime() + ""));
-			Date endDate = new Date(Long.parseLong(sBean.getEndTime() + ""));
+			Date startDate = new Date(Long.parseLong((long)sBean.getStartTime()*1000 + ""));
+			Date endDate = new Date(Long.parseLong((long)sBean.getEndTime()*1000 + ""));
 			String startTime = sdf.format(startDate);
 			String end_Time = sdf.format(endDate);
 			viewHolder.dateView.setText(startTime + "¡ª" + end_Time);

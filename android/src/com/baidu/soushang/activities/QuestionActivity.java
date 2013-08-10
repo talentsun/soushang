@@ -533,14 +533,19 @@ public class QuestionActivity extends BaseActivity implements
 			mPointBoard.setText(String.format(
 					getResources().getString(R.string.credit_and_point),
 					mMyCredit, mMyPoint));
+			
 		} else if (mEventType == Intents.EVENT_TYPE_LBS) {
 			mPointBoard.setText(String.format(
-					getResources().getString(R.string.fight_state), mMyPoint,
-					mOtherPoint));
+					getResources().getString(R.string.fight_state),mMyCredit,mMyPoint
+					));
 		} else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
+			
+			System.out.println("at QuestionActivity mMyCredit==="+mMyCredit);
+			System.out.println("at QuestionActivity mMyPoint=="+mMyPoint);
+			
 			mPointBoard.setText(String.format(
 					getResources().getString(R.string.credit_and_point),
-					mMyPoint, mOtherPoint));
+					mMyCredit,mMyPoint));
 		}
 	}
 

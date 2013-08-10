@@ -144,8 +144,6 @@ public class LBSService extends Service {
 		mWorker.start();
 		mClient = new LBSClient(mWorker.getLooper());
 
-		Message.obtain(mClient, STARTUP).sendToTarget();
-
 		super.onCreate();
 	}
 
@@ -157,37 +155,49 @@ public class LBSService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		if (intent != null && mStartup) {
+
+		if (intent != null) {
 			String action = intent.getAction();
-			if (Intents.ACTION_HEARTBEAT.equalsIgnoreCase(action)) {
-				Message.obtain(mClient, HEARTBEAT).sendToTarget();
-			} else if (Intents.ACTION_UPDATE_PEERS.equalsIgnoreCase(action)) {
-				Message.obtain(mClient, UPDATE_PEERS).sendToTarget();
-			} else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
-				Message msg = Message.obtain(mClient, FIGHT_REQ);
-				msg.arg1 = intent.getIntExtra(Intents.EXTRA_BET, 0);
-				msg.sendToTarget();
-			} else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
-				Message.obtain(mClient, FIGHT_CANCEL).sendToTarget();
-			} else if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
-				Message msg = Message.obtain(mClient, FIGHT_RESP);
-				msg.arg1 = intent.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 0);
-				msg.sendToTarget();
-			} else if (Intents.ACTION_ANSWER.equalsIgnoreCase(action)) {
-				Message msg = Message.obtain(mClient, ANSWER);
-				msg.arg1 = intent.getIntExtra(Intents.EXTRA_INDEX, -1);
-				msg.arg2 = intent.getIntExtra(Intents.EXTRA_RIGHT, -1);
-				msg.sendToTarget();
-			} else if (Intents.ACTION_FIGHT_QUIT.equalsIgnoreCase(action)) {
-				Message.obtain(mClient, FIGHT_QUIT).sendToTarget();
-			} else if (Intents.ACTION_LBS_ONLINE.equalsIgnoreCase(action)) {
-				Message.obtain(mClient, ONLINE).sendToTarget();
-			} else if (Intents.ACTION_LBS_OFFLINE.equalsIgnoreCase(action)) {
-				Message.obtain(mClient, OFFLINE).sendToTarget();
+
+			if (mStartup) {
+				if (Intents.ACTION_HEARTBEAT.equalsIgnoreCase(action)) {
+					Message.obtain(mClient, HEARTBEAT).sendToTarget();
+				} else if (Intents.ACTION_UPDATE_PEERS.equalsIgnoreCase(action)) {
+					Message.obtain(mClient, UPDATE_PEERS).sendToTarget();
+				} else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
+					Message msg = Message.obtain(mClient, FIGHT_REQ);
+					msg.arg1 = intent.getIntExtra(Intents.EXTRA_BET, 0);
+					msg.sendToTarget();
+				} else if (Intents.ACTION_FIGHT_CANCEL.equalsIgnoreCase(action)) {
+					Message.obtain(mClient, FIGHT_CANCEL).sendToTarget();
+				} else if (Intents.ACTION_FIGHT_RESP.equalsIgnoreCase(action)) {
+					Message msg = Message.obtain(mClient, FIGHT_RESP);
+					msg.arg1 = intent
+							.getIntExtra(Intents.EXTRA_FIGHT_RESULT, 0);
+					msg.sendToTarget();
+				} else if (Intents.ACTION_ANSWER.equalsIgnoreCase(action)) {
+					Message msg = Message.obtain(mClient, ANSWER);
+					msg.arg1 = intent.getIntExtra(Intents.EXTRA_INDEX, -1);
+					msg.arg2 = intent.getIntExtra(Intents.EXTRA_RIGHT, -1);
+					msg.sendToTarget();
+				} else if (Intents.ACTION_FIGHT_QUIT.equalsIgnoreCase(action)) {
+					Message.obtain(mClient, FIGHT_QUIT).sendToTarget();
+				} else if (Intents.ACTION_LBS_ONLINE.equalsIgnoreCase(action)) {
+					Message.obtain(mClient, ONLINE).sendToTarget();
+				} else if (Intents.ACTION_LBS_OFFLINE.equalsIgnoreCase(action)) {
+					Message.obtain(mClient, OFFLINE).sendToTarget();
+				}
+			} else {
+				if (Intents.ACTION_STARTUP.equalsIgnoreCase(action)) {
+
+					Message.obtain(mClient, STARTUP).sendToTarget();
+
+				}
 			}
 		}
 
 		return super.onStartCommand(intent, flags, startId);
+
 	}
 
 	private void shutdown() {
@@ -199,14 +209,8 @@ public class LBSService extends Service {
 
 			stopHeartbeat();
 			stopLocationClient();
-		}
-	}
 
-	private void broadcastStartupInfo(boolean success) {
-		Intent intent = new Intent();
-		intent.setAction(Intents.ACTION_LBS_STARTUP);
-		intent.putExtra(Intents.EXTRA_STARTUP_SUCCESS, success);
-		sendBroadcast(intent);
+		}
 	}
 
 	private void startLocationClient() {
@@ -229,6 +233,7 @@ public class LBSService extends Service {
 	}
 
 	private void startup() {
+
 		if (!mStartup) {
 			System.setProperty("org.jboss.netty.selectTimeout", "60000");
 			System.setProperty("org.jboss.netty.epollBugWorkaround", "true");
@@ -249,6 +254,7 @@ public class LBSService extends Service {
 				mChannel = connectFuture.getChannel();
 				mHandler = mChannel.getPipeline().get(
 						LBSClientRequestClientHandler.class);
+
 				mHandler.setClientListener(new ClientListener() {
 					@Override
 					public void onClosed() {
@@ -260,7 +266,6 @@ public class LBSService extends Service {
 					@Override
 					public void onPeersUpdated(List<User> peers) {
 						mApplication.setPeers(peers);
-
 						Intent intent = new Intent();
 						intent.setAction(Intents.ACTION_PEERS_UPDATED);
 						sendBroadcast(intent);
@@ -333,8 +338,25 @@ public class LBSService extends Service {
 						intent.putExtra(Intents.EXTRA_OTHER_TIME, otherTime);
 						sendBroadcast(intent);
 					}
-				});
 
+					@Override
+					public void onLoginFail() {
+						
+						
+						mApplication.setLBSServiceOn(false);
+					   
+					}
+
+					@Override
+					public void onLoginSuccess() {
+						
+						mApplication.setLBSServiceOn(true);
+						
+					}
+
+				});
+				
+				
 				mStartup = true;
 
 				startHeartbeat();
@@ -370,6 +392,10 @@ public class LBSService extends Service {
 
 	private void stopHeartbeat() {
 		if (mHeartbeat != null) {
+
+			
+			mAlarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0,
+					mHeartbeat);
 			mAlarmManager.cancel(mHeartbeat);
 		}
 	}
