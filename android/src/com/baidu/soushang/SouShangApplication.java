@@ -40,7 +40,8 @@ public class SouShangApplication extends Application {
 	private static final String USERINFO_URL = "https://openapi.baidu.com/rest/2.0/passport/users/getLoggedInUser";
 
 	private List<Answer> mAnswers;
-
+	private boolean mIsLBSServiceOn = true;
+	
 	public void setAnswers(List<Answer> answers) {
 		mAnswers = answers;
 	}
@@ -48,6 +49,16 @@ public class SouShangApplication extends Application {
 	public List<Answer> getAnswers() {
 		return mAnswers;
 	}
+
+	
+	public boolean isLBSServiceOn() {
+		return mIsLBSServiceOn;
+	}
+
+	public void setLBSServiceOn(boolean serviceOn) {
+		this.mIsLBSServiceOn = serviceOn;
+	}
+
 
 	private Baidu mBaidu;
 

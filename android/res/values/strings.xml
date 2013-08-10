@@ -136,6 +136,8 @@
     <string name="shop_item_test">读卡器手机做得得得得</string>
     <string name="gift_tips_msg">您还没有兑换过礼品，快去加油答题吧！积分商城有更多精美礼品哦！</string>
     <string name="feature_join_tips">您已参加过该专题赛，不能再参加！</string>
-    <string name="lbs_loginfail_tips">您的账号已在其他手机上登录，针锋相对不可用！</string>
-
+    <string name="lbs_loginfail_tips">要想在本手机上使用针锋相对，请在其它手机退出登录，并将本程序重启！</string>
+	<string name="lbs_event_invite">邀请好友</string>
+	<string name="lbs_event_invite_content">附近没有好友，快去邀请好友参加吧！</string>
+	<string name="lbs_event_invite_prize">邀请一次，加5个积分哦！</string>
 </resources>

@@ -26,7 +26,6 @@ public class JsonTool {
 			list=new ArrayList<FeatureEventBean>();
 			
 			String url=String.format(addr,Config.getAccessToken(context));
-			System.out.println("url="+url);
 			HttpPost request = new HttpPost(url);
 			
 			

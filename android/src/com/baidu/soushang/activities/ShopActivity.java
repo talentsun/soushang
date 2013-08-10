@@ -42,10 +42,8 @@ public class ShopActivity extends BaseActivity {
 	private TextView mFeaturePrize;
 
 	private GridView mGrid;
-
 	private TextView mNoGifts;
 	private LoadingView mLoading;
-
 	private ShopInfokAdapter mAdapter;
 
 	private ShopDialog sDialog;
@@ -58,7 +56,6 @@ public class ShopActivity extends BaseActivity {
 			showNoGifts();
 			if (arg0 != null && arg0.getRetCode() == 0
 					&& arg0.getGifts() != null) {
-
 				mAdapter.setData(arg0.getGifts());
 			} else {
 				mAdapter.clearData();
@@ -79,16 +76,11 @@ public class ShopActivity extends BaseActivity {
 		setContentView(R.layout.shop);
 
 		mTipsDialog = new TipsDialog(this);
-
 		mTypeface = Typeface.createFromAsset(getAssets(),
 				SouShangApplication.FONT);
 		mMainHandler = new Handler();
 		mTitle = (TextView) findViewById(R.id.gift_interal_title);
 		mInterral = (TextView) findViewById(R.id.gift_interal_content);
-
-		// String contet=mInterral.getText().toString();
-		// String strs[]=contet.split("\n");
-
 		mTitle.setTypeface(mTypeface);
 		mInterral.setTypeface(mTypeface);
 
@@ -125,6 +117,7 @@ public class ShopActivity extends BaseActivity {
 			mTitle.setVisibility(View.GONE);
 			mInterral.setVisibility(View.GONE);
 		}
+		
 		mDaliyPrize = (TextView) findViewById(R.id.shop_daliy_prize);
 		mDaliyPrize.setTypeface(mTypeface);
 
@@ -172,9 +165,7 @@ public class ShopActivity extends BaseActivity {
 
 		mGrid = (GridView) findViewById(R.id.shop_grid);
 		mGrid.setEmptyView(findViewById(android.R.id.empty));
-
 		mLoading = (LoadingView) findViewById(R.id.shop_loading);
-
 		mNoGifts = (TextView) findViewById(R.id.shop_nogifts);
 		mNoGifts.setTypeface(mTypeface);
 
@@ -305,6 +296,7 @@ public class ShopActivity extends BaseActivity {
 				viewHolder.shop_item_exchange.setTypeface(mTypeface);
 
 				convertView.setTag(viewHolder);
+				
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
@@ -313,7 +305,6 @@ public class ShopActivity extends BaseActivity {
 
 			String endUrl = BASEURL + urlList.get(position);
 			ImageLoader imageLoader = ImageLoader.getInstance();
-
 			imageLoader.displayImage(endUrl, viewHolder.shop_item_imag);
 
 			viewHolder.shop_item_name.setText(shopInfo.getTitle());
