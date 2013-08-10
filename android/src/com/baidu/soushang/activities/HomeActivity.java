@@ -105,6 +105,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle arg0) {
 		setContentView(R.layout.home);
 		Variables.homeFlag = 1;
+
 		mSouShang = (Button) findViewById(R.id.soushang);
 		mDailyEvent = (Button) findViewById(R.id.daily_event);
 		mRank = (Button) findViewById(R.id.rank);
@@ -135,6 +136,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		}
 
 		mApplication = (SouShangApplication) getApplication();
+		
 		if (Config.isLogged(this)) {
 			Apis.Login(this, Config.getAccessToken(this),
 					new ApiResponseCallback<CommonResponse>() {
@@ -161,7 +163,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			mApplication.updateUserExtraInfo();
 
 			Intent lbsIntent = new Intent(this, LBSService.class);
+			lbsIntent.setAction(Intents.ACTION_STARTUP);
 			startService(lbsIntent);
+
 		}
 
 		super.onCreate(arg0);
@@ -184,9 +188,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onDestroy() {
+
 		Intent intent = new Intent(this, LBSService.class);
 		stopService(intent);
+
 		super.onDestroy();
+
 	}
 
 	@Override
@@ -221,9 +228,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		} else if (v == mLBSEvent) {
 			if (Config.isLogged(HomeActivity.this)) {
-				Intent intent = new Intent(this, LBSEventActivity.class);
-				startActivity(intent);
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+				if (mApplication.isLBSServiceOn()) {
+					Intent intent = new Intent(this, LBSEventActivity.class);
+					startActivity(intent);
+					overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+				}else {
+					mTipsDialog.show(getResources().getString(
+							R.string.lbs_loginfail_tips));
+				}
 			} else {
 				mTipsDialog.show(getResources().getString(
 						R.string.lbs_event_need_logged));

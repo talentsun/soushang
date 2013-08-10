@@ -3,9 +3,13 @@ package com.baidu.soushang.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
+import com.baidu.soushang.cloudapis.Apis;
+import com.baidu.soushang.cloudapis.CommonResponse;
+import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
 import com.baidu.soushang.utils.NetworkUtils;
@@ -13,6 +17,7 @@ import com.baidu.soushang.views.LoadingView;
 import com.baidu.soushang.widgets.FightDialog;
 import com.baidu.soushang.widgets.FightDialog.Listener;
 import com.baidu.soushang.widgets.LBSFirstDialog;
+import com.limijiaoyin.socialsdk.dialogs.CommonShareDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -48,9 +53,13 @@ public class LBSEventActivity extends BaseActivity {
 	private PendingIntent mUpdatePeers;
 	private AlarmManager mAlarmManager;
 	private FightDialog mFightDialog;
+
 	private LBSFirstDialog lDialog;
 	private SharedPreferences sp;
 	private SharedPreferences.Editor et;
+
+	private Button mLbsInvite;
+	private CommonShareDialog mShareDialog;
 
 	public class PeersUpdatedReceiver extends BroadcastReceiver {
 
@@ -74,8 +83,11 @@ public class LBSEventActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
+
 		setContentView(R.layout.lbs_event);
+
 		mApplication = (SouShangApplication) getApplication();
+
 		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		mListView = (ListView) findViewById(R.id.peers);
@@ -117,17 +129,66 @@ public class LBSEventActivity extends BaseActivity {
 		if (lbs == -1) {
 			lDialog.show();
 		}
+
+		mLbsInvite = (Button) findViewById(R.id.lbs_invite);
+		mLbsInvite.setTypeface(typeface);
+		mLbsInvite.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				mShareDialog = new CommonShareDialog(LBSEventActivity.this,
+						getResources().getString(
+								R.string.lbs_event_invite_content), null,
+						getResources().getString(
+								R.string.lbs_event_invite_prize));
+				mShareDialog
+						.setOnShareListener(new CommonShareDialog.OnShareListener() {
+
+							@Override
+							public void onShared() {
+								Apis.share(
+										LBSEventActivity.this,
+										Config.getAccessToken(LBSEventActivity.this),
+										new ApiResponseCallback<CommonResponse>() {
+
+											@Override
+											public void onResults(
+													CommonResponse arg0) {
+												mApplication
+														.updateUserExtraInfo();
+											}
+
+											@Override
+											public void onError(Throwable arg0) {
+											}
+										});
+							}
+
+							@Override
+							public void onFailed() {
+							}
+
+						});
+				mShareDialog.create().show();
+
+			}
+		});
+
 		super.onCreate(arg0);
 	}
 
 	private void showLoading() {
 		mLoading.show();
 		mNoPeers.setVisibility(View.GONE);
+		mLbsInvite.setVisibility(View.GONE);
 	}
 
 	private void showNoPeers() {
 		mLoading.hide();
 		mNoPeers.setVisibility(View.VISIBLE);
+		mLbsInvite.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -159,6 +220,7 @@ public class LBSEventActivity extends BaseActivity {
 
 	@Override
 	protected void onStop() {
+
 		unregisterReceiver(mPeersUpdatedReceiver);
 		mAlarmManager.cancel(mUpdatePeers);
 

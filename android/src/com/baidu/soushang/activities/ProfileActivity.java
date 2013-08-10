@@ -48,7 +48,6 @@ public class ProfileActivity extends BaseActivity {
 	private ProfileGiftAdapter pGiftAdapter;
 	private int h;
 	private Timer timer;
-
 	private List<Gift> list = null;
 
 	@Override
@@ -122,7 +121,6 @@ public class ProfileActivity extends BaseActivity {
 				myHandler.sendMessage(message);
 			}
 		};
-
 		timer.schedule(task, 10, 10);
 
 		mEventInfoTab.setOnClickListener(new OnClickListener() {
@@ -130,6 +128,7 @@ public class ProfileActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+
 				mEventInfo.setVisibility(View.VISIBLE);
 				mEventInfoTab.setBackgroundResource(R.drawable.profile_gift);
 				mGiftInfoTab

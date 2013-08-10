@@ -27,7 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:paddingBottom="140dp" >
+        android:paddingBottom="140dp"
+        android:orientation="vertical"
+         >
 
         <TextView
             android:id="@+id/no_peers"
@@ -37,6 +39,18 @@
             android:textColor="#536f03"
             android:textSize="16sp"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/lbs_invite"
+            style="@style/OptionFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/feature_dialog_start"
+            android:gravity="center"
+            android:text="@string/lbs_event_invite"
+            android:textColor="#ffffff"
+            android:layout_marginTop="5dp"
+             />
 
         <com.baidu.soushang.views.LoadingView
             android:id="@+id/loading"
