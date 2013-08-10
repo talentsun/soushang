@@ -234,7 +234,6 @@ public class LBSService extends Service {
 
 	private void startup() {
 
-		System.out.println("at startup ---------");
 		if (!mStartup) {
 			System.setProperty("org.jboss.netty.selectTimeout", "60000");
 			System.setProperty("org.jboss.netty.epollBugWorkaround", "true");
@@ -343,7 +342,6 @@ public class LBSService extends Service {
 					@Override
 					public void onLoginFail() {
 						
-						System.out.println("at onLoginFail ");
 						
 						mApplication.setLBSServiceOn(false);
 					   
@@ -352,7 +350,6 @@ public class LBSService extends Service {
 					@Override
 					public void onLoginSuccess() {
 						
-						System.out.println("at onLoginSuccess");
 						mApplication.setLBSServiceOn(true);
 						
 					}
