@@ -148,7 +148,11 @@ public class LBSService extends Service {
 
   @Override
   public void onDestroy() {
+    stopHeartbeat();
+    stopLocationClient();
+    
     Message.obtain(mClient, SHUTDOWN).sendToTarget();
+
     super.onDestroy();
   }
 
@@ -206,9 +210,6 @@ public class LBSService extends Service {
       mChannel.close().awaitUninterruptibly();
       mClientBootstrap.releaseExternalResources();
 
-      stopHeartbeat();
-      stopLocationClient();
-      
       Log.d(TAG, "shutdown");
     }
   }
@@ -341,25 +342,20 @@ public class LBSService extends Service {
 
           @Override
           public void onLoginFail() {
-
-
             mApplication.setLBSServiceOn(false);
-
+            Log.d(TAG, "connect failed! stop service!");
+            stopSelf();
           }
 
           @Override
           public void onLoginSuccess() {
-
             mApplication.setLBSServiceOn(true);
-
+            Log.d(TAG, "connect success!");
           }
 
         });
 
-
         mStartup = true;
-
-        startHeartbeat();
 
         if (!TextUtils.isEmpty(Config.getUserName(LBSService.this))) {
           Log.d(TAG, Config.getAvatar(LBSService.this));
@@ -367,13 +363,12 @@ public class LBSService extends Service {
               Config.getUserName(LBSService.this),
               Config.getAvatar(LBSService.this),
               NetworkUtils.getNetworkType(LBSService.this));
+          startHeartbeat();
+          startLocationClient();
         } else {
           Log.e(TAG, "no client info");
+          stopSelf();
         }
-
-        startLocationClient();
-
-        Log.d(TAG, "connect success!");
       } else {
         Log.d(TAG, "connect failed! stop service!");
         stopSelf();

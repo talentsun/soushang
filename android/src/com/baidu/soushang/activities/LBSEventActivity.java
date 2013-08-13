@@ -145,8 +145,7 @@ public class LBSEventActivity extends BaseActivity {
                 R.string.lbs_event_invite_prize));
         mShareDialog
             .setOnShareListener(new CommonShareDialog.OnShareListener() {
-
-
+              
               @Override
               public void onShared() {
                 Apis.share(
@@ -199,6 +198,15 @@ public class LBSEventActivity extends BaseActivity {
   }
 
   @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (mShareDialog != null) {
+      mShareDialog.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
+  @Override
   protected void onStart() {
     IntentFilter filter = new IntentFilter();
     filter.addAction(Intents.ACTION_PEERS_UPDATED);
@@ -240,15 +248,6 @@ public class LBSEventActivity extends BaseActivity {
     intent.setAction(Intents.ACTION_LBS_ONLINE);
     startService(intent);
     super.onResume();
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-
-    if (mShareDialog != null) {
-      mShareDialog.onActivityResult(requestCode, resultCode, data);
-    }
   }
 
   public class LBSAdapter extends BaseAdapter {

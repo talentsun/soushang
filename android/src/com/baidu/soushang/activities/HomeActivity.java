@@ -60,10 +60,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             }
 
           } else {
-
             mTipsDialog.show(getResources()
                 .getString(R.string.no_day_event));
-
           }
         }
 
@@ -186,7 +184,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     
     Intent intent = new Intent(this, LBSService.class);
     stopService(intent);
-    
+
     mLogin.setText(getResources().getText(R.string.not_logged));
   }
 
@@ -293,13 +291,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
           @Override
           public void run() {
-
             notLogged();
           }
         });
       }
-
     });
+    
     initLoginStatus();
     super.onStart();
   }
