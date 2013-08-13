@@ -10,7 +10,9 @@
         android:layout_width="@dimen/shop_item_imag_width"
         android:layout_height="@dimen/shop_item_imag_height"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/shop_item_imag_margintop" />
+        android:layout_marginTop="@dimen/shop_item_imag_margintop" 
+      
+        />
 
     <LinearLayout
         android:id="@+id/shop_item_backlin"
@@ -19,7 +21,9 @@
         android:layout_below="@id/shop_item_imag"
         android:layout_centerHorizontal="true"
         android:background="@drawable/gift_showbg2"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:layout_marginTop="@dimen/shop_item_backlin_margintop"
+        >
 
         <TextView
             android:id="@+id/shop_item_name"

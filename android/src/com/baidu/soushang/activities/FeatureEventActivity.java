@@ -7,8 +7,7 @@ import java.util.List;
 
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.Variables;
-import com.baidu.soushang.bean.FeatureEventBean;
+import com.baidu.soushang.cloudapis.FeatureEvent;
 import com.baidu.soushang.utils.JsonTool;
 import com.baidu.soushang.views.LoadingView;
 import com.baidu.soushang.widgets.FeatureDialog;
@@ -29,254 +28,245 @@ import android.widget.TextView;
 
 public class FeatureEventActivity extends BaseActivity {
 
-	private ListView mListView;
-	private TextView mNoEvent;
-	private LoadingView mLoading;
-	private Typeface mTypeface;
+  private ListView mListView;
+  private TextView mNoEvent;
+  private LoadingView mLoading;
+  private Typeface mTypeface;
 
-	private EventAdapter mAdapter;
-	private List<FeatureEventBean> list = new ArrayList<FeatureEventBean>();
-	private List<FeatureEventBean> li = new ArrayList<FeatureEventBean>();
-	private static final String FEATURE_EVENT_URL = "http://soushang.limijiaoyin.com/index.php/Devent/getRooms.html?access_token=%s";
+  private EventAdapter mAdapter;
+  private List<FeatureEvent> list = new ArrayList<FeatureEvent>();
+  private List<FeatureEvent> li = new ArrayList<FeatureEvent>();
+  private static final String FEATURE_EVENT_URL =
+      "http://soushang.limijiaoyin.com/index.php/Devent/getRooms.html?access_token=%s";
 
-	private FeatureDialog fDialog;
+  private FeatureDialog mFeatureDialog;
 
-	@Override
-	protected void onCreate(Bundle arg0) {
-		// TODO Auto-generated method stub
-		setContentView(R.layout.feature_event);
+  @Override
+  protected void onCreate(Bundle arg0) {
+    // TODO Auto-generated method stub
+    setContentView(R.layout.feature_event);
 
-		mListView = (ListView) findViewById(R.id.list);
-		mTypeface = Typeface.createFromAsset(getAssets(),
-				SouShangApplication.FONT);
-		mListView.setEmptyView(findViewById(android.R.id.empty));
-		mLoading = (LoadingView) findViewById(R.id.loading);
-		mNoEvent = (TextView) findViewById(R.id.no_event);
-		mNoEvent.setTypeface(mTypeface);
+    mListView = (ListView) findViewById(R.id.list);
+    mTypeface = Typeface.createFromAsset(getAssets(),
+        SouShangApplication.FONT);
+    mListView.setEmptyView(findViewById(android.R.id.empty));
+    mLoading = (LoadingView) findViewById(R.id.loading);
+    mNoEvent = (TextView) findViewById(R.id.no_event);
+    mNoEvent.setTypeface(mTypeface);
 
-		fDialog = new FeatureDialog(this);
-		showLoading();
+    mFeatureDialog = new FeatureDialog(this);
+    mFeatureDialog.setOnClickListener(new FeatureDialog.OnClickListener() {
 
-		ThreadForFeature tFeature = new ThreadForFeature();
-		tFeature.execute("");
+      @Override
+      public void onResume() {
+      }
 
-		mListView.setOnItemClickListener(new OnItemClickListener() {
+      @Override
+      public void onHome() {
+        finish();
+      }
+    });
+    showLoading();
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				Variables.feBean = li.get(position);
-				fDialog.show();
-			}
-		});
-		
-		super.onCreate(arg0);
+    ThreadForFeature tFeature = new ThreadForFeature();
+    tFeature.execute("");
 
-	}
+    mListView.setOnItemClickListener(new OnItemClickListener() {
 
-	class ThreadForFeature extends
-			AsyncTask<String, String, List<FeatureEventBean>> {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view,
+          int position, long id) {
+        SouShangApplication.CurrentFeatureEvent = li.get(position);
+        mFeatureDialog.show();
+      }
+    });
 
-		public ThreadForFeature() {
-			// TODO Auto-generated constructor stub
-		}
+    super.onCreate(arg0);
 
-		@Override
-		protected List<FeatureEventBean> doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			
-			list = JsonTool.getFeatureData(FEATURE_EVENT_URL,
-					FeatureEventActivity.this);
-			
-			if (list != null) {
+  }
 
-				for (int i = 0; i < list.size(); i++) {
+  class ThreadForFeature extends
+      AsyncTask<String, String, List<FeatureEvent>> {
 
-					if (list.get(i).isRunning()) {
-						li.add(list.get(i));
-						list.remove(i);
-						i--;
-					}
-					
-				}
+    public ThreadForFeature() {
+    }
 
-				li.addAll(list);
+    @Override
+    protected List<FeatureEvent> doInBackground(String... params) {
+      list = JsonTool.getFeatureData(FEATURE_EVENT_URL,
+          FeatureEventActivity.this);
 
-			}
+      if (list != null) {
 
-			return li;
-		}
+        for (int i = 0; i < list.size(); i++) {
 
-		@Override
-		protected void onPostExecute(List<FeatureEventBean> result) {
-			// TODO Auto-generated method stub
+          if (list.get(i).isRunning()) {
+            li.add(list.get(i));
+            list.remove(i);
+            i--;
+          }
 
-			showNoEvent();
-			mAdapter = new EventAdapter(FeatureEventActivity.this);
-			if (result != null) {
-				mAdapter.setData(result);
-			}
-			
-			mListView.setAdapter(mAdapter);
-			super.onPostExecute(result);
-			
-		}
-	}
+        }
+        li.addAll(list);
+      }
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
+      return li;
+    }
 
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		if (Variables.homeFlag == 0) {
-			finish();
-		}
-		super.onStart();
-	}
+    @Override
+    protected void onPostExecute(List<FeatureEvent> result) {
+      showNoEvent();
+      mAdapter = new EventAdapter(FeatureEventActivity.this);
+      if (result != null) {
+        mAdapter.setData(result);
+      }
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		if (Variables.homeFlag == 0) {
-			finish();
-		}
-		super.onResume();
-	}
+      mListView.setAdapter(mAdapter);
+      super.onPostExecute(result);
+    }
+  }
 
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		finish();
-		super.onStop();
-	}
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+  }
 
-	private void showLoading() {
-		mNoEvent.setVisibility(View.GONE);
-		mLoading.show();
-	}
+  @Override
+  protected void onStart() {
+    super.onStart();
+  }
 
-	private void showNoEvent() {
-		mNoEvent.setVisibility(View.VISIBLE);
-		mLoading.hide();
-	}
+  @Override
+  protected void onResume() {
+    super.onResume();
+  }
 
-	public class EventAdapter extends BaseAdapter {
-		private List<FeatureEventBean> mData;
-		private LayoutInflater mInflater;
+  @Override
+  protected void onStop() {
+    super.onStop();
+  }
 
-		public List<FeatureEventBean> getData() {
-			return mData;
-		}
+  private void showLoading() {
+    mNoEvent.setVisibility(View.GONE);
+    mLoading.show();
+  }
 
-		public void setData(List<FeatureEventBean> data) {
-			mData.clear();
+  private void showNoEvent() {
+    mNoEvent.setVisibility(View.VISIBLE);
+    mLoading.hide();
+  }
 
-			if (data != null) {
-				mData.addAll(data);
-			}
+  public class EventAdapter extends BaseAdapter {
+    private List<FeatureEvent> mData;
+    private LayoutInflater mInflater;
 
-			notifyDataSetChanged();
-		}
+    public List<FeatureEvent> getData() {
+      return mData;
+    }
 
-		public void clearData() {
-			mData.clear();
-			notifyDataSetChanged();
-		}
+    public void setData(List<FeatureEvent> data) {
+      mData.clear();
 
-		public EventAdapter(Context context) {
-			super();
-			mData = new ArrayList<FeatureEventBean>();
-			mInflater = LayoutInflater.from(context);
-		}
+      if (data != null) {
+        mData.addAll(data);
+      }
 
-		@Override
-		public int getCount() {
-			return mData.size();
-		}
+      notifyDataSetChanged();
+    }
 
-		@Override
-		public Object getItem(int position) {
-			FeatureEventBean sBean = null;
-			try {
-				sBean = mData.get(position);
-			} catch (IndexOutOfBoundsException e) {
-			}
-			return sBean;
-		}
+    public void clearData() {
+      mData.clear();
+      notifyDataSetChanged();
+    }
 
-		@Override
-		public long getItemId(int position) {
-			FeatureEventBean sBean = mData.get(position);
-			if (sBean == null) {
-				return -1L;
-			} else {
-				return Long.parseLong(sBean.getId() + "");
-			}
-		}
+    public EventAdapter(Context context) {
+      super();
+      mData = new ArrayList<FeatureEvent>();
+      mInflater = LayoutInflater.from(context);
+    }
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
+    @Override
+    public int getCount() {
+      return mData.size();
+    }
 
-				convertView = mInflater.inflate(R.layout.feature_event_item,
-						parent, false);
+    @Override
+    public Object getItem(int position) {
+      FeatureEvent featureEvent = null;
+      try {
+        featureEvent = mData.get(position);
+      } catch (IndexOutOfBoundsException e) {}
+      return featureEvent;
+    }
 
-				viewHolder.backView = (LinearLayout) convertView
-						.findViewById(R.id.feature_back);
-				viewHolder.nameView = (TextView) convertView
-						.findViewById(R.id.name);
-				viewHolder.countView = (TextView) convertView
-						.findViewById(R.id.competitor_count);
-				viewHolder.dateView = (TextView) convertView
-						.findViewById(R.id.date);
-				viewHolder.nameView.setTypeface(mTypeface);
-				viewHolder.countView.setTypeface(mTypeface);
-				viewHolder.dateView.setTypeface(mTypeface);
-				convertView.setTag(viewHolder);
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
+    @Override
+    public long getItemId(int position) {
+      FeatureEvent featureEvent = mData.get(position);
+      if (featureEvent == null) {
+        return -1L;
+      } else {
+        return Long.parseLong(featureEvent.getId() + "");
+      }
+    }
 
-			FeatureEventBean sBean = mData.get(position);
-			viewHolder.nameView.setText(sBean.getTitle());
-			boolean isruning = sBean.isRunning();
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      ViewHolder viewHolder = null;
+      if (convertView == null) {
+        viewHolder = new ViewHolder();
 
-			if (isruning) {
-				viewHolder.backView
-						.setBackgroundResource(R.drawable.feature_run);
-			} else {
-				viewHolder.backView
-						.setBackgroundResource(R.drawable.feature_start);
-			}
+        convertView = mInflater.inflate(R.layout.feature_event_item,
+            parent, false);
 
-			viewHolder.nameView.setText(sBean.getTitle());
-			viewHolder.countView.setText(getResources().getString(
-					R.string.feature_count)
-					+ sBean.getPnum());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			Date startDate = new Date(Long.parseLong((long)sBean.getStartTime()*1000 + ""));
-			Date endDate = new Date(Long.parseLong((long)sBean.getEndTime()*1000 + ""));
-			String startTime = sdf.format(startDate);
-			String end_Time = sdf.format(endDate);
-			viewHolder.dateView.setText(startTime + "¡ª" + end_Time);
+        viewHolder.backView = (LinearLayout) convertView
+            .findViewById(R.id.feature_back);
+        viewHolder.nameView = (TextView) convertView
+            .findViewById(R.id.name);
+        viewHolder.countView = (TextView) convertView
+            .findViewById(R.id.competitor_count);
+        viewHolder.dateView = (TextView) convertView
+            .findViewById(R.id.date);
+        viewHolder.nameView.setTypeface(mTypeface);
+        viewHolder.countView.setTypeface(mTypeface);
+        viewHolder.dateView.setTypeface(mTypeface);
+        convertView.setTag(viewHolder);
+      } else {
+        viewHolder = (ViewHolder) convertView.getTag();
+      }
 
-			return convertView;
-		}
+      FeatureEvent featureEvent = mData.get(position);
+      viewHolder.nameView.setText(featureEvent.getTitle());
+      boolean isruning = featureEvent.isRunning();
 
-		class ViewHolder {
+      if (isruning) {
+        viewHolder.backView
+            .setBackgroundResource(R.drawable.feature_run);
+      } else {
+        viewHolder.backView
+            .setBackgroundResource(R.drawable.feature_start);
+      }
 
-			LinearLayout backView;
-			public TextView nameView;
-			public TextView countView;
-			public TextView dateView;
-		}
+      viewHolder.nameView.setText(featureEvent.getTitle());
+      viewHolder.countView.setText(getResources().getString(
+          R.string.feature_count)
+          + featureEvent.getPnum());
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+      Date startDate = new Date(Long.parseLong((long) featureEvent.getStartTime() * 1000 + ""));
+      Date endDate = new Date(Long.parseLong((long) featureEvent.getEndTime() * 1000 + ""));
+      String startTime = sdf.format(startDate);
+      String end_Time = sdf.format(endDate);
+      viewHolder.dateView.setText(startTime + "¡ª" + end_Time);
 
-	}
+      return convertView;
+    }
+
+    class ViewHolder {
+      LinearLayout backView;
+      public TextView nameView;
+      public TextView countView;
+      public TextView dateView;
+    }
+
+  }
+
 }

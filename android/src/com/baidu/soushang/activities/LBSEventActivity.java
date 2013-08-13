@@ -44,342 +44,350 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class LBSEventActivity extends BaseActivity {
-	private ListView mListView;
-	private LBSAdapter mAdapter;
-	private LoadingView mLoading;
-	private TextView mNoPeers;
+  private ListView mListView;
+  private LBSAdapter mAdapter;
+  private LoadingView mLoading;
+  private TextView mNoPeers;
 
-	private SouShangApplication mApplication;
-	private PendingIntent mUpdatePeers;
-	private AlarmManager mAlarmManager;
-	private FightDialog mFightDialog;
+  private SouShangApplication mApplication;
+  private PendingIntent mUpdatePeers;
+  private AlarmManager mAlarmManager;
+  private FightDialog mFightDialog;
 
-	private LBSFirstDialog lDialog;
-	private SharedPreferences sp;
-	private SharedPreferences.Editor et;
+  private LBSFirstDialog lDialog;
+  private SharedPreferences sp;
+  private SharedPreferences.Editor et;
 
-	private Button mLbsInvite;
-	private CommonShareDialog mShareDialog;
+  private Button mLbsInvite;
+  private CommonShareDialog mShareDialog;
 
-	public class PeersUpdatedReceiver extends BroadcastReceiver {
+  public class PeersUpdatedReceiver extends BroadcastReceiver {
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (intent != null) {
-				String action = intent.getAction();
-				if (Intents.ACTION_PEERS_UPDATED.equalsIgnoreCase(action)) {
-					mAdapter.setData(mApplication.getPeers());
-					showNoPeers();
-				} else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
-					mFightDialog.show(false, mApplication.getCurrentPeer(),
-							intent.getIntExtra(Intents.EXTRA_BET, 0));
-				}
-			}
-		}
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      if (intent != null) {
+        String action = intent.getAction();
+        if (Intents.ACTION_PEERS_UPDATED.equalsIgnoreCase(action)) {
+          mAdapter.setData(mApplication.getPeers());
+          showNoPeers();
+        } else if (Intents.ACTION_FIGHT_REQ.equalsIgnoreCase(action)) {
+          mFightDialog.show(false, mApplication.getCurrentPeer(),
+              intent.getIntExtra(Intents.EXTRA_BET, 0));
+        }
+      }
+    }
 
-	}
+  }
 
-	private PeersUpdatedReceiver mPeersUpdatedReceiver;
+  private PeersUpdatedReceiver mPeersUpdatedReceiver;
 
-	@Override
-	protected void onCreate(Bundle arg0) {
+  @Override
+  protected void onCreate(Bundle arg0) {
 
-		setContentView(R.layout.lbs_event);
+    setContentView(R.layout.lbs_event);
 
-		mApplication = (SouShangApplication) getApplication();
+    mApplication = (SouShangApplication) getApplication();
 
-		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-		mListView = (ListView) findViewById(R.id.peers);
-		mLoading = (LoadingView) findViewById(R.id.loading);
-		mNoPeers = (TextView) findViewById(R.id.no_peers);
+    mListView = (ListView) findViewById(R.id.peers);
+    mLoading = (LoadingView) findViewById(R.id.loading);
+    mNoPeers = (TextView) findViewById(R.id.no_peers);
 
-		Typeface typeface = Typeface.createFromAsset(getAssets(),
-				SouShangApplication.FONT);
-		mNoPeers.setTypeface(typeface);
+    Typeface typeface = Typeface.createFromAsset(getAssets(),
+        SouShangApplication.FONT);
+    mNoPeers.setTypeface(typeface);
 
-		mAdapter = new LBSAdapter(this);
-		mListView.setEmptyView(findViewById(android.R.id.empty));
-		mListView.setAdapter(mAdapter);
+    mAdapter = new LBSAdapter(this);
+    mListView.setEmptyView(findViewById(android.R.id.empty));
+    mListView.setAdapter(mAdapter);
 
-		mPeersUpdatedReceiver = new PeersUpdatedReceiver();
+    mPeersUpdatedReceiver = new PeersUpdatedReceiver();
 
-		mFightDialog = new FightDialog(this);
-		mFightDialog.setListener(new Listener() {
+    mFightDialog = new FightDialog(this);
+    mFightDialog.setListener(new Listener() {
 
-			@Override
-			public void onFight(String fightKey) {
-				Intent questionIntent = new Intent(LBSEventActivity.this,
-						QuestionActivity.class);
-				questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE,
-						Intents.EVENT_TYPE_LBS);
-				questionIntent.putExtra(Intents.EXTRA_FIGHT_KEY, fightKey);
-				LBSEventActivity.this.startActivity(questionIntent);
+      @Override
+      public void onFight(String fightKey) {
+        Intent questionIntent = new Intent(LBSEventActivity.this,
+            QuestionActivity.class);
+        questionIntent.putExtra(Intents.EXTRA_EVENT_TYPE,
+            Intents.EVENT_TYPE_LBS);
+        questionIntent.putExtra(Intents.EXTRA_FIGHT_KEY, fightKey);
+        LBSEventActivity.this.startActivity(questionIntent);
 
-				finish();
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-			}
-		});
+        finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+      }
+    });
 
-		lDialog = new LBSFirstDialog(this);
-		sp = getSharedPreferences(Intents.EXTRA_LBS_DIALOG_JUDGE,
-				Activity.MODE_PRIVATE);
-		et = sp.edit();
-		int lbs = sp.getInt("lbs", -1);
-		if (lbs == -1) {
-			lDialog.show();
-		}
+    lDialog = new LBSFirstDialog(this);
+    sp = getSharedPreferences(Intents.EXTRA_LBS_DIALOG_JUDGE,
+        Activity.MODE_PRIVATE);
+    et = sp.edit();
+    int lbs = sp.getInt("lbs", -1);
+    if (lbs == -1) {
+      lDialog.show();
+    }
 
-		mLbsInvite = (Button) findViewById(R.id.lbs_invite);
-		mLbsInvite.setTypeface(typeface);
-		mLbsInvite.setOnClickListener(new OnClickListener() {
+    mLbsInvite = (Button) findViewById(R.id.lbs_invite);
+    mLbsInvite.setTypeface(typeface);
+    mLbsInvite.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+      @Override
+      public void onClick(View v) {
+        // TODO Auto-generated method stub
 
-				mShareDialog = new CommonShareDialog(LBSEventActivity.this,
-						getResources().getString(
-								R.string.lbs_event_invite_content), null,
-						getResources().getString(
-								R.string.lbs_event_invite_prize));
-				mShareDialog
-						.setOnShareListener(new CommonShareDialog.OnShareListener() {
+        mShareDialog = new CommonShareDialog(LBSEventActivity.this,
+            getResources().getString(
+                R.string.lbs_event_invite_content), null,
+            getResources().getString(
+                R.string.lbs_event_invite_prize));
+        mShareDialog
+            .setOnShareListener(new CommonShareDialog.OnShareListener() {
 
-							@Override
-							public void onShared() {
-								Apis.share(
-										LBSEventActivity.this,
-										Config.getAccessToken(LBSEventActivity.this),
-										new ApiResponseCallback<CommonResponse>() {
 
-											@Override
-											public void onResults(
-													CommonResponse arg0) {
-												mApplication
-														.updateUserExtraInfo();
-											}
+              @Override
+              public void onShared() {
+                Apis.share(
+                    LBSEventActivity.this,
+                    Config.getAccessToken(LBSEventActivity.this),
+                    new ApiResponseCallback<CommonResponse>() {
 
-											@Override
-											public void onError(Throwable arg0) {
-											}
-										});
-							}
+                      @Override
+                      public void onResults(
+                          CommonResponse arg0) {
+                        mApplication
+                            .updateUserExtraInfo();
+                      }
 
-							@Override
-							public void onFailed() {
-							}
+                      @Override
+                      public void onError(Throwable arg0) {}
+                    });
+              }
 
-						});
-				mShareDialog.create().show();
+              @Override
+              public void onFailed() {}
 
-			}
-		});
+            });
+        mShareDialog.create().show();
 
-		super.onCreate(arg0);
-	}
+      }
+    });
 
-	private void showLoading() {
-		mLoading.show();
-		mNoPeers.setVisibility(View.GONE);
-		mLbsInvite.setVisibility(View.GONE);
-	}
+    super.onCreate(arg0);
+  }
 
-	private void showNoPeers() {
-		mLoading.hide();
-		mNoPeers.setVisibility(View.VISIBLE);
-		mLbsInvite.setVisibility(View.VISIBLE);
-	}
+  private void showLoading() {
+    mLoading.show();
+    mNoPeers.setVisibility(View.GONE);
+    mLbsInvite.setVisibility(View.GONE);
+  }
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		et.putInt("lbs", 0);
-		et.commit();
-		super.onDestroy();
-	}
+  private void showNoPeers() {
+    mLoading.hide();
+    mNoPeers.setVisibility(View.VISIBLE);
+    mLbsInvite.setVisibility(View.VISIBLE);
+  }
 
-	@Override
-	protected void onStart() {
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intents.ACTION_PEERS_UPDATED);
-		filter.addAction(Intents.ACTION_FIGHT_REQ);
-		registerReceiver(mPeersUpdatedReceiver, filter);
+  @Override
+  protected void onDestroy() {
+    // TODO Auto-generated method stub
+    et.putInt("lbs", 0);
+    et.commit();
+    super.onDestroy();
+  }
 
-		showLoading();
+  @Override
+  protected void onStart() {
+    IntentFilter filter = new IntentFilter();
+    filter.addAction(Intents.ACTION_PEERS_UPDATED);
+    filter.addAction(Intents.ACTION_FIGHT_REQ);
+    registerReceiver(mPeersUpdatedReceiver, filter);
 
-		Intent intent = new Intent(this, LBSService.class);
-		intent.setAction(Intents.ACTION_UPDATE_PEERS);
-		mUpdatePeers = PendingIntent.getService(this, 0, intent,
-				PendingIntent.FLAG_CANCEL_CURRENT);
-		mAlarmManager.setRepeating(AlarmManager.RTC,
-				System.currentTimeMillis(), 10 * 1000, mUpdatePeers);
+    showLoading();
 
-		super.onStart();
-	}
+    Intent intent = new Intent(this, LBSService.class);
+    intent.setAction(Intents.ACTION_UPDATE_PEERS);
+    mUpdatePeers = PendingIntent.getService(this, 0, intent,
+        PendingIntent.FLAG_CANCEL_CURRENT);
+    mAlarmManager.setRepeating(AlarmManager.RTC,
+        System.currentTimeMillis(), 10 * 1000, mUpdatePeers);
 
-	@Override
-	protected void onStop() {
+    super.onStart();
+  }
 
-		unregisterReceiver(mPeersUpdatedReceiver);
-		mAlarmManager.cancel(mUpdatePeers);
+  @Override
+  protected void onStop() {
 
-		super.onStop();
-	}
+    unregisterReceiver(mPeersUpdatedReceiver);
+    mAlarmManager.cancel(mUpdatePeers);
 
-	@Override
-	protected void onPause() {
-		Intent intent = new Intent(this, LBSService.class);
-		intent.setAction(Intents.ACTION_LBS_OFFLINE);
-		startService(intent);
-		super.onPause();
-	}
+    super.onStop();
+  }
 
-	@Override
-	protected void onResume() {
-		Intent intent = new Intent(this, LBSService.class);
-		intent.setAction(Intents.ACTION_LBS_ONLINE);
-		startService(intent);
-		super.onResume();
-	}
+  @Override
+  protected void onPause() {
+    Intent intent = new Intent(this, LBSService.class);
+    intent.setAction(Intents.ACTION_LBS_OFFLINE);
+    startService(intent);
+    super.onPause();
+  }
 
-	public class LBSAdapter extends BaseAdapter {
-		private List<User> mData;
-		private LayoutInflater mInflater;
-		private Context mContext;
+  @Override
+  protected void onResume() {
+    Intent intent = new Intent(this, LBSService.class);
+    intent.setAction(Intents.ACTION_LBS_ONLINE);
+    startService(intent);
+    super.onResume();
+  }
 
-		public LBSAdapter(Context context) {
-			super();
-			mContext = context;
-			mInflater = LayoutInflater.from(context);
-			mData = new ArrayList<User>();
-		}
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
 
-		public void setData(List<User> data) {
-			mData.clear();
-			if (data != null) {
-				mData.addAll(data);
-			}
-			notifyDataSetChanged();
-		}
+    if (mShareDialog != null) {
+      mShareDialog.onActivityResult(requestCode, resultCode, data);
+    }
+  }
 
-		public void clear() {
-			mData.clear();
-			notifyDataSetChanged();
-		}
+  public class LBSAdapter extends BaseAdapter {
+    private List<User> mData;
+    private LayoutInflater mInflater;
+    private Context mContext;
 
-		@Override
-		public int getCount() {
-			return mData.size();
-		}
+    public LBSAdapter(Context context) {
+      super();
+      mContext = context;
+      mInflater = LayoutInflater.from(context);
+      mData = new ArrayList<User>();
+    }
 
-		@Override
-		public Object getItem(int position) {
-			return mData.get(position);
-		}
+    public void setData(List<User> data) {
+      mData.clear();
+      if (data != null) {
+        mData.addAll(data);
+      }
+      notifyDataSetChanged();
+    }
 
-		@Override
-		public long getItemId(int position) {
-			return mData.get(position).getId();
-		}
+    public void clear() {
+      mData.clear();
+      notifyDataSetChanged();
+    }
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
-				Typeface typeface = Typeface.createFromAsset(
-						mContext.getAssets(), SouShangApplication.FONT);
+    @Override
+    public int getCount() {
+      return mData.size();
+    }
 
-				convertView = (View) mInflater.inflate(R.layout.peer, null);
-				viewHolder.bg = (LinearLayout) convertView
-						.findViewById(R.id.bg);
-				viewHolder.avatar = (ImageView) convertView
-						.findViewById(R.id.avatar);
-				viewHolder.username = (TextView) convertView
-						.findViewById(R.id.username);
-				viewHolder.network = (TextView) convertView
-						.findViewById(R.id.network);
-				viewHolder.eventCount = (TextView) convertView
-						.findViewById(R.id.event_count);
-				viewHolder.winRate = (TextView) convertView
-						.findViewById(R.id.win_rate);
-				viewHolder.fight = (Button) convertView
-						.findViewById(R.id.fight);
+    @Override
+    public Object getItem(int position) {
+      return mData.get(position);
+    }
 
-				viewHolder.username.setTypeface(typeface);
-				viewHolder.network.setTypeface(typeface);
-				viewHolder.eventCount.setTypeface(typeface);
-				viewHolder.winRate.setTypeface(typeface);
+    @Override
+    public long getItemId(int position) {
+      return mData.get(position).getId();
+    }
 
-				convertView.setTag(viewHolder);
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      ViewHolder viewHolder = null;
+      if (convertView == null) {
+        viewHolder = new ViewHolder();
+        Typeface typeface = Typeface.createFromAsset(
+            mContext.getAssets(), SouShangApplication.FONT);
 
-			final User peer = (User) getItem(position);
+        convertView = (View) mInflater.inflate(R.layout.peer, null);
+        viewHolder.bg = (LinearLayout) convertView
+            .findViewById(R.id.bg);
+        viewHolder.avatar = (ImageView) convertView
+            .findViewById(R.id.avatar);
+        viewHolder.username = (TextView) convertView
+            .findViewById(R.id.username);
+        viewHolder.network = (TextView) convertView
+            .findViewById(R.id.network);
+        viewHolder.eventCount = (TextView) convertView
+            .findViewById(R.id.event_count);
+        viewHolder.winRate = (TextView) convertView
+            .findViewById(R.id.win_rate);
+        viewHolder.fight = (Button) convertView
+            .findViewById(R.id.fight);
 
-			DisplayImageOptions option = new DisplayImageOptions.Builder()
-					.showImageOnFail(R.drawable.default_avatar)
-					.showImageForEmptyUri(R.drawable.default_avatar)
-					.showStubImage(R.drawable.default_avatar)
-					.displayer(
-							new RoundedBitmapDisplayer(
-									mContext.getResources()
-											.getDimensionPixelSize(
-													R.dimen.avatar_width) / 2))
-					.build();
-			ImageLoader.getInstance().displayImage(peer.getAvatar(),
-					viewHolder.avatar, option);
-			viewHolder.username.setText(peer.getName());
-			viewHolder.network.setText(NetworkUtils.getNetworkStr(peer
-					.getNetType()));
-			viewHolder.eventCount.setText(String.format(mContext.getResources()
-					.getString(R.string.event_count), peer.getFightNum()));
-			viewHolder.winRate.setText(String.format(mContext.getResources()
-					.getString(R.string.win_rate),
-					(int) (peer.getWinNum() * 100.0 / (float) peer
-							.getFightNum())));
-			viewHolder.fight.setOnClickListener(new OnClickListener() {
+        viewHolder.username.setTypeface(typeface);
+        viewHolder.network.setTypeface(typeface);
+        viewHolder.eventCount.setTypeface(typeface);
+        viewHolder.winRate.setTypeface(typeface);
 
-				@Override
-				public void onClick(View v) {
-					mFightDialog.show(true, peer, 0);
-				}
-			});
+        convertView.setTag(viewHolder);
+      } else {
+        viewHolder = (ViewHolder) convertView.getTag();
+      }
 
-			if (getCount() == 1) {
-				viewHolder.bg
-						.setBackgroundResource(R.drawable.lbs_event_item_bg_single);
-			} else {
-				if (position == 0) {
-					viewHolder.bg
-							.setBackgroundResource(R.drawable.lbs_event_item_bg_first);
-				} else if (position == mData.size() - 1) {
-					viewHolder.bg
-							.setBackgroundResource(R.drawable.lbs_event_item_bg_last);
-				} else {
-					viewHolder.bg
-							.setBackgroundResource(R.drawable.lbs_event_item_bg_other);
-				}
-			}
+      final User peer = (User) getItem(position);
 
-			return convertView;
-		}
+      DisplayImageOptions option = new DisplayImageOptions.Builder()
+          .showImageOnFail(R.drawable.default_avatar)
+          .showImageForEmptyUri(R.drawable.default_avatar)
+          .showStubImage(R.drawable.default_avatar)
+          .displayer(
+              new RoundedBitmapDisplayer(
+                  mContext.getResources()
+                      .getDimensionPixelSize(
+                          R.dimen.avatar_width) / 2))
+          .build();
+      ImageLoader.getInstance().displayImage(peer.getAvatar(),
+          viewHolder.avatar, option);
+      viewHolder.username.setText(peer.getName());
+      viewHolder.network.setText(NetworkUtils.getNetworkStr(peer
+          .getNetType()));
+      viewHolder.eventCount.setText(String.format(mContext.getResources()
+          .getString(R.string.event_count), peer.getFightNum()));
+      viewHolder.winRate.setText(String.format(mContext.getResources()
+          .getString(R.string.win_rate),
+          (int) (peer.getWinNum() * 100.0 / (float) peer
+              .getFightNum())));
+      viewHolder.fight.setOnClickListener(new OnClickListener() {
 
-		public class ViewHolder {
-			public LinearLayout bg;
-			public ImageView avatar;
-			public TextView username;
-			public TextView network;
-			public TextView eventCount;
-			public TextView winRate;
-			public Button fight;
+        @Override
+        public void onClick(View v) {
+          mFightDialog.show(true, peer, 0);
+        }
+      });
 
-			public ViewHolder() {
+      if (getCount() == 1) {
+        viewHolder.bg
+            .setBackgroundResource(R.drawable.lbs_event_item_bg_single);
+      } else {
+        if (position == 0) {
+          viewHolder.bg
+              .setBackgroundResource(R.drawable.lbs_event_item_bg_first);
+        } else if (position == mData.size() - 1) {
+          viewHolder.bg
+              .setBackgroundResource(R.drawable.lbs_event_item_bg_last);
+        } else {
+          viewHolder.bg
+              .setBackgroundResource(R.drawable.lbs_event_item_bg_other);
+        }
+      }
 
-			}
-		}
+      return convertView;
+    }
 
-	}
+    public class ViewHolder {
+      public LinearLayout bg;
+      public ImageView avatar;
+      public TextView username;
+      public TextView network;
+      public TextView eventCount;
+      public TextView winRate;
+      public Button fight;
+
+      public ViewHolder() {
+
+      }
+    }
+
+  }
 }

@@ -48,7 +48,7 @@
             android:background="@drawable/feature_dialog_start"
             android:gravity="center"
             android:text="@string/lbs_event_invite"
-            android:textColor="#ffffff"
+            android:textColor="#fdfcc4"
             android:layout_marginTop="5dp"
              />
 

@@ -138,6 +138,7 @@
     <string name="feature_join_tips">您已参加过该专题赛，不能再参加！</string>
     <string name="lbs_loginfail_tips">要想在本手机上使用针锋相对，请在其它手机退出登录，并将本程序重启！</string>
 	<string name="lbs_event_invite">邀请好友</string>
-	<string name="lbs_event_invite_content">附近没有好友，快去邀请好友参加吧！</string>
+	<string name="lbs_event_invite_content">我的妈呀，这是要发呀！你还在打飞机咩？你还在找你妹咩？你还在保卫萝卜咩？如果这就是你，那么你已经out了，赶快来寻找搜神吧，与你身边的小伙伴们一起针锋相对，赢取积分，赚取加注，夺得大奖，并且能和小伙伴们一起涨姿势，你还在等什么？</string>
 	<string name="lbs_event_invite_prize">邀请一次，加5个积分哦！</string>
+	<string name="profile_login_out">退出</string>
 </resources>

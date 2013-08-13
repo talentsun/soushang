@@ -32,16 +32,16 @@ public class AccountOauthDialog extends Dialog {
   static final int BLUE = 0xFF6D84B4;
 
   static final float[] DIMENSIONS_DIFF_LANDSCAPE = {
-        20, 60
-    };
+      20, 60
+  };
 
   static final float[] DIMENSIONS_DIFF_PORTRAIT = {
-        40, 60
-    };
+      40, 60
+  };
 
   static final FrameLayout.LayoutParams FILL = new FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT);
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT);
 
   static final int MARGIN = 4;
 
@@ -63,7 +63,7 @@ public class AccountOauthDialog extends Dialog {
   private Platform mPlatform;
 
   public AccountOauthDialog(Context context, String url, Platform platform,
-            ISocialLogin socialLoginListener) {
+      ISocialLogin socialLoginListener) {
     super(context);
     mUrl = url;
     this.mPlatform = platform;
@@ -74,7 +74,7 @@ public class AccountOauthDialog extends Dialog {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     this.getWindow().setFlags(LayoutParams.FLAG_FULLSCREEN,
-                LayoutParams.FLAG_FULLSCREEN);
+        LayoutParams.FLAG_FULLSCREEN);
     mSpinner = new ProgressDialog(getContext());
     mSpinner.requestWindowFeature(Window.FEATURE_NO_TITLE);
     mSpinner.setMessage("Loading...");
@@ -88,12 +88,12 @@ public class AccountOauthDialog extends Dialog {
     int orientation = getContext().getResources().getConfiguration().orientation;
     float[] dimensions =
         (orientation == Configuration.ORIENTATION_LANDSCAPE) ? DIMENSIONS_DIFF_LANDSCAPE
-                : DIMENSIONS_DIFF_PORTRAIT;
+            : DIMENSIONS_DIFF_PORTRAIT;
     addContentView(
-                mContent,
-                new LinearLayout.LayoutParams(display.getWidth()
-                        - ((int) (dimensions[0] * scale + 0.5f)), display
-                        .getHeight() - ((int) (dimensions[1] * scale + 0.5f))));
+        mContent,
+        new LinearLayout.LayoutParams(display.getWidth()
+            - ((int) (dimensions[0] * scale + 0.5f)), display
+            .getHeight() - ((int) (dimensions[1] * scale + 0.5f))));
   }
 
   private void setUpTitle() {
@@ -137,7 +137,7 @@ public class AccountOauthDialog extends Dialog {
     @TargetApi(8)
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler,
-                SslError error) {
+        SslError error) {
       handler.proceed();
     }
 
@@ -149,9 +149,9 @@ public class AccountOauthDialog extends Dialog {
 
     @Override
     public void onReceivedError(WebView view, int errorCode,
-                String description, String failingUrl) {
+        String description, String failingUrl) {
       Log.d("account", "errorCode=" + errorCode + " description= "
-                    + description + "  failingUrl= " + failingUrl);
+          + description + "  failingUrl= " + failingUrl);
       super.onReceivedError(view, errorCode, description, failingUrl);
     }
 
@@ -178,7 +178,7 @@ public class AccountOauthDialog extends Dialog {
       }
       try {
         if (mSpinner.isShowing())
-                    mSpinner.dismiss();
+          mSpinner.dismiss();
       } catch (Exception e) {
         e.printStackTrace();
       }

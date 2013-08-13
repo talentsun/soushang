@@ -36,7 +36,7 @@
     
     
     <dimen name="daily_event_margintop">-5dp</dimen>
-    <dimen name="home_line_margintop">20dp</dimen>
+    <dimen name="home_line_margintop">18dp</dimen>
     
     <dimen name="event_score_margin_right">5dp</dimen>
     <dimen name="event_score_margintop">-17dp</dimen>
@@ -51,4 +51,9 @@
      
     <dimen name="fight_dialog_waiting_size">17sp</dimen>
     <dimen name="fight_dialog_btn_range">10dp</dimen>
+   
+    <dimen name="shop_item_imag_width">140dp</dimen>
+	<dimen name="shop_item_imag_height">140dp</dimen>
+	
+	<dimen name="shop_item_backlin_margintop">4dp</dimen>
 </resources>

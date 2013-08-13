@@ -13,45 +13,45 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class TipsDialog extends Dialog {
-	private TextView mContent;
-	private Button mKnow;
+  private TextView mContent;
+  private Button mKnow;
 
-	public TipsDialog(Context context) {
-		this(context, R.style.TipsDialog);
-	}
+  public TipsDialog(Context context) {
+    this(context, R.style.TipsDialog);
+  }
 
-	public TipsDialog(Context context, int theme) {
-		super(context, theme);
+  public TipsDialog(Context context, int theme) {
+    super(context, theme);
 
-		setContentView(R.layout.no_day_event);
+    setContentView(R.layout.no_day_event);
 
-		mKnow = (Button) findViewById(R.id.know);
-		mContent = (TextView) findViewById(R.id.content);
+    mKnow = (Button) findViewById(R.id.know);
+    mContent = (TextView) findViewById(R.id.content);
 
-		mKnow.setOnClickListener(new View.OnClickListener() {
+    mKnow.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				dismiss();
-			}
-		});
+      @Override
+      public void onClick(View v) {
+        dismiss();
+      }
+    });
 
-		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(),
-				SouShangApplication.FONT);
-		mKnow.setTypeface(typeface);
-		mContent.setTypeface(typeface);
-	}
+    Typeface typeface = Typeface.createFromAsset(getContext().getAssets(),
+        SouShangApplication.FONT);
+    mKnow.setTypeface(typeface);
+    mContent.setTypeface(typeface);
+  }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
 
-	}
+  }
 
-	public void show(String message) {
-		if (!TextUtils.isEmpty(message)) {
-			mContent.setText(message);
-		}
-		super.show();
-	}
+  public void show(String message) {
+    if (!TextUtils.isEmpty(message)) {
+      mContent.setText(message);
+    }
+    super.show();
+  }
 
 }
