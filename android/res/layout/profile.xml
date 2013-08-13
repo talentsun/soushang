@@ -103,7 +103,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/profile_dash_line_repeated" />
 
                 <LinearLayout
@@ -154,7 +154,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/profile_dash_line_repeated" />
 
                 <LinearLayout
@@ -223,6 +223,17 @@
                 android:text="@string/gift_tips_msg"
                 android:visibility="gone" />
         </LinearLayout>
+        
     </LinearLayout>
 
+    <Button 
+        android:id="@+id/login_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_out"
+        android:text="@string/profile_login_out"
+        android:textColor="#536f03"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        />
 </LinearLayout>

@@ -152,7 +152,7 @@ public class LBSService extends Service {
     stopLocationClient();
     
     Message.obtain(mClient, SHUTDOWN).sendToTarget();
-    
+
     super.onDestroy();
   }
 
@@ -161,10 +161,6 @@ public class LBSService extends Service {
 
     if (intent != null) {
       String action = intent.getAction();
-      
-      if (Intents.ACTION_SHUTDOWN.equalsIgnoreCase(action)) {
-        stopSelf();
-      }
 
       if (mStartup) {
         if (Intents.ACTION_HEARTBEAT.equalsIgnoreCase(action)) {
@@ -214,6 +210,7 @@ public class LBSService extends Service {
       mChannel.close().awaitUninterruptibly();
       mClientBootstrap.releaseExternalResources();
 
+      Log.d(TAG, "shutdown");
     }
   }
 

@@ -6,7 +6,6 @@ import java.util.List;
 import com.baidu.soushang.Config;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.Variables;
 import com.baidu.soushang.SouShangApplication.UpdateUserInfoListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.ShopInfo;
@@ -34,322 +33,322 @@ import android.widget.TextView;
 
 public class ShopActivity extends BaseActivity {
 
-	private SouShangApplication mApplication;
-	private Typeface mTypeface;
-	private TextView mTitle;
-	private TextView mInterral;
-	private TextView mDaliyPrize;
-	private TextView mFeaturePrize;
+  private SouShangApplication mApplication;
+  private Typeface mTypeface;
+  private TextView mTitle;
+  private TextView mInterral;
+  private TextView mDaliyPrize;
+  private TextView mFeaturePrize;
 
-	private GridView mGrid;
-	private TextView mNoGifts;
-	private LoadingView mLoading;
-	private ShopInfokAdapter mAdapter;
+  private GridView mGrid;
+  private TextView mNoGifts;
+  private LoadingView mLoading;
+  private ShopInfokAdapter mAdapter;
 
-	private ShopDialog sDialog;
-	private TipsDialog mTipsDialog;
-	private Handler mMainHandler;
-	private ApiResponseCallback<ShopInfoResponse> mShopInfoCallback = new ApiResponseCallback<ShopInfoResponse>() {
+  private ShopDialog sDialog;
+  private TipsDialog mTipsDialog;
+  private Handler mMainHandler;
+  private ApiResponseCallback<ShopInfoResponse> mShopInfoCallback =
+      new ApiResponseCallback<ShopInfoResponse>() {
 
-		@Override
-		public void onResults(ShopInfoResponse arg0) {
-			showNoGifts();
-			if (arg0 != null && arg0.getRetCode() == 0
-					&& arg0.getGifts() != null) {
-				mAdapter.setData(arg0.getGifts());
-			} else {
-				mAdapter.clearData();
-			}
-		}
+        @Override
+        public void onResults(ShopInfoResponse arg0) {
+          showNoGifts();
+          if (arg0 != null && arg0.getRetCode() == 0
+              && arg0.getGifts() != null) {
+            mAdapter.setData(arg0.getGifts());
+          } else {
+            mAdapter.clearData();
+          }
+        }
 
-		@Override
-		public void onError(Throwable arg0) {
-			showNoGifts();
-			mAdapter.clearData();
-		}
-	};
+        @Override
+        public void onError(Throwable arg0) {
+          showNoGifts();
+          mAdapter.clearData();
+        }
+      };
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.shop);
+    setContentView(R.layout.shop);
 
-		mTipsDialog = new TipsDialog(this);
-		mTypeface = Typeface.createFromAsset(getAssets(),
-				SouShangApplication.FONT);
-		mMainHandler = new Handler();
-		mTitle = (TextView) findViewById(R.id.gift_interal_title);
-		mInterral = (TextView) findViewById(R.id.gift_interal_content);
-		mTitle.setTypeface(mTypeface);
-		mInterral.setTypeface(mTypeface);
+    mTipsDialog = new TipsDialog(this);
+    mTypeface = Typeface.createFromAsset(getAssets(),
+        SouShangApplication.FONT);
+    mMainHandler = new Handler();
+    mTitle = (TextView) findViewById(R.id.gift_interal_title);
+    mInterral = (TextView) findViewById(R.id.gift_interal_content);
+    mTitle.setTypeface(mTypeface);
+    mInterral.setTypeface(mTypeface);
 
-		mApplication = (SouShangApplication) getApplication();
-		mApplication.setUpdateUserInfoListener(new UpdateUserInfoListener() {
+    mApplication = (SouShangApplication) getApplication();
+    mApplication.setUpdateUserInfoListener(new UpdateUserInfoListener() {
 
-			@Override
-			public void onUpdated(User user) {
-				final int point = user.getPoint();
-				// TODO Auto-generated method stub
-				mMainHandler.post(new Runnable() {
+      @Override
+      public void onUpdated(User user) {
+        final int point = user.getPoint();
+        // TODO Auto-generated method stub
+        mMainHandler.post(new Runnable() {
 
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						mInterral.setText(point + "");
-					}
-				});
+          @Override
+          public void run() {
+            // TODO Auto-generated method stub
+            mInterral.setText(point + "");
+          }
+        });
 
-			}
+      }
 
-			@Override
-			public void onError() {
-				// TODO Auto-generated method stub
+      @Override
+      public void onError() {
+        // TODO Auto-generated method stub
 
-			}
-		});
+      }
+    });
 
-		if (mApplication.getUser() != null) {
-			mTitle.setVisibility(View.VISIBLE);
-			mInterral.setVisibility(View.VISIBLE);
-			mInterral.setText(mApplication.getUser().getPoint() + "");
-		} else {
-			mTitle.setVisibility(View.GONE);
-			mInterral.setVisibility(View.GONE);
-		}
-		
-		mDaliyPrize = (TextView) findViewById(R.id.shop_daliy_prize);
-		mDaliyPrize.setTypeface(mTypeface);
+    if (mApplication.getUser() != null) {
+      mTitle.setVisibility(View.VISIBLE);
+      mInterral.setVisibility(View.VISIBLE);
+      mInterral.setText(mApplication.getUser().getPoint() + "");
+    } else {
+      mTitle.setVisibility(View.GONE);
+      mInterral.setVisibility(View.GONE);
+    }
 
-		mDaliyPrize.setOnClickListener(new OnClickListener() {
+    mDaliyPrize = (TextView) findViewById(R.id.shop_daliy_prize);
+    mDaliyPrize.setTypeface(mTypeface);
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mDaliyPrize.setBackgroundResource(R.drawable.gift_cg_pressed);
-				mDaliyPrize.setTextColor(getResources().getColor(
-						R.color.light_green));
-				mFeaturePrize.setBackgroundResource(R.drawable.gift_zt_normal);
-				mFeaturePrize.setTextColor(getResources().getColor(
-						R.color.dark_green));
-				Variables.CATID = "1";
-				showLoading();
-				Apis.getShopInfo(ShopActivity.this, Variables.CATID,
-						mShopInfoCallback);
-				mAdapter = new ShopInfokAdapter(ShopActivity.this);
-				mGrid.setAdapter(mAdapter);
-			}
-		});
+    mDaliyPrize.setOnClickListener(new OnClickListener() {
 
-		mFeaturePrize = (TextView) findViewById(R.id.shop_feature_prize);
-		mFeaturePrize.setTypeface(mTypeface);
-		mFeaturePrize.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // TODO Auto-generated method stub
+        mDaliyPrize.setBackgroundResource(R.drawable.gift_cg_pressed);
+        mDaliyPrize.setTextColor(getResources().getColor(
+            R.color.light_green));
+        mFeaturePrize.setBackgroundResource(R.drawable.gift_zt_normal);
+        mFeaturePrize.setTextColor(getResources().getColor(
+            R.color.dark_green));
+        SouShangApplication.CATID = "1";
+        showLoading();
+        Apis.getShopInfo(ShopActivity.this, SouShangApplication.CATID,
+            mShopInfoCallback);
+        mAdapter = new ShopInfokAdapter(ShopActivity.this);
+        mGrid.setAdapter(mAdapter);
+      }
+    });
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mDaliyPrize.setBackgroundResource(R.drawable.gift_cg_normal);
-				mDaliyPrize.setTextColor(getResources().getColor(
-						R.color.dark_green));
-				mFeaturePrize.setBackgroundResource(R.drawable.gift_zt_pressed);
-				mFeaturePrize.setTextColor(getResources().getColor(
-						R.color.light_green));
-				Variables.CATID = "2";
-				showLoading();
-				Apis.getShopInfo(ShopActivity.this, Variables.CATID,
-						mShopInfoCallback);
-				mAdapter = new ShopInfokAdapter(ShopActivity.this);
-				mGrid.setAdapter(mAdapter);
-			}
-		});
+    mFeaturePrize = (TextView) findViewById(R.id.shop_feature_prize);
+    mFeaturePrize.setTypeface(mTypeface);
+    mFeaturePrize.setOnClickListener(new OnClickListener() {
 
-		mGrid = (GridView) findViewById(R.id.shop_grid);
-		mGrid.setEmptyView(findViewById(android.R.id.empty));
-		mLoading = (LoadingView) findViewById(R.id.shop_loading);
-		mNoGifts = (TextView) findViewById(R.id.shop_nogifts);
-		mNoGifts.setTypeface(mTypeface);
+      @Override
+      public void onClick(View v) {
+        // TODO Auto-generated method stub
+        mDaliyPrize.setBackgroundResource(R.drawable.gift_cg_normal);
+        mDaliyPrize.setTextColor(getResources().getColor(
+            R.color.dark_green));
+        mFeaturePrize.setBackgroundResource(R.drawable.gift_zt_pressed);
+        mFeaturePrize.setTextColor(getResources().getColor(
+            R.color.light_green));
+        SouShangApplication.CATID = "2";
+        showLoading();
+        Apis.getShopInfo(ShopActivity.this, SouShangApplication.CATID,
+            mShopInfoCallback);
+        mAdapter = new ShopInfokAdapter(ShopActivity.this);
+        mGrid.setAdapter(mAdapter);
+      }
+    });
 
-	}
+    mGrid = (GridView) findViewById(R.id.shop_grid);
+    mGrid.setEmptyView(findViewById(android.R.id.empty));
+    mLoading = (LoadingView) findViewById(R.id.shop_loading);
+    mNoGifts = (TextView) findViewById(R.id.shop_nogifts);
+    mNoGifts.setTypeface(mTypeface);
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+  }
 
-	}
+  @Override
+  protected void onResume() {
+    // TODO Auto-generated method stub
+    super.onResume();
 
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		Variables.CATID = "1";
-		mAdapter = new ShopInfokAdapter(ShopActivity.this);
-		mGrid.setAdapter(mAdapter);
-		showLoading();
-		Apis.getShopInfo(ShopActivity.this, Variables.CATID, mShopInfoCallback);
-	}
+  }
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
+  @Override
+  protected void onStart() {
+    // TODO Auto-generated method stub
+    super.onStart();
+    SouShangApplication.CATID = "1";
+    mAdapter = new ShopInfokAdapter(ShopActivity.this);
+    mGrid.setAdapter(mAdapter);
+    showLoading();
+    Apis.getShopInfo(ShopActivity.this, SouShangApplication.CATID, mShopInfoCallback);
+  }
 
-	private void showLoading() {
-		mNoGifts.setVisibility(View.GONE);
-		mLoading.show();
-	}
+  @Override
+  protected void onDestroy() {
+    // TODO Auto-generated method stub
+    super.onDestroy();
+  }
 
-	private void showNoGifts() {
-		mNoGifts.setVisibility(View.VISIBLE);
-		mLoading.hide();
+  private void showLoading() {
+    mNoGifts.setVisibility(View.GONE);
+    mLoading.show();
+  }
 
-	}
+  private void showNoGifts() {
+    mNoGifts.setVisibility(View.VISIBLE);
+    mLoading.hide();
 
-	public class ShopInfokAdapter extends BaseAdapter {
-		private List<ShopInfo> mData;
-		private ShopInfo shopInfo;
-		private LayoutInflater mInflater;
-		private List<String> urlList = null;
-		private String url = null;
-		private static final String BASEURL = "http://soushang.limijiaoyin.com";
+  }
 
-		public List<ShopInfo> getData() {
-			return mData;
-		}
+  public class ShopInfokAdapter extends BaseAdapter {
+    private List<ShopInfo> mData;
+    private ShopInfo shopInfo;
+    private LayoutInflater mInflater;
+    private List<String> urlList = null;
+    private String url = null;
+    private static final String BASEURL = "http://soushang.limijiaoyin.com";
 
-		public void setData(List<ShopInfo> data) {
-			mData.clear();
+    public List<ShopInfo> getData() {
+      return mData;
+    }
 
-			if (data != null) {
-				mData.addAll(data);
-			}
+    public void setData(List<ShopInfo> data) {
+      mData.clear();
 
-			urlList = new ArrayList<String>();
-			for (int i = 0; i < mData.size(); i++) {
-				shopInfo = new ShopInfo();
-				shopInfo = mData.get(i);
-				url = shopInfo.getImage();
-				url.replace("\\", "");
-				urlList.add(url);
-			}
-			notifyDataSetChanged();
-		}
+      if (data != null) {
+        mData.addAll(data);
+      }
 
-		public void clearData() {
-			mData.clear();
-			notifyDataSetChanged();
-		}
+      urlList = new ArrayList<String>();
+      for (int i = 0; i < mData.size(); i++) {
+        shopInfo = new ShopInfo();
+        shopInfo = mData.get(i);
+        url = shopInfo.getImage();
+        url.replace("\\", "");
+        urlList.add(url);
+      }
+      notifyDataSetChanged();
+    }
 
-		public ShopInfokAdapter(Context context) {
-			super();
-			mData = new ArrayList<ShopInfo>();
-			mInflater = LayoutInflater.from(context);
+    public void clearData() {
+      mData.clear();
+      notifyDataSetChanged();
+    }
 
-		}
+    public ShopInfokAdapter(Context context) {
+      super();
+      mData = new ArrayList<ShopInfo>();
+      mInflater = LayoutInflater.from(context);
 
-		@Override
-		public int getCount() {
-			return mData.size();
-		}
+    }
 
-		@Override
-		public Object getItem(int position) {
-			ShopInfo shopInfo = null;
-			try {
-				shopInfo = mData.get(position);
-			} catch (IndexOutOfBoundsException e) {
-			}
-			return shopInfo;
-		}
+    @Override
+    public int getCount() {
+      return mData.size();
+    }
 
-		@Override
-		public long getItemId(int position) {
+    @Override
+    public Object getItem(int position) {
+      ShopInfo shopInfo = null;
+      try {
+        shopInfo = mData.get(position);
+      } catch (IndexOutOfBoundsException e) {}
+      return shopInfo;
+    }
 
-			return Long.parseLong(mData.get(position).getId());
+    @Override
+    public long getItemId(int position) {
 
-		}
+      return Long.parseLong(mData.get(position).getId());
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
+    }
 
-				convertView = mInflater.inflate(R.layout.shop_item, parent,
-						false);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      ViewHolder viewHolder = null;
+      if (convertView == null) {
+        viewHolder = new ViewHolder();
 
-				viewHolder.shop_item_imag = (ImageView) convertView
-						.findViewById(R.id.shop_item_imag);
-				viewHolder.shop_item_name = (TextView) convertView
-						.findViewById(R.id.shop_item_name);
-				viewHolder.shop_item_marktitle = (TextView) convertView
-						.findViewById(R.id.shop_item_marktitle);
-				viewHolder.shop_item_marknum = (TextView) convertView
-						.findViewById(R.id.shop_item_marknum);
-				viewHolder.shop_item_exchange = (Button) convertView
-						.findViewById(R.id.shop_item_exchange);
+        convertView = mInflater.inflate(R.layout.shop_item, parent,
+            false);
 
-				viewHolder.shop_item_name.setTypeface(mTypeface);
-				viewHolder.shop_item_marktitle.setTypeface(mTypeface);
-				viewHolder.shop_item_marknum.setTypeface(mTypeface);
-				viewHolder.shop_item_exchange.setTypeface(mTypeface);
+        viewHolder.shop_item_imag = (ImageView) convertView
+            .findViewById(R.id.shop_item_imag);
+        viewHolder.shop_item_name = (TextView) convertView
+            .findViewById(R.id.shop_item_name);
+        viewHolder.shop_item_marktitle = (TextView) convertView
+            .findViewById(R.id.shop_item_marktitle);
+        viewHolder.shop_item_marknum = (TextView) convertView
+            .findViewById(R.id.shop_item_marknum);
+        viewHolder.shop_item_exchange = (Button) convertView
+            .findViewById(R.id.shop_item_exchange);
 
-				convertView.setTag(viewHolder);
-				
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
+        viewHolder.shop_item_name.setTypeface(mTypeface);
+        viewHolder.shop_item_marktitle.setTypeface(mTypeface);
+        viewHolder.shop_item_marknum.setTypeface(mTypeface);
+        viewHolder.shop_item_exchange.setTypeface(mTypeface);
 
-			final ShopInfo shopInfo = (ShopInfo) getItem(position);
+        convertView.setTag(viewHolder);
 
-			String endUrl = BASEURL + urlList.get(position);
-			ImageLoader imageLoader = ImageLoader.getInstance();
-			imageLoader.displayImage(endUrl, viewHolder.shop_item_imag);
+      } else {
+        viewHolder = (ViewHolder) convertView.getTag();
+      }
 
-			viewHolder.shop_item_name.setText(shopInfo.getTitle());
-			viewHolder.shop_item_marknum.setText("" + shopInfo.getIntegral());
-			viewHolder.shop_item_exchange
-					.setOnClickListener(new OnClickListener() {
+      final ShopInfo shopInfo = (ShopInfo) getItem(position);
 
-						@Override
-						public void onClick(View v) {
+      String endUrl = BASEURL + urlList.get(position);
+      ImageLoader imageLoader = ImageLoader.getInstance();
+      imageLoader.displayImage(endUrl, viewHolder.shop_item_imag);
 
-							// TODO Auto-generated method stub
-							if (Config.isLogged(ShopActivity.this)) {
+      viewHolder.shop_item_name.setText(shopInfo.getTitle());
+      viewHolder.shop_item_marknum.setText("" + shopInfo.getIntegral());
+      viewHolder.shop_item_exchange
+          .setOnClickListener(new OnClickListener() {
 
-								int mPoint = mApplication.getUser().getPoint();
+            @Override
+            public void onClick(View v) {
 
-								Variables.shBean = shopInfo;
-								int nPoint = Integer.parseInt(shopInfo
-										.getIntegral());
-								if (mPoint < nPoint) {
-									mTipsDialog.show(getResources().getString(
-											R.string.shop_dialog_tips));
-								} else {
+              // TODO Auto-generated method stub
+              if (Config.isLogged(ShopActivity.this)) {
 
-									sDialog = new ShopDialog(ShopActivity.this);
-									sDialog.show();
-								}
+                int mPoint = mApplication.getUser().getPoint();
 
-							} else {
-								mTipsDialog.show(getResources().getString(
-										R.string.shop_event_need_logged));
-							}
+                SouShangApplication.CurrentShopInfo = shopInfo;
+                int nPoint = Integer.parseInt(shopInfo
+                    .getIntegral());
+                if (mPoint < nPoint) {
+                  mTipsDialog.show(getResources().getString(
+                      R.string.shop_dialog_tips));
+                } else {
 
-						}
-					});
+                  sDialog = new ShopDialog(ShopActivity.this);
+                  sDialog.show();
+                }
 
-			return convertView;
-		}
+              } else {
+                mTipsDialog.show(getResources().getString(
+                    R.string.shop_event_need_logged));
+              }
 
-		class ViewHolder {
-			public ImageView shop_item_imag;
-			public TextView shop_item_name;
-			public TextView shop_item_marktitle;
-			public TextView shop_item_marknum;
-			public Button shop_item_exchange;
-		}
+            }
+          });
 
-	}
+      return convertView;
+    }
+
+    class ViewHolder {
+      public ImageView shop_item_imag;
+      public TextView shop_item_name;
+      public TextView shop_item_marktitle;
+      public TextView shop_item_marknum;
+      public Button shop_item_exchange;
+    }
+
+  }
 }
