@@ -250,7 +250,7 @@ public class LBSService extends Service {
       mClientBootstrap.setOption("keepAlive", true);
       ChannelFuture connectFuture = mClientBootstrap
           .connect(new InetSocketAddress(LBS_SERVER, LBS_SERVER_PORT));
-      if (connectFuture.awaitUninterruptibly(1000)
+      if (connectFuture.awaitUninterruptibly(2000)
           && connectFuture.isDone() && connectFuture.isSuccess()) {
         mChannel = connectFuture.getChannel();
         mHandler = mChannel.getPipeline().get(
