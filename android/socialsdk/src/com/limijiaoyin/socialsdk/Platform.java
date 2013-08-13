@@ -1,5 +1,5 @@
 package com.limijiaoyin.socialsdk;
 
 public enum Platform {
-    SINA, QQ, RENREN
+  SINA, QQ, RENREN
 }

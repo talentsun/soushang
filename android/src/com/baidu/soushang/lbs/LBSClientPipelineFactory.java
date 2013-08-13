@@ -13,20 +13,20 @@ import com.baidu.soushang.lbs.Models.CommandMsg;
 
 public class LBSClientPipelineFactory implements ChannelPipelineFactory {
 
-	@Override
-	public ChannelPipeline getPipeline() throws Exception {
-		ChannelPipeline pipeline = pipeline();
+  @Override
+  public ChannelPipeline getPipeline() throws Exception {
+    ChannelPipeline pipeline = pipeline();
 
-		pipeline.addLast("frameDecoder", new ProtobufVarint32FrameDecoder());
-		pipeline.addLast("protobufDecoder",
-				new ProtobufDecoder(CommandMsg.getDefaultInstance()));
-		pipeline.addLast("frameEncoder",
-				new ProtobufVarint32LengthFieldPrepender());
-		pipeline.addLast("protobufEncoder", new ProtobufEncoder());
+    pipeline.addLast("frameDecoder", new ProtobufVarint32FrameDecoder());
+    pipeline.addLast("protobufDecoder",
+        new ProtobufDecoder(CommandMsg.getDefaultInstance()));
+    pipeline.addLast("frameEncoder",
+        new ProtobufVarint32LengthFieldPrepender());
+    pipeline.addLast("protobufEncoder", new ProtobufEncoder());
 
-		pipeline.addLast("handler", new LBSClientRequestClientHandler());
+    pipeline.addLast("handler", new LBSClientRequestClientHandler());
 
-		return pipeline;
-	}
+    return pipeline;
+  }
 
 }

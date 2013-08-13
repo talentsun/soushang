@@ -7,7 +7,6 @@ import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.Variables;
 import com.baidu.soushang.SouShangApplication.LoginListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
@@ -106,7 +105,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   @Override
   protected void onCreate(Bundle arg0) {
     setContentView(R.layout.home);
-    Variables.homeFlag = 1;
 
     mSouShang = (Button) findViewById(R.id.soushang);
     mDailyEvent = (Button) findViewById(R.id.daily_event);
@@ -139,6 +137,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
     mApplication = (SouShangApplication) getApplication();
 
+    super.onCreate(arg0);
+
+    MobclickAgent.onError(this);
+    MobclickAgent.updateOnlineConfig(this);
+    UmengUpdateAgent.update(this);
+  }
+
+  private void initLoginStatus() {
     if (Config.isLogged(this)) {
       Apis.Login(this, Config.getAccessToken(this),
           new ApiResponseCallback<CommonResponse>() {
@@ -160,30 +166,24 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     } else {
       notLogged();
     }
-
-    if (Config.isLogged(this)) {
-      mApplication.updateUserExtraInfo();
-
-      Intent lbsIntent = new Intent(this, LBSService.class);
-      lbsIntent.setAction(Intents.ACTION_STARTUP);
-      startService(lbsIntent);
-
-    }
-
-    super.onCreate(arg0);
-
-    MobclickAgent.onError(this);
-    MobclickAgent.updateOnlineConfig(this);
-    UmengUpdateAgent.update(this);
   }
 
   private void logged() {
     mLogin.setText(Config.getUserName(HomeActivity.this));
+    
+    Intent lbsIntent = new Intent(this, LBSService.class);
+    lbsIntent.setAction(Intents.ACTION_STARTUP);
+    startService(lbsIntent);
+    
+    mApplication.updateUserExtraInfo();
   }
 
   private void notLogged() {
     Config.removeAccessToken(HomeActivity.this);
     Config.setLogged(HomeActivity.this, false);
+    
+    Intent intent = new Intent(this, LBSService.class);
+    stopService(intent);
 
     mLogin.setText(getResources().getText(R.string.not_logged));
   }
@@ -248,7 +248,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
       } else {
-        // mApplication.login(HomeActivity.this);
         mTipsDialog.show(getResources().getString(
             R.string.feature_event));
       }
@@ -262,7 +261,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
   @Override
   protected void onStart() {
-    Variables.homeFlag = 1;
     mApplication.setLoginListener(new LoginListener() {
 
       @Override
@@ -298,20 +296,18 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         });
       }
     });
-
+    
+    initLoginStatus();
     super.onStart();
   }
 
   @Override
   protected void onResume() {
-    // TODO Auto-generated method stub
     super.onResume();
-    Variables.homeFlag = 1;
   }
 
   @Override
   protected void onStop() {
-    Variables.homeFlag = 1;
     mApplication.setLoginListener(null);
     super.onStop();
   }

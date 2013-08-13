@@ -16,6 +16,8 @@ import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.FeatureEvent;
+import com.baidu.soushang.cloudapis.ShopInfo;
 import com.baidu.soushang.cloudapis.UserInfoResponse;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
@@ -30,262 +32,306 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.CookieSyncManager;
 
 public class SouShangApplication extends Application {
-	public static final String FONT = "fonts/yuppy-sc.otf";
+  public static final String FONT = "fonts/yuppy-sc.otf";
 
-	private static final String APP_KEY = "VKgVRtN9Lja2Uu4mcRumpkTY";
-	private static final String APP_SECRET = "Fnp8AQYSp9jR7G9RluVbgBxqmz7bQexH";
-	private static final String USERINFO_URL = "https://openapi.baidu.com/rest/2.0/passport/users/getLoggedInUser";
+  private static final String APP_KEY = "VKgVRtN9Lja2Uu4mcRumpkTY";
+  private static final String APP_SECRET = "Fnp8AQYSp9jR7G9RluVbgBxqmz7bQexH";
+  private static final String USERINFO_URL =
+      "https://openapi.baidu.com/rest/2.0/passport/users/getLoggedInUser";
 
-	private List<Answer> mAnswers;
-	private boolean mIsLBSServiceOn = true;
-	
-	public void setAnswers(List<Answer> answers) {
-		mAnswers = answers;
-	}
+  private List<Answer> mAnswers;
+  private boolean mIsLBSServiceOn = true;
 
-	public List<Answer> getAnswers() {
-		return mAnswers;
-	}
+  static {
+    SouShangApplication.CurrentFeatureEvent = new FeatureEvent();
+    SouShangApplication.CurrentShopInfo = new ShopInfo();
+  }
 
-	
-	public boolean isLBSServiceOn() {
-		return mIsLBSServiceOn;
-	}
+  public void setAnswers(List<Answer> answers) {
+    mAnswers = answers;
+  }
 
-	public void setLBSServiceOn(boolean serviceOn) {
-		this.mIsLBSServiceOn = serviceOn;
-	}
+  public List<Answer> getAnswers() {
+    return mAnswers;
+  }
 
 
-	private Baidu mBaidu;
+  public boolean isLBSServiceOn() {
+    return mIsLBSServiceOn;
+  }
 
-	public interface LoginListener {
-		public void onSuccess();
+  public void setLBSServiceOn(boolean serviceOn) {
+    this.mIsLBSServiceOn = serviceOn;
+  }
 
-		public void onFail();
 
-		public void onError();
-	}
+  private Baidu mBaidu;
 
-	private LoginListener mLoginListener;
+  public interface LoginListener {
+    public void onSuccess();
 
-	public void setLoginListener(LoginListener listener) {
-		mLoginListener = listener;
-	}
+    public void onFail();
 
-	public interface UpdateUserInfoListener {
-		public void onUpdated(com.baidu.soushang.cloudapis.User user);
+    public void onError();
+  }
 
-		public void onError();
-	}
+  private LoginListener mLoginListener;
 
-	private UpdateUserInfoListener mUpdateUserInfoListener;
+  public void setLoginListener(LoginListener listener) {
+    mLoginListener = listener;
+  }
 
-	public void setUpdateUserInfoListener(UpdateUserInfoListener listener) {
-		mUpdateUserInfoListener = listener;
-	}
+  public interface UpdateUserInfoListener {
+    public void onUpdated(com.baidu.soushang.cloudapis.User user);
 
-	private com.baidu.soushang.cloudapis.User mUser;
+    public void onError();
+  }
 
-	public com.baidu.soushang.cloudapis.User getUser() {
-		return mUser;
-	}
+  private UpdateUserInfoListener mUpdateUserInfoListener;
 
-	private List<User> mPeers;
+  public void setUpdateUserInfoListener(UpdateUserInfoListener listener) {
+    mUpdateUserInfoListener = listener;
+  }
 
-	public void setPeers(List<User> peers) {
-		mPeers = peers;
-	}
+  private com.baidu.soushang.cloudapis.User mUser;
 
-	public List<User> getPeers() {
-		return mPeers;
-	}
+  public com.baidu.soushang.cloudapis.User getUser() {
+    return mUser;
+  }
 
-	private User mCurrentPeer;
+  private List<User> mPeers;
 
-	public void setCurrentPeer(User peer) {
-		mCurrentPeer = peer;
-	}
+  public void setPeers(List<User> peers) {
+    mPeers = peers;
+  }
 
-	public User getCurrentPeer() {
-		return mCurrentPeer;
-	}
+  public List<User> getPeers() {
+    return mPeers;
+  }
 
-	private DisplayImageOptions mOption;
+  private User mCurrentPeer;
 
-	public DisplayImageOptions getAvatarDisplayOption() {
-		return mOption;
-	}
+  public void setCurrentPeer(User peer) {
+    mCurrentPeer = peer;
+  }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+  public User getCurrentPeer() {
+    return mCurrentPeer;
+  }
 
-		DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
-				.cacheInMemory().cacheOnDisc().build();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				getApplicationContext()).defaultDisplayImageOptions(
-				displayOptions).build();
-		ImageLoader.getInstance().init(config);
-		mOption = new DisplayImageOptions.Builder()
-				.showImageOnFail(R.drawable.default_avatar)
-				.showImageForEmptyUri(R.drawable.default_avatar)
-				.showStubImage(R.drawable.default_avatar)
-				.displayer(
-						new RoundedBitmapDisplayer(
-								getResources().getDimensionPixelSize(
-										R.dimen.avatar_width) / 2)).build();
+  private DisplayImageOptions mOption;
 
-		SpeechConfig.setAppId(APP_KEY);
-		SpeechConfig.setAppKey(APP_SECRET);
-		CookieSyncManager.createInstance(this);
+  public DisplayImageOptions getAvatarDisplayOption() {
+    return mOption;
+  }
 
-		Config.getUDID(this);
-	}
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
-	private ApiResponseCallback<CommonResponse> mLoginCallback = new ApiResponseCallback<CommonResponse>() {
+    DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
+        .cacheInMemory().cacheOnDisc().build();
+    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+        getApplicationContext()).defaultDisplayImageOptions(
+        displayOptions).build();
+    ImageLoader.getInstance().init(config);
+    mOption = new DisplayImageOptions.Builder()
+        .showImageOnFail(R.drawable.default_avatar)
+        .showImageForEmptyUri(R.drawable.default_avatar)
+        .showStubImage(R.drawable.default_avatar)
+        .displayer(
+            new RoundedBitmapDisplayer(
+                getResources().getDimensionPixelSize(
+                    R.dimen.avatar_width) / 2)).build();
 
-		@Override
-		public void onResults(CommonResponse arg0) {
-			if (arg0 != null && arg0.getRetCode() == 0) {
-				Config.setLogged(getApplicationContext(), true);
-				updateBaseUserInfo();
-			} else {
-				Config.setLogged(getApplicationContext(), false);
+    SpeechConfig.setAppId(APP_KEY);
+    SpeechConfig.setAppKey(APP_SECRET);
+//  CookieSyncManager.createInstance(this);
 
-				if (mLoginListener != null) {
-					mLoginListener.onFail();
-				}
-			}
-		}
+    Config.getUDID(this);
+  }
 
-		@Override
-		public void onError(Throwable arg0) {
-			Config.setLogged(getApplicationContext(), false);
+  private ApiResponseCallback<CommonResponse> mLoginCallback =
+      new ApiResponseCallback<CommonResponse>() {
 
-			if (mLoginListener != null) {
-				mLoginListener.onError();
-			}
-		}
-	};
+        @Override
+        public void onResults(CommonResponse arg0) {
 
-	public void login(Activity context) {
-		Log.d("app", "login");
-		mBaidu = new Baidu(APP_KEY, APP_SECRET, context);
-		mBaidu.authorize(context, new BaiduDialogListener() {
+          if (arg0 != null && arg0.getRetCode() == 0) {
+            Config.setLogged(getApplicationContext(), true);
+            updateBaseUserInfo();
+          } else {
+            Config.setLogged(getApplicationContext(), false);
 
-			@Override
-			public void onError(BaiduDialogError arg0) {
+            if (mLoginListener != null) {
+              mLoginListener.onFail();
+            }
+          }
+        }
 
-			}
+        @Override
+        public void onError(Throwable arg0) {
+          Config.setLogged(getApplicationContext(), false);
 
-			@Override
-			public void onComplete(Bundle arg0) {
-				Log.i("access_token", mBaidu.getAccessToken());
-				Config.setAccessToken(SouShangApplication.this,
-						mBaidu.getAccessToken());
-				Apis.Login(SouShangApplication.this, mBaidu.getAccessToken(),
-						mLoginCallback);
-			}
+          if (mLoginListener != null) {
+            mLoginListener.onError();
+          }
+        }
+      };
 
-			@Override
-			public void onCancel() {
+  public void logout(Activity context) {
+    if (mBaidu != null) {
+      mBaidu.LogOut();
+    }
+    
+    mUser = null;
+  }
 
-			}
+  public void login(Activity context) {
+    Log.d("app", "login");
 
-			@Override
-			public void onBaiduException(BaiduException arg0) {
-			}
-		});
-	}
+    mBaidu = new Baidu(APP_KEY, APP_SECRET, context);
+    mBaidu.authorize(context, new BaiduDialogListener() {
 
-	private ApiResponseCallback<UserInfoResponse> mUserExtraInfoCallback = new ApiResponseCallback<UserInfoResponse>() {
+      @Override
+      public void onError(BaiduDialogError arg0) {
 
-		@Override
-		public void onResults(UserInfoResponse arg0) {
-			if (arg0 != null && arg0.getRetCode() == 0
-					&& arg0.getUser() != null) {
-				mUser = arg0.getUser();
-				if (mUpdateUserInfoListener != null) {
-					mUpdateUserInfoListener.onUpdated(mUser);
-				}
-			}
-		}
+      }
 
-		@Override
-		public void onError(Throwable arg0) {
+      @Override
+      public void onComplete(Bundle arg0) {
+        
+        Log.i("access_token", mBaidu.getAccessToken());
+        Config.setAccessToken(SouShangApplication.this,
+            mBaidu.getAccessToken());
 
-			System.out.println(arg0.toString() + "at mUserExtraInfoCallback");
-			if (mUpdateUserInfoListener != null) {
-				mUpdateUserInfoListener.onError();
-			}
-		}
-	};
+        Apis.Login(SouShangApplication.this, mBaidu.getAccessToken(),
+            mLoginCallback);
 
-	public void updateUserExtraInfo() {
-		Apis.getUserInfo(this, Config.getAccessToken(this),
-				mUserExtraInfoCallback);
-	}
+      }
 
-	public void updateBaseUserInfo() {
-		new AsyncBaiduRunner(mBaidu).request(USERINFO_URL, null, "GET",
-				new RequestListener() {
+      @Override
+      public void onCancel() {
 
-					@Override
-					public void onIOException(IOException arg0) {
-						updateUserBaseInfoError();
-					}
+      }
 
-					@Override
-					public void onComplete(String arg0) {
-						Log.d("userInfo", arg0);
-						try {
-							JSONObject obj = new JSONObject(arg0);
-							Config.setUserName(SouShangApplication.this,
-									obj.getString("uname"));
-							Config.setAvatar(SouShangApplication.this,
-									"http://tb.himg.baidu.com/sys/portrait/item/"
-											+ obj.getString("portrait"));
-							Config.setUserId(SouShangApplication.this,
-									obj.getLong("uid"));
-							Log.d("userId", obj.getLong("uid") + "");
+      @Override
+      public void onBaiduException(BaiduException arg0) {}
+    });
+  }
 
-							Intent lbsIntent = new Intent(
-									SouShangApplication.this, LBSService.class);
+  private ApiResponseCallback<UserInfoResponse> mUserExtraInfoCallback =
+      new ApiResponseCallback<UserInfoResponse>() {
 
-							startService(lbsIntent);
+        @Override
+        public void onResults(UserInfoResponse arg0) {
+          if (arg0 != null && arg0.getRetCode() == 0
+              && arg0.getUser() != null) {
+            mUser = arg0.getUser();
+            if (mUpdateUserInfoListener != null) {
+              mUpdateUserInfoListener.onUpdated(mUser);
+            }
+          }
+        }
 
-							if (mLoginListener != null) {
-								mLoginListener.onSuccess();
+        @Override
+        public void onError(Throwable arg0) {
 
-							}
-						} catch (Exception e) {
-							updateUserBaseInfoError();
-						}
+          if (mUpdateUserInfoListener != null) {
+            mUpdateUserInfoListener.onError();
+          }
+        }
+      };
 
-						updateUserExtraInfo();
-					}
+  public static int DailyFeatureEvent = 0;
 
-					@Override
-					public void onBaiduException(BaiduException arg0) {
-						updateUserBaseInfoError();
-					}
-				});
-	}
+  public static String CATID = "1";
 
-	private void updateUserBaseInfoError() {
-		Config.setUserName(SouShangApplication.this,
-				SystemUtils.getDeviceName(SouShangApplication.this));
-		Config.setAvatar(SouShangApplication.this,
-				"http://tb.himg.baidu.com/sys/portrait/item/");
-		Config.setUserId(SouShangApplication.this, 0);
+  public static ShopInfo CurrentShopInfo = null;
 
-		if (mLoginListener != null) {
-			mLoginListener.onError();
-		}
-	}
+  public static FeatureEvent CurrentFeatureEvent = null;
+
+  public void updateUserExtraInfo() {
+    Apis.getUserInfo(this, Config.getAccessToken(this),
+        mUserExtraInfoCallback);
+  }
+
+  public void updateBaseUserInfo() {
+    
+    new AsyncBaiduRunner(mBaidu).request(USERINFO_URL, null, "GET",
+        new RequestListener() {
+
+          @Override
+          public void onIOException(IOException arg0) {
+            updateUserBaseInfoError();
+          }
+
+          @Override
+          public void onComplete(String arg0) {
+            Log.d("userInfo", arg0);
+            try {
+
+              JSONObject obj = new JSONObject(arg0);
+              if (obj.has("uname")) {
+                Config.setUserName(SouShangApplication.this,
+                    obj.getString("uname"));
+              } else {
+                Config.setUserName(SouShangApplication.this,
+                    SystemUtils.getDeviceName(SouShangApplication.this));
+              }
+
+              if (obj.has("uid")) {
+                Config.setUserId(SouShangApplication.this,
+                    obj.getLong("uid"));
+                Log.d("userId", obj.getLong("uid") + "");
+              } else {
+                Config.setUserId(SouShangApplication.this, 0);
+              }
+
+              if (obj.has("portrait")) {
+                Config.setAvatar(SouShangApplication.this,
+                    "http://tb.himg.baidu.com/sys/portrait/item/"
+                        + obj.getString("portrait"));
+              } else {
+                Config.setAvatar(SouShangApplication.this,
+                    "http://tb.himg.baidu.com/sys/portrait/item/");
+              }
+
+              Intent lbsIntent = new Intent(
+                  SouShangApplication.this, LBSService.class);
+
+              startService(lbsIntent);
+
+              if (mLoginListener != null) {
+                mLoginListener.onSuccess();
+
+              }
+            } catch (Exception e) {
+              updateUserBaseInfoError();
+            }
+
+            updateUserExtraInfo();
+          }
+
+          @Override
+          public void onBaiduException(BaiduException arg0) {
+            updateUserBaseInfoError();
+          }
+        });
+  }
+
+  private void updateUserBaseInfoError() {
+    Config.setUserName(SouShangApplication.this,
+        SystemUtils.getDeviceName(SouShangApplication.this));
+    Config.setAvatar(SouShangApplication.this,
+        "http://tb.himg.baidu.com/sys/portrait/item/");
+    Config.setUserId(SouShangApplication.this, 0);
+
+    if (mLoginListener != null) {
+      mLoginListener.onError();
+    }
+  }
 
 }
