@@ -19,8 +19,13 @@ import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -138,7 +143,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mApplication = (SouShangApplication) getApplication();
 
     super.onCreate(arg0);
-
+    
     MobclickAgent.onError(this);
     MobclickAgent.updateOnlineConfig(this);
     UmengUpdateAgent.update(this);
@@ -190,7 +195,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
   @Override
   protected void onDestroy() {
-
     Intent intent = new Intent(this, LBSService.class);
     stopService(intent);
 
