@@ -211,18 +211,16 @@ public class Apis {
 
   @SuppressWarnings("deprecation")
   public static void answer(Context context, List<Answer> answers,
-      String accessToken, int mEventType,
+      String accessToken, int mEventType,int id,
       final ApiResponseCallback<CommonResponse> callback) {
     AnswerRequest request = new AnswerRequest();
     request.setAnswers(answers);
     request.setAccessToken(accessToken);
-
     String url = ANSWER_URL;
     if (mEventType == Intents.EVENT_TYPE_FEATURE) {
       request.setType("room_fight");
-      request.setRid(SouShangApplication.CurrentFeatureEvent.getId());
+      request.setRid(id);
       url = FEATURE_ANSWER_URL;
-
     }
     RestClientFactory.getClient().postAsync(
         new ContextAwareAPIDelegate<CommonResponse>(context,

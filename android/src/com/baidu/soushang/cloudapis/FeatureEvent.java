@@ -9,12 +9,49 @@ public class FeatureEvent {
   private int mPnum;
   private String mTitle;
   private String mIntroduce;
+  private String mCat;
+  private int mScore;
+  private boolean mIsPractice;
+  private boolean mIsStartPoint;
+
+
+  public boolean isIsStartPoint() {
+    return mIsStartPoint;
+  }
+
+  public void setIsStartPoint(boolean isStartPoint) {
+    this.mIsStartPoint = isStartPoint;
+  }
+
+  public boolean isIsPractice() {
+    return mIsPractice;
+  }
+
+  public void setIsPractice(boolean isPractice) {
+    this.mIsPractice = isPractice;
+  }
+
+  public String getCat() {
+    return mCat;
+  }
+
+  public void setCat(String cat) {
+    this.mCat = cat;
+  }
+
+  public int getScore() {
+    return mScore;
+  }
+
+  public void setScore(int score) {
+    this.mScore = score;
+  }
 
   public int getStartTime() {
     return mStartTime;
   }
 
-  public void setmStartTime(int startTime) {
+  public void setStartTime(int startTime) {
     this.mStartTime = startTime;
   }
 
@@ -22,7 +59,7 @@ public class FeatureEvent {
     return mEndTime;
   }
 
-  public void setmEndTime(int endTime) {
+  public void setEndTime(int endTime) {
     this.mEndTime = endTime;
   }
 
@@ -46,8 +83,8 @@ public class FeatureEvent {
     return mId;
   }
 
-  public void setId(int mId) {
-    this.mId = mId;
+  public void setId(int id) {
+    this.mId = id;
   }
 
   public int getPnum() {
@@ -70,7 +107,7 @@ public class FeatureEvent {
     return mIntroduce;
   }
 
-  public void setmIntroduce(String introduce) {
+  public void setIntroduce(String introduce) {
     this.mIntroduce = introduce;
   }
 

@@ -20,7 +20,7 @@ import com.baidu.soushang.cloudapis.FeatureEvent;
 
 public class JsonTool {
 
-  private static ArrayList<FeatureEvent> list;
+  private static  ArrayList<FeatureEvent> list;
 
   public static ArrayList<FeatureEvent> getFeatureData(String addr, Context context) {
     try {
@@ -51,23 +51,24 @@ public class JsonTool {
 
   public static ArrayList<FeatureEvent> parseJsonMulti(String strResult) {
     ArrayList<FeatureEvent> list = new ArrayList<FeatureEvent>();
-    FeatureEvent sBean;
+    FeatureEvent featureEvent;
     try {
-
       JSONObject jObject = new JSONObject(strResult);
       JSONArray array = jObject.getJSONArray("rooms");
       for (int i = 0; i < array.length(); i++) {
         JSONObject jsonObj = array.getJSONObject(i);
-        sBean = new FeatureEvent();
-        sBean.setmStartTime(jsonObj.getInt("starttime"));
-        sBean.setmEndTime(jsonObj.getInt("endtime"));
-        sBean.setRunning(jsonObj.getBoolean("running"));
-        sBean.setFinished(jsonObj.getBoolean("finished"));
-        sBean.setId(jsonObj.getInt("id"));
-        sBean.setPnum(jsonObj.getInt("pnum"));
-        sBean.setTitle(jsonObj.getString("title"));
-        sBean.setmIntroduce(jsonObj.getString("introduce"));
-        list.add(sBean);
+        featureEvent = new FeatureEvent();
+        featureEvent.setStartTime(jsonObj.getInt("starttime"));
+        featureEvent.setEndTime(jsonObj.getInt("endtime"));
+        featureEvent.setRunning(jsonObj.getBoolean("running"));
+        featureEvent.setCat(jsonObj.getString("cat"));
+        featureEvent.setFinished(jsonObj.getBoolean("finished"));
+        featureEvent.setId(jsonObj.getInt("id"));
+        featureEvent.setPnum(jsonObj.getInt("pnum"));
+        featureEvent.setTitle(jsonObj.getString("title"));
+        featureEvent.setIntroduce(jsonObj.getString("introduce"));
+        featureEvent.setScore(jsonObj.getInt("score"));
+        list.add(featureEvent); 
       }
     } catch (JSONException e) {
       System.out.println(e + "Jsons parse error !");

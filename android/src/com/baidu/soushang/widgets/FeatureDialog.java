@@ -1,27 +1,29 @@
 package com.baidu.soushang.widgets;
 
-import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
-import com.baidu.soushang.activities.QuestionActivity;
-import com.baidu.soushang.widgets.PausedDialog.OnClickListener;
+import com.baidu.soushang.cloudapis.FeatureEvent;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FeatureDialog extends Dialog {
-  private TextView title;
-  private TextView introduce;
-  private Button cancel;
-  private Button start;
+  private TextView mTitle;
+  private TextView mIntegral;
+  private TextView mIntroduce;
+  private Button mKonwn;
+  private FeatureEvent mFeatureEvent;
+  private Context mContext;
+
+  public void setFeatureEvent(FeatureEvent featureEvent) {
+    this.mFeatureEvent = featureEvent;
+  }
 
   public interface OnClickListener {
     public void onResume();
@@ -40,50 +42,18 @@ public class FeatureDialog extends Dialog {
   }
 
   public FeatureDialog(Context context) {
-
     this(context, R.style.FeatureDialog);
   }
 
   public FeatureDialog(final Context context, int theme) {
     super(context, theme);
     setContentView(R.layout.feature_event_dialog);
-
-    cancel = (Button) findViewById(R.id.cancel);
-    title = (TextView) findViewById(R.id.title);
-    introduce = (TextView) findViewById(R.id.introduce);
-    start = (Button) findViewById(R.id.start);
-
-    start.setOnClickListener(new View.OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-
-        if (!SouShangApplication.CurrentFeatureEvent.isFinished()) {
-          if (mOnClickListener != null) {
-            mOnClickListener.onHome();
-          }
-
-          Intent intent = null;
-          intent = new Intent(context, QuestionActivity.class);
-          intent.putExtra(Intents.EXTRA_EVENT_TYPE,
-              Intents.EVENT_TYPE_FEATURE);
-
-          context.startActivity(intent);
-        } else {
-
-          dismiss();
-          Toast.makeText(
-              context,
-              context.getResources().getString(
-                  R.string.feature_join_tips),
-              Toast.LENGTH_SHORT).show();
-        }
-
-      }
-    });
-
-    cancel.setOnClickListener(new View.OnClickListener() {
-
+    this.mContext = context;
+    mTitle = (TextView) findViewById(R.id.title);
+    mIntegral = (TextView) findViewById(R.id.integral);
+    mIntroduce = (TextView) findViewById(R.id.introduce);
+    mKonwn = (Button) findViewById(R.id.know);
+    mKonwn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         dismiss();
@@ -92,11 +62,10 @@ public class FeatureDialog extends Dialog {
 
     Typeface typeface = Typeface.createFromAsset(getContext().getAssets(),
         SouShangApplication.FONT);
-    start.setTypeface(typeface);
-    cancel.setTypeface(typeface);
-    title.setTypeface(typeface);
-    introduce.setTypeface(typeface);
-
+    mKonwn.setTypeface(typeface);
+    mTitle.setTypeface(typeface);
+    mIntegral.setTypeface(typeface);
+    mIntroduce.setTypeface(typeface);
   }
 
   @Override
@@ -107,24 +76,12 @@ public class FeatureDialog extends Dialog {
   @Override
   public void show() {
     super.show();
-
-    String mTitle = SouShangApplication.CurrentFeatureEvent.getTitle();
-    String mIntroduce = SouShangApplication.CurrentFeatureEvent.getIntroduce();
-
-    if (!TextUtils.isEmpty(mTitle)) {
-      title.setText(mTitle);
+    String title = mFeatureEvent.getTitle();
+    int intergal = mFeatureEvent.getScore();
+    if (!TextUtils.isEmpty(title)) {
+      mTitle.setText(title);
     }
-
-    if (!TextUtils.isEmpty(mIntroduce)) {
-      introduce.setText(mIntroduce);
-    }
-    if (!SouShangApplication.CurrentFeatureEvent.isRunning()) {
-      start.setEnabled(false);
-      start.setBackgroundResource(R.drawable.zhuanti_intro_startbtdisable);
-    } else {
-      start.setEnabled(true);
-      start.setBackgroundResource(R.drawable.feature_dialog_start);
-    }
+    mIntegral.setText(mContext.getResources().getString(R.string.feature_dialog_intergal)
+        + intergal);
   }
-
 }

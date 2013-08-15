@@ -184,7 +184,7 @@ public class DailyEventCompletedActivity extends BaseActivity implements
                 DailyEventCompletedActivity.this,
                 mApplication.getAnswers(),
                 Config.getAccessToken(DailyEventCompletedActivity.this),
-                SouShangApplication.DailyFeatureEvent, null);
+                SouShangApplication.DailyFeatureEvent,-1,null);
             initLoggedArea(null);
             SouShangApplication.DailyFeatureEvent = 0;
           }
