@@ -20,8 +20,12 @@ import com.baidu.soushang.utils.NetworkUtils;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -134,6 +138,23 @@ public class LBSService extends Service {
     public void onReceivePoi(BDLocation poiLocation) {}
   }
 
+  public class NetworkDisconnectedReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      String action = intent.getAction();
+      if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+        NetworkInfo info = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+        if (info == null || !info.isConnected()) {
+          stopSelf();
+        }
+      }
+    }
+
+  }
+  
+  private NetworkDisconnectedReceiver mNetworkDisconnectedReceiver;
+  
   @Override
   public void onCreate() {
     mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -143,15 +164,21 @@ public class LBSService extends Service {
     mWorker.start();
     mClient = new LBSClient(mWorker.getLooper());
 
+    IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    mNetworkDisconnectedReceiver = new NetworkDisconnectedReceiver();
+    registerReceiver(mNetworkDisconnectedReceiver, filter);
+    
     super.onCreate();
   }
-
+  
   @Override
   public void onDestroy() {
     stopHeartbeat();
     stopLocationClient();
     
     Message.obtain(mClient, SHUTDOWN).sendToTarget();
+    
+    unregisterReceiver(mNetworkDisconnectedReceiver);
 
     super.onDestroy();
   }
@@ -250,7 +277,7 @@ public class LBSService extends Service {
       mClientBootstrap.setOption("keepAlive", true);
       ChannelFuture connectFuture = mClientBootstrap
           .connect(new InetSocketAddress(LBS_SERVER, LBS_SERVER_PORT));
-      if (connectFuture.awaitUninterruptibly(1000)
+      if (connectFuture.awaitUninterruptibly(2000)
           && connectFuture.isDone() && connectFuture.isSuccess()) {
         mChannel = connectFuture.getChannel();
         mHandler = mChannel.getPipeline().get(
