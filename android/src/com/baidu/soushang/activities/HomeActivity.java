@@ -18,14 +18,8 @@ import com.baidu.soushang.widgets.TipsDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,14 +34,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   private Button mLBSEvent;
   private Button mFeatureEvent;
   private Button mLogin;
-
   private WebViewDialog mNewsDialog;
   private TipsDialog mTipsDialog;
   private SouShangApplication mApplication;
 
   private ApiResponseCallback<DayEventResponse> mDayEventCallback =
       new ApiResponseCallback<DayEventResponse>() {
-
         @Override
         public void onResults(DayEventResponse arg0) {
           // FIXME no event 0:00
@@ -63,7 +55,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
               mTipsDialog.show(getResources().getString(
                   R.string.day_event_finished));
             }
-
           } else {
             mTipsDialog.show(getResources()
                 .getString(R.string.no_day_event));
@@ -82,7 +73,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
   private ApiResponseCallback<QuestionResponse> mNextQuestionCallback =
       new ApiResponseCallback<QuestionResponse>() {
-
         @Override
         public void onResults(QuestionResponse arg0) {
           if (arg0 != null && arg0.getRetCode() == 0
@@ -110,7 +100,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   @Override
   protected void onCreate(Bundle arg0) {
     setContentView(R.layout.home);
-
     mSouShang = (Button) findViewById(R.id.soushang);
     mDailyEvent = (Button) findViewById(R.id.daily_event);
     mRank = (Button) findViewById(R.id.rank);
@@ -118,11 +107,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mLBSEvent = (Button) findViewById(R.id.lbs_event);
     mFeatureEvent = (Button) findViewById(R.id.feature_event);
     mLogin = (Button) findViewById(R.id.login);
-
     Typeface typeface = Typeface.createFromAsset(getAssets(),
         SouShangApplication.FONT);
     mLogin.setTypeface(typeface);
-
     mSouShang.setOnClickListener(this);
     mDailyEvent.setOnClickListener(this);
     mRank.setOnClickListener(this);
@@ -132,18 +119,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mFeatureEvent.setOnClickListener(this);
     mNewsDialog = new WebViewDialog(this);
     mTipsDialog = new TipsDialog(this);
-
     String currentDate = getCurrentDate();
     if (!currentDate.equalsIgnoreCase(Config.getLatestNewsDate(this))) {
       Config.setLatestNewsDate(this, currentDate);
       mNewsDialog.show(getResources().getString(R.string.news),
           "http://sou.baidu.com/news/news.html");
     }
-
     mApplication = (SouShangApplication) getApplication();
-
     super.onCreate(arg0);
-    
     MobclickAgent.onError(this);
     MobclickAgent.updateOnlineConfig(this);
     UmengUpdateAgent.update(this);
@@ -153,7 +136,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     if (Config.isLogged(this)) {
       Apis.Login(this, Config.getAccessToken(this),
           new ApiResponseCallback<CommonResponse>() {
-
             @Override
             public void onResults(CommonResponse arg0) {
               if (arg0 == null || arg0.getRetCode() != 0) {
@@ -175,21 +157,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
   private void logged() {
     mLogin.setText(Config.getUserName(HomeActivity.this));
-    
+
     Intent lbsIntent = new Intent(this, LBSService.class);
     lbsIntent.setAction(Intents.ACTION_STARTUP);
     startService(lbsIntent);
-    
+
     mApplication.updateUserExtraInfo();
   }
 
   private void notLogged() {
     Config.removeAccessToken(HomeActivity.this);
     Config.setLogged(HomeActivity.this, false);
-    
     Intent intent = new Intent(this, LBSService.class);
     stopService(intent);
-
     mLogin.setText(getResources().getText(R.string.not_logged));
   }
 
@@ -197,7 +177,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   protected void onDestroy() {
     Intent intent = new Intent(this, LBSService.class);
     stopService(intent);
-
     super.onDestroy();
 
   }
@@ -270,7 +249,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       @Override
       public void onSuccess() {
         mLogin.post(new Runnable() {
-
           @Override
           public void run() {
             logged();
@@ -281,7 +259,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       @Override
       public void onFail() {
         mLogin.post(new Runnable() {
-
           @Override
           public void run() {
             notLogged();
@@ -292,7 +269,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       @Override
       public void onError() {
         mLogin.post(new Runnable() {
-
           @Override
           public void run() {
             notLogged();
@@ -300,7 +276,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         });
       }
     });
-    
+
     initLoginStatus();
     super.onStart();
   }

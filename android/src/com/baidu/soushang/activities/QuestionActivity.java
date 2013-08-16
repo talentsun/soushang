@@ -140,6 +140,7 @@ public class QuestionActivity extends BaseActivity implements
   private static final int CREDIT_INTERVAL = 10;
   private static final int POINT_INTERVAL = 5;
   private SouShangApplication mApplication;
+
   @Override
   protected void onCreate(Bundle arg0) {
 
@@ -169,7 +170,7 @@ public class QuestionActivity extends BaseActivity implements
     mHelp.setOnClickListener(this);
     mSearch.setOnClickListener(this);
     mQuit.setOnClickListener(this);
-    
+
     mApplication = (SouShangApplication) getApplication();
     Typeface typeface = Typeface.createFromAsset(getAssets(),
         SouShangApplication.FONT);
@@ -273,9 +274,10 @@ public class QuestionActivity extends BaseActivity implements
       if (mEventType == Intents.EVENT_TYPE_LBS) {
         mEventKey = getIntent().getStringExtra(Intents.EXTRA_FIGHT_KEY);
       } else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
-        FeatureEvent featureEvent =mApplication.getFeatureEvent();
+        FeatureEvent featureEvent = mApplication.getFeatureEvent();
         mMatchName.setText(featureEvent.getTitle());
         mEventKey = featureEvent.getId() + "";
+        mMyPoint = mApplication.getFeatureEvent().getScore();
       }
 
       IntentFilter filter = new IntentFilter(Intents.ACTION_FIGHTING);
@@ -479,10 +481,9 @@ public class QuestionActivity extends BaseActivity implements
       mMatchName.setText(getResources().getString(R.string.lbs_event));
     } else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
       mMatchName.setText(mApplication.getFeatureEvent().getTitle());
-    }
-
-    if (!TextUtils.isEmpty(question.getSearchRecom())) {
-      mEdit.setText(question.getSearchRecom());
+      if (!TextUtils.isEmpty(question.getSearchRecom())) {
+        mEdit.setText(question.getSearchRecom());
+      }
     }
 
     mQuestionOrder.setText(String.format(
@@ -593,7 +594,7 @@ public class QuestionActivity extends BaseActivity implements
         answers.add(answer);
         Apis.answer(this, answers,
             Config.getAccessToken(QuestionActivity.this),
-            Intents.EVENT_TYPE_DAILY,-1,null);
+            Intents.EVENT_TYPE_DAILY, -1, null);
       } else {
         mAnswers.add(answer);
       }
@@ -604,7 +605,7 @@ public class QuestionActivity extends BaseActivity implements
       answers.add(answer);
       Apis.answer(this, answers,
           Config.getAccessToken(QuestionActivity.this),
-          Intents.EVENT_TYPE_FEATURE,mApplication.getFeatureEvent().getId(), null);
+          Intents.EVENT_TYPE_FEATURE, mApplication.getFeatureEvent().getId(), null);
     }
 
     finished = mCurrentQuestion.getTotal() == (mCurrentQuestion.getIndex() + 1);

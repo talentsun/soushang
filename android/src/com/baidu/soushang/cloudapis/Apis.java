@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.baidu.soushang.Config;
 import com.baidu.soushang.Intents;
-import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;

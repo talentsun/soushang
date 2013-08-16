@@ -10,8 +10,6 @@
     <dimen name="hangtag_marginTop">128dp</dimen>
     <dimen name="webview_dialog_padding">32dp</dimen>
     <dimen name="webview_dialog_content_height">460dp</dimen>
-    <dimen name="question_section_margin">0dp</dimen>
-    <dimen name="question_section_up">8dp</dimen>
     <dimen name="timer_height">113dp</dimen>
     <dimen name="loading_content_height">85dp</dimen>
     
@@ -23,7 +21,7 @@
 	<dimen name="lbs_dialog_tv_paddingleft">14dp</dimen>
 	<dimen name="lbs_dialog_tv_margintop">20dp</dimen>
 	<dimen name="lbs_dialog_tv_size">17sp</dimen>
-	<dimen name="lbs_dialog_tv_content_size">15sp</dimen>
+	<dimen name="lbs_dialog_tv_content_size">16sp</dimen>
 	<dimen name="lbs_dialog_rel_margintop">25dp</dimen>
 	<dimen name="lbs_dialog_btn_margin">15dp</dimen>
 	<dimen name="lbs_event_line_length">100dp</dimen>
@@ -42,6 +40,8 @@
 	<dimen name="feature_dialog_introduce_marginleft">14dp</dimen>
 	<dimen name="feature_dialog_svieww_height">300dp</dimen>
 	
+	<dimen name="question_section_margin">0dp</dimen>
+    <dimen name="question_section_up">8dp</dimen>
 	<dimen name="question_edit_marginleft">15dp</dimen>
 	<dimen name="question_edit_paddingleft">17dp</dimen>
 	<dimen name="question_btn_search_marginleft">-39dp</dimen>
@@ -52,6 +52,9 @@
 	<dimen name="gift_interal_title_margintop">90dp</dimen>
 	<dimen name="gift_interal_content_size">21sp</dimen>
 	<dimen name="shop_daliy_prize_size">17sp</dimen>
+	<dimen name="gift_name_margintop">12dp</dimen>
+	<dimen name="gift_name_size">18sp</dimen>
+	<dimen name="gift_integral_marginTop">7dp</dimen>
 	<dimen name="shop_lin_margintop">7dp</dimen>
 	<dimen name="shop_grid_margintop">8dp</dimen>	
 	<dimen name="shop_grid_columnwidth">130dp</dimen>
@@ -64,39 +67,27 @@
 	<dimen name="shop_item_name_margintop">5dp</dimen>	
 	<dimen name="shop_item_name_size">15sp</dimen>	
 	<dimen name="shop_item_imag_paddingtop">-15dp</dimen>
-	
 	<dimen name="shop_item_btn_margintop">10dp</dimen>
 	<dimen name="shop_item_imag_margin_top">-12dp</dimen>
-	
-	
-	<dimen name="gift_name_margintop">12dp</dimen>
-	<dimen name="gift_name_size">18sp</dimen>
-	<dimen name="gift_integral_marginTop">7dp</dimen>
+	<dimen name="shop_item_backlin_margintop">4dp</dimen>
+    <dimen name="shop_item_backlin_marginleft">0dp</dimen>
 	
 	<dimen name="daily_event_margintop">0dp</dimen>
-	<dimen name="feature_event_lin_margintop">0dp</dimen>
 	<dimen name="home_line_margintop">20dp</dimen>
-	
 	<dimen name="event_score_margintop">-19dp</dimen>
 	<dimen name="back_home_margintop">8dp</dimen>
 	<dimen name="event_score_margin_right">0dp</dimen>
-	
 	<dimen name="profile_lin_margintop">37dp</dimen>
-	
 	<dimen name="shop_dialog_lin_bottom_top">65dp</dimen>
-	
-	<dimen name="feature_cancel_margintop">0dp</dimen>
-	
 	<dimen name="soushang_content_size">16sp</dimen>
 	<dimen name="soushang_size">24sp</dimen>
 	<dimen name="popup_dialog_width">275dp</dimen>
     <dimen name="popup_dialog_height">238dp</dimen>
-    
     <dimen name="fight_dialog_waiting_size">23dp</dimen>
     <dimen name="fight_dialog_btn_range">10dp</dimen>
     
-    <dimen name="shop_item_backlin_margintop">4dp</dimen>
-    
+    <dimen name="feature_event_lin_margintop">0dp</dimen>
+	<dimen name="feature_cancel_margintop">0dp</dimen>
     <dimen name="feature_dialog_back_marginLeft">30dp</dimen>
     <dimen name="feature_dialog_back_marginRight">30dp</dimen>
     <dimen name="feature_dialog_title_marginTop">20dp</dimen>
@@ -108,4 +99,5 @@
     <dimen name="feature_event_dialog_introduce_paddingRight">50dp</dimen>
     <dimen name="feature_event_dialog_know_margintop">12dp</dimen>
     <dimen name="feature_event_dialog_know_marginBottom">22dp</dimen>
+    
 </resources>

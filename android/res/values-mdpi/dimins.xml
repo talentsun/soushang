@@ -4,20 +4,17 @@
     <dimen name="home_paddingBottom">0dp</dimen>
     <dimen name="tips_dialog_width">240dp</dimen>
     <dimen name="tips_dialog_height">207dp</dimen>
-    
     <dimen name="hangtag_marginTop">80dp</dimen>
-    
     <dimen name="webview_dialog_padding">24dp</dimen>
     <dimen name="webview_dialog_content_height">350dp</dimen>
-    
     <dimen name="question_section_margin">-1dp</dimen>
     <dimen name="question_section_up">2dp</dimen>
     <dimen name="timer_height">113dp</dimen>
     <dimen name="loading_content_height">85dp</dimen>
-    
     <dimen name="soushang_content_size">15sp</dimen>
     <dimen name="soushang_size">20sp</dimen>
-    
+    <dimen name="daily_event_margintop">-5dp</dimen>
+    <dimen name="home_line_margintop">18dp</dimen>
     
     <dimen name="lbs_dialog_tv_content_size">14sp</dimen>
     <dimen name="lbs_dialog_tv_size">15sp</dimen>
@@ -34,26 +31,20 @@
     <dimen name="lbs_event_dialog_lin_paddingtop">8dp</dimen>
     <dimen name="lbs_event_result_title2_size">15sp</dimen>
     
-    
-    <dimen name="daily_event_margintop">-5dp</dimen>
-    <dimen name="home_line_margintop">18dp</dimen>
-    
     <dimen name="event_score_margin_right">5dp</dimen>
     <dimen name="event_score_margintop">-17dp</dimen>
 	<dimen name="popup_dialog_width">240dp</dimen>
     <dimen name="popup_dialog_height">190dp</dimen>
-
+    <dimen name="fight_dialog_waiting_size">17sp</dimen>
+    <dimen name="fight_dialog_btn_range">10dp</dimen>
     
     <dimen name="feature_event_dialog_btn_margintop">10dp</dimen>
 	<dimen name="feature_event_dialog_btn_marginbottom">15dp</dimen>
     <dimen name="feature_dialog_introduce_marginleft">14dp</dimen>
     <dimen name="feature_dialog_svieww_height">280dp</dimen>
-     
-    <dimen name="fight_dialog_waiting_size">17sp</dimen>
-    <dimen name="fight_dialog_btn_range">10dp</dimen>
    
     <dimen name="shop_item_imag_width">140dp</dimen>
 	<dimen name="shop_item_imag_height">140dp</dimen>
-	
 	<dimen name="shop_item_backlin_margintop">4dp</dimen>
+    <dimen name="shop_item_backlin_marginleft">0dp</dimen>
 </resources>
