@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <resources >
-    <color name="profile_tab_pressed">#fdfcc5</color>
+    <color name="profile_tab_selected">#7e1315</color>
     <color name="profile_tab_nomal">#cfcea8</color>
 </resources>

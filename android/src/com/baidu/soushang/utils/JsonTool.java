@@ -44,7 +44,7 @@ public class JsonTool {
       }
 
     } catch (Exception e) {
-      System.out.println(e + "at getRelultDone!!");
+      e.printStackTrace();
     }
     return list;
   }
@@ -71,7 +71,6 @@ public class JsonTool {
         list.add(featureEvent); 
       }
     } catch (JSONException e) {
-      System.out.println(e + "Jsons parse error !");
       e.printStackTrace();
     }
     return list;

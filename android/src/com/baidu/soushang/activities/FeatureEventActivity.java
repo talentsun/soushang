@@ -2,6 +2,7 @@ package com.baidu.soushang.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.baidu.soushang.Intents;
 import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
@@ -9,6 +10,7 @@ import com.baidu.soushang.cloudapis.FeatureEvent;
 import com.baidu.soushang.utils.JsonTool;
 import com.baidu.soushang.views.LoadingView;
 import com.baidu.soushang.widgets.FeatureDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -61,6 +63,7 @@ public class FeatureEventActivity extends BaseActivity {
     });
     showLoading();
     mAdapter = new EventAdapter(this);
+    mGridView.setVisibility(View.VISIBLE);
     mGridView.setAdapter(mAdapter);
     GetFeatureEvents getFeatureEvents = new GetFeatureEvents();
     getFeatureEvents.execute("");
@@ -137,6 +140,7 @@ public class FeatureEventActivity extends BaseActivity {
 
   private void showNoEvent() {
     mNoEvent.setVisibility(View.VISIBLE);
+    mGridView.setVisibility(View.GONE);
     mLoading.hide();
   }
 
