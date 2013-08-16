@@ -215,7 +215,6 @@ public class SouShangApplication extends Application {
         Log.i("access_token", mBaidu.getAccessToken());
         Config.setAccessToken(SouShangApplication.this,
             mBaidu.getAccessToken());
-        System.out.println("at onComplete AccessToken==="+ mBaidu.getAccessToken());
         Apis.Login(SouShangApplication.this, mBaidu.getAccessToken(),
             mLoginCallback);
 

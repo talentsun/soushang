@@ -226,6 +226,7 @@ public class FeatureEventActivity extends BaseActivity {
           case 3:
             if (mData.size() > 0) {
               featureEvent = mData.get(0);
+              featureEvent.setIsStartPoint(true);
             }
             return featureEvent;
           case 6:
@@ -465,6 +466,7 @@ public class FeatureEventActivity extends BaseActivity {
         if (event.isRunning()) {
           setBack(event, viewHolder.Back, viewHolder.Mark);
         } else {
+          viewHolder.Back.setVisibility(View.VISIBLE);
           if (event.isIsStartPoint()) {
             viewHolder.Back.setBackgroundResource(R.drawable.event_start);
             viewHolder.Mark.setVisibility(View.GONE);
@@ -477,6 +479,7 @@ public class FeatureEventActivity extends BaseActivity {
         viewHolder.Back.setVisibility(View.GONE);
         viewHolder.Mark.setVisibility(View.GONE);
       }
+    
       return convertView;
     }
 
