@@ -23,13 +23,13 @@ import android.widget.Toast;
 public class ShopDialog extends Dialog {
 
   private SouShangApplication mApplication;
-  private TextView title;
-  private TextView yMark;
-  private TextView nMark;
-  private TextView receMsg, receName, receAddr, recePhone;
-  private EditText editName, editAddr, editPhone;
-  private Button exchange;
-  private Button cancel;
+  private TextView mTitle;
+  private TextView mYourMark;
+  private TextView mNeedMark;
+  private TextView mReceMsg, mReceName, mReceAddr, mRecePhone;
+  private EditText mEditName, mEditAddr, mEditPhone;
+  private Button mExchange;
+  private Button mCancel; 
   private SharedPreferences sp;
   private SharedPreferences.Editor et;
 
@@ -47,39 +47,39 @@ public class ShopDialog extends Dialog {
     mApplication = (SouShangApplication) ((Activity) context)
         .getApplication();
 
-    title = (TextView) findViewById(R.id.shop_dialog_title_exchange);
-    title.setTypeface(typeface);
-    title.setText(SouShangApplication.CurrentShopInfo.getTitle());
+    mTitle = (TextView) findViewById(R.id.shop_dialog_title_exchange);
+    mTitle.setTypeface(typeface);
+    mTitle.setText(SouShangApplication.CurrentShopInfo.getTitle());
 
-    yMark = (TextView) findViewById(R.id.shop_dialog_ymark);
-    yMark.setTypeface(typeface);
-    yMark.setText(context.getResources().getString(
+    mYourMark = (TextView) findViewById(R.id.shop_dialog_ymark);
+    mYourMark.setTypeface(typeface);
+    mYourMark.setText(context.getResources().getString(
         R.string.shop_dialog_ymark)
         + mApplication.getUser().getPoint());
 
-    nMark = (TextView) findViewById(R.id.shop_dialog_nmark);
-    nMark.setTypeface(typeface);
-    nMark.setText(context.getResources().getString(
+    mNeedMark = (TextView) findViewById(R.id.shop_dialog_nmark);
+    mNeedMark.setTypeface(typeface);
+    mNeedMark.setText(context.getResources().getString(
         R.string.shop_dialog_nmark)
         + SouShangApplication.CurrentShopInfo.getIntegral());
 
-    receMsg = (TextView) findViewById(R.id.shop_dialog_rece_msg);
-    receMsg.setTypeface(typeface);
+    mReceMsg = (TextView) findViewById(R.id.shop_dialog_rece_msg);
+    mReceMsg.setTypeface(typeface);
 
-    receName = (TextView) findViewById(R.id.shop_dialog_rece_name);
-    receName.setTypeface(typeface);
-    editName = (EditText) findViewById(R.id.shop_dialog_edit_name);
-    editName.setTypeface(typeface);
+    mReceName = (TextView) findViewById(R.id.shop_dialog_rece_name);
+    mReceName.setTypeface(typeface);
+    mEditName = (EditText) findViewById(R.id.shop_dialog_edit_name);
+    mEditName.setTypeface(typeface);
 
-    receAddr = (TextView) findViewById(R.id.shop_dialog_rece_address);
-    receAddr.setTypeface(typeface);
-    editAddr = (EditText) findViewById(R.id.shop_dialog_edit_address);
-    editAddr.setTypeface(typeface);
+    mReceAddr = (TextView) findViewById(R.id.shop_dialog_rece_address);
+    mReceAddr.setTypeface(typeface);
+    mEditAddr = (EditText) findViewById(R.id.shop_dialog_edit_address);
+    mEditAddr.setTypeface(typeface);
 
-    recePhone = (TextView) findViewById(R.id.shop_dialog_rece_phone);
-    recePhone.setTypeface(typeface);
-    editPhone = (EditText) findViewById(R.id.shop_dialog_edit_phone);
-    editPhone.setTypeface(typeface);
+    mRecePhone = (TextView) findViewById(R.id.shop_dialog_rece_phone);
+    mRecePhone.setTypeface(typeface);
+    mEditPhone = (EditText) findViewById(R.id.shop_dialog_edit_phone);
+    mEditPhone.setTypeface(typeface);
 
     sp = context.getSharedPreferences(Intents.EXTRA_SHOP_SEND_ADDRESS,
         Activity.MODE_PRIVATE);
@@ -88,19 +88,19 @@ public class ShopDialog extends Dialog {
     String shop = sp.getString(key, "first");
     if (!shop.equals("first")) {
       String msg[] = shop.split("#");
-      editName.setText(msg[0]);
-      editAddr.setText(msg[1]);
-      editPhone.setText(msg[2]);
+      mEditName.setText(msg[0]);
+      mEditAddr.setText(msg[1]);
+      mEditPhone.setText(msg[2]);
     }
 
-    exchange = (Button) findViewById(R.id.shop_dialog_btn_exchange);
-    exchange.setTypeface(typeface);
-    exchange.setOnClickListener(new View.OnClickListener() {
+    mExchange = (Button) findViewById(R.id.shop_dialog_btn_exchange);
+    mExchange.setTypeface(typeface);
+    mExchange.setOnClickListener(new View.OnClickListener() {
 
       @Override
       public void onClick(View v) {
         // TODO Auto-generated method stub
-        String name = editName.getText().toString();
+        String name = mEditName.getText().toString();
         if (TextUtils.isEmpty(name)) {
           Toast.makeText(
               context,
@@ -110,7 +110,7 @@ public class ShopDialog extends Dialog {
           return;
         }
 
-        String addr = editAddr.getText().toString();
+        String addr = mEditAddr.getText().toString();
         if (TextUtils.isEmpty(addr)) {
           Toast.makeText(
               context,
@@ -120,7 +120,7 @@ public class ShopDialog extends Dialog {
           return;
         }
 
-        String phone = editPhone.getText().toString();
+        String phone = mEditPhone.getText().toString();
         if (TextUtils.isEmpty(phone)) {
           Toast.makeText(
               context,
@@ -142,10 +142,10 @@ public class ShopDialog extends Dialog {
         sExchangeInfo.setGid(SouShangApplication.CurrentShopInfo.getId());
         Apis.exchange(context, sExchangeInfo, null);
 
-        yMark.setText(context.getResources().getString(
+        mYourMark.setText(context.getResources().getString(
             R.string.shop_dialog_ymark)
             + mApplication.getUser().getPoint());
-        nMark.setText(context.getResources().getString(
+        mNeedMark.setText(context.getResources().getString(
             R.string.shop_dialog_nmark)
             + SouShangApplication.CurrentShopInfo.getIntegral());
         dismiss();
@@ -154,9 +154,9 @@ public class ShopDialog extends Dialog {
       }
     });
 
-    cancel = (Button) findViewById(R.id.shop_dialog_btn_cancel);
-    cancel.setTypeface(typeface);
-    cancel.setOnClickListener(new View.OnClickListener() {
+    mCancel = (Button) findViewById(R.id.shop_dialog_btn_cancel);
+    mCancel.setTypeface(typeface);
+    mCancel.setOnClickListener(new View.OnClickListener() {
 
       @Override
       public void onClick(View v) {

@@ -39,6 +39,7 @@ import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.cloudapis.AnswerRequest.Answer;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
+import com.baidu.soushang.cloudapis.FeatureEvent;
 import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.widgets.LoadingDialog;
@@ -138,7 +139,7 @@ public class QuestionActivity extends BaseActivity implements
 
   private static final int CREDIT_INTERVAL = 10;
   private static final int POINT_INTERVAL = 5;
-
+  private SouShangApplication mApplication;
   @Override
   protected void onCreate(Bundle arg0) {
 
@@ -168,7 +169,8 @@ public class QuestionActivity extends BaseActivity implements
     mHelp.setOnClickListener(this);
     mSearch.setOnClickListener(this);
     mQuit.setOnClickListener(this);
-
+    
+    mApplication = (SouShangApplication) getApplication();
     Typeface typeface = Typeface.createFromAsset(getAssets(),
         SouShangApplication.FONT);
     mMatchName.setTypeface(typeface);
@@ -271,8 +273,9 @@ public class QuestionActivity extends BaseActivity implements
       if (mEventType == Intents.EVENT_TYPE_LBS) {
         mEventKey = getIntent().getStringExtra(Intents.EXTRA_FIGHT_KEY);
       } else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
-        mMatchName.setText(SouShangApplication.CurrentFeatureEvent.getTitle());
-        mEventKey = SouShangApplication.CurrentFeatureEvent.getId() + "";
+        FeatureEvent featureEvent =mApplication.getFeatureEvent();
+        mMatchName.setText(featureEvent.getTitle());
+        mEventKey = featureEvent.getId() + "";
       }
 
       IntentFilter filter = new IntentFilter(Intents.ACTION_FIGHTING);
@@ -475,7 +478,7 @@ public class QuestionActivity extends BaseActivity implements
     } else if (mEventType == Intents.EVENT_TYPE_LBS) {
       mMatchName.setText(getResources().getString(R.string.lbs_event));
     } else if (mEventType == Intents.EVENT_TYPE_FEATURE) {
-      mMatchName.setText(SouShangApplication.CurrentFeatureEvent.getTitle());
+      mMatchName.setText(mApplication.getFeatureEvent().getTitle());
     }
 
     if (!TextUtils.isEmpty(question.getSearchRecom())) {
@@ -585,13 +588,12 @@ public class QuestionActivity extends BaseActivity implements
     answer.setId(mCurrentQuestion.getId());
     answer.setAnswer(index);
     if (mEventType == Intents.EVENT_TYPE_DAILY) {
-
       if (Config.isLogged(this)) {
         List<Answer> answers = new ArrayList<Answer>();
         answers.add(answer);
         Apis.answer(this, answers,
             Config.getAccessToken(QuestionActivity.this),
-            Intents.EVENT_TYPE_DAILY, null);
+            Intents.EVENT_TYPE_DAILY,-1,null);
       } else {
         mAnswers.add(answer);
       }
@@ -602,7 +604,7 @@ public class QuestionActivity extends BaseActivity implements
       answers.add(answer);
       Apis.answer(this, answers,
           Config.getAccessToken(QuestionActivity.this),
-          Intents.EVENT_TYPE_FEATURE, null);
+          Intents.EVENT_TYPE_FEATURE,mApplication.getFeatureEvent().getId(), null);
     }
 
     finished = mCurrentQuestion.getTotal() == (mCurrentQuestion.getIndex() + 1);

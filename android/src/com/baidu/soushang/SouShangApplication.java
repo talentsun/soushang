@@ -45,7 +45,6 @@ public class SouShangApplication extends Application {
   private boolean mIsLBSServiceOn = true;
 
   static {
-    SouShangApplication.CurrentFeatureEvent = new FeatureEvent();
     SouShangApplication.CurrentShopInfo = new ShopInfo();
   }
 
@@ -127,6 +126,16 @@ public class SouShangApplication extends Application {
     return mOption;
   }
 
+  private FeatureEvent mFeatureEvent;
+  
+  public FeatureEvent getFeatureEvent() {
+    return mFeatureEvent;
+  }
+
+  public void setFeatureEvent(FeatureEvent featureEvent) {
+    this.mFeatureEvent = featureEvent;
+  }
+
   @Override
   public void onCreate() {
     super.onCreate();
@@ -206,7 +215,6 @@ public class SouShangApplication extends Application {
         Log.i("access_token", mBaidu.getAccessToken());
         Config.setAccessToken(SouShangApplication.this,
             mBaidu.getAccessToken());
-
         Apis.Login(SouShangApplication.this, mBaidu.getAccessToken(),
             mLoginCallback);
 
@@ -250,8 +258,6 @@ public class SouShangApplication extends Application {
   public static String CATID = "1";
 
   public static ShopInfo CurrentShopInfo = null;
-
-  public static FeatureEvent CurrentFeatureEvent = null;
 
   public void updateUserExtraInfo() {
     Apis.getUserInfo(this, Config.getAccessToken(this),
