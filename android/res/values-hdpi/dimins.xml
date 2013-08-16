@@ -94,4 +94,16 @@
     <dimen name="fight_dialog_btn_range">10dp</dimen>
     
     <dimen name="shop_item_backlin_margintop">3dp</dimen>
+    
+    <dimen name="feature_dialog_back_marginleft">20dp</dimen>
+    <dimen name="feature_dialog_back_marginright">20dp</dimen>
+    <dimen name="feature_dialog_title_marginTop">16dp</dimen>
+    <dimen name="feature_event_dialog_title_size">21sp</dimen>
+    <dimen name="feature_event_dialog_integral_size">18sp</dimen>
+    <dimen name="feature_event_dialog_introduce_size">16sp</dimen>
+    <dimen name="feature_event_dialog_introduce_paddingTop">20dp</dimen>
+    <dimen name="feature_event_dialog_introduce_paddingBottom">8dp</dimen>
+    <dimen name="feature_event_dialog_introduce_paddingLeft">40dp</dimen>
+    <dimen name="feature_event_dialog_introduce_paddingRight">40dp</dimen>
+    <dimen name="feature_event_dialog_know_marginBottom">15dp</dimen>
 </resources>

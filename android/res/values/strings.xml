@@ -106,7 +106,7 @@
     <string name="feature_count">参赛人数：</string>
     <string name="gift_test_name">青花瓷套装</string>
     <string name="gift_test_num">40000点</string>
-    <string name="feature_dialog_start">开始参加</string>
+    <string name="feature_dialog_konwn">我知道了</string>
     <string name="feature_dialog_cancel">不参加了</string>
     <string name="name">全国中小学创新大赛题库</string>
     <string name="gift_integral_title">您的积分是</string>
@@ -141,4 +141,9 @@
 	<string name="lbs_event_invite_content">我的妈呀，这是要发呀！你还在打飞机咩？你还在找你妹咩？你还在保卫萝卜咩？如果这就是你，那么你已经out了，赶快来寻找搜神吧，与你身边的小伙伴们一起针锋相对，赢取积分，赚取加注，夺得大奖，并且能和小伙伴们一起涨姿势，你还在等什么？</string>
 	<string name="lbs_event_invite_prize">邀请一次，加5个积分哦！</string>
 	<string name="profile_login_out">退出</string>
+	
+	<string name="feature_event_item_mark">32</string>
+	<string name="feature_dialog_introduce">专题赛一周一次，答完后就请期待下次专题赛的到来吧。扫除搜索难题，做新时代的知识分子。我们的目标是：一路通关，成为搜神！ </string>
+	<string name="feature_dialog_intergal">"获得积分"</string>
+	<string name="feature_dialog_title">类之练习关</string>
 </resources>

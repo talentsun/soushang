@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@drawable/rank_bg"
+    android:background="@drawable/event_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
@@ -16,15 +16,24 @@
         android:listSelector="#00000000"
         android:src="@drawable/feature_event_title" />
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:cacheColorHint="#00000000"
-        android:divider="#00000000"
-        android:listSelector="@drawable/feature_list_item" >
-    </ListView>
+    <GridView
+        android:id="@+id/feature_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:columnWidth="70dp"
+        android:duplicateParentState="true"
+        android:gravity="center"
+        android:horizontalSpacing="4dp"
+        android:listSelector="@null"
+        android:numColumns="5"
+        android:smoothScrollbar="true"
+        android:soundEffectsEnabled="true"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="4dp"
+        >
+    </GridView>
 
     <LinearLayout
         android:id="@android:id/empty"
