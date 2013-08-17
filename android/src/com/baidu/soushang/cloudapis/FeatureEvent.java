@@ -14,7 +14,6 @@ public class FeatureEvent {
   private boolean mIsPractice;
   private boolean mIsStartPoint;
 
-
   public boolean isIsStartPoint() {
     return mIsStartPoint;
   }

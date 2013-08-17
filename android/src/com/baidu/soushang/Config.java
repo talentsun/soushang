@@ -2,6 +2,7 @@ package com.baidu.soushang;
 
 import java.util.UUID;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -16,11 +17,24 @@ public class Config {
   public static final String KEY_USERNAME = "user_name";
   public static final String KEY_AVATAR = "avatar";
   public static final String KEY_USERID = "user_id";
-
+  
   public static SharedPreferences getConfigs(Context context) {
     return context.getSharedPreferences(PREFS_NAME, 0);
   }
-
+  
+  public static void setExchangeUsrInfo(Context context,String key,String msg){
+    SharedPreferences  sp = context.getSharedPreferences(Intents.EXTRA_SHOP_SEND_ADDRESS,
+      Activity.MODE_PRIVATE);
+    SharedPreferences.Editor  et = sp.edit();
+    et.putString(key, msg);
+    et.commit();
+  }
+  public static String getExchangeUserInfo(Context context,String key){
+    SharedPreferences  sp = context.getSharedPreferences(Intents.EXTRA_SHOP_SEND_ADDRESS,
+      Activity.MODE_PRIVATE);
+    String shop = sp.getString(key, "first");
+    return shop;
+  }
   public static void setAccessToken(Context context, String accessToken) {
     SharedPreferences settings = context
         .getSharedPreferences(PREFS_NAME, 0);

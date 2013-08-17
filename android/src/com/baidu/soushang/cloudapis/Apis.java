@@ -15,7 +15,7 @@ import it.restrung.rest.marshalling.response.AbstractJSONResponse;
 
 public class Apis {
   // private static final String BASE_URL = "http://sou.baidu.com/";
-  private static final String BASE_URL = "http://soushang.limijiaoyin.com/index.php/";
+  private static final String BASE_URL = "http://sou.baidu.com/";
   private static final String QUESTION_URL = BASE_URL
       + "Devent/next/s/%d.html?udid=%s";
   private static final String QUESTION_URL_LOGGED = BASE_URL
@@ -136,7 +136,7 @@ public class Apis {
 
   public static void getUserInfo(Context context, String accessToken,
       final ApiResponseCallback<UserInfoResponse> callback) {
-    
+
     RestClientFactory.getClient().getAsync(
         new ContextAwareAPIDelegate<UserInfoResponse>(context,
             UserInfoResponse.class) {
@@ -209,7 +209,7 @@ public class Apis {
 
   @SuppressWarnings("deprecation")
   public static void answer(Context context, List<Answer> answers,
-      String accessToken, int mEventType,int id,
+      String accessToken, int mEventType, int id,
       final ApiResponseCallback<CommonResponse> callback) {
     AnswerRequest request = new AnswerRequest();
     request.setAnswers(answers);

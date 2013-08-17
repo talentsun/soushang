@@ -38,11 +38,7 @@ public class JsonTool {
 
         String result = EntityUtils.toString(httpResponse.getEntity());
         list = JsonTool.parseJsonMulti(result);
-
-      } else {
-        System.out.println("at getFeatureData of JsonTool Á´½Ó»ñÈ¡json×Ö·û´®Ê§°Ü!");
       }
-
     } catch (Exception e) {
       e.printStackTrace();
     }
