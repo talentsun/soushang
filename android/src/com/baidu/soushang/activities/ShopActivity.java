@@ -57,6 +57,7 @@ public class ShopActivity extends BaseActivity {
             mAdapter.clearData();
           }
         }
+
         @Override
         public void onError(Throwable arg0) {
           showNoGifts();
@@ -90,6 +91,7 @@ public class ShopActivity extends BaseActivity {
           }
         });
       }
+
       @Override
       public void onError() {
         // TODO Auto-generated method stub
@@ -159,6 +161,7 @@ public class ShopActivity extends BaseActivity {
     // TODO Auto-generated method stub
     super.onResume();
   }
+
   @Override
   protected void onStart() {
     // TODO Auto-generated method stub
@@ -188,28 +191,28 @@ public class ShopActivity extends BaseActivity {
 
   public class ShopInfokAdapter extends BaseAdapter {
     private List<ShopInfo> mData;
-    private ShopInfo shopInfo;
+    private ShopInfo mShopInfo;
     private LayoutInflater mInflater;
-    private List<String> urlList = null;
-    private String url = null;
-    private static final String BASEURL = "http://soushang.limijiaoyin.com";
+    private List<String> mUrlList = null;
+    private String mUrl = null;
+    private static final String BASEURL = "http://sou.baidu.com";
+
     public List<ShopInfo> getData() {
       return mData;
     }
 
     public void setData(List<ShopInfo> data) {
       mData.clear();
-
       if (data != null) {
         mData.addAll(data);
       }
-      urlList = new ArrayList<String>();
+      mUrlList = new ArrayList<String>();
       for (int i = 0; i < mData.size(); i++) {
-        shopInfo = new ShopInfo();
-        shopInfo = mData.get(i);
-        url = shopInfo.getImage();
-        url.replace("\\", "");
-        urlList.add(url);
+        mShopInfo = new ShopInfo();
+        mShopInfo = mData.get(i);
+        mUrl = mShopInfo.getImage();
+        mUrl.replace("\\", "");
+        mUrlList.add(mUrl);
       }
       notifyDataSetChanged();
     }
@@ -251,31 +254,31 @@ public class ShopActivity extends BaseActivity {
         viewHolder = new ViewHolder();
         convertView = mInflater.inflate(R.layout.shop_item, parent,
             false);
-        viewHolder.shop_item_imag = (ImageView) convertView
+        viewHolder.mShopImag = (ImageView) convertView
             .findViewById(R.id.shop_item_imag);
-        viewHolder.shop_item_name = (TextView) convertView
+        viewHolder.mShopName = (TextView) convertView
             .findViewById(R.id.shop_item_name);
-        viewHolder.shop_item_marktitle = (TextView) convertView
+        viewHolder.mShopMarkTitle = (TextView) convertView
             .findViewById(R.id.shop_item_marktitle);
-        viewHolder.shop_item_marknum = (TextView) convertView
+        viewHolder.mShopMarkNum = (TextView) convertView
             .findViewById(R.id.shop_item_marknum);
-        viewHolder.shop_item_exchange = (Button) convertView
+        viewHolder.mShopExchange = (Button) convertView
             .findViewById(R.id.shop_item_exchange);
-        viewHolder.shop_item_name.setTypeface(mTypeface);
-        viewHolder.shop_item_marktitle.setTypeface(mTypeface);
-        viewHolder.shop_item_marknum.setTypeface(mTypeface);
-        viewHolder.shop_item_exchange.setTypeface(mTypeface);
+        viewHolder.mShopName.setTypeface(mTypeface);
+        viewHolder.mShopMarkTitle.setTypeface(mTypeface);
+        viewHolder.mShopMarkNum.setTypeface(mTypeface);
+        viewHolder.mShopExchange.setTypeface(mTypeface);
         convertView.setTag(viewHolder);
       } else {
         viewHolder = (ViewHolder) convertView.getTag();
       }
       final ShopInfo shopInfo = (ShopInfo) getItem(position);
-      String endUrl = BASEURL + urlList.get(position);
+      String endUrl = BASEURL + mUrlList.get(position);
       ImageLoader imageLoader = ImageLoader.getInstance();
-      imageLoader.displayImage(endUrl, viewHolder.shop_item_imag);
-      viewHolder.shop_item_name.setText(shopInfo.getTitle());
-      viewHolder.shop_item_marknum.setText("" + shopInfo.getIntegral());
-      viewHolder.shop_item_exchange
+      imageLoader.displayImage(endUrl, viewHolder.mShopImag);
+      viewHolder.mShopName.setText(shopInfo.getTitle());
+      viewHolder.mShopMarkNum.setText("" + shopInfo.getIntegral());
+      viewHolder.mShopExchange
           .setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,16 +301,15 @@ public class ShopActivity extends BaseActivity {
               }
             }
           });
-
       return convertView;
     }
-    
+
     class ViewHolder {
-      public ImageView shop_item_imag;
-      public TextView shop_item_name;
-      public TextView shop_item_marktitle;
-      public TextView shop_item_marknum;
-      public Button shop_item_exchange;
+      public ImageView mShopImag;
+      public TextView mShopName;
+      public TextView mShopMarkTitle;
+      public TextView mShopMarkNum;
+      public Button mShopExchange;
     }
   }
 }

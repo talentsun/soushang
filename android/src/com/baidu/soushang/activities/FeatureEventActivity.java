@@ -32,11 +32,9 @@ public class FeatureEventActivity extends BaseActivity {
   private TextView mNoEvent;
   private LoadingView mLoading;
   private Typeface mTypeface;
-
   private EventAdapter mAdapter;
   private static final String FEATURE_EVENT_URL =
-      "http://soushang.limijiaoyin.com/index.php/Devent/getRooms.html?access_token=%s";
-
+      "http://sou.baidu.com/Devent/getRooms.html?access_token=%s";
   private FeatureDialog mFeatureDialog;
   private GridView mGridView;
 
@@ -63,7 +61,6 @@ public class FeatureEventActivity extends BaseActivity {
     });
     showLoading();
     mAdapter = new EventAdapter(this);
-    mGridView.setVisibility(View.VISIBLE);
     mGridView.setAdapter(mAdapter);
     GetFeatureEvents getFeatureEvents = new GetFeatureEvents();
     getFeatureEvents.execute("");
@@ -140,7 +137,6 @@ public class FeatureEventActivity extends BaseActivity {
 
   private void showNoEvent() {
     mNoEvent.setVisibility(View.VISIBLE);
-    mGridView.setVisibility(View.GONE);
     mLoading.hide();
   }
 
@@ -483,7 +479,7 @@ public class FeatureEventActivity extends BaseActivity {
         viewHolder.Back.setVisibility(View.GONE);
         viewHolder.Mark.setVisibility(View.GONE);
       }
-    
+
       return convertView;
     }
 

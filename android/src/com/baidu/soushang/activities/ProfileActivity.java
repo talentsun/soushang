@@ -51,7 +51,8 @@ public class ProfileActivity extends BaseActivity {
   private int mHeight;
   private Timer mTimer;
   private List<Gift> mList = null;
-  private Button mLoginOut; 
+  private Button mLoginOut;
+
   @Override
   protected void onCreate(Bundle arg0) {
     setContentView(R.layout.profile);
@@ -86,7 +87,7 @@ public class ProfileActivity extends BaseActivity {
     mWinRate.setTypeface(tf);
     mTipsMsg.setTypeface(tf);
     mApplication = (SouShangApplication) getApplication();
-    final Handler myHandler = new Handler() {
+    final Handler mHandler = new Handler() {
       @Override
       public void handleMessage(Message msg) {
         if (msg.what == 1) {
@@ -109,7 +110,7 @@ public class ProfileActivity extends BaseActivity {
         // TODO Auto-generated method stub
         Message message = new Message();
         message.what = 1;
-        myHandler.sendMessage(message);
+        mHandler.sendMessage(message);
       }
     };
     mTimer.schedule(task, 10, 10);
@@ -173,7 +174,6 @@ public class ProfileActivity extends BaseActivity {
           mApplication.getUser().getWinNum()));
       mWinRate.setText(String.format(getString(R.string.win_rate),
           mApplication.getUser().getWinRatio()));
-      // 获取礼品信息
       mList = new ArrayList<Gift>();
       mList = mApplication.getUser().getGifts();
     }
@@ -214,41 +214,42 @@ public class ProfileActivity extends BaseActivity {
   }
 
   class ProfileGiftAdapter extends BaseAdapter {
-    private Context context;
-    private LayoutInflater layoutInflater;
+    private Context mContext;
+    private LayoutInflater mLayoutInflater;
     private SouShangApplication mApplication;
-    private List<Gift> list = new ArrayList<Gift>();
-    private Gift gift;
-    private List<String> urlList = null;
-    private String url = null;
-    private static final String BASEURL = "http://soushang.limijiaoyin.com";
+    private List<Gift> mList = new ArrayList<Gift>();
+    private Gift mGift;
+    private List<String> mUrlList = null;
+    private String mUrl = null;
+    private static final String BASEURL = "http://sou.baidu.com";
+
     public ProfileGiftAdapter(SouShangApplication mApplication,
-        Context context, List<Gift> list2) {
+        Context context, List<Gift> list) {
       this.mApplication = mApplication;
-      this.context = context;
-      this.list = list2;
-      layoutInflater = (LayoutInflater) context
+      this.mContext = context;
+      this.mList = list;
+      mLayoutInflater = (LayoutInflater) context
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      urlList = new ArrayList<String>();
-      for (int i = 0; i < list2.size(); i++) {
-        gift = new Gift();
-        gift = list2.get(i);
-        url = gift.getThumb();
-        url.replace("\\", "");
-        urlList.add(url);
+      mUrlList = new ArrayList<String>();
+      for (int i = 0; i < list.size(); i++) {
+        mGift = new Gift();
+        mGift = list.get(i);
+        mUrl = mGift.getThumb();
+        mUrl.replace("\\", "");
+        mUrlList.add(mUrl);
       }
     }
 
     @Override
     public int getCount() {
       // TODO Auto-generated method stub
-      return list.size();
+      return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
       // TODO Auto-generated method stub
-      return list.get(position);
+      return mList.get(position);
     }
 
     @Override
@@ -262,38 +263,38 @@ public class ProfileActivity extends BaseActivity {
       // TODO Auto-generated method stub
       MyLayout mlayout;
       if (convertView == null || convertView.getTag() == null) {
-        convertView = layoutInflater.inflate(R.layout.profile_gift_ada,
+        convertView = mLayoutInflater.inflate(R.layout.profile_gift_ada,
             null);
         mlayout = new MyLayout();
-        mlayout.gift_imag = (ImageView) convertView
+        mlayout.mGiftImag = (ImageView) convertView
             .findViewById(R.id.gift_imag);
-        mlayout.gift_name = (TextView) convertView
+        mlayout.mGiftName = (TextView) convertView
             .findViewById(R.id.gift_name);
-        mlayout.gift_integral = (TextView) convertView
+        mlayout.mGiftIntegral = (TextView) convertView
             .findViewById(R.id.gift_integral);
         convertView.setTag(mlayout);
       } else {
         mlayout = (MyLayout) convertView.getTag();
       }
-      gift = list.get(position);
-      String endUrl = BASEURL + urlList.get(position);
-      mlayout.gift_imag.setBackgroundResource(R.drawable.self_gift_stroke);
+      mGift = mList.get(position);
+      String endUrl = BASEURL + mUrlList.get(position);
+      mlayout.mGiftImag.setBackgroundResource(R.drawable.self_gift_stroke);
       ImageLoader imageLoader = ImageLoader.getInstance();
-      imageLoader.displayImage(endUrl, mlayout.gift_imag,
+      imageLoader.displayImage(endUrl, mlayout.mGiftImag,
           mApplication.getAvatarDisplayOption());
-      Typeface tf = Typeface.createFromAsset(context.getAssets(),
+      Typeface tf = Typeface.createFromAsset(mContext.getAssets(),
           SouShangApplication.FONT);
-      mlayout.gift_name.setTypeface(tf);
-      mlayout.gift_integral.setTypeface(tf);
-      mlayout.gift_name.setText(gift.getTitle());
-      mlayout.gift_integral.setText(gift.getNums());
+      mlayout.mGiftName.setTypeface(tf);
+      mlayout.mGiftIntegral.setTypeface(tf);
+      mlayout.mGiftName.setText(mGift.getTitle());
+      mlayout.mGiftIntegral.setText(mGift.getNums());
       return convertView;
     }
 
     class MyLayout {
-      ImageView gift_imag;
-      TextView gift_name;
-      TextView gift_integral;
+      ImageView mGiftImag;
+      TextView mGiftName;
+      TextView mGiftIntegral;
     }
   }
 }

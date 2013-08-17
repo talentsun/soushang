@@ -127,7 +127,7 @@ public class SouShangApplication extends Application {
   }
 
   private FeatureEvent mFeatureEvent;
-  
+
   public FeatureEvent getFeatureEvent() {
     return mFeatureEvent;
   }
@@ -157,7 +157,7 @@ public class SouShangApplication extends Application {
 
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);
-//  CookieSyncManager.createInstance(this);
+    // CookieSyncManager.createInstance(this);
 
     Config.getUDID(this);
   }
@@ -194,7 +194,7 @@ public class SouShangApplication extends Application {
     if (mBaidu != null) {
       mBaidu.LogOut();
     }
-    
+
     mUser = null;
   }
 
@@ -211,7 +211,7 @@ public class SouShangApplication extends Application {
 
       @Override
       public void onComplete(Bundle arg0) {
-        
+
         Log.i("access_token", mBaidu.getAccessToken());
         Config.setAccessToken(SouShangApplication.this,
             mBaidu.getAccessToken());
@@ -239,6 +239,8 @@ public class SouShangApplication extends Application {
               && arg0.getUser() != null) {
             mUser = arg0.getUser();
             if (mUpdateUserInfoListener != null) {
+              System.out.println("at mUserExtraInfoCallback+++++++mUser.getPoint()===="
+                  + mUser.getPoint());
               mUpdateUserInfoListener.onUpdated(mUser);
             }
           }
@@ -265,7 +267,7 @@ public class SouShangApplication extends Application {
   }
 
   public void updateBaseUserInfo() {
-    
+
     new AsyncBaiduRunner(mBaidu).request(USERINFO_URL, null, "GET",
         new RequestListener() {
 
