@@ -157,11 +157,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
   private void logged() {
     mLogin.setText(Config.getUserName(HomeActivity.this));
-
     Intent lbsIntent = new Intent(this, LBSService.class);
     lbsIntent.setAction(Intents.ACTION_STARTUP);
     startService(lbsIntent);
-
     mApplication.updateUserExtraInfo();
   }
 

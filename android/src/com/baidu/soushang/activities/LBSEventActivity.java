@@ -145,7 +145,7 @@ public class LBSEventActivity extends BaseActivity {
                 R.string.lbs_event_invite_prize));
         mShareDialog
             .setOnShareListener(new CommonShareDialog.OnShareListener() {
-              
+
               @Override
               public void onShared() {
                 Apis.share(

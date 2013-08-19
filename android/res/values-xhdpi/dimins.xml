@@ -52,9 +52,9 @@
 	<dimen name="gift_interal_title_margintop">90dp</dimen>
 	<dimen name="gift_interal_content_size">21sp</dimen>
 	<dimen name="shop_daliy_prize_size">17sp</dimen>
-	<dimen name="gift_name_margintop">12dp</dimen>
+	<dimen name="gift_name_margintop">8dp</dimen>
 	<dimen name="gift_name_size">18sp</dimen>
-	<dimen name="gift_integral_marginTop">7dp</dimen>
+	<dimen name="gift_integral_marginTop">5dp</dimen>
 	<dimen name="shop_lin_margintop">7dp</dimen>
 	<dimen name="shop_grid_margintop">8dp</dimen>	
 	<dimen name="shop_grid_columnwidth">130dp</dimen>
