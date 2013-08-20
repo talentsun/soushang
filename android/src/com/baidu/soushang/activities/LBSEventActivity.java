@@ -14,6 +14,7 @@ import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
 import com.baidu.soushang.utils.NetworkUtils;
 import com.baidu.soushang.views.LoadingView;
+import com.baidu.soushang.views.ScrollAlwaysTextView;
 import com.baidu.soushang.widgets.FightDialog;
 import com.baidu.soushang.widgets.FightDialog.Listener;
 import com.baidu.soushang.widgets.LBSFirstDialog;
@@ -303,7 +304,7 @@ public class LBSEventActivity extends BaseActivity {
             .findViewById(R.id.bg);
         viewHolder.avatar = (ImageView) convertView
             .findViewById(R.id.avatar);
-        viewHolder.username = (TextView) convertView
+        viewHolder.username = (ScrollAlwaysTextView) convertView
             .findViewById(R.id.username);
         viewHolder.network = (TextView) convertView
             .findViewById(R.id.network);
@@ -338,6 +339,7 @@ public class LBSEventActivity extends BaseActivity {
           .build();
       ImageLoader.getInstance().displayImage(peer.getAvatar(),
           viewHolder.avatar, option);
+      viewHolder.username.requestFocus();
       viewHolder.username.setText(peer.getName());
       viewHolder.network.setText(NetworkUtils.getNetworkStr(peer
           .getNetType()));
@@ -377,7 +379,7 @@ public class LBSEventActivity extends BaseActivity {
     public class ViewHolder {
       public LinearLayout bg;
       public ImageView avatar;
-      public TextView username;
+      public ScrollAlwaysTextView username;
       public TextView network;
       public TextView eventCount;
       public TextView winRate;

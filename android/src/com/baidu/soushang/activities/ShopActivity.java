@@ -13,11 +13,17 @@ import com.baidu.soushang.cloudapis.ShopInfoResponse;
 import com.baidu.soushang.cloudapis.User;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
 import com.baidu.soushang.views.LoadingView;
+import com.baidu.soushang.views.ScrollAlwaysTextView;
 import com.baidu.soushang.widgets.ShopDialog;
 import com.baidu.soushang.widgets.TipsDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import android.R.integer;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,7 +57,7 @@ public class ShopActivity extends BaseActivity {
         public void onResults(ShopInfoResponse arg0) {
           showNoGifts();
           if (arg0 != null && arg0.getRetCode() == 0
-              && arg0.getGifts() != null) {
+              && arg0.getGifts() != null && arg0.getGifts().size() != 0) {
             mAdapter.setData(arg0.getGifts());
           } else {
             mAdapter.clearData();
@@ -205,15 +211,16 @@ public class ShopActivity extends BaseActivity {
       mData.clear();
       if (data != null) {
         mData.addAll(data);
+        mUrlList = new ArrayList<String>();
+        for (int i = 0; i < mData.size(); i++) {
+          mShopInfo = new ShopInfo();
+          mShopInfo = mData.get(i);
+          mUrl = mShopInfo.getImage();
+          mUrl.replace("\\", "");
+          mUrlList.add(mUrl);
+        }
       }
-      mUrlList = new ArrayList<String>();
-      for (int i = 0; i < mData.size(); i++) {
-        mShopInfo = new ShopInfo();
-        mShopInfo = mData.get(i);
-        mUrl = mShopInfo.getImage();
-        mUrl.replace("\\", "");
-        mUrlList.add(mUrl);
-      }
+
       notifyDataSetChanged();
     }
 
@@ -256,7 +263,7 @@ public class ShopActivity extends BaseActivity {
             false);
         viewHolder.mShopImag = (ImageView) convertView
             .findViewById(R.id.shop_item_imag);
-        viewHolder.mShopName = (TextView) convertView
+        viewHolder.mShopName = (ScrollAlwaysTextView) convertView
             .findViewById(R.id.shop_item_name);
         viewHolder.mShopMarkTitle = (TextView) convertView
             .findViewById(R.id.shop_item_marktitle);
@@ -275,7 +282,8 @@ public class ShopActivity extends BaseActivity {
       final ShopInfo shopInfo = (ShopInfo) getItem(position);
       String endUrl = BASEURL + mUrlList.get(position);
       ImageLoader imageLoader = ImageLoader.getInstance();
-      imageLoader.displayImage(endUrl, viewHolder.mShopImag);
+      imageLoader.displayImage(endUrl, viewHolder.mShopImag);      
+      viewHolder.mShopName.requestFocus();
       viewHolder.mShopName.setText(shopInfo.getTitle());
       viewHolder.mShopMarkNum.setText("" + shopInfo.getIntegral());
       viewHolder.mShopExchange
@@ -306,7 +314,7 @@ public class ShopActivity extends BaseActivity {
 
     class ViewHolder {
       public ImageView mShopImag;
-      public TextView mShopName;
+      public ScrollAlwaysTextView mShopName;
       public TextView mShopMarkTitle;
       public TextView mShopMarkNum;
       public Button mShopExchange;

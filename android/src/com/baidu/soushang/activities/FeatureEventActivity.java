@@ -101,7 +101,7 @@ public class FeatureEventActivity extends BaseActivity {
 
     @Override
     protected void onPostExecute(List<FeatureEvent> result) {
-      if (result != null) {
+      if (result != null && result.size() != 0) {
         mAdapter.setData(result);
       } else {
         showNoEvent();

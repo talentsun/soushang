@@ -10,28 +10,31 @@
         android:layout_width="@dimen/shop_item_imag_width"
         android:layout_height="@dimen/shop_item_imag_height"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/shop_item_imag_margintop" 
-        />
+        android:layout_marginTop="@dimen/shop_item_imag_margintop" />
 
     <LinearLayout
         android:id="@+id/shop_item_backlin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/shop_item_imag"
-        android:background="@drawable/gift_showbg2"
-        android:orientation="vertical" 
-        android:layout_marginTop="@dimen/shop_item_backlin_margintop"
         android:layout_marginLeft="@dimen/shop_item_backlin_marginleft"
-        >
+        android:layout_marginTop="@dimen/shop_item_backlin_margintop"
+        android:background="@drawable/gift_showbg2"
+        android:orientation="vertical" >
 
-        <TextView
+        <com.baidu.soushang.views.ScrollAlwaysTextView
             android:id="@+id/shop_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/shop_item_name_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/shop_item_name_margintop"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center"
-            android:maxEms="9"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:text="@string/shop_item_test"
             android:textColor="#536f03"
             android:textSize="@dimen/shop_item_name_size" />

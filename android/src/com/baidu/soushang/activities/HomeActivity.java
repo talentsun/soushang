@@ -18,6 +18,7 @@ import com.baidu.soushang.widgets.TipsDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
+
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;

@@ -25,13 +25,17 @@ import com.baidu.soushang.utils.SystemUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.BitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 public class SouShangApplication extends Application {
   public static final String FONT = "fonts/yuppy-sc.otf";
@@ -151,10 +155,11 @@ public class SouShangApplication extends Application {
         .showImageForEmptyUri(R.drawable.default_avatar)
         .showStubImage(R.drawable.default_avatar)
         .displayer(
-            new RoundedBitmapDisplayer(
-                getResources().getDimensionPixelSize(
-                    R.dimen.avatar_width) / 2)).build();
-
+          new RoundedBitmapDisplayer(
+            getResources().getDimensionPixelSize(
+                R.dimen.avatar_width) / 2)
+           ).build();
+   new SimpleBitmapDisplayer();
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);
     // CookieSyncManager.createInstance(this);
@@ -239,8 +244,6 @@ public class SouShangApplication extends Application {
               && arg0.getUser() != null) {
             mUser = arg0.getUser();
             if (mUpdateUserInfoListener != null) {
-              System.out.println("at mUserExtraInfoCallback+++++++mUser.getPoint()===="
-                  + mUser.getPoint());
               mUpdateUserInfoListener.onUpdated(mUser);
             }
           }
