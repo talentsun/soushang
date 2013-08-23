@@ -152,7 +152,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     lbsIntent.setAction(Intents.ACTION_STARTUP);
     startService(lbsIntent);
     mApplication.updateUserExtraInfo();
- 
+
   }
 
   private void notLogged() {

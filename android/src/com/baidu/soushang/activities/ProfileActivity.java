@@ -297,7 +297,7 @@ public class ProfileActivity extends BaseActivity {
       TextView mGiftIntegral;
     }
   }
-  
-  
-  
+
+
+
 }

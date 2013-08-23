@@ -17,13 +17,7 @@ import com.baidu.soushang.views.ScrollAlwaysTextView;
 import com.baidu.soushang.widgets.ShopDialog;
 import com.baidu.soushang.widgets.TipsDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
-
-import android.R.integer;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -282,7 +276,7 @@ public class ShopActivity extends BaseActivity {
       final ShopInfo shopInfo = (ShopInfo) getItem(position);
       String endUrl = BASEURL + mUrlList.get(position);
       ImageLoader imageLoader = ImageLoader.getInstance();
-      imageLoader.displayImage(endUrl, viewHolder.mShopImag);      
+      imageLoader.displayImage(endUrl, viewHolder.mShopImag);
       viewHolder.mShopName.requestFocus();
       viewHolder.mShopName.setText(shopInfo.getTitle());
       viewHolder.mShopMarkNum.setText("" + shopInfo.getIntegral());

@@ -152,9 +152,9 @@ public class LBSService extends Service {
     }
 
   }
-  
+
   private NetworkDisconnectedReceiver mNetworkDisconnectedReceiver;
-  
+
   @Override
   public void onCreate() {
     mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -167,17 +167,17 @@ public class LBSService extends Service {
     IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     mNetworkDisconnectedReceiver = new NetworkDisconnectedReceiver();
     registerReceiver(mNetworkDisconnectedReceiver, filter);
-    
+
     super.onCreate();
   }
-  
+
   @Override
   public void onDestroy() {
     stopHeartbeat();
     stopLocationClient();
-    
+
     Message.obtain(mClient, SHUTDOWN).sendToTarget();
-    
+
     unregisterReceiver(mNetworkDisconnectedReceiver);
 
     super.onDestroy();

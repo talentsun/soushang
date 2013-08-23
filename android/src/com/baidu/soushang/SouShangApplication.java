@@ -26,7 +26,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import android.app.Activity;
 import android.app.Application;
@@ -152,15 +151,12 @@ public class SouShangApplication extends Application {
         .showImageForEmptyUri(R.drawable.default_avatar)
         .showStubImage(R.drawable.default_avatar)
         .displayer(
-          new RoundedBitmapDisplayer(
-            getResources().getDimensionPixelSize(
-                R.dimen.avatar_width) / 2)
-           ).build();
-   new SimpleBitmapDisplayer();
+            new RoundedBitmapDisplayer(
+                getResources().getDimensionPixelSize(
+                    R.dimen.avatar_width) / 2)
+        ).build();
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);
-    // CookieSyncManager.createInstance(this);
-
     Config.getUDID(this);
   }
 
@@ -205,7 +201,7 @@ public class SouShangApplication extends Application {
     mBaidu.authorize(context, new BaiduDialogListener() {
       @Override
       public void onError(BaiduDialogError arg0) {
-        
+
       }
 
       @Override

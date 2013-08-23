@@ -18,9 +18,9 @@ public class DialyEventDialog extends Dialog {
   public DialyEventDialog(Context context, int theme) {
     super(context, theme);
     setContentView(R.layout.loading_daily_dialog);
-    mDialyTips = (TextView)findViewById(R.id.dialy_dialog_tip);
+    mDialyTips = (TextView) findViewById(R.id.dialy_dialog_tip);
     Typeface typeface = Typeface.createFromAsset(getContext().getAssets(),
-      SouShangApplication.FONT);
+        SouShangApplication.FONT);
     mDialyTips.setTypeface(typeface);
   }
 
@@ -28,6 +28,5 @@ public class DialyEventDialog extends Dialog {
   protected void onCreate(Bundle savedInstanceState) {
 
   }
-
 
 }
