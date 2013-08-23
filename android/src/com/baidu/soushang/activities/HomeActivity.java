@@ -10,10 +10,10 @@ import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.SouShangApplication.LoginListener;
 import com.baidu.soushang.cloudapis.Apis;
 import com.baidu.soushang.cloudapis.Apis.ApiResponseCallback;
-import com.baidu.soushang.cloudapis.CommonResponse;
 import com.baidu.soushang.cloudapis.DayEventResponse;
 import com.baidu.soushang.cloudapis.QuestionResponse;
 import com.baidu.soushang.lbs.LBSService;
+import com.baidu.soushang.widgets.DialyEventDialog;
 import com.baidu.soushang.widgets.TipsDialog;
 import com.baidu.soushang.widgets.WebViewDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -38,13 +38,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
   private WebViewDialog mNewsDialog;
   private TipsDialog mTipsDialog;
   private SouShangApplication mApplication;
-
+  private DialyEventDialog mDialyEventDialog;
   private ApiResponseCallback<DayEventResponse> mDayEventCallback =
       new ApiResponseCallback<DayEventResponse>() {
         @Override
         public void onResults(DayEventResponse arg0) {
           // FIXME no event 0:00
           if (arg0 != null && arg0.getRetCode() == 0) {
+            mDialyEventDialog.dismiss();
             if (arg0.getEventFinished() == 0) {
               Intent intent = new Intent(HomeActivity.this,
                   QuestionActivity.class);
@@ -64,6 +65,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
         @Override
         public void onError(Throwable arg0) {
+          mDialyEventDialog.dismiss();
           Toast.makeText(
               HomeActivity.this,
               HomeActivity.this.getResources().getString(
@@ -76,6 +78,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       new ApiResponseCallback<QuestionResponse>() {
         @Override
         public void onResults(QuestionResponse arg0) {
+          mDialyEventDialog.dismiss();
           if (arg0 != null && arg0.getRetCode() == 0
               && arg0.getQuestion() != null) {
             Intent intent = new Intent(HomeActivity.this,
@@ -90,6 +93,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
         @Override
         public void onError(Throwable arg0) {
+          mDialyEventDialog.dismiss();
           Toast.makeText(
               HomeActivity.this,
               HomeActivity.this.getResources().getString(
@@ -120,6 +124,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     mFeatureEvent.setOnClickListener(this);
     mNewsDialog = new WebViewDialog(this);
     mTipsDialog = new TipsDialog(this);
+    mDialyEventDialog = new DialyEventDialog(this);
     String currentDate = getCurrentDate();
     if (!currentDate.equalsIgnoreCase(Config.getLatestNewsDate(this))) {
       Config.setLatestNewsDate(this, currentDate);
@@ -135,22 +140,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
   private void initLoginStatus() {
     if (Config.isLogged(this)) {
-      Apis.Login(this, Config.getAccessToken(this),
-          new ApiResponseCallback<CommonResponse>() {
-            @Override
-            public void onResults(CommonResponse arg0) {
-              if (arg0 == null || arg0.getRetCode() != 0) {
-                notLogged();
-              } else {
-                logged();
-              }
-            }
-
-            @Override
-            public void onError(Throwable arg0) {
-              notLogged();
-            }
-          });
+      logged();
     } else {
       notLogged();
     }
@@ -162,6 +152,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     lbsIntent.setAction(Intents.ACTION_STARTUP);
     startService(lbsIntent);
     mApplication.updateUserExtraInfo();
+ 
   }
 
   private void notLogged() {
@@ -187,6 +178,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
       startActivity(intent);
       overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     } else if (v == mDailyEvent) {
+      mDialyEventDialog.show();
       if (Config.isLogged(this)) {
         Apis.getDayEvent(this, Config.getAccessToken(this),
             mDayEventCallback);

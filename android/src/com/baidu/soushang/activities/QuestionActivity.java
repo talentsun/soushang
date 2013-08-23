@@ -682,6 +682,7 @@ public class QuestionActivity extends BaseActivity implements
 
   @Override
   protected void onDestroy() {
+    mLoadingDialog.dismiss();
     if (mEventType == Intents.EVENT_TYPE_LBS
         || mEventType == Intents.EVENT_TYPE_FEATURE
         && mFightStateReceiver != null) {

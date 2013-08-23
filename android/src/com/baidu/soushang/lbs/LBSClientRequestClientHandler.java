@@ -167,7 +167,6 @@ public class LBSClientRequestClientHandler extends SimpleChannelUpstreamHandler 
           break;
       }
     }
-
     super.messageReceived(ctx, e);
   }
 

@@ -3,7 +3,6 @@
     <style name="AppTheme" parent="android:Theme.Light" />
 
     <style name="OptionFont">
-       
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#fdfcc5</item>
         <item name="android:shadowColor">#7f2100</item>
@@ -32,6 +31,14 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/tips_bg</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="DialyEventDialog" parent="@android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/home_loading_bg</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -86,13 +93,12 @@
 
     <style name="GreenText">
         <item name="android:textSize">@dimen/lbs_dialog_tv_content_size</item>
-        <item name="android:textColor">#536f03</item>    
+        <item name="android:textColor">#536f03</item>
     </style>
 
     <style name="LargeGreenText">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#536f03</item>
     </style>
-
 
 </resources>

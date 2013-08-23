@@ -131,7 +131,7 @@ public class Apis {
               callback.onResults(arg0);
             }
           }
-        }, String.format(LOGIN_URL, accessToken), 2 * 1000);
+        }, String.format(LOGIN_URL, accessToken), 5 * 1000);
   }
 
   public static void getUserInfo(Context context, String accessToken,

@@ -25,17 +25,14 @@ import com.baidu.soushang.utils.SystemUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.BitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
 public class SouShangApplication extends Application {
   public static final String FONT = "fonts/yuppy-sc.otf";
@@ -172,7 +169,6 @@ public class SouShangApplication extends Application {
 
         @Override
         public void onResults(CommonResponse arg0) {
-
           if (arg0 != null && arg0.getRetCode() == 0) {
             Config.setLogged(getApplicationContext(), true);
             updateBaseUserInfo();
@@ -205,24 +201,20 @@ public class SouShangApplication extends Application {
 
   public void login(Activity context) {
     Log.d("app", "login");
-
     mBaidu = new Baidu(APP_KEY, APP_SECRET, context);
     mBaidu.authorize(context, new BaiduDialogListener() {
-
       @Override
       public void onError(BaiduDialogError arg0) {
-
+        
       }
 
       @Override
       public void onComplete(Bundle arg0) {
-
         Log.i("access_token", mBaidu.getAccessToken());
         Config.setAccessToken(SouShangApplication.this,
             mBaidu.getAccessToken());
         Apis.Login(SouShangApplication.this, mBaidu.getAccessToken(),
             mLoginCallback);
-
       }
 
       @Override
@@ -283,7 +275,6 @@ public class SouShangApplication extends Application {
           public void onComplete(String arg0) {
             Log.d("userInfo", arg0);
             try {
-
               JSONObject obj = new JSONObject(arg0);
               if (obj.has("uname")) {
                 Config.setUserName(SouShangApplication.this,

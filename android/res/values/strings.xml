@@ -146,4 +146,6 @@
 	<string name="feature_dialog_introduce">专题赛一周一次，答完后就请期待下次专题赛的到来吧。扫除搜索难题，做新时代的知识分子。我们的目标是：一路通关，成为搜神！ </string>
 	<string name="feature_dialog_intergal">"获得积分"</string>
 	<string name="feature_dialog_title">类之练习关</string>
+	
+	<string name="dialy_dialog_tip">正在玩命取题中...</string>	
 </resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/dialy_dialog_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@anim/dialy_loading"
+            android:indeterminateOnly="true"
+            android:indeterminateBehavior="repeat"
+            />
+
+        <TextView
+            android:id="@+id/dialy_dialog_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/dialy_dialog_tip"
+            android:textColor="#fdfcc5"
+            android:textSize="16sp" 
+            android:layout_marginTop="10dp"
+            android:maxEms="3"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
