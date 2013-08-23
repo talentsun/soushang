@@ -145,7 +145,7 @@ public class ProfileActivity extends BaseActivity {
             R.color.profile_tab_nomal));
         mGiftInfoTab.setTextColor(getResources().getColor(
             R.color.profile_tab_selected));
-        if (mList.size() != 0) {
+        if (mList != null && mList.size() != 0) {
           mGiftGrid.setVisibility(View.VISIBLE);
           mTipsMsg.setVisibility(View.GONE);
           mGiftAdapter = new ProfileGiftAdapter(mApplication,
@@ -297,4 +297,7 @@ public class ProfileActivity extends BaseActivity {
       TextView mGiftIntegral;
     }
   }
+
+
+
 }

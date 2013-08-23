@@ -31,13 +31,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <TextView
+                <com.baidu.soushang.views.ScrollAlwaysTextView
                     android:id="@+id/username"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/lbs_username_width"
                     android:layout_height="wrap_content"
-                    android:maxWidth="90dp"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
                     android:textColor="#536f03"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                     />
 
                 <TextView
                     android:id="@+id/network"

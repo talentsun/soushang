@@ -70,7 +70,6 @@ public class PausedDialog extends Dialog implements
     if (mOnClickListener != null) {
       mOnClickListener.onHome();
     }
-
     Intent intent = new Intent(getContext(), HomeActivity.class);
     getContext().startActivity(intent);
   }
