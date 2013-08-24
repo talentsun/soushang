@@ -96,5 +96,8 @@
     <dimen name="feature_event_dialog_introduce_paddingLeft">40dp</dimen>
     <dimen name="feature_event_dialog_introduce_paddingRight">40dp</dimen>
     <dimen name="feature_event_dialog_know_marginBottom">15dp</dimen>
+    <dimen name="shop_item_name_width">105dp</dimen>
     
+    
+    <dimen name="lbs_username_width">65dp</dimen>
 </resources>

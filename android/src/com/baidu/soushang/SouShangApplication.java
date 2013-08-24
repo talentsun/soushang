@@ -153,12 +153,10 @@ public class SouShangApplication extends Application {
         .displayer(
             new RoundedBitmapDisplayer(
                 getResources().getDimensionPixelSize(
-                    R.dimen.avatar_width) / 2)).build();
-
+                    R.dimen.avatar_width) / 2)
+        ).build();
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);
-    // CookieSyncManager.createInstance(this);
-
     Config.getUDID(this);
   }
 
@@ -167,7 +165,6 @@ public class SouShangApplication extends Application {
 
         @Override
         public void onResults(CommonResponse arg0) {
-
           if (arg0 != null && arg0.getRetCode() == 0) {
             Config.setLogged(getApplicationContext(), true);
             updateBaseUserInfo();
@@ -200,10 +197,8 @@ public class SouShangApplication extends Application {
 
   public void login(Activity context) {
     Log.d("app", "login");
-
     mBaidu = new Baidu(APP_KEY, APP_SECRET, context);
     mBaidu.authorize(context, new BaiduDialogListener() {
-
       @Override
       public void onError(BaiduDialogError arg0) {
 
@@ -211,13 +206,11 @@ public class SouShangApplication extends Application {
 
       @Override
       public void onComplete(Bundle arg0) {
-
         Log.i("access_token", mBaidu.getAccessToken());
         Config.setAccessToken(SouShangApplication.this,
             mBaidu.getAccessToken());
         Apis.Login(SouShangApplication.this, mBaidu.getAccessToken(),
             mLoginCallback);
-
       }
 
       @Override
@@ -239,8 +232,6 @@ public class SouShangApplication extends Application {
               && arg0.getUser() != null) {
             mUser = arg0.getUser();
             if (mUpdateUserInfoListener != null) {
-              System.out.println("at mUserExtraInfoCallback+++++++mUser.getPoint()===="
-                  + mUser.getPoint());
               mUpdateUserInfoListener.onUpdated(mUser);
             }
           }
@@ -280,7 +271,6 @@ public class SouShangApplication extends Application {
           public void onComplete(String arg0) {
             Log.d("userInfo", arg0);
             try {
-
               JSONObject obj = new JSONObject(arg0);
               if (obj.has("uname")) {
                 Config.setUserName(SouShangApplication.this,

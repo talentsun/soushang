@@ -20,7 +20,7 @@ import com.baidu.soushang.cloudapis.FeatureEvent;
 
 public class JsonTool {
 
-  private static  ArrayList<FeatureEvent> list;
+  private static ArrayList<FeatureEvent> list;
 
   public static ArrayList<FeatureEvent> getFeatureData(String addr, Context context) {
     try {
@@ -64,7 +64,7 @@ public class JsonTool {
         featureEvent.setTitle(jsonObj.getString("title"));
         featureEvent.setIntroduce(jsonObj.getString("introduce"));
         featureEvent.setScore(jsonObj.getInt("score"));
-        list.add(featureEvent); 
+        list.add(featureEvent);
       }
     } catch (JSONException e) {
       e.printStackTrace();

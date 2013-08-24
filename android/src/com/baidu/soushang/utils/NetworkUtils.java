@@ -15,7 +15,7 @@ public class NetworkUtils {
       return false;
     }
   }
-  
+
   public static String getNetworkStr(int networkType) {
     if (networkType == 1) {
       return "2G/3G";
@@ -25,7 +25,7 @@ public class NetworkUtils {
       return "无网络";
     }
   }
-  
+
   public static int getNetworkType(Context context) {
     ConnectivityManager connManager =
         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -42,7 +42,7 @@ public class NetworkUtils {
         return 2;
       }
     }
-    
+
     return 0;
   }
 }

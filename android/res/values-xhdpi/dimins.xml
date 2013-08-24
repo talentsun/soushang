@@ -100,4 +100,5 @@
     <dimen name="feature_event_dialog_know_margintop">12dp</dimen>
     <dimen name="feature_event_dialog_know_marginBottom">22dp</dimen>
     
+    <dimen name="lbs_username_width">90dp</dimen>
 </resources>
