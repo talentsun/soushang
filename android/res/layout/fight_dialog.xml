@@ -125,12 +125,18 @@
                 android:layout_marginLeft="16dp"
                 android:orientation="vertical" >
 
-                <TextView
+                <com.baidu.soushang.views.ScrollAlwaysTextView
                     android:id="@+id/other_resp"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/shop_item_name_width"
                     android:layout_height="wrap_content"
-                    android:maxWidth="90dp" />
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
 
                 <TextView
                     android:id="@+id/other_event_count_resp"

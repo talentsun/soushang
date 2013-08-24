@@ -32,6 +32,8 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 public class SouShangApplication extends Application {
   public static final String FONT = "fonts/yuppy-sc.otf";
@@ -155,8 +157,10 @@ public class SouShangApplication extends Application {
                 getResources().getDimensionPixelSize(
                     R.dimen.avatar_width) / 2)
         ).build();
+
     SpeechConfig.setAppId(APP_KEY);
     SpeechConfig.setAppKey(APP_SECRET);
+    CookieSyncManager.createInstance(this);
     Config.getUDID(this);
   }
 
@@ -190,8 +194,10 @@ public class SouShangApplication extends Application {
   public void logout(Activity context) {
     if (mBaidu != null) {
       mBaidu.LogOut();
+      CookieSyncManager.createInstance(this);
+      CookieSyncManager.getInstance().startSync();
+      CookieManager.getInstance().removeSessionCookie();
     }
-
     mUser = null;
   }
 
