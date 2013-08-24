@@ -6,6 +6,7 @@ import com.baidu.soushang.R;
 import com.baidu.soushang.SouShangApplication;
 import com.baidu.soushang.lbs.LBSService;
 import com.baidu.soushang.lbs.Models.User;
+import com.baidu.soushang.views.ScrollAlwaysTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
@@ -37,7 +38,7 @@ public class FightDialog extends Dialog implements View.OnClickListener {
   private TextView mReceiveFight;
   private TextView mSomebodyReceive;
   private ImageView mOtherAvatarResp;
-  private TextView mOtherUserNameResp;
+  private ScrollAlwaysTextView mOtherUserNameResp;
   private TextView mOtherEventCountResp;
   private TextView mOtherWinRateResp;
   private Button mAccept;
@@ -176,7 +177,7 @@ public class FightDialog extends Dialog implements View.OnClickListener {
     mReceiveFight = (TextView) findViewById(R.id.receive_fight);
     mSomebodyReceive = (TextView) findViewById(R.id.somebody_receive);
     mOtherAvatarResp = (ImageView) findViewById(R.id.other_avatar_resp);
-    mOtherUserNameResp = (TextView) findViewById(R.id.other_resp);
+    mOtherUserNameResp = (ScrollAlwaysTextView) findViewById(R.id.other_resp);
     mOtherEventCountResp = (TextView) findViewById(R.id.other_event_count_resp);
     mOtherWinRateResp = (TextView) findViewById(R.id.other_win_rate_resp);
     mAccept = (Button) findViewById(R.id.accept);

@@ -24,6 +24,8 @@ public class Intents {
   public static final String EXTRA_LOGIN = "com.baidu.soushang.extra.LOGIN";
 
 
+  public static final String EXTRA_BAIDU_ACCESSTOKEN_FILE="baidu_sdk_config";
+  public static final String EXTRA_BAIDU_EXPIRE_SECONDS="baidu_sdk_config_prop_expire_secends";
   public static final String EXTRA_LBS_DIALOG_JUDGE = "lbsdialog";
   public static final String EXTRA_SHOP_SEND_ADDRESS = "address";
   public static final int EVENT_TYPE_DAILY = 1;
