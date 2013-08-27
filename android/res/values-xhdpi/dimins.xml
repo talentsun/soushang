@@ -60,6 +60,8 @@
 	<dimen name="shop_grid_columnwidth">130dp</dimen>
 	<dimen name="shop_grid_horizontalspacing">10dp</dimen>	
 	<dimen name="shop_nogifts_size">16sp</dimen>
+	<dimen name="shop_dialog_edit_marginleft">50dp</dimen>
+	<dimen name="shop_dialog_edit_marginright">40dp</dimen>
 	
 	<dimen name="shop_item_imag_width">152dp</dimen>
 	<dimen name="shop_item_imag_height">152dp</dimen>
@@ -101,4 +103,6 @@
     <dimen name="feature_event_dialog_know_marginBottom">22dp</dimen>
     
     <dimen name="lbs_username_width">90dp</dimen>
+    <dimen name="shop_dialog_line_marginleft">36dp</dimen>
+    <dimen name="shop_dialog_line_marginright">36dp</dimen>
 </resources>
