@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  	<dimen name="shop_dialog_edit_marginleft">50dp</dimen>
+	<dimen name="shop_dialog_edit_marginright">70dp</dimen>
+	<dimen name="shop_dialog_line_marginleft">38dp</dimen>
+    <dimen name="shop_dialog_line_marginright">60dp</dimen>
+</resources>
