@@ -40,10 +40,10 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
 public class LBSService extends Service {
-  private static final String LBS_SERVER = "118.244.225.222";
+  private static final String LBS_SERVER = "211.151.186.82";
   private static final String TAG = "lbs";
 
-  private static final int LBS_SERVER_PORT = 9300;
+  private static final int LBS_SERVER_PORT = 8020;
   private static final int STARTUP = 1;
   private static final int HEARTBEAT = 2;
   private static final int LBS_INFO = 3;
